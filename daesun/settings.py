@@ -25,7 +25,7 @@ SECRET_KEY = 'x-g(o_(ep7rhy+h7w5*zpjey4cb818z5&@+8y+yf*jc)#5j)+0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -73,16 +73,24 @@ WSGI_APPLICATION = 'daesun.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
+# [START dbconfig]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'daesun',
-        'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': ''
+        'USER': 'daesun',
+        'PASSWORD': '',
     }
 }
+# In the flexible environment, you connect to CloudSQL using a unix socket.
+# Locally, you can use the CloudSQL proxy to proxy a localhost connection
+# to the instance
+DATABASES['default']['HOST'] = '/cloudsql/daesun2017:asia-east1:mysql'
+if os.getenv('GAE_INSTANCE'):
+    pass
+else:
+    DATABASES['default']['HOST'] = '104.199.133.72'
+# [END dbconfig]
 
 DATABASE_OPTIONS = {'charset': 'utf8'}
 
