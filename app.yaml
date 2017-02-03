@@ -1,7 +1,8 @@
 # [START runtime]
 runtime: python
 env: flex
-entrypoint: gunicorn -b :$PORT mysite.wsgi
+threadsafe: yes
+entrypoint: gunicorn -b :$PORT daesun.wsgi
 
 beta_settings:
     cloud_sql_instances: daesun2017:asia-east1:mysql

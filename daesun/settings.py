@@ -131,4 +131,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+# Fill in your cloud bucket and switch which one of the following 2 lines
+# is commented to serve static content from GCS
+# STATIC_URL = 'https://storage.googleapis.com/<your-gcs-bucket>/static/'
+
+STATIC_URL = 'static/'
+
+STATIC_ROOT = 'static/'
