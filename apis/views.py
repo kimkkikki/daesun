@@ -15,12 +15,7 @@ def get_memcache_client():
     else:
         memcache_server = os.environ.get('MEMCACHE_SERVER', 'localhost:11211')
 
-    memcache_username = os.environ.get('MEMCACHE_USERNAME')
-    memcache_password = os.environ.get('MEMCACHE_PASSWORD')
-
-    memcache_client = pylibmc.Client(
-        [memcache_server], binary=True,
-        username=memcache_username, password=memcache_password)
+    memcache_client = pylibmc.Client([memcache_server], binary=True)
 
     return memcache_client
 
@@ -53,7 +48,7 @@ def group(request):
 
     result = json.dumps(list(group_list))
 
-    client.add(key='group_db_result', val=result, time=3600)
+    client.add(key='group_db_result', val=result, time=600)
 
     print('memcache not hit')
     return HttpResponse(json.dumps(list(group_list)), content_type='application/json; charset=utf-8')
