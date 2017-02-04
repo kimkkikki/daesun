@@ -135,6 +135,6 @@ USE_TZ = True
 # is commented to serve static content from GCS
 # STATIC_URL = 'https://storage.googleapis.com/<your-gcs-bucket>/static/'
 
-STATIC_URL = 'static/'
+STATIC_URL = 'https://storage.googleapis.com/daesunstatic/static/'
 
 STATIC_ROOT = 'static/'

@@ -13,7 +13,7 @@ def get_memcache_client():
             os.environ.get('GAE_MEMCACHE_HOST', 'localhost'),
             os.environ.get('GAE_MEMCACHE_PORT', '11211')])
     else:
-        memcache_server = os.environ.get('memcache_server', 'localhost:11211')
+        memcache_server = os.environ.get('MEMCACHE_SERVER', 'localhost:11211')
 
     memcache_username = os.environ.get('MEMCACHE_USERNAME')
     memcache_password = os.environ.get('MEMCACHE_PASSWORD')
