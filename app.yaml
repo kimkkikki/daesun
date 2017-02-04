@@ -11,3 +11,12 @@ runtime_config:
   python_version: 3
 # [END runtime]
 
+env_variables:
+  # If you are using the App Engine Memcache service (currently in alpha),
+  # uncomment this section and comment out the other Memcache variables.
+  # USE_GAE_MEMCACHE: 1
+  MEMCACHE_SERVER: memcached-14662.c8.us-east-1-4.ec2.cloud.redislabs.com:14662
+  # If you are using a Memcached server with SASL authentiation enabled,
+  # fill in these values with your username and password.
+  MEMCACHE_USERNAME: daesun
+  MEMCACHE_PASSWORD: aabb1122
