@@ -25,8 +25,8 @@ def get_memcache_client():
 
 
 def index(req):
-    scraps = Scraps.objects.all().values('title', 'cp')
-    return HttpResponse(json.dumps(list(scraps)), content_type='application/json; charset=utf-8')
+    scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')
+    return HttpResponse(json.dumps(list(scraps), cls=DjangoJSONEncoder), content_type='application/json; charset=utf-8')
 
 
 def cp_group(req):
@@ -82,9 +82,8 @@ def cp_daily(req):
 def shop(req):
     client_id = "cC0cf4zyUuLFmj_kKUum"
     client_secret = "EYop6SBs44"
-    enc_text = parse.quote("문재인")
+    enc_text = parse.quote("문재인") # 추후 parameter 로 변경
     url = "https://openapi.naver.com/v1/search/book.json?query=" + enc_text  # json 결과
-    # url = "https://openapi.naver.com/v1/search/blog.xml?query=" + encText # xml 결과
 
     send_request = request.Request(url)
     send_request.add_header("X-Naver-Client-Id", client_id)
