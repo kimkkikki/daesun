@@ -8,6 +8,13 @@ import os
 import pylibmc
 
 
+def date_handler(obj):
+    if hasattr(obj, 'isoformat'):
+        return obj.isoformat()
+    else:
+        raise TypeError
+
+
 def get_memcache_client():
     # Environment variables are defined in app.yaml.
     # Note: USE_GAE_MEMCACHE is in whitelist-only alpha. See README.md
@@ -24,8 +31,8 @@ def get_memcache_client():
 
 
 def index(request):
-    scraps = Scraps.objects.all().values('title', 'cp')
-    return HttpResponse(json.dumps(list(scraps)), content_type='application/json; charset=utf-8')
+    scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')
+    return HttpResponse(json.dumps(list(scraps), default=date_handler), content_type='application/json; charset=utf-8')
 
 
 def group(request):
@@ -61,9 +68,8 @@ def group(request):
 def shop(req):
     client_id = "cC0cf4zyUuLFmj_kKUum"
     client_secret = "EYop6SBs44"
-    enc_text = parse.quote("문재인")
+    enc_text = parse.quote("문재인") # 추후 parameter 로 변경
     url = "https://openapi.naver.com/v1/search/book.json?query=" + enc_text  # json 결과
-    # url = "https://openapi.naver.com/v1/search/blog.xml?query=" + encText # xml 결과
 
     send_request = request.Request(url)
     send_request.add_header("X-Naver-Client-Id", client_id)
