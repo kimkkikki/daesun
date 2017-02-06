@@ -129,6 +129,9 @@ TIME_ZONE = 'Asia/Seoul'
 # is commented to serve static content from GCS
 # STATIC_URL = 'https://storage.googleapis.com/<your-gcs-bucket>/static/'
 
-STATIC_URL = 'https://storage.googleapis.com/daesunstatic/static/'
+if os.getenv('GAE_INSTANCE'):
+    STATIC_URL = 'https://storage.googleapis.com/daesun2017.appspot.com/static/'
+else:
+    STATIC_URL = '/static/'
 
 STATIC_ROOT = 'static/'

@@ -7,6 +7,10 @@ from django.core.serializers.json import DjangoJSONEncoder
 import json
 import os
 import pylibmc
+# from pytrends.request import TrendReq
+
+
+# pytrend = TrendReq('donggeun.kim@questcompany.io', 'ejdrmsdl1', custom_useragent='daesun pytrends')
 
 
 def get_memcache_client():
@@ -37,14 +41,16 @@ def cp_group(req):
     if result is None:
         group_list = Scraps.objects.filter(
             Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안')
+            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+            Q(title__contains='남경필')
         ).values('cp').annotate(
             moon=Count(Case(When(title__contains='문재인', then=1))),
             ahn=Count(Case(When(title__contains='안철수', then=1))),
             lee=Count(Case(When(title__contains='이재명', then=1))),
             you=Count(Case(When(title__contains='유승민', then=1))),
             hee=Count(Case(When(title__contains='안희정', then=1))),
-            hwang=Count(Case(When(title__contains='황교안', then=1)))
+            hwang=Count(Case(When(title__contains='황교안', then=1))),
+            nam=Count(Case(When(title__contains='남경필', then=1)))
         )
 
         print(group_list.query)
@@ -82,8 +88,10 @@ def cp_daily(req):
 def shop(req):
     client_id = "cC0cf4zyUuLFmj_kKUum"
     client_secret = "EYop6SBs44"
-    enc_text = parse.quote("문재인") # 추후 parameter 로 변경
-    url = "https://openapi.naver.com/v1/search/book.json?query=" + enc_text  # json 결과
+    # 추후 parameter 로 변경
+    enc_text = parse.quote("문재인")
+    # json 결과
+    url = "https://openapi.naver.com/v1/search/book.json?query=" + enc_text
 
     send_request = request.Request(url)
     send_request.add_header("X-Naver-Client-Id", client_id)
@@ -99,3 +107,13 @@ def shop(req):
     else:
         print("Error Code:" + code)
         return HttpResponse(status=code)
+
+
+# def trend(req):
+#     pytrend.build_payload(kw_list=['문재인', '안희정', '이재명', '유승민', '황교안'], timeframe='today 1-m')
+#
+#     # Interest Over Time
+#     interest_over_time_df = pytrend.interest_over_time()
+#     print(interest_over_time_df)
+#
+#     return HttpResponse(status=200)
