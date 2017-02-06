@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.db.models import Count
 from django.db.models import Q, Case, When
 from urllib import parse, request
+from django.core.serializers.json import DjangoJSONEncoder
 import json
 import os
 import pylibmc
@@ -23,39 +24,59 @@ def get_memcache_client():
     return memcache_client
 
 
-def index(request):
+def index(req):
     scraps = Scraps.objects.all().values('title', 'cp')
     return HttpResponse(json.dumps(list(scraps)), content_type='application/json; charset=utf-8')
 
 
-def group(request):
+def cp_group(req):
+    cache_key = 'cp_group_result'
     client = get_memcache_client()
-    result = client.get('group_db_result')
+    result = client.get(cache_key)
 
-    if result:
-        print('memcache hit')
-        return HttpResponse(result, content_type='application/json; charset=utf-8')
+    if result is None:
+        group_list = Scraps.objects.filter(
+            Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
+            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안')
+        ).values('cp').annotate(
+            moon=Count(Case(When(title__contains='문재인', then=1))),
+            ahn=Count(Case(When(title__contains='안철수', then=1))),
+            lee=Count(Case(When(title__contains='이재명', then=1))),
+            you=Count(Case(When(title__contains='유승민', then=1))),
+            hee=Count(Case(When(title__contains='안희정', then=1))),
+            hwang=Count(Case(When(title__contains='황교안', then=1)))
+        )
 
-    group_list = Scraps.objects.filter(
-        Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-        Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안')
-    ).values('cp').annotate(
-        moon=Count(Case(When(title__contains='문재인', then=1))),
-        ahn=Count(Case(When(title__contains='안철수', then=1))),
-        lee=Count(Case(When(title__contains='이재명', then=1))),
-        you=Count(Case(When(title__contains='유승민', then=1))),
-        hee=Count(Case(When(title__contains='안희정', then=1))),
-        hwang=Count(Case(When(title__contains='황교안', then=1)))
-    )
+        print(group_list.query)
+        result = json.dumps(list(group_list))
+        client.add(key=cache_key, val=result, time=600)
+        print('memcache not hit')
 
-    print(group_list.query)
+    return HttpResponse(result, content_type='application/json; charset=utf-8')
 
-    result = json.dumps(list(group_list))
 
-    client.add(key='group_db_result', val=result, time=600)
+def cp_daily(req):
+    cache_key = 'cp_daily_result'
+    client = get_memcache_client()
+    result = client.get(cache_key)
 
-    print('memcache not hit')
-    return HttpResponse(json.dumps(list(group_list)), content_type='application/json; charset=utf-8')
+    if result is None:
+        daily_list = Scraps.objects.filter(
+            Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
+            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안')
+        ).extra({'date': 'date(created_at)'}).values('date').annotate(
+            moon=Count(Case(When(title__contains='문재인', then=1))),
+            ahn=Count(Case(When(title__contains='안철수', then=1))),
+            lee=Count(Case(When(title__contains='이재명', then=1))),
+            you=Count(Case(When(title__contains='유승민', then=1))),
+            hee=Count(Case(When(title__contains='안희정', then=1))),
+            hwang=Count(Case(When(title__contains='황교안', then=1)))
+        )
+
+        result = json.dumps(list(daily_list), cls=DjangoJSONEncoder)
+        client.add(key=cache_key, val=result, time=600)
+
+    return HttpResponse(result, content_type='application/json; charset=utf-8')
 
 
 def shop(req):

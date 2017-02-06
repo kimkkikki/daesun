@@ -6,7 +6,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^cp/group$', views.group, name='group'),
+    url(r'^cp/group$', views.cp_group, name='cp_group'),
+    url(r'^cp/daily', views.cp_daily, name='cp_daily'),
     url(r'^shop$', views.shop, name='shop'),
 ]
 
