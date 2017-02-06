@@ -2,8 +2,10 @@ from apis.models import Scraps
 from django.http import HttpResponse
 from django.db.models import Count
 from django.db.models import Q, Case, When
-import json, os, pylibmc, sys
-import urllib
+from urllib import parse, request
+import json
+import os
+import pylibmc
 
 
 def get_memcache_client():
@@ -36,13 +38,14 @@ def group(request):
 
     group_list = Scraps.objects.filter(
         Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-        Q(title__contains='유승민') | Q(title__contains='안희정')
+        Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안')
     ).values('cp').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
         ahn=Count(Case(When(title__contains='안철수', then=1))),
         lee=Count(Case(When(title__contains='이재명', then=1))),
         you=Count(Case(When(title__contains='유승민', then=1))),
-        hee=Count(Case(When(title__contains='안희정', then=1)))
+        hee=Count(Case(When(title__contains='안희정', then=1))),
+        hwang=Count(Case(When(title__contains='황교안', then=1)))
     )
 
     print(group_list.query)
@@ -55,22 +58,24 @@ def group(request):
     return HttpResponse(json.dumps(list(group_list)), content_type='application/json; charset=utf-8')
 
 
-def shop(request):
-
+def shop(req):
     client_id = "cC0cf4zyUuLFmj_kKUum"
     client_secret = "EYop6SBs44"
-    encText = urllib.parse.quote("문재인")
-    url = "https://openapi.naver.com/v1/search/book.json?query=" + encText  # json 결과
+    enc_text = parse.quote("문재인")
+    url = "https://openapi.naver.com/v1/search/book.json?query=" + enc_text  # json 결과
     # url = "https://openapi.naver.com/v1/search/blog.xml?query=" + encText # xml 결과
-    request = urllib.request.Request(url)
-    request.add_header("X-Naver-Client-Id", client_id)
-    request.add_header("X-Naver-Client-Secret", client_secret)
-    response = urllib.request.urlopen(request)
-    rescode = response.getcode()
-    if (rescode == 200):
+
+    send_request = request.Request(url)
+    send_request.add_header("X-Naver-Client-Id", client_id)
+    send_request.add_header("X-Naver-Client-Secret", client_secret)
+    response = request.urlopen(send_request)
+    code = response.getcode()
+
+    if code == 200:
         response_body = response.read()
         print(response_body.decode('utf-8'))
-    else:
-        print("Error Code:" + rescode)
+        return HttpResponse(response_body, content_type='application/json; charset=utf-8')
 
-    return HttpResponse(response_body, content_type='application/json; charset=utf-8')
+    else:
+        print("Error Code:" + code)
+        return HttpResponse(status=code)
