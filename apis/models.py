@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import admin
 
 
 class Scraps(models.Model):
@@ -12,6 +13,12 @@ class Scraps(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+class ScrapsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'cp', 'created_at')
+    list_filter = ('cp', 'created_at')
+    search_fields = ['title']
+
+
 class Pledge(models.Model):
     class Meta:
         db_table = 'pledge'
@@ -21,3 +28,8 @@ class Pledge(models.Model):
     category = models.IntegerField(default=0)
     candidate = models.CharField(max_length=10)
     created = models.DateTimeField(auto_now_add=True)
+
+
+class PledgeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'contents', 'candidate', 'category', 'created')
+    list_filter = ('candidate', 'category')
