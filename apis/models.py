@@ -27,9 +27,11 @@ class Pledge(models.Model):
     contents = models.TextField(null=True)
     category = models.IntegerField(default=0)
     candidate = models.CharField(max_length=10)
+    like = models.IntegerField(default=0)
+    unlike = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
 
 
 class PledgeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'contents', 'candidate', 'category', 'created')
+    list_display = ('id', 'title', 'contents', 'candidate', 'category', 'like', 'unlike', 'created')
     list_filter = ('candidate', 'category')

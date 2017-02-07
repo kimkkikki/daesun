@@ -109,6 +109,13 @@ def shop(req):
         return HttpResponse(status=code)
 
 
+def pledge(req):
+    if req.method == 'GET':
+        pass
+    else:
+        pass
+
+
 # def trend(req):
 #     pytrend.build_payload(kw_list=['문재인', '안희정', '이재명', '유승민', '황교안'], timeframe='today 1-m')
 #
