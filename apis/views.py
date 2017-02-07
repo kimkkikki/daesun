@@ -1,4 +1,4 @@
-from apis.models import Scraps
+from apis.models import Scraps, Keywords
 from django.http import HttpResponse
 from django.db.models import Count
 from django.db.models import Q, Case, When
@@ -9,6 +9,7 @@ import json
 import os
 import pylibmc
 from .util import hangle
+from datetime import datetime, timedelta
 
 
 def get_memcache_client():
@@ -136,3 +137,29 @@ def name_chemistry(req):
         result = 0
 
     return HttpResponse(json.dumps({'score': result}), status=200)
+
+
+def timeline(req):
+    cache_key = 'timeline_result'
+    client = get_memcache_client()
+    result = client.get(cache_key)
+
+    if result is None:
+        item_list = Keywords.objects.values('candidate', 'created_at').annotate(Count('candidate'), Count('created_at')).filter(created_at__gte=datetime.now() - timedelta(hours=3)).order_by('-created_at')
+
+        for item in item_list:
+            keywords = Keywords.objects.values('keyword').filter(candidate__contains=item['candidate']).filter(created_at__contains=item['created_at'])
+            keyword_list = []
+            for k in keywords:
+                inner_item = {}
+                inner_item['keyword'] = k['keyword']
+                scraps = [scraps for scraps in Scraps.objects.values('title', 'link', 'cp', 'created_at').filter(title__contains=item['candidate']).filter(title__contains=k['keyword'])[:5]]
+                inner_item['news'] = scraps
+                keyword_list.append(inner_item)
+            item['keywords'] = keyword_list
+
+            result = json.dumps(list(item_list), cls=DjangoJSONEncoder)
+            client.add(key=cache_key, val=result, time=600)
+            print('memcache not hit')
+
+    return HttpResponse(result, content_type='application/json; charset=utf-8')

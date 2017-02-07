@@ -35,3 +35,19 @@ class Pledge(models.Model):
 class PledgeAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'contents', 'candidate', 'category', 'like', 'unlike', 'created')
     list_filter = ('candidate', 'category')
+
+
+class Keywords(models.Model):
+    class Meta:
+        db_table = 'keywords'
+    id = models.AutoField(primary_key=True)
+    candidate = models.CharField(max_length=10)
+    keyword = models.CharField(max_length=20)
+    count = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class KeywordsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'candidate', 'keyword', 'count', 'created_at')
+    list_filter = ('candidate', 'keyword')
+    search_fields = ['candidate', 'keyword']
