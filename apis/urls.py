@@ -10,8 +10,9 @@ urlpatterns = [
     url(r'^cp/group$', views.cp_group, name='cp_group'),
     url(r'^cp/daily', views.cp_daily, name='cp_daily'),
     url(r'^shop$', views.shop, name='shop'),
-    url(r'^name', views.name_chemistry, name='name_chemistry'),
     url(r'^timeline$', views.timeline, name='timeline'),
+    url(r'^name$', views.name_chemistry, name='name_chemistry'),
+    url(r'^pledge/rank$', views.pledge_rank, name='pledge_rank'),
     url(r'^admin/', admin.site.urls),
 ]
 
