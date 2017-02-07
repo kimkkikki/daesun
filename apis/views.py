@@ -4,13 +4,11 @@ from django.db.models import Count
 from django.db.models import Q, Case, When
 from urllib import parse, request
 from django.core.serializers.json import DjangoJSONEncoder
+from django.views.decorators.csrf import csrf_exempt
 import json
 import os
 import pylibmc
-# from pytrends.request import TrendReq
-
-
-# pytrend = TrendReq('donggeun.kim@questcompany.io', 'ejdrmsdl1', custom_useragent='daesun pytrends')
+from .util import hangle
 
 
 def get_memcache_client():
@@ -116,11 +114,25 @@ def pledge(req):
         pass
 
 
-# def trend(req):
-#     pytrend.build_payload(kw_list=['문재인', '안희정', '이재명', '유승민', '황교안'], timeframe='today 1-m')
-#
-#     # Interest Over Time
-#     interest_over_time_df = pytrend.interest_over_time()
-#     print(interest_over_time_df)
-#
-#     return HttpResponse(status=200)
+@csrf_exempt
+def name_chemistry(req):
+    if req.method == 'GET':
+        name1 = req.GET.get('name1', None)
+        name2 = req.GET.get('name2', None)
+
+    elif req.method == 'POST':
+        body = json.loads(req.body)
+        name1 = body.get('name1', None)
+        name2 = body.get('name2', None)
+    else:
+        return HttpResponse(status=400)
+
+    if name1 is None or name2 is None:
+        return HttpResponse(status=400)
+
+    if len(name1) == 3 and len(name2) == 3:
+        result = hangle.name_chemistry(name1, name2)
+    else:
+        result = 0
+
+    return HttpResponse(json.dumps({'score': result}), status=200)
