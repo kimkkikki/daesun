@@ -1,7 +1,7 @@
-from apis.models import Scraps
+from apis.models import Scraps, Pledge
 from django.http import HttpResponse
 from django.db.models import Count
-from django.db.models import Q, Case, When
+from django.db.models import Q, Case, When, Sum, F
 from urllib import parse, request
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
@@ -107,6 +107,19 @@ def shop(req):
         return HttpResponse(status=code)
 
 
+def pledge_rank(req):
+    cache_key = 'pledge_rank'
+    client = get_memcache_client()
+    result = client.get(cache_key)
+
+    if result is None:
+        pledges = Pledge.objects.annotate(score=Sum(F('like')-F('unlike'))).order_by('-score')[0:10]
+        result = json.dumps(list(pledges.values()), cls=DjangoJSONEncoder)
+        client.add(key=cache_key, val=result, time=60)
+
+    return HttpResponse(result, content_type='application/json; charset=utf-8')
+
+
 def pledge(req):
     if req.method == 'GET':
         pass
@@ -135,4 +148,4 @@ def name_chemistry(req):
     else:
         result = 0
 
-    return HttpResponse(json.dumps({'score': result}), status=200)
+    return HttpResponse(json.dumps({'score': result}), content_type='application/json; charset=utf-8')
