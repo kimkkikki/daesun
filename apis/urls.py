@@ -11,7 +11,9 @@ urlpatterns = [
     url(r'^cp/daily', views.cp_daily, name='cp_daily'),
     url(r'^shop$', views.shop, name='shop'),
     url(r'^name$', views.name_chemistry, name='name_chemistry'),
+    url(r'^pledge$', views.pledge, name='pledge'),
     url(r'^pledge/rank$', views.pledge_rank, name='pledge_rank'),
+    url(r'^pledge/(?P<id>\d+)$', views.pledge_evaluation, name='pledge_evaluation'),
     url(r'^admin/', admin.site.urls),
 ]
 

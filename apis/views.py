@@ -121,10 +121,19 @@ def pledge_rank(req):
 
 
 def pledge(req):
-    if req.method == 'GET':
-        pass
+    pledge = Pledge.objects.annotate(score=Sum(F('like')+F('unlike'))).order_by('score')[0:1]
+    pledges = list(pledge.values())
+    print(pledges)
+    return HttpResponse(json.dumps(pledges[0], cls=DjangoJSONEncoder), content_type='application/json; charset=utf-8')
+
+
+def pledge_evaluation(req, id):
+    if id is None:
+        print('id none')
     else:
-        pass
+        print('get')
+
+    return HttpResponse(status=200)
 
 
 @csrf_exempt
