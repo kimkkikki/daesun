@@ -20,7 +20,7 @@ def get_memcache_client():
             os.environ.get('GAE_MEMCACHE_HOST', 'localhost'),
             os.environ.get('GAE_MEMCACHE_PORT', '11211')])
     else:
-        memcache_server = os.environ.get('MEMCACHE_SERVER', 'localhost:11211')
+        memcache_server = os.environ.get('MEMCACHE_SERVER', '104.199.215.251:11211')
 
     memcache_client = pylibmc.Client([memcache_server], binary=True)
 
@@ -175,21 +175,27 @@ def timeline(req):
     result = client.get(cache_key)
 
     if result is None:
-        item_list = Keywords.objects.values('candidate', 'created_at').annotate(Count('candidate'), Count('created_at')).filter(created_at__gte=datetime.now() - timedelta(hours=3)).order_by('-created_at')
-
+        item_list = Keywords.objects.values('candidate', 'created_at').annotate(keyword_count=Count('candidate'), c_count=Count('created_at')).filter(created_at__gte=datetime.now() - timedelta(hours=3)).order_by('-created_at')
+        result_list = []
         for item in item_list:
-            keywords = Keywords.objects.values('keyword').filter(candidate__contains=item['candidate']).filter(created_at__contains=item['created_at'])
+            inner = {}
             keyword_list = []
+            keywords = Keywords.objects.values('keyword', 'count').filter(candidate__contains=item['candidate']).filter(created_at__contains=item['created_at'])
             for k in keywords:
-                inner_item = {}
-                inner_item['keyword'] = k['keyword']
+                inner_keyword = {}
+                inner_keyword['keyword'] = k['keyword']
+                inner_keyword['count'] = k['count']
                 scraps = [scraps for scraps in Scraps.objects.values('title', 'link', 'cp', 'created_at').filter(title__contains=item['candidate']).filter(title__contains=k['keyword'])[:5]]
-                inner_item['news'] = scraps
-                keyword_list.append(inner_item)
-            item['keywords'] = keyword_list
+                inner_keyword['news'] = scraps
+                keyword_list.append(inner_keyword)
 
-            result = json.dumps(list(item_list), cls=DjangoJSONEncoder)
-            client.add(key=cache_key, val=result, time=600)
-            print('memcache not hit')
+            inner['candidate'] = item['candidate']
+            inner['created_at'] = item['created_at']
+            inner['keywords'] = keyword_list
+            result_list.append(inner)
+
+        result = json.dumps(list(result_list), cls=DjangoJSONEncoder)
+        client.add(key=cache_key, val=result, time=600)
+        print('memcache not hit')
 
     return HttpResponse(result, content_type='application/json; charset=utf-8')
