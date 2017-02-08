@@ -28,8 +28,13 @@ def get_memcache_client():
 
 
 def index(req):
-    scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')
+    scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')[0:100]
     return HttpResponse(json.dumps(list(scraps), cls=DjangoJSONEncoder), content_type='application/json; charset=utf-8')
+
+
+candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
+            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+            Q(title__contains='남경필'))
 
 
 def cp_group(req):
@@ -38,11 +43,7 @@ def cp_group(req):
     result = client.get(cache_key)
 
     if result is None:
-        group_list = Scraps.objects.filter(
-            Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
-            Q(title__contains='남경필')
-        ).values('cp').annotate(
+        group_list = Scraps.objects.filter(candidate_q_list).values('cp').annotate(
             moon=Count(Case(When(title__contains='문재인', then=1))),
             ahn=Count(Case(When(title__contains='안철수', then=1))),
             lee=Count(Case(When(title__contains='이재명', then=1))),
@@ -66,16 +67,14 @@ def cp_daily(req):
     result = client.get(cache_key)
 
     if result is None:
-        daily_list = Scraps.objects.filter(
-            Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안')
-        ).extra({'date': 'date(created_at)'}).values('date').annotate(
+        daily_list = Scraps.objects.filter(candidate_q_list).extra({'date': 'date(created_at)'}).values('date').annotate(
             moon=Count(Case(When(title__contains='문재인', then=1))),
             ahn=Count(Case(When(title__contains='안철수', then=1))),
             lee=Count(Case(When(title__contains='이재명', then=1))),
             you=Count(Case(When(title__contains='유승민', then=1))),
             hee=Count(Case(When(title__contains='안희정', then=1))),
-            hwang=Count(Case(When(title__contains='황교안', then=1)))
+            hwang=Count(Case(When(title__contains='황교안', then=1)),
+            nam=Count(Case(When(title__contains='남경필', then=1))))
         )
 
         result = json.dumps(list(daily_list), cls=DjangoJSONEncoder)
@@ -122,19 +121,28 @@ def pledge_rank(req):
 
 
 def pledge(req):
-    pledge = Pledge.objects.annotate(score=Sum(F('like')+F('unlike'))).order_by('score')[0:1]
-    pledges = list(pledge.values())
+    pledge_obj = Pledge.objects.annotate(score=Sum(F('like')+F('unlike'))).order_by('score')[0:1]
+    pledges = list(pledge_obj.values())
     print(pledges)
     return HttpResponse(json.dumps(pledges[0], cls=DjangoJSONEncoder), content_type='application/json; charset=utf-8')
 
 
+@csrf_exempt
 def pledge_evaluation(req, id):
-    if id is None:
-        print('id none')
+    if req.method == 'POST':
+        body = json.loads(req.body)
+        type = body.get('type', None)
+        if type:
+            if type == 'like':
+                Pledge.objects.filter(id=id).update(like=F('like') + 1)
+            elif type == 'unlike':
+                Pledge.objects.filter(id=id).update(unlike=F('unlike') + 1)
+            else:
+                return HttpResponse(status=400, content_type='application/json; charset=utf-8')
     else:
-        print('get')
+        return HttpResponse(status=400, content_type='application/json; charset=utf-8')
 
-    return HttpResponse(status=200)
+    return HttpResponse(status=200, content_type='application/json; charset=utf-8')
 
 
 @csrf_exempt
