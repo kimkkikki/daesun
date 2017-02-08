@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'daesun',
         'USER': 'daesun',
-        'PASSWORD': '',
+        'PASSWORD': 'aabb1122',
     }
 }
 # In the flexible environment, you connect to CloudSQL using a unix socket.

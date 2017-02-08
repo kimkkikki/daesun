@@ -4,3 +4,4 @@ from . import models
 
 admin.site.register(models.Scraps, models.ScrapsAdmin)
 admin.site.register(models.Pledge, models.PledgeAdmin)
+admin.site.register(models.Keywords, models.KeywordsAdmin)
