@@ -30,10 +30,11 @@ class Pledge(models.Model):
     like = models.IntegerField(default=0)
     unlike = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
 
 class PledgeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'contents', 'candidate', 'category', 'like', 'unlike', 'created')
+    list_display = ('id', 'title', 'contents', 'candidate', 'category', 'like', 'unlike', 'created', 'updated')
     list_filter = ('candidate', 'category')
 
 
@@ -49,5 +50,5 @@ class Keywords(models.Model):
 
 class KeywordsAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'keyword', 'count', 'created_at')
-    list_filter = ('candidate', 'keyword')
+    list_filter = ['candidate']
     search_fields = ['candidate', 'keyword']
