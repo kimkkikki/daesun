@@ -7,28 +7,12 @@ from django.db.models import Q, Case, When, Sum, F
 from urllib import parse, request
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
+from django.core.cache import caches
 import json
-import os
-import pylibmc
 import uuid
 from .util import hangle
 from datetime import datetime, timedelta
 from rest_framework.decorators import api_view
-
-
-def get_memcache_client():
-    # Environment variables are defined in app.yaml.
-    # Note: USE_GAE_MEMCACHE is in whitelist-only alpha. See README.md
-    if os.environ.get('USE_GAE_MEMCACHE'):
-        memcache_server = ':'.join([
-            os.environ.get('GAE_MEMCACHE_HOST', 'localhost'),
-            os.environ.get('GAE_MEMCACHE_PORT', '11211')])
-    else:
-        memcache_server = os.environ.get('MEMCACHE_SERVER', '104.199.215.251:11211')
-
-    memcache_client = pylibmc.Client([memcache_server], binary=True)
-
-    return memcache_client
 
 
 class JSONResponse(HttpResponse):
@@ -52,8 +36,8 @@ candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철�
 @api_view(['GET'])
 def cp_group(req):
     cache_key = 'cp_group_result'
-    client = get_memcache_client()
-    result = client.get(cache_key)
+    cache = caches['default']
+    result = cache.get(cache_key)
 
     if result is None:
         group_list = Scraps.objects.filter(candidate_q_list).values('cp').annotate(
@@ -68,8 +52,7 @@ def cp_group(req):
 
         print(group_list.query)
         result = json.dumps(list(group_list))
-        client.add(key=cache_key, val=result, time=600)
-        print('memcache not hit')
+        cache.set(cache_key, result, timeout=600)
 
     result = json.loads(result)
 
@@ -79,8 +62,8 @@ def cp_group(req):
 @api_view(['GET'])
 def cp_daily(req):
     cache_key = 'cp_daily_result'
-    client = get_memcache_client()
-    result = client.get(cache_key)
+    cache = caches['default']
+    result = cache.get(cache_key)
 
     if result is None:
         daily_list = Scraps.objects.filter(candidate_q_list).extra({'date': 'date(created_at)'}).values(
@@ -95,7 +78,7 @@ def cp_daily(req):
         )
 
         result = json.dumps(list(daily_list), cls=DjangoJSONEncoder)
-        client.add(key=cache_key, val=result, time=600)
+        cache.set(cache_key, result, timeout=600)
 
     result = json.loads(result)
 
@@ -130,13 +113,13 @@ def shop(req):
 @api_view(['GET'])
 def pledge_rank(req):
     cache_key = 'pledge_rank'
-    client = get_memcache_client()
-    result = client.get(cache_key)
+    cache = caches['default']
+    result = cache.get(cache_key)
 
     if result is None:
         pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
         result = json.dumps(list(pledges.values()), cls=DjangoJSONEncoder)
-        client.add(key=cache_key, val=result, time=60)
+        cache.set(cache_key, result, timeout=60)
 
     result = json.loads(result)
 
@@ -146,7 +129,7 @@ def pledge_rank(req):
 @csrf_exempt
 @api_view(['GET', 'POST'])
 def pledge(req):
-    memcache_client = get_memcache_client()
+    cache = caches['default']
 
     if req.method == 'GET':
         pledge_obj = Pledge.objects.all().order_by('updated')[0:10]
@@ -158,7 +141,7 @@ def pledge(req):
         cache_key = 'pledge_evaluate|' + evaluate_token
 
         data = {"token": evaluate_token, "list": pledges}
-        memcache_client.add(key=cache_key, val=json.dumps(data, cls=DjangoJSONEncoder), time=600)
+        cache.set(cache_key, json.dumps(data, cls=DjangoJSONEncoder), timeout=600)
 
         return JSONResponse(data)
 
@@ -166,7 +149,10 @@ def pledge(req):
         body = JSONParser().parse(req)
         token = body.get('token', None)
         result_list = body.get('list', None)
-        cache_data = memcache_client.get('pledge_evaluate|' + token)
+        cache_key = 'pledge_evaluate|' + token
+        cache_data = cache.get(cache_key)
+        cache.delete(cache_key)
+
         print(cache_data)
 
         if cache_data is None:
@@ -210,8 +196,8 @@ def timeline(req):
     param = int(req.GET.get('param', 1))
 
     cache_key = 'timeline_result_' + str(param)
-    client = get_memcache_client()
-    result = client.get(cache_key)
+    cache = caches['default']
+    result = cache.get(cache_key)
 
     if result is None:
         start_date = datetime.now() - timedelta(hours=param * 3)
@@ -248,8 +234,7 @@ def timeline(req):
             result_list.append(result_inner)
 
         result = json.dumps(list(result_list), cls=DjangoJSONEncoder)
-        client.add(key=cache_key, val=result, time=600)
-        print('memcache not hit')
+        cache.set(cache_key, result, timeout=600)
 
     result = json.loads(result)
     return JSONResponse(result)

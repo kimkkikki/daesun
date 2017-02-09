@@ -95,6 +95,34 @@ else:
 
 DATABASE_OPTIONS = {'charset': 'utf8'}
 
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': [
+            '104.199.215.251:6379',
+        ],
+        'OPTIONS': {
+            'DB': 1,
+            'PASSWORD': 'aabb1122',
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+            'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+            'CONNECTION_POOL_CLASS_KWARGS': {
+                'max_connections': 50,
+                'timeout': 20,
+            },
+            'MAX_CONNECTIONS': 1000,
+            'PICKLE_VERSION': -1,
+        },
+    },
+    'memcached': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '104.199.215.251:11211',
+    }
+}
+
+if os.getenv('GAE_INSTANCE'):
+    if os.environ.get('USE_GAE_MEMCACHE'):
+        CACHES['memcached']['LOCATION'] = '127.0.0.1:11211'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
