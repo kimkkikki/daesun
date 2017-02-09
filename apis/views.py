@@ -38,18 +38,18 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-@api_view()
+@api_view(['GET'])
 def index(req):
     scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')[0:100]
     return JSONResponse(list(scraps))
 
 
 candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
-            Q(title__contains='남경필'))
+                    Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+                    Q(title__contains='남경필'))
 
 
-@api_view()
+@api_view(['GET'])
 def cp_group(req):
     cache_key = 'cp_group_result'
     client = get_memcache_client()
@@ -76,21 +76,22 @@ def cp_group(req):
     return JSONResponse(result)
 
 
-@api_view()
+@api_view(['GET'])
 def cp_daily(req):
     cache_key = 'cp_daily_result'
     client = get_memcache_client()
     result = client.get(cache_key)
 
     if result is None:
-        daily_list = Scraps.objects.filter(candidate_q_list).extra({'date': 'date(created_at)'}).values('date').annotate(
+        daily_list = Scraps.objects.filter(candidate_q_list).extra({'date': 'date(created_at)'}).values(
+            'date').annotate(
             moon=Count(Case(When(title__contains='문재인', then=1))),
             ahn=Count(Case(When(title__contains='안철수', then=1))),
             lee=Count(Case(When(title__contains='이재명', then=1))),
             you=Count(Case(When(title__contains='유승민', then=1))),
             hee=Count(Case(When(title__contains='안희정', then=1))),
-            hwang=Count(Case(When(title__contains='황교안', then=1)),
-            nam=Count(Case(When(title__contains='남경필', then=1))))
+            hwang=Count(Case(When(title__contains='황교안', then=1))),
+            nam=Count(Case(When(title__contains='남경필', then=1)))
         )
 
         result = json.dumps(list(daily_list), cls=DjangoJSONEncoder)
@@ -101,7 +102,7 @@ def cp_daily(req):
     return JSONResponse(result)
 
 
-@api_view()
+@api_view(['GET'])
 def shop(req):
     client_id = "cC0cf4zyUuLFmj_kKUum"
     client_secret = "EYop6SBs44"
@@ -126,14 +127,14 @@ def shop(req):
         return HttpResponse(status=code)
 
 
-@api_view()
+@api_view(['GET'])
 def pledge_rank(req):
     cache_key = 'pledge_rank'
     client = get_memcache_client()
     result = client.get(cache_key)
 
     if result is None:
-        pledges = Pledge.objects.annotate(score=Sum(F('like')-F('unlike'))).order_by('-score')[0:10]
+        pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
         result = json.dumps(list(pledges.values()), cls=DjangoJSONEncoder)
         client.add(key=cache_key, val=result, time=60)
 
@@ -171,32 +172,25 @@ def pledge(req):
         if cache_data is None:
             # Expire
             return JSONResponse({'message': '10분 이내에 입력해야 합니다'}, status=400)
-        else:
-            cache_data = json.loads(cache_data)
-            candidate_list = cache_data['list']
-            candidate_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '황교안': 0, '남경필': 0}
 
-            for i, result in enumerate(result_list):
-                if result == 1:
-                    Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1)
-                    candidate_dict[candidate_list[i].get('candidate')] += 1
-                elif result == -1:
-                    Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1)
-                    candidate_dict[candidate_list[i].get('candidate')] -= 1
+        cache_data = json.loads(cache_data)
+        candidate_list = cache_data['list']
+        candidate_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '황교안': 0, '남경필': 0}
 
-            return JSONResponse(candidate_dict)
+        for i, result in enumerate(result_list):
+            if result == 1:
+                Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1)
+                candidate_dict[candidate_list[i].get('candidate')] += 1
+            elif result == -1:
+                Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1)
+                candidate_dict[candidate_list[i].get('candidate')] -= 1
 
-    else:
-        return JSONResponse({'message': 'not supported request method'}, status=400)
+        return JSONResponse(candidate_dict)
 
 
 @api_view(['GET'])
 def name_chemistry(req):
-    if req.method == 'GET':
-        name = req.GET.get('name', None)
-
-    else:
-        return JSONResponse({'message': 'not supported request method'}, status=400)
+    name = req.GET.get('name', None)
 
     if name is None:
         return JSONResponse({'message': 'param is missing'}, status=400)
@@ -213,7 +207,6 @@ def name_chemistry(req):
 
 @api_view(['GET'])
 def timeline(req):
-
     param = int(req.GET.get('param', 1))
 
     cache_key = 'timeline_result_' + str(param)
@@ -224,22 +217,25 @@ def timeline(req):
         start_date = datetime.now() - timedelta(hours=param * 3)
         end_date = start_date + timedelta(hours=3)
 
-        date_group_list = Keywords.objects.values('created_at').annotate(count=Count('created_at')).filter(created_at__gte=start_date).filter(created_at__lte=end_date).order_by('-created_at')
+        date_group_list = Keywords.objects.values('created_at').annotate(count=Count('created_at')).filter(
+            created_at__gte=start_date).filter(created_at__lte=end_date).order_by('-created_at')
         result_list = []
         for data_group in date_group_list:
             result_inner = {}
-            candidate_list = Keywords.objects.values('candidate').annotate(count=Count('candidate')).filter(created_at__contains=data_group['created_at'])
+            candidate_list = Keywords.objects.values('candidate').annotate(count=Count('candidate')).filter(
+                created_at__contains=data_group['created_at'])
             result_data_list = []
 
             for c in candidate_list:
                 inner = {}
                 keyword_list = []
-                candidate_keyword_list = Keywords.objects.values('candidate', 'keyword', 'count').filter(candidate__contains=c['candidate']).filter(created_at__contains=data_group['created_at'])
+                candidate_keyword_list = Keywords.objects.values('candidate', 'keyword', 'count').filter(
+                    candidate__contains=c['candidate']).filter(created_at__contains=data_group['created_at'])
                 for ck in candidate_keyword_list:
-                    inner_keyword = {}
-                    inner_keyword['keyword'] = ck['keyword']
-                    inner_keyword['count'] = ck['count']
-                    scraps = [scraps for scraps in Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').filter(title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
+                    inner_keyword = {'keyword': ck['keyword'], 'count': ck['count']}
+                    scraps = [scraps for scraps in
+                              Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').filter(
+                                  title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
                     inner_keyword['news'] = scraps
                     keyword_list.append(inner_keyword)
 
