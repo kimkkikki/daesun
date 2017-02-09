@@ -13,6 +13,7 @@ import pylibmc
 import uuid
 from .util import hangle
 from datetime import datetime, timedelta
+from rest_framework.decorators import api_view
 
 
 def get_memcache_client():
@@ -37,6 +38,7 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
+@api_view()
 def index(req):
     scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')[0:100]
     return JSONResponse(list(scraps))
@@ -47,6 +49,7 @@ candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철�
             Q(title__contains='남경필'))
 
 
+@api_view()
 def cp_group(req):
     cache_key = 'cp_group_result'
     client = get_memcache_client()
@@ -73,6 +76,7 @@ def cp_group(req):
     return JSONResponse(result)
 
 
+@api_view()
 def cp_daily(req):
     cache_key = 'cp_daily_result'
     client = get_memcache_client()
@@ -97,6 +101,7 @@ def cp_daily(req):
     return JSONResponse(result)
 
 
+@api_view()
 def shop(req):
     client_id = "cC0cf4zyUuLFmj_kKUum"
     client_secret = "EYop6SBs44"
@@ -121,6 +126,7 @@ def shop(req):
         return HttpResponse(status=code)
 
 
+@api_view()
 def pledge_rank(req):
     cache_key = 'pledge_rank'
     client = get_memcache_client()
@@ -137,6 +143,7 @@ def pledge_rank(req):
 
 
 @csrf_exempt
+@api_view(['GET', 'POST'])
 def pledge(req):
     memcache_client = get_memcache_client()
 
@@ -183,31 +190,28 @@ def pledge(req):
         return JSONResponse({'message': 'not supported request method'}, status=400)
 
 
-@csrf_exempt
+@api_view(['GET'])
 def name_chemistry(req):
     if req.method == 'GET':
-        name1 = req.GET.get('name1', None)
-        name2 = req.GET.get('name2', None)
-
-    elif req.method == 'POST':
-        body = json.loads(req.body)
-        name1 = body.get('name1', None)
-        name2 = body.get('name2', None)
+        name = req.GET.get('name', None)
 
     else:
         return JSONResponse({'message': 'not supported request method'}, status=400)
 
-    if name1 is None or name2 is None:
-        return JSONResponse({'message': 'not supported request method'}, status=400)
+    if name is None:
+        return JSONResponse({'message': 'param is missing'}, status=400)
 
-    if len(name1) == 3 and len(name2) == 3:
-        result = hangle.name_chemistry(name1, name2)
-    else:
-        result = 0
+    candidates = ['문재인', '이재명', '안철수', '안희정', '황교안', '남경필']
+    result_list = []
+    for candidate in candidates:
+        score_to = hangle.name_chemistry(name, candidate)
+        score_from = hangle.name_chemistry(candidate, name)
+        result_list.append({'candidate': candidate, 'score_to': score_to, 'score_from': score_from})
 
-    return JSONResponse(json.dumps({'score': result}))
+    return JSONResponse({'list': result_list})
 
 
+@api_view(['GET'])
 def timeline(req):
     cache_key = 'timeline_result'
     client = get_memcache_client()
