@@ -213,29 +213,43 @@ def name_chemistry(req):
 
 @api_view(['GET'])
 def timeline(req):
-    cache_key = 'timeline_result'
+
+    param = int(req.GET.get('param', 1))
+
+    cache_key = 'timeline_result_' + str(param)
     client = get_memcache_client()
     result = client.get(cache_key)
 
     if result is None:
-        item_list = Keywords.objects.values('candidate', 'created_at').annotate(keyword_count=Count('candidate'), c_count=Count('created_at')).filter(created_at__gte=datetime.now() - timedelta(hours=3)).order_by('-created_at')
-        result_list = []
-        for item in item_list:
-            inner = {}
-            keyword_list = []
-            keywords = Keywords.objects.values('keyword', 'count').filter(candidate__contains=item['candidate']).filter(created_at__contains=item['created_at'])
-            for k in keywords:
-                inner_keyword = {}
-                inner_keyword['keyword'] = k['keyword']
-                inner_keyword['count'] = k['count']
-                scraps = [scraps for scraps in Scraps.objects.values('title', 'link', 'cp', 'created_at').filter(title__contains=item['candidate']).filter(title__contains=k['keyword'])[:5]]
-                inner_keyword['news'] = scraps
-                keyword_list.append(inner_keyword)
+        start_date = datetime.now() - timedelta(hours=param * 3)
+        end_date = start_date + timedelta(hours=3)
 
-            inner['candidate'] = item['candidate']
-            inner['created_at'] = item['created_at']
-            inner['keywords'] = keyword_list
-            result_list.append(inner)
+        date_group_list = Keywords.objects.values('created_at').annotate(count=Count('created_at')).filter(created_at__gte=start_date).filter(created_at__lte=end_date).order_by('-created_at')
+        result_list = []
+        for data_group in date_group_list:
+            result_inner = {}
+            candidate_list = Keywords.objects.values('candidate').annotate(count=Count('candidate')).filter(created_at__contains=data_group['created_at'])
+            result_data_list = []
+
+            for c in candidate_list:
+                inner = {}
+                keyword_list = []
+                candidate_keyword_list = Keywords.objects.values('candidate', 'keyword', 'count').filter(candidate__contains=c['candidate']).filter(created_at__contains=data_group['created_at'])
+                for ck in candidate_keyword_list:
+                    inner_keyword = {}
+                    inner_keyword['keyword'] = ck['keyword']
+                    inner_keyword['count'] = ck['count']
+                    scraps = [scraps for scraps in Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').filter(title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
+                    inner_keyword['news'] = scraps
+                    keyword_list.append(inner_keyword)
+
+                inner['candidate'] = c['candidate']
+                inner['keywords'] = keyword_list
+                result_data_list.append(inner)
+
+            result_inner['created_at'] = data_group['created_at']
+            result_inner['data'] = result_data_list
+            result_list.append(result_inner)
 
         result = json.dumps(list(result_list), cls=DjangoJSONEncoder)
         client.add(key=cache_key, val=result, time=600)
