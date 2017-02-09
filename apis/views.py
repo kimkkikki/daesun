@@ -1,5 +1,7 @@
 from apis.models import Scraps, Keywords, Pledge
 from django.http import HttpResponse
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
 from django.db.models import Count
 from django.db.models import Q, Case, When, Sum, F
 from urllib import parse, request
@@ -8,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import os
 import pylibmc
+import uuid
 from .util import hangle
 from datetime import datetime, timedelta
 
@@ -27,9 +30,16 @@ def get_memcache_client():
     return memcache_client
 
 
+class JSONResponse(HttpResponse):
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
+
+
 def index(req):
     scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')[0:100]
-    return HttpResponse(json.dumps(list(scraps), cls=DjangoJSONEncoder), content_type='application/json; charset=utf-8')
+    return JSONResponse(list(scraps))
 
 
 candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
@@ -58,7 +68,9 @@ def cp_group(req):
         client.add(key=cache_key, val=result, time=600)
         print('memcache not hit')
 
-    return HttpResponse(result, content_type='application/json; charset=utf-8')
+    result = json.loads(result)
+
+    return JSONResponse(result)
 
 
 def cp_daily(req):
@@ -80,7 +92,9 @@ def cp_daily(req):
         result = json.dumps(list(daily_list), cls=DjangoJSONEncoder)
         client.add(key=cache_key, val=result, time=600)
 
-    return HttpResponse(result, content_type='application/json; charset=utf-8')
+    result = json.loads(result)
+
+    return JSONResponse(result)
 
 
 def shop(req):
@@ -100,7 +114,7 @@ def shop(req):
     if code == 200:
         response_body = response.read()
         print(response_body.decode('utf-8'))
-        return HttpResponse(response_body, content_type='application/json; charset=utf-8')
+        return JSONResponse(response_body)
 
     else:
         print("Error Code:" + code)
@@ -117,32 +131,56 @@ def pledge_rank(req):
         result = json.dumps(list(pledges.values()), cls=DjangoJSONEncoder)
         client.add(key=cache_key, val=result, time=60)
 
-    return HttpResponse(result, content_type='application/json; charset=utf-8')
+    result = json.loads(result)
 
-
-def pledge(req):
-    pledge_obj = Pledge.objects.annotate(score=Sum(F('like')+F('unlike'))).order_by('score')[0:1]
-    pledges = list(pledge_obj.values())
-    print(pledges)
-    return HttpResponse(json.dumps(pledges[0], cls=DjangoJSONEncoder), content_type='application/json; charset=utf-8')
+    return JSONResponse(result)
 
 
 @csrf_exempt
-def pledge_evaluation(req, id):
-    if req.method == 'POST':
-        body = json.loads(req.body)
-        type = body.get('type', None)
-        if type:
-            if type == 'like':
-                Pledge.objects.filter(id=id).update(like=F('like') + 1)
-            elif type == 'unlike':
-                Pledge.objects.filter(id=id).update(unlike=F('unlike') + 1)
-            else:
-                return HttpResponse(status=400, content_type='application/json; charset=utf-8')
-    else:
-        return HttpResponse(status=400, content_type='application/json; charset=utf-8')
+def pledge(req):
+    memcache_client = get_memcache_client()
 
-    return HttpResponse(status=200, content_type='application/json; charset=utf-8')
+    if req.method == 'GET':
+        pledge_obj = Pledge.objects.all().order_by('updated')[0:10]
+        pledges = list(pledge_obj.values())
+        print(pledges)
+
+        # 10개 공약 순서대로 누군지 저장해야함
+        evaluate_token = str(uuid.uuid4())
+        cache_key = 'pledge_evaluate|' + evaluate_token
+
+        data = {"token": evaluate_token, "list": pledges}
+        memcache_client.add(key=cache_key, val=json.dumps(data, cls=DjangoJSONEncoder), time=600)
+
+        return JSONResponse(data)
+
+    elif req.method == 'POST':
+        body = JSONParser().parse(req)
+        token = body.get('token', None)
+        result_list = body.get('list', None)
+        cache_data = memcache_client.get('pledge_evaluate|' + token)
+        print(cache_data)
+
+        if cache_data is None:
+            # Expire
+            return JSONResponse({'message': '10분 이내에 입력해야 합니다'}, status=400)
+        else:
+            cache_data = json.loads(cache_data)
+            candidate_list = cache_data['list']
+            candidate_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '황교안': 0, '남경필': 0}
+
+            for i, result in enumerate(result_list):
+                if result == 1:
+                    Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1)
+                    candidate_dict[candidate_list[i].get('candidate')] += 1
+                elif result == -1:
+                    Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1)
+                    candidate_dict[candidate_list[i].get('candidate')] -= 1
+
+            return JSONResponse(candidate_dict)
+
+    else:
+        return JSONResponse({'message': 'not supported request method'}, status=400)
 
 
 @csrf_exempt
@@ -155,18 +193,19 @@ def name_chemistry(req):
         body = json.loads(req.body)
         name1 = body.get('name1', None)
         name2 = body.get('name2', None)
+
     else:
-        return HttpResponse(status=400)
+        return JSONResponse({'message': 'not supported request method'}, status=400)
 
     if name1 is None or name2 is None:
-        return HttpResponse(status=400)
+        return JSONResponse({'message': 'not supported request method'}, status=400)
 
     if len(name1) == 3 and len(name2) == 3:
         result = hangle.name_chemistry(name1, name2)
     else:
         result = 0
 
-    return HttpResponse(json.dumps({'score': result}), content_type='application/json; charset=utf-8')
+    return JSONResponse(json.dumps({'score': result}))
 
 
 def timeline(req):
@@ -212,4 +251,5 @@ def timeline(req):
         client.add(key=cache_key, val=result, time=600)
         print('memcache not hit')
 
-    return HttpResponse(result, content_type='application/json; charset=utf-8')
+    result = json.loads(result)
+    return JSONResponse(result)
