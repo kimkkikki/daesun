@@ -23,6 +23,10 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
+def google_app_engine_health_check(req):
+    return HttpResponse(status=200)
+
+
 @api_view(['GET'])
 @cache_page(60 * 1)
 def index(req):
@@ -152,6 +156,7 @@ def pledge(req):
 
 
 @api_view(['GET'])
+@cache_page(60 * 1)
 def name_chemistry(req):
     name = req.GET.get('name', None)
 

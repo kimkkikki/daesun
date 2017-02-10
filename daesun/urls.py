@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from apis import views
 
 urlpatterns = [
     url(r'^apis/', include('apis.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^_ah/health', views.google_app_engine_health_check),
 ]
