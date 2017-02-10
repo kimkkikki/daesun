@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib import admin
+from rest_framework import serializers
 
 
 class Scraps(models.Model):
@@ -52,3 +53,17 @@ class KeywordsAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'keyword', 'count', 'created_at')
     list_filter = ['candidate']
     search_fields = ['candidate', 'keyword']
+
+
+class TimeLimitBoard(models.Model):
+    class Meta:
+        db_table = 'time_limit_board'
+    id = models.AutoField(primary_key=True)
+    contents = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+
+class TimeLimitBoardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TimeLimitBoard
+        fields = '__all__'

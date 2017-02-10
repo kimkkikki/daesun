@@ -8,6 +8,7 @@ from urllib import parse, request
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import caches
+from django.views.decorators.cache import cache_page
 import json
 import uuid
 from .util import hangle
@@ -23,66 +24,51 @@ class JSONResponse(HttpResponse):
 
 
 @api_view(['GET'])
+@cache_page(60 * 1)
 def index(req):
     scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')[0:100]
     return JSONResponse(list(scraps))
 
 
-candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-                    Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
-                    Q(title__contains='남경필'))
-
-
 @api_view(['GET'])
+@cache_page(60 * 10)
 def cp_group(req):
-    cache_key = 'cp_group_result'
-    cache = caches['default']
-    result = cache.get(cache_key)
+    candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
+                        Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+                        Q(title__contains='남경필'))
 
-    if result is None:
-        group_list = Scraps.objects.filter(candidate_q_list).values('cp').annotate(
-            moon=Count(Case(When(title__contains='문재인', then=1))),
-            ahn=Count(Case(When(title__contains='안철수', then=1))),
-            lee=Count(Case(When(title__contains='이재명', then=1))),
-            you=Count(Case(When(title__contains='유승민', then=1))),
-            hee=Count(Case(When(title__contains='안희정', then=1))),
-            hwang=Count(Case(When(title__contains='황교안', then=1))),
-            nam=Count(Case(When(title__contains='남경필', then=1)))
-        )
+    group_list = Scraps.objects.filter(candidate_q_list).values('cp').annotate(
+        moon=Count(Case(When(title__contains='문재인', then=1))),
+        ahn=Count(Case(When(title__contains='안철수', then=1))),
+        lee=Count(Case(When(title__contains='이재명', then=1))),
+        you=Count(Case(When(title__contains='유승민', then=1))),
+        hee=Count(Case(When(title__contains='안희정', then=1))),
+        hwang=Count(Case(When(title__contains='황교안', then=1))),
+        nam=Count(Case(When(title__contains='남경필', then=1)))
+    )
 
-        print(group_list.query)
-        result = json.dumps(list(group_list))
-        cache.set(cache_key, result, timeout=600)
-
-    result = json.loads(result)
-
-    return JSONResponse(result)
+    return JSONResponse(list(group_list))
 
 
 @api_view(['GET'])
+@cache_page(60 * 10)
 def cp_daily(req):
-    cache_key = 'cp_daily_result'
-    cache = caches['default']
-    result = cache.get(cache_key)
+    candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
+                        Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+                        Q(title__contains='남경필'))
 
-    if result is None:
-        daily_list = Scraps.objects.filter(candidate_q_list).extra({'date': 'date(created_at)'}).values(
-            'date').annotate(
-            moon=Count(Case(When(title__contains='문재인', then=1))),
-            ahn=Count(Case(When(title__contains='안철수', then=1))),
-            lee=Count(Case(When(title__contains='이재명', then=1))),
-            you=Count(Case(When(title__contains='유승민', then=1))),
-            hee=Count(Case(When(title__contains='안희정', then=1))),
-            hwang=Count(Case(When(title__contains='황교안', then=1))),
-            nam=Count(Case(When(title__contains='남경필', then=1)))
-        )
+    daily_list = Scraps.objects.filter(candidate_q_list).extra({'date': 'date(created_at)'}).values(
+        'date').annotate(
+        moon=Count(Case(When(title__contains='문재인', then=1))),
+        ahn=Count(Case(When(title__contains='안철수', then=1))),
+        lee=Count(Case(When(title__contains='이재명', then=1))),
+        you=Count(Case(When(title__contains='유승민', then=1))),
+        hee=Count(Case(When(title__contains='안희정', then=1))),
+        hwang=Count(Case(When(title__contains='황교안', then=1))),
+        nam=Count(Case(When(title__contains='남경필', then=1)))
+    )
 
-        result = json.dumps(list(daily_list), cls=DjangoJSONEncoder)
-        cache.set(cache_key, result, timeout=600)
-
-    result = json.loads(result)
-
-    return JSONResponse(result)
+    return JSONResponse(list(daily_list))
 
 
 @api_view(['GET'])
@@ -111,19 +97,10 @@ def shop(req):
 
 
 @api_view(['GET'])
+@cache_page(60 * 1)
 def pledge_rank(req):
-    cache_key = 'pledge_rank'
-    cache = caches['default']
-    result = cache.get(cache_key)
-
-    if result is None:
-        pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
-        result = json.dumps(list(pledges.values()), cls=DjangoJSONEncoder)
-        cache.set(cache_key, result, timeout=60)
-
-    result = json.loads(result)
-
-    return JSONResponse(result)
+    pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
+    return JSONResponse(list(pledges.values()))
 
 
 @csrf_exempt

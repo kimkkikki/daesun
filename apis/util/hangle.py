@@ -71,7 +71,7 @@ def name_chemistry(name1, name2):
 
     while len(sum_list) > 2:
         result_list = []
-        for i, sum in enumerate(sum_list):
+        for i, obj in enumerate(sum_list):
             if i + 1 < len(sum_list):
                 result_list.append((sum_list[i] + sum_list[i+1]) % 10)
         sum_list = result_list
