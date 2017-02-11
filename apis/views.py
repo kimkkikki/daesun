@@ -1,9 +1,9 @@
-from apis.models import Scraps, Keywords, Pledge
+from apis.models import Scraps, Keywords, Pledge, ApprovalRating
 from django.http import HttpResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from django.db.models import Count
-from django.db.models import Q, Case, When, Sum, F
+from django.db.models import Q, Case, When, Sum, F, Avg
 from urllib import parse, request
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
@@ -153,6 +153,13 @@ def pledge(req):
                 candidate_dict[candidate_list[i].get('candidate')] -= 1
 
         return JSONResponse(candidate_dict)
+
+
+@api_view(['GET'])
+def approval_rating(req):
+    approval_ratings = ApprovalRating.objects.filter(type=1).extra({'date': 'date(date)'})\
+        .values('candidate', 'date').annotate(rating=Avg(F('rating')))
+    return JSONResponse(list(approval_ratings))
 
 
 @api_view(['GET'])

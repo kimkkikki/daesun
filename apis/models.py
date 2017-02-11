@@ -74,11 +74,11 @@ class ApprovalRating(models.Model):
     class Meta:
         db_table = 'approval_rating'
     id = models.AutoField(primary_key=True)
-    candidate = models.CharField(max_length=10)
+    candidate = models.CharField(max_length=10, db_index=True)
     rating = models.FloatField(default=0)
     cp = models.CharField(max_length=20)
     type = models.IntegerField(default=0)
-    date = models.DateTimeField(default=datetime.now)
+    date = models.DateTimeField(default=datetime.now, db_index=True)
     created = models.DateTimeField(auto_now_add=True)
 
 
