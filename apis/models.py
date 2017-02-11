@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib import admin
 from rest_framework import serializers
+from datetime import datetime
 
 
 class Scraps(models.Model):
@@ -67,3 +68,20 @@ class TimeLimitBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimeLimitBoard
         fields = '__all__'
+
+
+class ApprovalRating(models.Model):
+    class Meta:
+        db_table = 'approval_rating'
+    id = models.AutoField(primary_key=True)
+    candidate = models.CharField(max_length=10)
+    rating = models.FloatField(default=0)
+    cp = models.CharField(max_length=20)
+    type = models.IntegerField(default=0)
+    date = models.DateTimeField(default=datetime.now)
+    created = models.DateTimeField(auto_now_add=True)
+
+
+class ApprovalRatingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'candidate', 'rating', 'cp', 'type', 'date', 'created')
+    list_filter = ['cp']
