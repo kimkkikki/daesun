@@ -15,10 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from apis import views
 
 urlpatterns = [
+    url(r'^', include('web.urls')),
     url(r'^apis/', include('apis.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^_ah/health', views.google_app_engine_health_check),
 ]
+
+
+# This enables static files to be served from the Gunicorn server
+# In Production, serve static files from Google Cloud Storage or an alternative
+# CDN
+if settings.DEBUG:
+    urlpatterns += staticfiles_urlpatterns()

@@ -237,4 +237,3 @@ def love_test(req):
             count, target = result['t_cnt'], result['target']
 
     return JSONResponse(list(result_list))
-
