@@ -85,3 +85,17 @@ class ApprovalRating(models.Model):
 class ApprovalRatingAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'rating', 'cp', 'type', 'date', 'created')
     list_filter = ['cp']
+
+
+class LoveOrHate(models.Model):
+    class Meta:
+        db_table = 'love_or_hate'
+    id = models.AutoField(primary_key=True)
+    speaker = models.CharField(max_length=10)
+    target = models.CharField(max_length=10)
+    scraps = models.ForeignKey(Scraps, to_field='id', db_column='related_to')
+
+
+class LoveOrHateAdmin(admin.ModelAdmin):
+    list_display = ('id', 'speaker', 'target', 'scraps')
+    list_filter = ['speaker', 'target']

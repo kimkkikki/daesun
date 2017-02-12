@@ -1,4 +1,4 @@
-from apis.models import Scraps, Keywords, Pledge, ApprovalRating
+from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate
 from django.http import HttpResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -181,49 +181,60 @@ def name_chemistry(req):
 
 
 @api_view(['GET'])
+@cache_page(60 * 10)
 def timeline(req):
     param = int(req.GET.get('param', 1))
 
-    cache_key = 'timeline_result_' + str(param)
-    cache = caches['default']
-    result = cache.get(cache_key)
+    start_date = datetime.now() - timedelta(hours=param * 3)
+    end_date = start_date + timedelta(hours=3)
 
-    if result is None:
-        start_date = datetime.now() - timedelta(hours=param * 3)
-        end_date = start_date + timedelta(hours=3)
+    date_group_list = Keywords.objects.values('created_at').annotate(count=Count('created_at')).filter(
+        created_at__gte=start_date).filter(created_at__lte=end_date).order_by('-created_at')
+    result_list = []
+    for data_group in date_group_list:
+        result_inner = {}
+        candidate_list = Keywords.objects.values('candidate').annotate(count=Count('candidate')).filter(
+            created_at__contains=data_group['created_at'])
+        result_data_list = []
 
-        date_group_list = Keywords.objects.values('created_at').annotate(count=Count('created_at')).filter(
-            created_at__gte=start_date).filter(created_at__lte=end_date).order_by('-created_at')
-        result_list = []
-        for data_group in date_group_list:
-            result_inner = {}
-            candidate_list = Keywords.objects.values('candidate').annotate(count=Count('candidate')).filter(
-                created_at__contains=data_group['created_at'])
-            result_data_list = []
+        for c in candidate_list:
+            inner = {}
+            keyword_list = []
+            candidate_keyword_list = Keywords.objects.values('candidate', 'keyword', 'count').filter(
+                candidate__contains=c['candidate']).filter(created_at__contains=data_group['created_at'])
+            for ck in candidate_keyword_list:
+                inner_keyword = {'keyword': ck['keyword'], 'count': ck['count']}
+                scraps = [scraps for scraps in
+                          Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').filter(
+                              title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
+                inner_keyword['news'] = scraps
+                keyword_list.append(inner_keyword)
 
-            for c in candidate_list:
-                inner = {}
-                keyword_list = []
-                candidate_keyword_list = Keywords.objects.values('candidate', 'keyword', 'count').filter(
-                    candidate__contains=c['candidate']).filter(created_at__contains=data_group['created_at'])
-                for ck in candidate_keyword_list:
-                    inner_keyword = {'keyword': ck['keyword'], 'count': ck['count']}
-                    scraps = [scraps for scraps in
-                              Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').filter(
-                                  title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
-                    inner_keyword['news'] = scraps
-                    keyword_list.append(inner_keyword)
+            inner['candidate'] = c['candidate']
+            inner['keywords'] = keyword_list
+            result_data_list.append(inner)
 
-                inner['candidate'] = c['candidate']
-                inner['keywords'] = keyword_list
-                result_data_list.append(inner)
+        result_inner['created_at'] = data_group['created_at']
+        result_inner['data'] = result_data_list
+        result_list.append(result_inner)
 
-            result_inner['created_at'] = data_group['created_at']
-            result_inner['data'] = result_data_list
-            result_list.append(result_inner)
+    return JSONResponse(list(result_list))
 
-        result = json.dumps(list(result_list), cls=DjangoJSONEncoder)
-        cache.set(cache_key, result, timeout=600)
 
-    result = json.loads(result)
-    return JSONResponse(result)
+@api_view(['GET'])
+@cache_page(60 * 10)
+def love_test(req):
+
+    result_list = []
+    result_db_list = LoveOrHate.objects.values('speaker', 'target').annotate(s_cnt=Count('speaker'), t_cnt=Count('target'))
+    speaker, target, count = result_db_list[0]['speaker'], result_db_list[0]['target'], result_db_list[0]['t_cnt']
+    for result in result_db_list:
+        if speaker != result['speaker']:
+            result_list.append({'from': speaker, 'to': target, 'count': count})
+            speaker, target, count = result['speaker'], result['target'], result['t_cnt']
+
+        if count < result['t_cnt']:
+            count, target = result['t_cnt'], result['target']
+
+    return JSONResponse(list(result_list))
+
