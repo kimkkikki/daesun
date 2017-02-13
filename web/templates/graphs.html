@@ -1,0 +1,61 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- 추가한 파일 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet" type="text/css">
+
+    <title>Stats</title>
+
+  </head>
+  <body>
+
+    <!-- 추가한 부분 -->
+    <select id='selectBox'>
+      <option value="total">전체</option>
+      <option value="asiae">아시아경제</option>
+      <option value="chosun">조선일보</option>
+      <option value="donga">동아일보</option>
+      <option value="edaily">이데일리</option>
+      <option value="hani">한겨례</option>
+      <option value="heraldcorp">헤럴드경제</option>
+      <option value="ichannela">채널A</option>
+      <option value="joins">중앙일보</option>
+      <option value="jtbc">JTBC</option>
+      <option value="khan">경향신문</option>
+      <option value="kmib">국민일보</option>
+      <option value="mbc">MBC</option>
+      <option value="mbn">MBN 매일방송</option>
+      <option value="mk">매일경제</option>
+      <option value="mt">머니투데이</option>
+      <option value="munhwa">문화일보</option>
+      <option value="newsis">Newsis</option>
+      <option value="ohmynews">Ohmynews</option>
+      <option value="sbs">SBS</option>
+      <option value="sedaily">서울경제</option>
+      <option value="segye">세계일보</option>
+      <option value="seoul">서울일보</option>
+      <option value="sisain">시사IN</option>
+      <option value="tvchosun">TV조선</option>
+      <option value="yonhap">연합뉴스</option>
+      <option value="ytn">YTN</option>
+    </select>
+
+    <div id="press_chart"></div>
+
+    <div id="daily_chart"></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+    <script src="{% static '/js/stats.js' %}"></script>
+
+  </body>
+</html>
