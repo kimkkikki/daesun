@@ -2,15 +2,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
     <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
     <title>2017 대선닷컴</title>
 </head>
 <body>
-Welcome Man
+    <div class="container theme-showcase" role="main">
+        <h1>대선공약 블라인드 테스트</h1>
+        <h3 id="pledgeTestTitle" class="text-center">공약</h3>
+        <p id="pledgeTestContents" class="text-center">공약내용</p>
+        <p class="text-center">
+            <button type="button" class="btn btn-lg btn-primary">좋아요</button>
+            <button type="button" class="btn btn-lg btn-danger">싫어요</button>
+            <button type="button" class="btn btn-lg btn-default">관심없어요</button>
+        </p>
+
+        <h1>대선공약 랭킹보기</h1>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>순위</th>
+                    <th>공약제목</th>
+                    <th>후보</th>
+                    <th>좋아요</th>
+                    <th>싫어요</th>
+                </tr>
+            </thead>
+            <tbody id="rankTable">
+            </tbody>
+        </table>
+    </div>
 </body>
+<script type="text/javascript">
+$(document).ready(function(){
+    var pledgeTestDataList;
+    var getPledgeTest = function(){
+		$.ajax({
+			url: '/apis/pledge',
+			headers: {
+		        'Content-Type':'application/json'
+		    },
+		    async: true,
+			type: 'GET',
+			dataType: 'json',
+			success: function(data) {
+			    console.log(data);
+			    pledgeTestDataList = data;
+			},
+			error: function(data, status, err) {
+				console.log(err);
+			}
+		});
+	}
+	getPledgeTest();
+
+	var getRanks = function(){
+		$.ajax({
+			url: '/apis/pledge/rank',
+			headers: {
+		        'Content-Type':'application/json'
+		    },
+		    async: true,
+			type: 'GET',
+			dataType: 'json',
+			success: function(data) {
+			    console.log(data);
+			    var result = '';
+			    $.each(data, function(i, obj) {
+                    result += '<tr><td>'
+                            + (i + 1)
+                            + '</td><td>'
+                            + obj.title
+                            + '</td><td>'
+                            + obj.candidate
+                            + '</td><td>'
+                            + obj.like
+                            + '</td><td>'
+                            + obj.unlike
+                            + '</td></tr>';
+			    });
+			    $('#rankTable').append(result);
+			},
+			error: function(data, status, err) {
+				console.log(err);
+			}
+		});
+	}
+
+	getRanks();
+});
+</script>
 </html>

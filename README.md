@@ -17,7 +17,7 @@
 ```bash
 gcloud auth application-default login
 ```
-2. proxy 실행
+2. proxy 실행 (실행파일 다운로드 : https://cloud.google.com/sql/docs/mysql-connect-proxy)
 ```bash
 ./cloud_sql_proxy -instances=daesun2017:asia-east1:mysql=tcp:3306
 ```
