@@ -100,8 +100,8 @@ DATABASE_OPTIONS = {'charset': 'utf8'}
 
 CACHES = {
     'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        # 'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        # 'BACKEND': 'redis_cache.RedisCache',
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'LOCATION': [
             '104.199.215.251:6379',
         ],
@@ -167,4 +167,7 @@ if os.getenv('GAE_INSTANCE'):
 else:
     STATIC_URL = '/static/'
 
-STATIC_ROOT = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    'static/',
+]
