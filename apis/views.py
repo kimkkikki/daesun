@@ -224,16 +224,23 @@ def timeline(req):
 @api_view(['GET'])
 @cache_page(60 * 10)
 def love_test(req):
-
+    number = [('문재인', 1), ('안희정', 2), ('이재명', 3), ('안철수', 4), ('유승민', 5), ('황교안', 6)]
     result_list = []
     result_db_list = LoveOrHate.objects.values('speaker', 'target').annotate(s_cnt=Count('speaker'), t_cnt=Count('target'))
-    speaker, target, count = result_db_list[0]['speaker'], result_db_list[0]['target'], result_db_list[0]['t_cnt']
+    speaker, target, count, arrows = result_db_list[0]['speaker'], result_db_list[0]['target'], result_db_list[0]['t_cnt'], 'to'
     for result in result_db_list:
         if speaker != result['speaker']:
-            result_list.append({'from': speaker, 'to': target, 'count': count})
+            for n in number:
+                if n[0] == speaker:
+                    speaker = n[1]
+                if n[0] == target:
+                    target = n[1]
+            result_list.append({'from': speaker, 'to': target, 'arrows': arrows})
             speaker, target, count = result['speaker'], result['target'], result['t_cnt']
 
         if count < result['t_cnt']:
             count, target = result['t_cnt'], result['target']
+            if count > 20:
+                arrows = {'to': {'scaleFactor': '2'}}
 
     return JSONResponse(list(result_list))

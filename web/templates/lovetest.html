@@ -1,0 +1,75 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.1/vis.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.1/vis.min.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>2017 대선닷컴</title>
+    <style type="text/css">
+        #mynetwork {
+            width: 600px;
+            height: 400px;
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+<div id="mynetwork"></div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var data_set;
+
+        var url = "http://daesun2017.appspot.com//apis/lovetest";
+
+        var dataList = function(){
+            $.ajax({
+                url: url,
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                async: false,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    data_set = data;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                }
+            });
+        }
+        dataList();
+
+        // create an array with nodes
+        var nodes = new vis.DataSet([
+            {id: 1, shape: 'circularImage', image: '{% static 'img/moon.jpeg' %}', label:"문재인"},
+            {id: 2, shape: 'circularImage', image: '{% static 'img/hee.jpg' %}', label:"안희정"},
+            {id: 3, shape: 'circularImage', image: '{% static 'img/lee.png' %}', label:"이재명"},
+            {id: 4, shape: 'circularImage', image: '{% static 'img/ahn.jpeg' %}', label:"안철수"},
+            {id: 5, shape: 'circularImage', image: '{% static 'img/you.jpg' %}', label:"유승민"},
+            {id: 6, shape: 'circularImage', image: '{% static 'img/hwang.jpg' %}', label:"황교안"}
+        ]);
+
+        // create an array with edges
+        var edges = new vis.DataSet(data_set);
+
+        // create a network
+        var container = document.getElementById('mynetwork');
+
+        // provide the data in the vis format
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+        var options = {};
+
+        // initialize your network!
+        var network = new vis.Network(container, data, options);
+    });
+</script>
+</body>
+</html>
