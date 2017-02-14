@@ -3,43 +3,175 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
 
-    <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="{% static 'css/agency.min.css' %}">
+
     <title>2017 대선닷컴</title>
 </head>
 <body>
-    <div class="container theme-showcase" role="main">
-        <h1>대선공약 블라인드 테스트</h1>
-        <h3 id="pledgeTestTitle" class="text-center">공약</h3>
-        <p id="pledgeTestContents" class="text-center">공약내용</p>
-        <p class="text-center">
-            <button type="button" class="btn btn-lg btn-primary">좋아요</button>
-            <button type="button" class="btn btn-lg btn-danger">싫어요</button>
-            <button type="button" class="btn btn-lg btn-default">관심없어요</button>
-        </p>
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> 메뉴 <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">2017Daesun.com</a>
+            </div>
 
-        <h1>대선공약 랭킹보기</h1>
-        <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th>순위</th>
-                    <th>공약제목</th>
-                    <th>후보</th>
-                    <th>좋아요</th>
-                    <th>싫어요</th>
-                </tr>
-            </thead>
-            <tbody id="rankTable">
-            </tbody>
-        </table>
-    </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#services">타임키워드</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#portfolio">각종차트</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">대선책방</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#team">공약들</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">팀소개</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">2017 대선닷컴에 오신 여러분 환영합니다</div>
+                <div class="intro-heading">당신의 선택에 대한민국의 미래가 달려있습니다</div>
+                <!--<a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>-->
+            </div>
+        </div>
+    </header>
+
+    <section id="blind">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">대선공약 블라인드 테스트</h2>
+                    <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-lg-12 text-center">
+                    <button type="button" class="btn btn-lg btn-primary" onclick="pledgeTestButtonClick();">시작하기</button>
+                    <!--<div id="blindTestSlidr" class="center-block" style="float: none; background-color: grey; text-align: center">-->
+                        <!--<div data-slidr="one" class="text-center">-->
+                            <!--<h3 id="pledgeTestTitle" class="text-center">공약</h3>-->
+                            <!--<p id="pledgeTestContents" class="text-center">공약내용</p>-->
+                            <!--<p class="text-center">-->
+                                <!--<button type="button" class="btn btn-lg btn-primary">좋아요</button>-->
+                                <!--<button type="button" class="btn btn-lg btn-danger">싫어요</button>-->
+                                <!--<button type="button" class="btn btn-lg btn-default">관심없어요</button>-->
+                            <!--</p>-->
+                        <!--</div>-->
+                        <!--<div data-slidr="two">banana</div>-->
+                        <!--<div data-slidr="three">coconut</div>-->
+                    <!--</div>-->
+                </div>
+                <!--<div class="col-md-4">-->
+                    <!--<span class="fa-stack fa-4x">-->
+                        <!--<i class="fa fa-circle fa-stack-2x text-primary"></i>-->
+                        <!--<i class="fa fa-lock fa-stack-1x fa-inverse"></i>-->
+                    <!--</span>-->
+                    <!--<h4 class="service-heading">Web Security</h4>-->
+                    <!--<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </section>
+
+    <section id="pledgeRank" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">대선공약 랭킹</h2>
+                    <h3 class="section-subheading text-muted">블라인드 테스트 결과로 나온 공약별 랭킹입니다</h3>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>순위</th>
+                            <th>공약제목</th>
+                            <th>후보</th>
+                            <th>좋아요</th>
+                            <th>싫어요</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 </body>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <span class="copyright">Copyright &copy; 2017daesun.com 2017</span>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline social-buttons">
+                    <li><a href="#"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline quicklinks">
+                    <li><a href="#">Privacy Policy</a>
+                    </li>
+                    <li><a href="#">Terms of Use</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'js/slidr.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/agency.min.js' %}"></script>
+
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
-$(document).ready(function(){
+function pledgeTestButtonClick() {
     var pledgeTestDataList;
     var getPledgeTest = function(){
 		$.ajax({
@@ -53,14 +185,18 @@ $(document).ready(function(){
 			success: function(data) {
 			    console.log(data);
 			    pledgeTestDataList = data;
+			    <!--slidr.create('blindTestSlidr').start();-->
 			},
 			error: function(data, status, err) {
 				console.log(err);
 			}
 		});
 	}
-	getPledgeTest();
 
+	getPledgeTest();
+}
+
+$(document).ready(function(){
 	var getRanks = function(){
 		$.ajax({
 			url: '/apis/pledge/rank',

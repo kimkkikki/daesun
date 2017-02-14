@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
-	// var press_url = "http://daesun2017.appspot.com/apis/cp/group";
-	var press_url = "cp.json";
-	// var daily_url = "http://daesun2017.appspot.com/apis/cp/daily";
-	var daily_url = "date.json";
+	 var press_url = "/apis/cp/group";
+//	var press_url = "cp.json";
+	 var daily_url = "/apis/cp/daily";
+//	var daily_url = "date.json";
 
 	var press_data;
 	var total_moon=0;
