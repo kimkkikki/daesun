@@ -18,10 +18,11 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="{% static 'css/agency.min.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet" type="text/css">
 
     <title>2017 대선닷컴</title>
 </head>
-<body>
+<body id="page-top" class="index">
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -39,25 +40,23 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">타임키워드</a>
+                        <a class="page-scroll" href="#timeline">타임키워드</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#portfolio">각종차트</a>
+                        <a class="page-scroll" href="#charts">각종차트</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">대선책방</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#team">공약들</a>
+                        <a class="page-scroll" href="#pledge">공약들</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#contact">팀소개</a>
+                        <a class="page-scroll" href="#team">팀소개</a>
                     </li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container-fluid -->
     </nav>
 
     <header>
@@ -70,7 +69,79 @@
         </div>
     </header>
 
-    <section id="blind">
+    <section id="timeline">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">대선주자 타임라인</h2>
+                    <h3 class="section-subheading text-muted">시간별로 뭐하고 있었나..</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="charts" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">언론관심도 차트</h2>
+                    <h3 class="section-subheading text-muted">언론별/시간별 대선주자 관심도 그래프</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <select id='selectBox'>
+                        <option value="total">전체</option>
+                        <option value="asiae">아시아경제</option>
+                        <option value="chosun">조선일보</option>
+                        <option value="donga">동아일보</option>
+                        <option value="edaily">이데일리</option>
+                        <option value="hani">한겨례</option>
+                        <option value="heraldcorp">헤럴드경제</option>
+                        <option value="ichannela">채널A</option>
+                        <option value="joins">중앙일보</option>
+                        <option value="jtbc">JTBC</option>
+                        <option value="khan">경향신문</option>
+                        <option value="kmib">국민일보</option>
+                        <option value="mbc">MBC</option>
+                        <option value="mbn">MBN 매일방송</option>
+                        <option value="mk">매일경제</option>
+                        <option value="mt">머니투데이</option>
+                        <option value="munhwa">문화일보</option>
+                        <option value="newsis">Newsis</option>
+                        <option value="ohmynews">Ohmynews</option>
+                        <option value="sbs">SBS</option>
+                        <option value="sedaily">서울경제</option>
+                        <option value="segye">세계일보</option>
+                        <option value="seoul">서울일보</option>
+                        <option value="sisain">시사IN</option>
+                        <option value="tvchosun">TV조선</option>
+                        <option value="yonhap">연합뉴스</option>
+                        <option value="ytn">YTN</option>
+                    </select>
+                    <h4 class="service-heading">대선주자별 언급 점유율</h4>
+                    <div id="press_chart"></div>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="service-heading">일자별 대선주자 언급 횟수</h4>
+                    <div id="daily_chart"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="loveOrHate">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">사랑과 전쟁</h2>
+                    <h3 class="section-subheading text-muted">후보간 언급횟수에 따른 관계도</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blind" class="bg-light-gray">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -80,7 +151,7 @@
             </div>
             <div class="row text-center">
                 <div class="col-lg-12 text-center">
-                    <button type="button" class="btn btn-lg btn-primary" onclick="pledgeTestButtonClick();">시작하기</button>
+                    <button type="button" class="btn btn-lg btn-primary" onclick="blindTestButtonClick();">시작하기</button>
                     <!--<div id="blindTestSlidr" class="center-block" style="float: none; background-color: grey; text-align: center">-->
                         <!--<div data-slidr="one" class="text-center">-->
                             <!--<h3 id="pledgeTestTitle" class="text-center">공약</h3>-->
@@ -95,19 +166,11 @@
                         <!--<div data-slidr="three">coconut</div>-->
                     <!--</div>-->
                 </div>
-                <!--<div class="col-md-4">-->
-                    <!--<span class="fa-stack fa-4x">-->
-                        <!--<i class="fa fa-circle fa-stack-2x text-primary"></i>-->
-                        <!--<i class="fa fa-lock fa-stack-1x fa-inverse"></i>-->
-                    <!--</span>-->
-                    <!--<h4 class="service-heading">Web Security</h4>-->
-                    <!--<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>-->
-                <!--</div>-->
             </div>
         </div>
     </section>
 
-    <section id="pledgeRank" class="bg-light-gray">
+    <section id="pledgeRank">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -132,6 +195,28 @@
             </div>
         </div>
     </section>
+
+    <section id="team" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Team Daesun</h2>
+                    <h3 class="section-subheading text-muted">팀 소개 입니다</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sponsor">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">후원하기</h2>
+                    <h3 class="section-subheading text-muted">서버비가 없어서 후원 받아야 해요</h3>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 
 <footer>
@@ -152,9 +237,7 @@
             </div>
             <div class="col-md-4">
                 <ul class="list-inline quicklinks">
-                    <li><a href="#">Privacy Policy</a>
-                    </li>
-                    <li><a href="#">Terms of Use</a>
+                    <li><a href="#">이용약관</a>
                     </li>
                 </ul>
             </div>
@@ -170,9 +253,13 @@
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
 
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+<script src="{% static '/js/stats.js' %}"></script>
+
 <script type="text/javascript">
-function pledgeTestButtonClick() {
-    var pledgeTestDataList;
+function blindTestButtonClick() {
+    var blindTestDataList;
     var getPledgeTest = function(){
 		$.ajax({
 			url: '/apis/pledge',
@@ -184,7 +271,7 @@ function pledgeTestButtonClick() {
 			dataType: 'json',
 			success: function(data) {
 			    console.log(data);
-			    pledgeTestDataList = data;
+			    blindTestDataList = data;
 			    <!--slidr.create('blindTestSlidr').start();-->
 			},
 			error: function(data, status, err) {
