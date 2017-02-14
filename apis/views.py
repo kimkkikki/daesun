@@ -223,7 +223,7 @@ def timeline(req):
             inner['keywords'] = keyword_list
             result_data_list.append(inner)
 
-        result_inner['created_at'] = data_group['created_at']
+        result_inner['created_at'] = data_group['created_at'].strftime('%Y-%m-%d %H:%M:%S')
         result_inner['data'] = result_data_list
         result_list.append(result_inner)
 
