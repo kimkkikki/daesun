@@ -14,6 +14,7 @@ import uuid
 from .util import hangle
 from datetime import datetime, timedelta
 from rest_framework.decorators import api_view
+from operator import itemgetter
 
 
 class JSONResponse(HttpResponse):
@@ -108,7 +109,6 @@ def pledge_rank(req):
 
 
 @csrf_exempt
-@api_view(['GET', 'POST'])
 def pledge(req):
     cache = caches['default']
 
@@ -145,14 +145,23 @@ def pledge(req):
         candidate_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '황교안': 0, '남경필': 0}
 
         for i, result in enumerate(result_list):
-            if result == 1:
+            if result == 1 or result == '1':
                 Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1)
                 candidate_dict[candidate_list[i].get('candidate')] += 1
-            elif result == -1:
+            elif result == -1 or result == '-1':
                 Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1)
                 candidate_dict[candidate_list[i].get('candidate')] -= 1
 
-        return JSONResponse(candidate_dict)
+        result_list = [{'candidate': '문재인', 'count': candidate_dict['문재인']},
+                       {'candidate': '안철수', 'count': candidate_dict['안철수']},
+                       {'candidate': '이재명', 'count': candidate_dict['이재명']},
+                       {'candidate': '유승민', 'count': candidate_dict['유승민']},
+                       {'candidate': '안희정', 'count': candidate_dict['안희정']},
+                       {'candidate': '황교안', 'count': candidate_dict['황교안']},
+                       {'candidate': '남경필', 'count': candidate_dict['남경필']},]
+        result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
+
+        return JSONResponse(result_list)
 
 
 @api_view(['GET'])

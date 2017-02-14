@@ -151,24 +151,51 @@
             </div>
             <div class="row text-center">
                 <div class="col-lg-12 text-center">
-                    <button type="button" class="btn btn-lg btn-primary" onclick="blindTestButtonClick();">시작하기</button>
-                    <!--<div id="blindTestSlidr" class="center-block" style="float: none; background-color: grey; text-align: center">-->
-                        <!--<div data-slidr="one" class="text-center">-->
-                            <!--<h3 id="pledgeTestTitle" class="text-center">공약</h3>-->
-                            <!--<p id="pledgeTestContents" class="text-center">공약내용</p>-->
-                            <!--<p class="text-center">-->
-                                <!--<button type="button" class="btn btn-lg btn-primary">좋아요</button>-->
-                                <!--<button type="button" class="btn btn-lg btn-danger">싫어요</button>-->
-                                <!--<button type="button" class="btn btn-lg btn-default">관심없어요</button>-->
-                            <!--</p>-->
-                        <!--</div>-->
-                        <!--<div data-slidr="two">banana</div>-->
-                        <!--<div data-slidr="three">coconut</div>-->
-                    <!--</div>-->
+                    <a href="#blindTestModal" data-toggle="modal">
+                        <button type="button" class="btn btn-lg btn-primary" onclick="blindTestButtonClick();">시작하기</button>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="portfolio-modal modal fade" id="blindTestModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container" id="blindTestDiv">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <h2 id="blindTestTitle"></h2>
+                                <p id="blindTestContents"></p>
+
+                                <button type="button" class="btn btn-success" value="1" onclick="blindNextButtonClick(this);">좋아요</button>
+                                <button type="button" class="btn btn-danger" value="-1" onclick="blindNextButtonClick(this);">싫어요</button>
+                                <button type="button" class="btn btn-default" value="0" onclick="blindNextButtonClick(this);">관심없어요</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" id="blindResultDiv" aria-hidden="true">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <h2 id="blindResultTitle"></h2>
+                                <p id="blindResultContents"></p>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> 창 닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section id="pledgeRank">
         <div class="container">
@@ -258,9 +285,60 @@
 <script src="{% static '/js/stats.js' %}"></script>
 
 <script type="text/javascript">
+$.ajaxSetup({ cache: false });
+
+var blindResult;
+var blindToken;
+var blindList;
+var blindLoopIndex;
+
+function blindNextButtonClick(button) {
+    console.log(button.value);
+    if (blindLoopIndex < 10) {
+        document.getElementById('blindTestTitle').innerHTML = blindList[blindLoopIndex].title;
+        document.getElementById('blindTestContents').innerHTML = blindList[blindLoopIndex].contents;
+        blindLoopIndex += 1;
+        blindResult.push(button.value);
+    } else {
+        blindLoopIndex += 1;
+        blindResult.push(button.value);
+
+        console.log(blindResult);
+        var sendPledgeResult = function(){
+            $.ajax({
+                url: '/apis/pledge',
+                cache: false,
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                async: true,
+                type: 'POST',
+                data: JSON.stringify({
+                    'token': blindToken,
+                    'list': blindResult,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                }),
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+
+
+                },
+                error: function(data, status, err) {
+                    console.log(data);
+                    console.log(status);
+                    console.log(err);
+                }
+            });
+        }
+
+        sendPledgeResult();
+    }
+}
+
 function blindTestButtonClick() {
-    var blindTestDataList;
     var getPledgeTest = function(){
+        $.ajaxSetup({ cache: false });
 		$.ajax({
 			url: '/apis/pledge',
 			headers: {
@@ -269,10 +347,16 @@ function blindTestButtonClick() {
 		    async: true,
 			type: 'GET',
 			dataType: 'json',
+            cache: false,
 			success: function(data) {
 			    console.log(data);
-			    blindTestDataList = data;
-			    <!--slidr.create('blindTestSlidr').start();-->
+			    blindResult = new Array();
+			    blindToken = data.token;
+			    blindList = data.list;
+			    blindLoopIndex = 1;
+
+                document.getElementById('blindTestTitle').innerHTML = blindList[0].title;
+                document.getElementById('blindTestContents').innerHTML = blindList[0].contents;
 			},
 			error: function(data, status, err) {
 				console.log(err);
@@ -284,6 +368,7 @@ function blindTestButtonClick() {
 }
 
 $(document).ready(function(){
+    $.ajaxSetup({ cache: false });
 	var getRanks = function(){
 		$.ajax({
 			url: '/apis/pledge/rank',
@@ -293,6 +378,7 @@ $(document).ready(function(){
 		    async: true,
 			type: 'GET',
 			dataType: 'json',
+            cache: false,
 			success: function(data) {
 			    console.log(data);
 			    var result = '';
