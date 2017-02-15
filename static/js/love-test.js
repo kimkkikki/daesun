@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 $(document).ready(function(){
     var data_set;
 
