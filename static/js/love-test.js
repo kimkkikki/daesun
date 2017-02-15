@@ -1,4 +1,3 @@
-{% load staticfiles %}
 
 $(document).ready(function(){
     var data_set;
@@ -26,12 +25,12 @@ $(document).ready(function(){
 
     // create an array with nodes
     var nodes = new vis.DataSet([
-        {id: 1, shape: 'circularImage', image: '{% static 'img/moon.jpeg' %}', label:"문재인",  x: 300, y: 10},
-        {id: 2, shape: 'circularImage', image: '{% static 'img/hee.jpg' %}', label:"안희정", x: 50, y: 30},
-        {id: 3, shape: 'circularImage', image: '{% static 'img/lee.png' %}', label:"이재명", x: 0, y: 40},
-        {id: 4, shape: 'circularImage', image: '{% static 'img/ahn.jpeg' %}', label:"안철수", x: 500, y: 40},
-        {id: 5, shape: 'circularImage', image: '{% static 'img/you.jpg' %}', label:"유승민", x: 300, y: 30},
-        {id: 6, shape: 'circularImage', image: '{% static 'img/hwang.jpg' %}', label:"황교안", x: 100, y:40}
+        {id: 1, shape: 'circularImage', image: '/static/img/moon.jpeg', label:"문재인",  x: 300, y: 10},
+        {id: 2, shape: 'circularImage', image: '/static/img/hee.jpg', label:"안희정", x: 50, y: 30},
+        {id: 3, shape: 'circularImage', image: '/static/img/lee.png', label:"이재명", x: 0, y: 40},
+        {id: 4, shape: 'circularImage', image: '/static/img/ahn.jpeg', label:"안철수", x: 500, y: 40},
+        {id: 5, shape: 'circularImage', image: '/static/img/you.jpg', label:"유승민", x: 300, y: 30},
+        {id: 6, shape: 'circularImage', image: '/static/img/hwang.jpg', label:"황교안", x: 100, y:40}
     ]);
 
     // create an array with edges
