@@ -1,0 +1,29 @@
+{
+  "name": "static",
+  "description": "",
+  "main": "App.js",
+  "authors": [
+    "r2fresh <r2fresh78@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/kimkkikki/daesun",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "^2.3.2",
+    "text": "^2.0.15",
+    "underscore": "^1.8.3",
+    "backbone": "^1.3.3",
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "moment": "^2.17.1",
+    "c3": "^0.4.11"
+  }
+}
