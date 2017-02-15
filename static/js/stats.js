@@ -2,9 +2,9 @@ $(document).ready(function(){
     waitMe($('#charts'));
     var end = 0;
     var endApis = function() {
-        if (end == 0) {
-            end = 1;
-        } else if (end == 1) {
+        if (end < 2) {
+            end++;
+        } else {
             $('#charts').waitMe('hide');
             end = 0;
         }
@@ -203,4 +203,77 @@ $(document).ready(function(){
             }
         });
 	}
+
+    // 지지율 차트
+	var getRatingList = function(){
+		$.ajax({
+			url: '/apis/rating',
+			headers: {
+		        'Content-Type':'application/json'
+		    },
+		    async: true,
+			type: 'GET',
+			dataType: 'json',
+			success: function(data) {
+				getRatingSuccess(data);
+				endApis();
+			},
+			error: function(data, status, err) {
+				console.log(err);
+				endApis();
+			}
+		});
+	}
+    getRatingList();
+
+    function getRatingSuccess(data) {
+        result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명']];
+        for (var i = 0; i < data.length; i++) {
+            obj = data[i];
+            if (!result_list[0].includes(obj.date)) {
+                result_list[0].push(obj.date);
+            }
+
+            switch (obj.candidate) {
+                case '문재인':
+                    result_list[1].push(obj.rating);
+                    break;
+                case '안철수':
+                    result_list[2].push(obj.rating);
+                    break;
+                case '황교안':
+                    result_list[3].push(obj.rating);
+                    break;
+                case '남경필':
+                    result_list[4].push(obj.rating);
+                    break;
+                case '안희정':
+                    result_list[5].push(obj.rating);
+                    break;
+                case '이재명':
+                    result_list[6].push(obj.rating);
+                    break;
+            }
+        }
+
+        c3.generate({
+            bindto: '#rating_chart',
+            data: {
+                x: 'x',
+                columns: result_list
+            },
+            subchart: {
+                show: true
+            },
+            axis: {
+                x: {
+//                    extent: [result_list[0][data.length - 7], result_list[0][data.length]],
+                    type: 'timeseries',
+                    tick: {
+                        format: '%Y-%m-%d'
+                    }
+                }
+            }
+        });
+    }
 });

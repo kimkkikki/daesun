@@ -28,14 +28,12 @@ def google_app_engine_health_check(req):
     return HttpResponse(status=200)
 
 
-@api_view(['GET'])
 @cache_page(60 * 1)
 def index(req):
     scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')[0:100]
     return JSONResponse(list(scraps))
 
 
-@api_view(['GET'])
 @cache_page(60 * 10)
 def cp_group(req):
     candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
@@ -55,7 +53,6 @@ def cp_group(req):
     return JSONResponse(list(group_list))
 
 
-@api_view(['GET'])
 @cache_page(60 * 10)
 def cp_daily(req):
     candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
@@ -101,8 +98,7 @@ def shop(req):
         return HttpResponse(status=code)
 
 
-@api_view(['GET'])
-@cache_page(60 * 1)
+@cache_page(60 * 10)
 def pledge_rank(req):
     pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
     return JSONResponse(list(pledges.values()))
@@ -164,14 +160,19 @@ def pledge(req):
         return JSONResponse(result_list)
 
 
-@api_view(['GET'])
+@cache_page(60 * 10)
 def approval_rating(req):
-    approval_ratings = ApprovalRating.objects.filter(type=1).extra({'date': 'date(date)'})\
-        .values('candidate', 'date').annotate(rating=Avg(F('rating')))
+    cp = req.GET.get('cp', None)
+    if cp is None:
+        approval_ratings = ApprovalRating.objects.filter(type=1).extra({'date': 'date(date)'})\
+        .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
+    else:
+        approval_ratings = ApprovalRating.objects.filter(type=1, cp=cp).extra({'date': 'date(date)'}) \
+            .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
+
     return JSONResponse(list(approval_ratings))
 
 
-@api_view(['GET'])
 @cache_page(60 * 1)
 def name_chemistry(req):
     name = req.GET.get('name', None)

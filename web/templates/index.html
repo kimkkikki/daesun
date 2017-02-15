@@ -53,7 +53,7 @@
                         <a class="page-scroll" href="#about">대선책방</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#pledge">공약들</a>
+                        <a class="page-scroll" href="#blind">공약들</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#team">팀소개</a>
@@ -93,7 +93,8 @@
                 </div>
             </div>
             <div class="row text-center">
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <h4 class="service-heading">대선주자별 언급 점유율</h4>
                     <select id='selectBox'>
                         <option value="total">전체</option>
                         <option value="asiae">아시아경제</option>
@@ -125,12 +126,15 @@
                         <option value="yonhap">연합뉴스</option>
                         <option value="ytn">YTN</option>
                     </select>
-                    <h4 class="service-heading">대선주자별 언급 점유율</h4>
                     <div id="press_chart"></div>
                 </div>
-                <div class="col-md-6">
-                    <h4 class="service-heading">일자별 대선주자 언급 횟수</h4>
+                <div class="col-md-4">
+                    <h4 class="service-heading">언론에서 대선주자 언급 횟수</h4>
                     <div id="daily_chart"></div>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="service-heading">지지율 변화 추이</h4>
+                    <div id="rating_chart"></div>
                 </div>
             </div>
         </div>
@@ -219,16 +223,13 @@
                 </div>
             </div>
             <div class="row">
+                <!--<div class="row-fluid">-->
+                    <!--<img src="{% static 'img/moon.jpeg' %}" class="inline img-circle img-responsive inline-block">-->
+                    <!--<h4 class="inline">공약제목이당</h4>-->
+                    <!--<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>123-->
+                    <!--<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>123-->
+                <!--</div>-->
                 <table class="table table-condensed">
-                    <thead>
-                        <tr>
-                            <th>순위</th>
-                            <th>공약제목</th>
-                            <th>후보</th>
-                            <th>좋아요</th>
-                            <th>싫어요</th>
-                        </tr>
-                    </thead>
                     <tbody id="rankTable">
                     </tbody>
                 </table>
@@ -299,7 +300,6 @@
 <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{% static 'js/slidr.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/agency.min.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/waitMe.min.js' %}"></script>
 
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
@@ -307,6 +307,8 @@
 
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/agency.min.js' %}"></script>
 <script type="text/javascript">
 
 function blindTestButtonClick() {
