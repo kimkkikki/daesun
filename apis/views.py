@@ -222,8 +222,11 @@ def timeline(req):
 
 
 @api_view(['GET'])
-@cache_page(60 * 10)
+# @cache_page(60 * 10)
 def love_test(req):
+    cache = caches['default']
+    cache.delete('lovetest')
+
     number = [('문재인', 1), ('안희정', 2), ('이재명', 3), ('안철수', 4), ('유승민', 5), ('황교안', 6)]
     result_list = []
     result_db_list = LoveOrHate.objects.values('speaker', 'target').annotate(s_cnt=Count('speaker'), t_cnt=Count('target'))
@@ -235,7 +238,7 @@ def love_test(req):
                     speaker = n[1]
                 if n[0] == target:
                     target = n[1]
-            result_list.append({'from': speaker, 'to': target, 'arrows': arrows})
+            result_list.append({'from': speaker, 'to': target, 'arrows': arrows, 'label': '싫어함', 'font': {'align': 'bottom'}})
             speaker, target, count = result['speaker'], result['target'], result['t_cnt']
 
         if count < result['t_cnt']:

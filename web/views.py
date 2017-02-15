@@ -11,3 +11,4 @@ def graphs(request):
 
 def love_test(request):
     return render(request, template_name='lovetest.html')
+
