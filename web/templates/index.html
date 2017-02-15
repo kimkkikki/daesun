@@ -17,11 +17,13 @@
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
+    <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/agency.min.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet" type="text/css">
 
     <title>2017 대선닷컴</title>
 </head>
+
 <body id="page-top" class="index">
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
         <div class="container">
@@ -223,7 +225,18 @@
         </div>
     </section>
 
-    <section id="team" class="bg-light-gray">
+    <section id="chemistry" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">이름점</h2>
+                    <h3 class="section-subheading text-muted">대선 주자와 이름점을 보세요</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -234,7 +247,7 @@
         </div>
     </section>
 
-    <section id="sponsor">
+    <section id="sponsor" class="bg-light-gray">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -276,134 +289,116 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{% static 'js/slidr.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/agency.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/waitMe.min.js' %}"></script>
 
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
 
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
-<script src="{% static '/js/stats.js' %}"></script>
+<script type="text/javascript">
+    $.ajaxSetup({ cache: false });
+
+    function waitMe(element) {
+        element.waitMe({
+            effect : 'facebook',
+            text : '로딩 중입니다',
+            bg : 'rgba(255,255,255,0.7)',
+            color : '#000',
+            maxSize : '',
+            textPos : 'vertical',
+            fontSize : '',
+            source : ''
+        });
+    }
+</script>
+<script type="text/javascript" src="{% static '/js/stats.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/pledge-rank.js' %}"></script>
 
 <script type="text/javascript">
-$.ajaxSetup({ cache: false });
+    $.ajaxSetup({ cache: false });
 
-var blindResult;
-var blindToken;
-var blindList;
-var blindLoopIndex;
+    var blindResult;
+    var blindToken;
+    var blindList;
+    var blindLoopIndex;
 
-function blindNextButtonClick(button) {
-    console.log(button.value);
-    if (blindLoopIndex < 10) {
-        document.getElementById('blindTestTitle').innerHTML = blindList[blindLoopIndex].title;
-        document.getElementById('blindTestContents').innerHTML = blindList[blindLoopIndex].contents;
-        blindLoopIndex += 1;
-        blindResult.push(button.value);
-    } else {
-        blindLoopIndex += 1;
-        blindResult.push(button.value);
+    function blindNextButtonClick(button) {
+        console.log(button.value);
+        if (blindLoopIndex < 10) {
+            document.getElementById('blindTestTitle').innerHTML = blindList[blindLoopIndex].title;
+            document.getElementById('blindTestContents').innerHTML = blindList[blindLoopIndex].contents;
+            blindLoopIndex += 1;
+            blindResult.push(button.value);
+        } else {
+            blindLoopIndex += 1;
+            blindResult.push(button.value);
 
-        console.log(blindResult);
-        var sendPledgeResult = function(){
+            console.log(blindResult);
+            var sendPledgeResult = function(){
+                $.ajax({
+                    url: '/apis/pledge',
+                    cache: false,
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    async: true,
+                    type: 'POST',
+                    data: JSON.stringify({
+                        'token': blindToken,
+                        'list': blindResult,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    }),
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data);
+
+
+                    },
+                    error: function(data, status, err) {
+                        console.log(data);
+                        console.log(status);
+                        console.log(err);
+                    }
+                });
+            }
+
+            sendPledgeResult();
+        }
+    }
+
+    function blindTestButtonClick() {
+        waitMe($('#blindTestModal'));
+        var getPledgeTest = function(){
+            $.ajaxSetup({ cache: false });
             $.ajax({
                 url: '/apis/pledge',
-                cache: false,
                 headers: {
                     'Content-Type':'application/json'
                 },
                 async: true,
-                type: 'POST',
-                data: JSON.stringify({
-                    'token': blindToken,
-                    'list': blindResult,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
-                }),
+                type: 'GET',
                 dataType: 'json',
+                cache: false,
                 success: function(data) {
                     console.log(data);
+                    $('#blindTestModal').waitMe('hide');
+                    blindResult = new Array();
+                    blindToken = data.token;
+                    blindList = data.list;
+                    blindLoopIndex = 1;
 
-
+                    document.getElementById('blindTestTitle').innerHTML = blindList[0].title;
+                    document.getElementById('blindTestContents').innerHTML = blindList[0].contents;
                 },
                 error: function(data, status, err) {
-                    console.log(data);
-                    console.log(status);
                     console.log(err);
+                    $('#blindTestModal').waitMe('hide');
                 }
             });
         }
 
-        sendPledgeResult();
+        getPledgeTest();
     }
-}
-
-function blindTestButtonClick() {
-    var getPledgeTest = function(){
-        $.ajaxSetup({ cache: false });
-		$.ajax({
-			url: '/apis/pledge',
-			headers: {
-		        'Content-Type':'application/json'
-		    },
-		    async: true,
-			type: 'GET',
-			dataType: 'json',
-            cache: false,
-			success: function(data) {
-			    console.log(data);
-			    blindResult = new Array();
-			    blindToken = data.token;
-			    blindList = data.list;
-			    blindLoopIndex = 1;
-
-                document.getElementById('blindTestTitle').innerHTML = blindList[0].title;
-                document.getElementById('blindTestContents').innerHTML = blindList[0].contents;
-			},
-			error: function(data, status, err) {
-				console.log(err);
-			}
-		});
-	}
-
-	getPledgeTest();
-}
-
-$(document).ready(function(){
-    $.ajaxSetup({ cache: false });
-	var getRanks = function(){
-		$.ajax({
-			url: '/apis/pledge/rank',
-			headers: {
-		        'Content-Type':'application/json'
-		    },
-		    async: true,
-			type: 'GET',
-			dataType: 'json',
-            cache: false,
-			success: function(data) {
-			    console.log(data);
-			    var result = '';
-			    $.each(data, function(i, obj) {
-                    result += '<tr><td>'
-                            + (i + 1)
-                            + '</td><td>'
-                            + obj.title
-                            + '</td><td>'
-                            + obj.candidate
-                            + '</td><td>'
-                            + obj.like
-                            + '</td><td>'
-                            + obj.unlike
-                            + '</td></tr>';
-			    });
-			    $('#rankTable').append(result);
-			},
-			error: function(data, status, err) {
-				console.log(err);
-			}
-		});
-	}
-
-	getRanks();
-});
 </script>
 </html>
