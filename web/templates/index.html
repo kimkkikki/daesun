@@ -179,14 +179,16 @@
                                 <h2 id="blindTestTitle"></h2>
                                 <p id="blindTestContents"></p>
 
-                                <button type="button" class="btn btn-success" value="1" onclick="blindNextButtonClick(this);">좋아요</button>
-                                <button type="button" class="btn btn-danger" value="-1" onclick="blindNextButtonClick(this);">싫어요</button>
-                                <button type="button" class="btn btn-default" value="0" onclick="blindNextButtonClick(this);">관심없어요</button>
+                                <div>
+                                    <button type="button" class="btn btn-success" value="1" onclick="blindNextButtonClick(this);">좋아요</button>
+                                    <button type="button" class="btn btn-danger" value="-1" onclick="blindNextButtonClick(this);">싫어요</button>
+                                    <button type="button" class="btn btn-default" value="0" onclick="blindNextButtonClick(this);">관심없어요</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="container" id="blindResultDiv" aria-hidden="true">
+                <div class="container" id="blindResultDiv" style="display:none">
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2">
                             <div class="modal-body">
@@ -316,91 +318,5 @@
 </script>
 <script type="text/javascript" src="{% static '/js/stats.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/pledge-rank.js' %}"></script>
-
-<script type="text/javascript">
-    $.ajaxSetup({ cache: false });
-
-    var blindResult;
-    var blindToken;
-    var blindList;
-    var blindLoopIndex;
-
-    function blindNextButtonClick(button) {
-        console.log(button.value);
-        if (blindLoopIndex < 10) {
-            document.getElementById('blindTestTitle').innerHTML = blindList[blindLoopIndex].title;
-            document.getElementById('blindTestContents').innerHTML = blindList[blindLoopIndex].contents;
-            blindLoopIndex += 1;
-            blindResult.push(button.value);
-        } else {
-            blindLoopIndex += 1;
-            blindResult.push(button.value);
-
-            console.log(blindResult);
-            var sendPledgeResult = function(){
-                $.ajax({
-                    url: '/apis/pledge',
-                    cache: false,
-                    headers: {
-                        'Content-Type':'application/json'
-                    },
-                    async: true,
-                    type: 'POST',
-                    data: JSON.stringify({
-                        'token': blindToken,
-                        'list': blindResult,
-                        'csrfmiddlewaretoken': '{{ csrf_token }}',
-                    }),
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log(data);
-
-
-                    },
-                    error: function(data, status, err) {
-                        console.log(data);
-                        console.log(status);
-                        console.log(err);
-                    }
-                });
-            }
-
-            sendPledgeResult();
-        }
-    }
-
-    function blindTestButtonClick() {
-        waitMe($('#blindTestModal'));
-        var getPledgeTest = function(){
-            $.ajaxSetup({ cache: false });
-            $.ajax({
-                url: '/apis/pledge',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                async: true,
-                type: 'GET',
-                dataType: 'json',
-                cache: false,
-                success: function(data) {
-                    console.log(data);
-                    $('#blindTestModal').waitMe('hide');
-                    blindResult = new Array();
-                    blindToken = data.token;
-                    blindList = data.list;
-                    blindLoopIndex = 1;
-
-                    document.getElementById('blindTestTitle').innerHTML = blindList[0].title;
-                    document.getElementById('blindTestContents').innerHTML = blindList[0].contents;
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                    $('#blindTestModal').waitMe('hide');
-                }
-            });
-        }
-
-        getPledgeTest();
-    }
-</script>
+<script type="text/javascript" src="{% static '/js/blind-test.js' %}"></script>
 </html>
