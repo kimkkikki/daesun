@@ -189,8 +189,12 @@ $(document).ready(function(){
                     ahn
                 ]
             },
+            subchart: {
+                show: true
+            },
             axis: {
                 x: {
+                    extent: [timeMenu[daily_data.length - 7], timeMenu[daily_data.length]],
                     type: 'timeseries',
                     tick: {
                         format: '%Y-%m-%d'

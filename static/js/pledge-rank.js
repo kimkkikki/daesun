@@ -11,7 +11,6 @@ $(document).ready(function(){
 			dataType: 'json',
             cache: false,
 			success: function(data) {
-			    console.log(data);
 			    var result = '';
 			    $.each(data, function(i, obj) {
                     result += '<tr><td>'
