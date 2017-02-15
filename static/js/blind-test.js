@@ -2,14 +2,15 @@ var blindResult;
 var blindToken;
 var blindList;
 var blindLoopIndex;
+var isTestEnd = false;
 
 var blindTestEnd = function(data) {
-    console.log(data);
     document.getElementById('blindTestDiv').style.display = 'none';
     document.getElementById('blindResultDiv').style.display = 'block';
 
     document.getElementById('blindResultTitle').innerHTML = data[0].candidate;
     document.getElementById('blindResultContents').innerHTML = data[0].candidate + ' 후보의 공약을 좋아하시네요';
+    isTestEnd = true;
 }
 
 function blindNextButtonClick(button) {
@@ -57,7 +58,6 @@ function blindNextButtonClick(button) {
 }
 
 function blindTestButtonClick() {
-    waitMe($('#blindTestModal'));
     var getPledgeTest = function(){
         $.ajax({
             url: '/apis/pledge',
@@ -86,5 +86,8 @@ function blindTestButtonClick() {
         });
     }
 
-    getPledgeTest();
+    if (!isTestEnd) {
+        waitMe($('#blindTestModal'));
+        getPledgeTest();
+    }
 }

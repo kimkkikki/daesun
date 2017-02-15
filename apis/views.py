@@ -142,10 +142,10 @@ def pledge(req):
 
         for i, result in enumerate(result_list):
             if result == 1 or result == '1':
-                Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1)
+                Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1, updated=datetime.now())
                 candidate_dict[candidate_list[i].get('candidate')] += 1
             elif result == -1 or result == '-1':
-                Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1)
+                Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1, updated=datetime.now())
                 candidate_dict[candidate_list[i].get('candidate')] -= 1
 
         result_list = [{'candidate': '문재인', 'count': candidate_dict['문재인']},
