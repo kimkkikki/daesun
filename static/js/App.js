@@ -5,11 +5,7 @@ requirejs.config({
 		name: 'agency',
 		location: '../js',
 		main: 'agency.min'
-	}],
-	// paths: {
-	// 	'text':'/lib/text/text',
-	// 	'tpl':'../template',
-	// }
+	}]
 });
 
 requirejs([
