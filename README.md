@@ -28,22 +28,27 @@ mysql -u <USERNAME> -p --host 127.0.0.1
 
 # JS/CSS 파일 설정
 
-1. nvm(node version manager) 설치
+1. static폴더로 이동한다.
+```bash
+$> cd daesun/static
+```
+
+2. nvm(node version manager) 설치
 > https://github.com/creationix/nvm 를 참고하여 설치한다.
 
-2. node 설치
+3. node 설치
 ```bash
-$> nvm install v6.9.1
+$ daesun/static> nvm install v6.9.1
 ```
 
-3. node plugin을 설치
+4. node plugin을 설치
 ```bash
-$> npm install
+$ daesun/static> npm install
 ```
 
-4. browser에서 사용한 library를 설치
+5. browser에서 사용한 library를 설치
 ```bash
-$> node_modules/.bin/bower install
+$ daesun/static> node_modules/.bin/bower install
 ```
 
 

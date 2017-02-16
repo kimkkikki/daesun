@@ -1,0 +1,54 @@
+<div>
+
+    <!-- timeline template-->
+
+    <script class="d-timeline-tpl" type="text/x-handlebars-template">
+        {{#list}}
+        <span class="timeline-label">
+            <span class="label label-primary">{{created_at}}</span>
+        </span>
+
+        {{#data}}
+        <div class="timeline-item">
+            <div class="timeline-point timeline-point-default">
+                <i class="fa fa-money"></i>
+            </div>
+            <div class="timeline-event">
+                <div class="timeline-heading">
+                    <h4>{{candidate}}</h4>
+                </div>
+                <div class="timeline-body">
+                    {{#keywords}}
+                    <p>{{keyword}} : {{count}}</p>
+                    {{/keywords}}
+                </div>
+                <div class="timeline-footer">
+                    <!-- <p class="text-right">2017-02-08T10:00:00</p> -->
+                </div>
+            </div>
+        </div>
+        {{/data}}
+        {{/list}}
+    </script>
+
+    <script class="d-timeline2-tpl" type="text/x-handlebars-template">
+        <div class="title" data-index="8">{{player1}}</div>
+        <div>{{keyword1}}{{keyword2}}{{keyword3}}</div>
+        <span>{{keyword1}}{{keyword2}}{{keyword3}}</span>
+    </script>
+
+    <script class="d-timeline-keyword-tpl" type="text/x-handlebars-template">
+        {{#keywords}}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{keyword}}</h3>
+            </div>
+            <ul class="list-group">
+                {{#news}}
+                <li class="list-group-item">{{cp}} / {{created_at}} / {{title}}</li>
+                {{/news}}
+            </ul>
+        </div>
+        {{/keywords}}
+    </script>
+</div>
