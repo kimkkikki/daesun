@@ -29,6 +29,7 @@
     "jquery-ui": "^1.12.1",
     "html5shiv": "^3.7.3",
     "respond": "^1.4.2",
-    "handlebars": "^4.0.5"
+    "handlebars": "^4.0.5",
+    "startbootstrap-agency": "git://github.com/BlackrockDigital/startbootstrap-agency.git#^3.3.7"
   }
 }

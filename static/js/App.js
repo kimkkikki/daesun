@@ -1,5 +1,10 @@
 requirejs.config({
 	baseUrl: 'static/js/',
+	packages: [{
+		name: 'agency',
+		location: '../js/',
+		main: 'agency.min'
+	}],
 	paths: {
 		'text':'../lib/text/text',
 		'tpl':'../template',
@@ -7,9 +12,10 @@ requirejs.config({
 });
 
 requirejs([
-    'Timeline'
+    'Timeline',
+	'agency'
 ],
-function(Timeline){
+function(Timeline, agency){
 
 	var prevView = null, routers = null;
 
