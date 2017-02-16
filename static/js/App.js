@@ -1,9 +1,3 @@
-/*
- * kt-membership-statistics-service 1.0.0
- * 방문자, 메뉴, 서비스 별로 다양한 통계 데이터와 차트
- * https://cms.membership.kt.com
- * Copyright ©2011 - 2017 KT corp. All rights reserved.
-*/
 requirejs.config({
 	baseUrl: 'static/js/',
 	paths: {
