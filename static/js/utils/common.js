@@ -10,11 +10,8 @@
 		case 'localhost':
 			DAESUN.BASE_URL = 'static/js/';
 		break;
-		case 'daesun2017.appspot.com':
+		default:
 			DAESUN.BASE_URL = 'https://storage.googleapis.com/daesun2017.appspot.com/static/js/';
-		break;
-		default :
-			DAESUN.BASE_URL = ''
 		break;
 	}
 })();
