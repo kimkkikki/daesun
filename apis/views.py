@@ -191,7 +191,7 @@ def name_chemistry(req):
 
 
 @api_view(['GET'])
-@cache_page(60 * 10)
+@cache_page(60 * 30)
 def timeline(req):
     param = int(req.GET.get('param', 1))
 
@@ -232,7 +232,7 @@ def timeline(req):
 
 
 @api_view(['GET'])
-# @cache_page(60 * 10)
+@cache_page(60 * 60)
 def love_test(req):
     cache = caches['default']
     cache.delete('lovetest')
