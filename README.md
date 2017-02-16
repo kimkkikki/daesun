@@ -25,3 +25,25 @@ gcloud auth application-default login
 ```bash
 mysql -u <USERNAME> -p --host 127.0.0.1
 ```
+
+# JS/CSS 파일 설정
+
+1. nvm(node version manager) 설치
+> https://github.com/creationix/nvm 를 참고하여 설치한다.
+
+2. node 설치
+```bash
+$> nvm install v6.9.1
+```
+
+3. node plugin을 설치
+```bash
+$> npm install
+```
+
+4. browser에서 사용한 library를 설치
+```bash
+$> node_modules/.bin/bower install
+```
+
+
