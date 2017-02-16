@@ -1,14 +1,15 @@
 requirejs.config({
-	baseUrl: 'static/js/',
+	baseUrl: DAESUN.BASE_URL,
+	//baseUrl: 'https://storage.googleapis.com/daesun2017.appspot.com/static/js/',
 	packages: [{
 		name: 'agency',
-		location: '../js/',
+		location: '../js',
 		main: 'agency.min'
 	}],
-	paths: {
-		'text':'../lib/text/text',
-		'tpl':'../template',
-	}
+	// paths: {
+	// 	'text':'/lib/text/text',
+	// 	'tpl':'../template',
+	// }
 });
 
 requirejs([

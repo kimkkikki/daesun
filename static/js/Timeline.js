@@ -1,10 +1,8 @@
 define([
    'module',
-   'text!tpl/timeline.html',
-   'text!tpl/template.html',
    'Model'
    ],
-   function(module, Timeline, Template, Model){
+   function(module, Model){
 
 	'use strict'
  	module.exports = new (Backbone.View.extend({
@@ -32,13 +30,15 @@ define([
         initialize:function(){
         },
         render:function(){
-            this.$el.html(Timeline);
+            //this.$el.html(Timeline);
 
             if(this.prevView != null){
     			this.prevView.hide();
     		}
 
-            this.timelineKeywordTpl = $(Template).find('.d-timeline-keyword-tpl').html();
+            console.log(this.$el.find('.d-timeline-keyword-tpl'))
+
+            this.timelineKeywordTpl = this.$el.find('.d-timeline-keyword-tpl').html();
 
             this.getKeyword();
         },

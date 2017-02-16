@@ -2,15 +2,21 @@
 	window.DAESUN = window.DAESUN || {};
 
     DAESUN.HOST = ''
+	DAESUN.BASE_URL = '';
 
-    // switch(location.hostname){
-	// 	case 'localhost':
-	// 		DAESUN.HOST = 'https://cms.membership.kt.com';
-	// 	break;
-	// 	default :
-	// 		DAESUN.HOST = ''
-	// 	break;
-	// }
+	console.log(location.hostname)
+
+    switch(location.hostname){
+		case 'localhost':
+			DAESUN.BASE_URL = 'static/js/';
+		break;
+		case 'daesun2017.appspot.com':
+			DAESUN.BASE_URL = 'https://storage.googleapis.com/daesun2017.appspot.com/static/js/';
+		break;
+		default :
+			DAESUN.BASE_URL = ''
+		break;
+	}
 })();
 
 (function(DAESUN){
