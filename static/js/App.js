@@ -1,13 +1,13 @@
 requirejs.config({
-	baseUrl: 'static/js/',
+	baseUrl: 'https://storage.googleapis.com/daesun2017.appspot.com/static/js/',
 	packages: [{
 		name: 'agency',
-		location: '../js/',
+		location: '../js',
 		main: 'agency.min'
 	}],
 	paths: {
 		'text':'../lib/text/text',
-		'tpl':'../template',
+		'tpl':'https://storage.googleapis.com/daesun2017.appspot.com/static/template',
 	}
 });
 
