@@ -8,21 +8,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
-
-    <!-- <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.1/vis.min.css" rel="stylesheet" type="text/css" />
-
-    <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/agency.min.css' %}"> -->
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet" type="text/css"> -->
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.18.1/vis.min.js"></script> -->
-
     <!--  Timeline stylesheet @r2fresh -->
     <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}">
 
@@ -34,8 +19,8 @@
 
     <link rel="stylesheet" href="{% static 'lib/vis/dist/vis.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/agency.min.css' %}">
     <link rel="stylesheet" href="{% static 'lib/c3/c3.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/agency.min.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -47,15 +32,17 @@
     <script src="{% static 'lib/underscore/underscore-min.js' %}"></script>
     <script src="{% static 'lib/backbone/backbone-min.js' %}"></script>
     <script src="{% static 'lib/moment/min/moment.min.js' %}" charset="utf-8"></script>
+    <script src="{% static 'lib/handlebars/handlebars.min.js' %}" charset="utf-8"></script>
     <script src="{% static 'lib/d3/d3.min.js' %}"></script>
     <script src="{% static 'lib/c3/c3.min.js' %}"></script>
     <script src="{% static 'lib/vis/dist/vis.min.js' %}"></script>
 
+    <script type="text/javascript" src="{% static 'js/agency.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/slidr.min.js' %}"></script>
-    <script type="text/javascript" src="{% static '/js/waitMe.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
 
-    <script type="text/javascript" src="{% static '/lib/html5shiv/dist/html5shiv.min.js' %}"></script>
-    <script type="text/javascript" src="{% static '/lib/respond/dest/respond.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/html5shiv/dist/html5shiv.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/respond/dest/respond.min.js' %}"></script>
 
     <script src="{% static 'js/utils/common.js' %}" charset="utf-8"></script>
 
@@ -112,14 +99,7 @@
     </header>
 
     <section id="timeline">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">대선주자 타임라인</h2>
-                    <h3 class="section-subheading text-muted">시간별로 뭐하고 있었나..</h3>
-                </div>
-            </div>
-        </div>
+
     </section>
 
     <section id="charts" class="bg-light-gray">
