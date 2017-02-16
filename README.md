@@ -50,5 +50,3 @@ $ daesun/static> npm install
 ```bash
 $ daesun/static> node_modules/.bin/bower install
 ```
-
-
