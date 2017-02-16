@@ -9,6 +9,26 @@ define([
 	'use strict'
  	module.exports = new (Backbone.View.extend({
  		el: '#timeline',
+        events :{
+            'click #visualization': 'onItemClick'
+ 		},
+        onItemClick:function(e){
+            var props = this.timeline.getEventProperties(e)
+            console.log(props);
+
+            if(props.item == null) return;
+
+            var news_data = _.find(this.timelineData,function(item){
+                return item.id === props.item
+            })
+
+            this.setNews(news_data)
+        },
+        setNews:function(item){
+            console.log(item.keywords)
+            var template = Handlebars.compile(this.timelineKeywordTpl);
+            this.$el.find('.d-timeline-keyword-list').html(template({'keywords':item.keywords}));
+        },
         initialize:function(){
         },
         render:function(){
@@ -18,7 +38,7 @@ define([
     			this.prevView.hide();
     		}
 
-            // this.timeLineListTpl     = $(Template).find('.d-timeline-tpl').html();
+            this.timelineKeywordTpl = $(Template).find('.d-timeline-keyword-tpl').html();
 
             this.getKeyword();
         },
@@ -138,7 +158,8 @@ define([
 
                 editable : {
                     remove : false
-                }
+                },
+                locale: 'ko'
 
             };
 
