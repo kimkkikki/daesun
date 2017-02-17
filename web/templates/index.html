@@ -23,11 +23,12 @@
     <link rel="stylesheet" href="{% static 'css/agency.min.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
 
     <!--  Timeline Javascript @r2fresh -->
     <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
-    <script src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'lib//dist/js/bootstrap.min.js' %}"></script>
 
     <script src="{% static 'lib/underscore/underscore-min.js' %}"></script>
     <script src="{% static 'lib/backbone/backbone-min.js' %}"></script>
@@ -75,6 +76,9 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="#blind">공약들</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#chemistry">이름점</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#team">팀소개</a>
@@ -287,6 +291,17 @@
                     <h3 class="section-subheading text-muted">대선 주자와 이름점을 보세요</h3>
                 </div>
             </div>
+            <div class="row text-center">
+                <div class="col-lg-12 text-center">
+                    <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4" required autofocus>
+                    <button type="button" class="btn btn-lg btn-primary">확인</button>
+                </div>
+                <div class="panel-group">
+                    <div class="row" id="panelGroup">
+                        <!-- 여기에 패널 생성 됨   -->
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -295,10 +310,61 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Team Daesun</h2>
-                    <h3 class="section-subheading text-muted">팀 소개 입니다</h3>
+                    <h3 class="section-subheading text-muted">Introduce Team</h3>
                 </div>
             </div>
             <div class="row">
+                <div class="col-xs-4 col-sm-4">
+                    <div class="team-member">
+                        <img src="{% static 'img/team/donggeun-kim.jpg' %}" class="img-responsive img-circle" alt="">
+                        <h4>Backend</h4>
+                        <p class="text-muted">Kim Dong Geun</p>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4">
+                    <div class="team-member">
+                        <img src="{% static 'img/team/minjeong-song.jpg' %}" class="img-responsive img-circle" alt="">
+                        <h4>Backend</h4>
+                        <p class="text-muted">Song Min Jeong</p>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4">
+                    <div class="team-member">
+                        <img src="{% static 'img/team/minhyang-lee.jpg' %}" class="img-responsive img-circle" alt="">
+                        <h4>Design</h4>
+                        <p class="text-muted">Lee Min Hyang</p>
+                    </div>
+                </div>
+
+
+
+                <div class="col-xs-4 col-sm-4">
+                    <div class="team-member">
+                        <img src="{% static 'img/team/haneol-chae.jpg' %}" class="img-responsive img-circle" alt="">
+                        <h4>Design</h4>
+                        <p class="text-muted">Chae Han eol</p>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4">
+                    <div class="team-member">
+                        <img src="{% static 'img/team/woncheol-jang.jpg' %}" class="img-responsive img-circle" alt="">
+                        <h4>Front</h4>
+                        <p class="text-muted">Jang Won Cheol</p>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4">
+                    <div class="team-member">
+                        <img src="{% static 'img/team/r2fresh.jpg' %}" class="img-responsive img-circle" alt="">
+                        <h4>Front</h4>
+                        <p class="text-muted">R2fresh</p>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <!-- <div class="row">
                 <div class="col-sm-4">
                     <div class="team-member">
                         <h4>Backend</h4>
@@ -322,7 +388,7 @@
                         <p class="text-muted">minh</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -403,6 +469,7 @@
     }
 </script>
 <script type="text/javascript" src="{% static '/js/stats.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/name-luck.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/pledge-rank.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/blind-test.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/love-test.js' %}"></script>

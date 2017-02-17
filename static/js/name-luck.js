@@ -1,17 +1,26 @@
 $(document).ready(function(){
 
-	// var nameluckUrl = "http://daesun2017.appspot.com/apis/name?name=";
-	
-	var nameLuckUrl = "/dummy/nameLuck.json";
+	waitMe($('#chemistry'));
+    var end = 0;
+    var endApis = function() {
+        if (end < 2) {
+            end++;
+        } else {
+            $('#chemistry').waitMe('hide');
+            end = 0;
+        }
+    }
 
+	var nameluckUrl = "/apis/name?name=";
 	var nameLuckData;
 	var userName = '';
 	var nameLuckScoreToSort = []
 	var nameLuckScoreFromSort = []
+
 	var getNameLuckList = function(){
 		$.ajax({
 			// 적용할 때, 아래 코드의 주석을 풀어줘야 합니다.
-			url: nameLuckUrl,// + userName,
+			url: nameLuckUrl + userName,
 			headers: {
 		        'Content-Type':'application/json'
 		    },
@@ -19,12 +28,12 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(data) {
 				nameLuckData = data;
+
+				// 내가 후보를 생각하는 이름점
 				nameLuckScoreToSort = nameLuckData.list.slice(0); //깊은 복사
-			
 				nameLuckScoreToSort.sort(function(a,b){
 					return b.score_to-a.score_to
 				})
-
 				createNameLuck(nameLuckScoreToSort);
 				
 				// 후보가 나를 생각하는 이름점
@@ -33,9 +42,12 @@ $(document).ready(function(){
 				// 	return b.score_from-a.score_from
 				// })
 				// createNameLuck(nameLuckScoreFromSort);
+
+				endApis();
 			},
 			error: function(data, status, err) {
 				console.log(err);
+				endApis();
 			}
 		});
 	}
@@ -78,7 +90,7 @@ $(document).ready(function(){
 		                            "</div>"+
 		                            "<div class='col-xs-4 text-center vcenter'>"+
 		                                // "<img src='/img/nameLuck_pic/"+updown_pic+"' class='img-circle'/>"+
-		                                "<img src='/img/nameLuck_pic/"+updown_pic+"' width='100px' height='100px' class='img-circle'/>"+
+		                                "<img src='/static/img/nameLuck_pic/"+updown_pic+"' width='100px' height='100px' class='img-circle'/>"+
 		                            "</div>"+
 		                            "<div class='col-xs-4 text-center vcenter'>"+
 		                                "<p style='font-size:20px;'><strong>"+nameLuckData[i].score_to+"%</strong></p>"+
@@ -197,102 +209,3 @@ $(document).ready(function(){
 	    }
 	}
 });
-
-/////vis.js library 사용한 버전. 별로////
-
-// var nodes = null;
-// var edges = null;
-// var network = null;
-
-// function destroy() {
-//     if (network !== null) {
-//         network.destroy();
-//         network = null;
-//     }
-// }
-
-// function draw() {
-//     destroy();
-//     // randomly create some nodes and edges
-//     var nodeCount = 21;
-//     var data = getScaleFreeNetwork(nodeCount)
-
-//     // create a network
-//     var container = document.getElementById('mynetwork');
-//     var options = {
-//         layout: {
-//             hierarchical: {
-//             	parentCentralization: true,
-//             	enabled: true, 
-//                 direction: 'DU',
-//                 levelSeparation: 80
-                
-//             }
-//         },
-// 	    physics: {
-// 	    	enabled: true
-// 	    },
-// 	    nodes: {
-// 		    fixed: false,
-// 		    level: 6
-// 	    }
-//     };
-
-//     network = new vis.Network(container, data, options);
-
-//     // add event listeners
-//     network.on('select', function (params) {
-//         document.getElementById('selection').innerHTML = 'Selection: ' + params.nodes;
-//     });
-// }
-
-// function getScaleFreeNetwork(nodeCount) {
-// 	var nodes = [];
-// 	var edges = [];
-// 	// var connectionCount = [];
-// 	var to = 0;
-// 	var from = 0;
-// 	var depth = 1;
-// 	var level = 0;
-// 	// randomly create some nodes and edges
-//   	for (var i = 0; i < nodeCount; i++) {
-//   		if(i===1 || i===3 || i===6 || i===10 || i===15){
-//   			level = level + 1;
-//   		}
-// 	    nodes.push({
-// 	      id: i,
-// 	      label: String(i),
-// 	      level: level
-// 	    });
-// 	}
-
-// 	for (var i = 0; i < 15; i++) {
-// 		to = i; // 0 일 때, from 1, 2
-	
-// 		if(i===1 || i===3 || i===6 || i===10){
-// 			depth = depth + 1;
-// 		}
-
-// 		from = i+depth;
-// 		console.log(i+': '+from)
-// 		edges.push({
-// 		  to: to,
-// 		  from: from
-// 		});
-
-// 		from = from + 1;
-
-// 		edges.push({
-// 		  to: to,
-// 		  from: from
-// 		});
-
-// 		console.log(i+': '+from)
-	
-// 	}
-	  
-//   console.log(nodes)
-//   console.log(edges)
-  
-//   return {nodes:nodes, edges:edges};
-// }
