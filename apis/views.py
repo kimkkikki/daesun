@@ -73,29 +73,38 @@ def cp_daily(req):
     return JSONResponse(list(daily_list))
 
 
-@api_view(['GET'])
-def shop(req):
+def get_shop():
     client_id = "cC0cf4zyUuLFmj_kKUum"
     client_secret = "EYop6SBs44"
-    # 추후 parameter 로 변경
-    enc_text = parse.quote("문재인")
-    # json 결과
-    url = "https://openapi.naver.com/v1/search/book.json?query=" + enc_text
 
-    send_request = request.Request(url)
-    send_request.add_header("X-Naver-Client-Id", client_id)
-    send_request.add_header("X-Naver-Client-Secret", client_secret)
-    response = request.urlopen(send_request)
-    code = response.getcode()
+    candidates = ['문재인', '안희정', '이재명', '유승민', '황교안', '안철수']
+    results = []
 
-    if code == 200:
-        response_body = response.read()
-        print(response_body.decode('utf-8'))
-        return JSONResponse(response_body)
+    for candidate in candidates:
+        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + parse.quote(candidate) + "&d_auth=" + parse.quote(
+            candidate) + "&sort=date&d_dafr=20150101&d_dato=20171231"
 
-    else:
-        print("Error Code:" + code)
-        return HttpResponse(status=code)
+        send_request = request.Request(url)
+        send_request.add_header("X-Naver-Client-Id", client_id)
+        send_request.add_header("X-Naver-Client-Secret", client_secret)
+        response = request.urlopen(send_request)
+        code = response.getcode()
+
+        if code == 200:
+            response_body = response.read()
+            result = json.loads(response_body)
+
+            for obj in result['items']:
+                obj['image'] = obj['image'].replace('type=m1&', '')
+                results.append(obj)
+
+    results = sorted(results, key=itemgetter('pubdate'), reverse=True)
+    return results
+
+
+@cache_page(60 * 10)
+def shop(req):
+    return JSONResponse(get_shop())
 
 
 @cache_page(60 * 10)

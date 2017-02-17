@@ -334,6 +334,23 @@
                     <h3 class="section-subheading text-muted">대선 주자들의 책들입니다</h3>
                 </div>
             </div>
+            <div class="row">
+                {% for book in book_list %}
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="thumbnail">
+                        <h4>
+                            {{ book.title|striptags }}
+                            <span class="label label-info info">
+                                <span data-toggle="tooltip" title="{{ book.title|striptags }}">{{ book.pubdate }}</span>
+                            </span>
+                        </h4>
+                        <img src="{{ book.image }}" alt="...">
+                        <a href="{{ book.link }}" class="btn btn-primary col-xs-12" role="button">사러 가기</a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 
