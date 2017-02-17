@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <!-- 추가한 부분 -->
-    <!-- <link href="/lib/vis/dist/vis-network.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- /static/js -->
     <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="/lib/bootstrap-social/bootstrap-social.css" rel="stylesheet" type="text/css">
@@ -42,11 +43,9 @@
         <a class="btn btn-social-icon btn-openid" id='kakaotalk'><img src='https://dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png'/></a>
     </div>
 
-    <script src="/lib/jquery/dist/jquery.js" charset="utf-8"></script>
-    <!-- <script src="/lib/vis/dist/vis.js"></script>
-    <script src="/lib/vis/dist/vis-network.min.js"></script> -->
-    <script src="/js/NameLuck.js"></script>
-    <!-- 여기까 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="{% static '/js/name-luck.js' %}"></script>
 
   </body>
 </html>

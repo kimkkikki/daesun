@@ -118,8 +118,8 @@ $(document).ready(function(){
                             }
                         });
                     }
-               }
-           }
+                }
+            }
         });
 	}
 
