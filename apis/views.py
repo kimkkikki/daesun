@@ -91,12 +91,15 @@ def get_shop():
         code = response.getcode()
 
         if code == 200:
-            response_body = response.read()
-            result = json.loads(response_body)
+            try:
+                response_body = response.read()
+                result = json.loads(response_body)
 
-            for obj in result['items']:
-                obj['image'] = obj['image'].replace('type=m1&', '')
-                results.append(obj)
+                for obj in result['items']:
+                    obj['image'] = obj['image'].replace('type=m1&', '')
+                    results.append(obj)
+            except:
+                print('response read error')
 
     results = sorted(results, key=itemgetter('pubdate'), reverse=True)
     return results
