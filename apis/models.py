@@ -94,6 +94,7 @@ class LoveOrHate(models.Model):
     speaker = models.CharField(max_length=10)
     target = models.CharField(max_length=10)
     scraps = models.ForeignKey(Scraps, to_field='id', db_column='related_to')
+    created = models.DateTimeField(auto_now_add=True)
 
 
 class LoveOrHateAdmin(admin.ModelAdmin):
