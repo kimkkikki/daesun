@@ -67,6 +67,10 @@
     color : #000;
 }
 
+.vis-group > .vis-item.vis-line.vis-selected {}
+.vis-group > .vis-item.vis-selected {
+    z-index:0;
+}
 .vis-item.vis-selected .title {
     border-bottom: #000000 dashed 1px;
 }
@@ -102,6 +106,10 @@
     left:25px;
 }
 
+.thumbnail a.btn {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
 
 /*.vis-group > .vis-item.vis-line.vis-selected {
 .vis-group > .vis-item.vis-selected {
@@ -112,4 +120,37 @@
     display: inline-block;
     vertical-align: middle;
     float: none;
+}
+.panel-group {
+    margin-bottom: 0px; 
+}
+.helper {
+    display: inline-block;
+    height: 100%;
+}
+img {
+    vertical-align: middle;
+    max-height: 100px;
+    max-width: 100px;
+}
+.portfolio-modal .modal-content img {
+    margin-bottom: 20px;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.displayNone {
+  display:none;
+}
+.btn-kakaostory {
+    color: #fff;
+    background-color: #dcb382;
+    border-color: rgba(0,0,0,0.2);
+}
+.btn-kakaotalk {
+    color: #fff;
+    background-color: #e2d53f;
+    border-color: rgba(0,0,0,0.2);
 }
