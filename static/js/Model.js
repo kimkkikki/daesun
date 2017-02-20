@@ -14,7 +14,7 @@ define([
                 $.ajax({
                     url: DAESUN.HOST + '/apis/timeline',
                     method : 'GET',
-                    //data : JSON.stringify({'username':option.id,'password':option.pwd}),
+                    data : {'param':option.param},
                     dataType : 'json',
                     contentType:"application/json; charset=UTF-8",
                     success : option.success,

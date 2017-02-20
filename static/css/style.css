@@ -1,3 +1,6 @@
+.displayNone {
+    display: none;
+}
 
 .vis-item,
 .vis-item.vis-box.vis-selected{
@@ -7,14 +10,13 @@
     color : #fff;
 }
 
-/*.vis-item .candidate {*/
 .vis-item .title {
     border-bottom: #ffffff dashed 1px;
     margin-bottom: 5px;
     padding-bottom: 5px;
 }
 
-.d-together-item {
+.vis-item.d-together-item {
     background-color: #014481;
     border-color: #014481;
     font-weight: bold;
@@ -48,6 +50,38 @@
     font-weight: bold;
     color : #fff;
 }
+
+.vis-item.vis-selected.d-together-item,
+.vis-item.vis-selected.d-right-item,
+.vis-item.vis-selected.d-freekorea-item,
+.vis-item.vis-selected.d-people-item,
+.vis-item.vis-selected.d-etc-item {
+    background-color: #fff;
+    border-color: #014481;
+    font-weight: bold;
+    color : #000;
+}
+
+.vis-item.vis-selected .title {
+    border-bottom: #000000 dashed 1px;
+}
+
+.vis-item.vis-selected .label {
+    background-color: #000000;
+    color: #fff;
+}
+
+.vis-item.vis-line {
+    z-index: 0;
+}
+
+
+
+
+
+
+
+
 
 .label {
     background-color: #ffffff;
