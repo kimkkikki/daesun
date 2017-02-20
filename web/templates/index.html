@@ -315,7 +315,7 @@
                         여기에 패널 생성 됨  
                     </div>
                 </div> -->
-            </div>
+            <!--</div>-->
         </div>
     </section>
 
@@ -371,9 +371,6 @@
                         <p class="text-muted">Lee Min Hyang</p>
                     </div>
                 </div>
-
-
-
                 <div class="col-xs-4 col-sm-4">
                     <div class="team-member">
                         <img src="{% static 'img/team/haneol-chae.jpg' %}" class="img-responsive img-circle" alt="">
@@ -409,18 +406,10 @@
             </div>
             <div class="row">
                 {% for book in book_list %}
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                    <div class="thumbnail">
-                        <h4>
-                            {{ book.title|striptags }}
-                            <span class="label label-info info">
-                                <span data-toggle="tooltip" title="{{ book.title|striptags }}">{{ book.pubdate }}</span>
-                            </span>
-                        </h4>
-                        <img src="{{ book.image }}" alt="...">
-                        <a href="{{ book.link }}" class="btn btn-primary col-xs-12" role="button">사러 가기</a>
-                        <div class="clearfix"></div>
-                    </div>
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 thumb">
+                    <a class="thumbnail" href="{{ book.link }}">
+                        <img class="img-responsive" src="{{ book.image }}" alt="...">
+                    </a>
                 </div>
                 {% endfor %}
             </div>
