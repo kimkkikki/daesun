@@ -16,5 +16,11 @@
       "responseHeader": ["Content-Type"],
       "method": ["GET", "HEAD"],
       "maxAgeSeconds": 3600
+    },
+    {
+      "origin": ["http://daesun2017.appspot-preview.com"],
+      "responseHeader": ["Content-Type"],
+      "method": ["GET", "HEAD"],
+      "maxAgeSeconds": 3600
     }
 ]

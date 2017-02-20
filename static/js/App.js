@@ -30,7 +30,7 @@ function(Timeline, agency){
 	function setHandlebars(){
 
         Timeline.render();
-        //Timeline.show();
+        Timeline.show();
 
 	}
 

@@ -110,11 +110,8 @@
                 </div>
             </div>
             <div class="row">
-                <!-- <div class="col-xs-1 col-md-1 col-sm-1 d-timeline-more displayNone">
-
-                </div> -->
                 <div class="col-xs-12 col-sm-12 col-md-12 d-timeline-body">
-                    <button class="btn btn-default d-timeline-more-btn" style="position:absolute"> < </button>
+                    <button class="btn btn-warning d-timeline-more-btn displayNone"><strong><i class="fa fa-hand-o-left" aria-hidden="true"></i> 이전 대선 키워드</strong></button>
                     <div id="visualization"></div>
                 </div>
             </div>
@@ -123,13 +120,17 @@
                     {% verbatim %}
                     <script class="d-timeline-keyword-tpl" type="text/x-handlebars-template">
                         {{#keywords}}
-                        <div class="panel panel-default">
+                        <div class="panel {{panelClass}}" style="margin-top:20px;">
                             <div class="panel-heading">
-                                <h3 class="panel-title">{{keyword}}</h3>
+                                <h3 class="panel-title"> <i class="fa fa-search" aria-hidden="true"></i> {{keyword}}</h3>
                             </div>
                             <ul class="list-group">
                                 {{#news}}
-                                <li class="list-group-item">{{cp}} / {{created_at}} / {{title}}</li>
+                                <li class="list-group-item">
+                                    <a href="{{link}}" target="_blank" class="d_keyword">
+                                    <strong> {{created_at}} / {{title}} </strong><span class="label label-default">{{cp}}</span>
+                                    </a>
+                                </li>
                                 {{/news}}
                             </ul>
                         </div>
@@ -278,6 +279,15 @@
                 <!--</ul>-->
                 <table class="table table-condensed">
                     <tbody id="rankTable">
+                    {% for pledge in pledge_rank_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ pledge.title }}</td>
+                            <td>{{ pledge.candidate }}</td>
+                            <td>{{ pledge.like }}</td>
+                            <td>{{ pledge.unlike }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -312,10 +322,10 @@
                 <!-- <br> -->
                 <!-- <div class="panel-group">
                     <div class="row" id="panelGroup">
-                        여기에 패널 생성 됨  
+                        여기에 패널 생성 됨
                     </div>
                 </div> -->
-            </div>
+            <!--</div>-->
         </div>
     </section>
 
@@ -380,9 +390,6 @@
                         <p class="text-muted">Lee Min Hyang</p>
                     </div>
                 </div>
-
-
-
                 <div class="col-xs-4 col-sm-4">
                     <div class="team-member">
                         <img src="{% static 'img/team/haneol-chae.jpg' %}" class="img-responsive img-circle" alt="">
@@ -418,18 +425,10 @@
             </div>
             <div class="row">
                 {% for book in book_list %}
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                    <div class="thumbnail">
-                        <h4>
-                            {{ book.title|striptags }}
-                            <span class="label label-info info">
-                                <span data-toggle="tooltip" title="{{ book.title|striptags }}">{{ book.pubdate }}</span>
-                            </span>
-                        </h4>
-                        <img src="{{ book.image }}" alt="...">
-                        <a href="{{ book.link }}" class="btn btn-primary col-xs-12" role="button">사러 가기</a>
-                        <div class="clearfix"></div>
-                    </div>
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 thumb">
+                    <a class="thumbnail" href="{{ book.link }}">
+                        <img class="img-responsive" src="{{ book.image }}" alt="...">
+                    </a>
                 </div>
                 {% endfor %}
             </div>
@@ -486,7 +485,7 @@
 </script>
 <script type="text/javascript" src="{% static '/js/stats.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/name-luck.js' %}"></script>
-<script type="text/javascript" src="{% static '/js/pledge-rank.js' %}"></script>
+<!--<script type="text/javascript" src="{% static '/js/pledge-rank.js' %}"></script>-->
 <script type="text/javascript" src="{% static '/js/blind-test.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/love-test.js' %}"></script>
 

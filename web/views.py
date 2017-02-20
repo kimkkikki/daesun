@@ -4,7 +4,8 @@ from apis import views
 
 def index(request):
     book_list = views.get_shop()
-    return render(request, 'index.html', {'book_list': book_list})
+    pledge_rank_list = views.pledge_rank_list()
+    return render(request, 'index.html', {'book_list': book_list, 'pledge_rank_list': pledge_rank_list})
 
 
 def graphs(request):

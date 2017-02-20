@@ -4,7 +4,6 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from django.db.models import Count
 from django.db.models import Q, Case, When, Sum, F, Avg
-from urllib import parse, request
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import caches
@@ -15,6 +14,7 @@ from .util import hangle
 from datetime import datetime, timedelta
 from rest_framework.decorators import api_view
 from operator import itemgetter
+import requests
 
 
 class JSONResponse(HttpResponse):
@@ -74,32 +74,20 @@ def cp_daily(req):
 
 
 def get_shop():
-    client_id = "cC0cf4zyUuLFmj_kKUum"
-    client_secret = "EYop6SBs44"
-
     candidates = ['문재인', '안희정', '이재명', '유승민', '황교안', '안철수']
     results = []
 
     for candidate in candidates:
-        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + parse.quote(candidate) + "&d_auth=" + parse.quote(
-            candidate) + "&sort=date&d_dafr=20150101&d_dato=20171231"
+        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + candidate + "&d_auth=" + candidate + "&sort=date&d_dafr=20150101&d_dato=20171231"
 
-        send_request = request.Request(url)
-        send_request.add_header("X-Naver-Client-Id", client_id)
-        send_request.add_header("X-Naver-Client-Secret", client_secret)
-        response = request.urlopen(send_request)
-        code = response.getcode()
+        response = requests.get(url, headers={'X-Naver-Client-Id': 'cC0cf4zyUuLFmj_kKUum', 'X-Naver-Client-Secret': 'EYop6SBs44'})
+        result = response.json()
 
-        if code == 200:
-            try:
-                response_body = response.read()
-                result = json.loads(response_body)
-
-                for obj in result['items']:
-                    obj['image'] = obj['image'].replace('type=m1&', '')
-                    results.append(obj)
-            except:
-                print('response read error')
+        if 'items' in result:
+            for obj in result['items']:
+                obj['image'] = obj['image'].replace('type=m1&', 'type=m5&')
+                obj['title'] = obj['title'].split('(')[0]
+                results.append(obj)
 
     results = sorted(results, key=itemgetter('pubdate'), reverse=True)
     return results
@@ -110,8 +98,13 @@ def shop(req):
     return JSONResponse(get_shop())
 
 
+def pledge_rank_list():
+    pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
+    return list(pledges.values())
+
+
 @cache_page(60 * 10)
-def pledge_rank(req):
+def pledge_rank_api(req):
     pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
     return JSONResponse(list(pledges.values()))
 
@@ -203,7 +196,6 @@ def name_chemistry(req):
 
 
 @api_view(['GET'])
-@cache_page(60 * 30)
 def timeline(req):
     param = int(req.GET.get('param', 1))
 
@@ -226,9 +218,10 @@ def timeline(req):
                 candidate__contains=c['candidate']).filter(created_at__contains=data_group['created_at'])
             for ck in candidate_keyword_list:
                 inner_keyword = {'keyword': ck['keyword'], 'count': ck['count']}
-                scraps = [scraps for scraps in
-                          Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').filter(
-                              title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
+                scraps = [{'title': scraps['title'], 'link': scraps['link'], 'cp': scraps['cp'],
+                           'created_at': scraps['created_at'].strftime('%Y-%m-%d %H:%M:%S')} for scraps in
+                          Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').
+                              filter(title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
                 inner_keyword['news'] = scraps
                 keyword_list.append(inner_keyword)
 
