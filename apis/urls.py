@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^timeline$', views.timeline, name='timeline'),
     url(r'^name$', views.name_chemistry, name='name_chemistry'),
     url(r'^pledge$', views.pledge, name='pledge'),
-    url(r'^pledge/rank$', views.pledge_rank, name='pledge_rank'),
+    url(r'^pledge/rank$', views.pledge_rank_api, name='pledge_rank'),
     url(r'^rating$', views.approval_rating, name='approval_rating'),
     url(r'^lovetest$', views.love_test, name='love_test'),
     url(r'^admin/', admin.site.urls),

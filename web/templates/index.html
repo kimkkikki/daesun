@@ -275,6 +275,15 @@
                 <!--</ul>-->
                 <table class="table table-condensed">
                     <tbody id="rankTable">
+                    {% for pledge in pledge_rank_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ pledge.title }}</td>
+                            <td>{{ pledge.candidate }}</td>
+                            <td>{{ pledge.like }}</td>
+                            <td>{{ pledge.unlike }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -463,7 +472,7 @@
 </script>
 <script type="text/javascript" src="{% static '/js/stats.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/name-luck.js' %}"></script>
-<script type="text/javascript" src="{% static '/js/pledge-rank.js' %}"></script>
+<!--<script type="text/javascript" src="{% static '/js/pledge-rank.js' %}"></script>-->
 <script type="text/javascript" src="{% static '/js/blind-test.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/love-test.js' %}"></script>
 

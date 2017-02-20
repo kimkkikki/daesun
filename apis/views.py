@@ -82,7 +82,6 @@ def get_shop():
 
         response = requests.get(url, headers={'X-Naver-Client-Id': 'cC0cf4zyUuLFmj_kKUum', 'X-Naver-Client-Secret': 'EYop6SBs44'})
         result = response.json()
-        print(result)
 
         if 'items' in result:
             for obj in result['items']:
@@ -99,8 +98,13 @@ def shop(req):
     return JSONResponse(get_shop())
 
 
+def pledge_rank_list():
+    pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
+    return list(pledges.values())
+
+
 @cache_page(60 * 10)
-def pledge_rank(req):
+def pledge_rank_api(req):
     pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
     return JSONResponse(list(pledges.values()))
 
