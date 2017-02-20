@@ -1,4 +1,13 @@
 $(document).ready(function(){
+    var end = 0;
+    var endApis = function() {
+        if (end < 2) {
+            end++;
+        } else {
+            $('#chemistry').waitMe('hide');
+            end = 0;
+        }
+    }
 	var nameluckUrl = "/apis/name?name=";
 	var nameLuckData;
 	var userName = '';
@@ -9,7 +18,7 @@ $(document).ready(function(){
 	    waitMe($('#chemistry'));
 		$.ajax({
 			// 적용할 때, 아래 코드의 주석을 풀어줘야 합니다.
-			url: nameLuckUrl + userName,
+			url: nameluckUrl + userName,
 			headers: {
 		        'Content-Type':'application/json'
 		    },
@@ -42,8 +51,10 @@ $(document).ready(function(){
 	}
 
 	var createNameLuck = function(nameLuckData){
-		var nameLuckData = nameLuckData;
+		$('#panelGroup').empty();
 
+		var nameLuckData = nameLuckData;
+		
 		for(var i=0; i< nameLuckData.length; i++){
 			var userToCandidate = nameLuckData[i].candidate + ' ' + nameLuckData[i].score_to + '% 만큼 좋아해요.';
 			var updown_pic ='';
@@ -72,17 +83,18 @@ $(document).ready(function(){
 			                "<div class='panel panel-default'>"+
 			                    "<div class='panel-body'>"+
 		                            "<div class='col-xs-4 text-center vcenter'>"+
-	                                    "<div class='col-xs-12'>"+
+	                                    // "<div class='col-xs-12'>"+
 	                                        // "<p style='font-size:30px;'><strong>"+nameLuckData[i].candidate+"</strong></p>"+
-	                                        "<span class='align-middle'><p style='font-size:20px;'><strong>"+(i+1)+"위<br>"+nameLuckData[i].candidate+"</strong></p></span>"+
-	                                    "</div>"+
+	                                        "<p style='font-size:25px;'><strong>"+(i+1)+"위</strong></p>"+
+	                                        "<p style='font-size:17px;'><strong>"+nameLuckData[i].candidate+"</strong></p>"+
+	                                    // "</div>"+
 		                            "</div>"+
 		                            "<div class='col-xs-4 text-center vcenter'>"+
 		                                // "<img src='/img/nameLuck_pic/"+updown_pic+"' class='img-circle'/>"+
-		                                "<img src='/static/img/nameLuck_pic/"+updown_pic+"' width='100px' height='100px' class='img-circle'/>"+
+		                                "<img src='/static/img/nameLuck_pic/"+updown_pic+"' width='100px' height='100px' class='img-circle img-responsive'/>"+
 		                            "</div>"+
 		                            "<div class='col-xs-4 text-center vcenter'>"+
-		                                "<p style='font-size:20px;'><strong>"+nameLuckData[i].score_to+"%</strong></p>"+
+		                                "<p style='font-size:25px;'><strong>"+nameLuckData[i].score_to+"%</strong></p>"+
 		                            "</div>"+
 			                    "</div>"+
 			                "</div>"+
@@ -92,17 +104,50 @@ $(document).ready(function(){
 
 	var justOne = false;
 	$('#buttonUserName').click(function(){
-		$('#panelGroup').empty();
-		if(userName !== $('#inputUserName').val()){
-			userName = $('#inputUserName').val();
-			justOne = false;
-		}
-		//이름점 리스트
-		if (justOne === false){
-			getNameLuckList();
-			justOne = true;
+		var input_name = $('#inputUserName')
+		var isEmpty = name_validation(input_name);
+		console.log(isEmpty);
+		if (isEmpty){
+			if(userName !== $('#inputUserName').val()){
+				userName = $('#inputUserName').val();
+				justOne = false;
+			}
+			//이름점 리스트
+			if (justOne === false){
+				getNameLuckList();
+				justOne = true;
+			}	
+		} else {
+			input_name.focus();
 		}
 	});
+
+	var name_validation = function(name){
+		var name_value = name.val();
+		name_value.trim(); //공백 제거
+		var name_length = name_value.length;
+		if( name_value == "")
+		{
+			$('#inputUserName').val("");
+			// alert("이름을 입력하세요.");
+			return false;
+		} else {
+			var kor_check = /([^가-힣\x20])/i;
+			if (kor_check.test(name_value)) {
+				alert("한글만 입력하세요.");
+				$('#inputUserName').val("");
+				return false;
+			} else {
+				if( name_length < 2 || name_length > 4 ) {
+					alert("2글자 이상 입력하세요.");
+					$('#inputUserName').val("");
+					return false;
+				} else {
+					return true;
+				}
+			}
+		}
+	}
 
 	$('.snsBtnGroup > a').click(function(){
 		var sns = $(this).attr("id");
@@ -111,6 +156,33 @@ $(document).ready(function(){
 		sendSns(sns, url, txt);
 	});
 
+
+
+	var fnCopy = function() {
+	    html2canvas($("#divSource"), {
+	        //allowTaint: true,
+	        //taintTest: false,
+	        useCORS: true,
+	        proxy: '/etc/proxy_image',
+	        onrendered: function(canvas) {
+	            var image = canvas.toDataURL();
+	            $("#imgTarget").attr("src", image);
+	            meta.page.notify("Image Target 영역에 이미지가 생성되었습니다.");
+	        }
+	    });
+	}
+
+	var fnDownload = function () {
+		html2canvas($('#panelGroup'), {
+			useCORS: true,
+	        proxy: '/etc/proxy_image',
+		  	onrendered: function(canvas) {
+		  		var image = canvas.toDataURL();
+	            meta.cmn.submitHiddenForm("/etc/bypass_image", { image : image });
+		  }
+		});
+	}
+	
 	function sendSns(sns, url, txt)
 	{
 	    var o;
