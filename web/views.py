@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from apis import views
 
 
 def index(request):
-    return render(request, template_name='index.html')
+    book_list = views.get_shop()
+    return render(request, 'index.html', {'book_list': book_list})
 
 
 def graphs(request):

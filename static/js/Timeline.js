@@ -65,6 +65,8 @@ define([
                 return item
             })
 
+            var candiateClass=
+
             this.timelineData = [];
 
             for(var i=0; i<modify_data.length; i++) {
@@ -75,17 +77,21 @@ define([
                         start : new Date(modify_data[i].created_at)
                     }
 
-                    obj.content = '<div class="title" data-index="0">' + modify_data[i].data[j].candidate + '</div>';
+                    var candiate = modify_data[i].data[j].candidate;
+
+                    obj.content = '<div class="title" data-index="0">' + candiate + '</div>';
 
                     var keyword = ''
 
                     for(var k=0; k<modify_data[i].data[j].keywords.length; ++k) {
 
-                        keyword += modify_data[i].data[j].keywords[k].keyword;
+                        keyword += '<span class="label label-info" style="margin-right:5px">' + modify_data[i].data[j].keywords[k].keyword + '</span>'
+
+                        //keyword += modify_data[i].data[j].keywords[k].keyword;
 
                     }
 
-                    obj.content += '<div>' + keyword + '</div>';
+                    obj.content += '<div style="margin-bottom:5px;">' + keyword + '</div>';
 
                     obj.keywords = modify_data[i].data[j].keywords
 
@@ -164,6 +170,40 @@ define([
             };
 
             this.timeline = new vis.Timeline(container, items, options);
+
+
+            $.each(this.$el.find('.vis-item'),function(index,item){
+
+                var candiate = $(item).find('.title').text();
+
+                console.log(candiate)
+
+                switch(candiate){
+                    case '문재인':
+                    case '이재명':
+                    case '안희정':
+                        $(item).addClass('d-together-item');
+                    break;
+                    case '유승민':
+                    case '남경필':
+                        $(item).addClass('d-right-item');
+                    break;
+                    case '황교안':
+                        $(item).addClass('d-freekorea-item');
+                    break;
+                    case '안철수':
+                        $(item).addClass('d-people-item');
+                    break;
+                    default:
+                        $(item).addClass('d-etc-item');
+                    break;
+                }
+
+                console.log($(item).html())
+            })
+
+
+            this.show()
              this.timeline.zoomIn(0.8);
              this.timeline.moveTo(new Date( moment(this.timelineData[0].start).add(1,'hours')))
 

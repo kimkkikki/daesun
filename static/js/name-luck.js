@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     var end = 0;
     var endApis = function() {
         if (end < 2) {
@@ -9,7 +8,6 @@ $(document).ready(function(){
             end = 0;
         }
     }
-
 	var nameluckUrl = "/apis/name?name=";
 	var nameLuckData;
 	var userName = '';
@@ -17,6 +15,7 @@ $(document).ready(function(){
 	var nameLuckScoreFromSort = []
 
 	var getNameLuckList = function(){
+	    waitMe($('#chemistry'));
 		$.ajax({
 			// 적용할 때, 아래 코드의 주석을 풀어줘야 합니다.
 			url: nameluckUrl + userName,
@@ -42,11 +41,11 @@ $(document).ready(function(){
 				// })
 				// createNameLuck(nameLuckScoreFromSort);
 
-				endApis();
+                $('#chemistry').waitMe('hide');
 			},
 			error: function(data, status, err) {
 				console.log(err);
-				endApis();
+                $('#chemistry').waitMe('hide');
 			}
 		});
 	}

@@ -1,3 +1,102 @@
+
+.vis-item,
+.vis-item.vis-box.vis-selected{
+    background-color: rgb(24, 112, 185);
+    border-color: rgb(24, 112, 185);
+    font-weight: bold;
+    color : #fff;
+}
+
+/*.vis-item .candidate {*/
+.vis-item .title {
+    border-bottom: #ffffff dashed 1px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.d-together-item {
+    background-color: #014481;
+    border-color: #014481;
+    font-weight: bold;
+    color : #fff;
+}
+
+.d-right-item {
+    background-color: #4ca0e6;
+    border-color: #4ca0e6;
+    font-weight: bold;
+    color : #fff;
+}
+
+.d-freekorea-item {
+    background-color: #c9151e;
+    border-color: #c9151e;
+    font-weight: bold;
+    color : #fff;
+}
+
+.d-people-item {
+    background-color: #036242;
+    border-color: #036242;
+    font-weight: bold;
+    color : #fff;
+}
+
+.d-etc-item {
+    background-color: #5d5d5d;
+    border-color: #5d5d5d;
+    font-weight: bold;
+    color : #fff;
+}
+
+.label {
+    background-color: #ffffff;
+    color : #000;
+}
+
+.vis-group > .vis-item.vis-line.vis-selected {
+.vis-group > .vis-item.vis-selected {
+    z-index:0;
+}
+
+.thumbnail {
+    position: relative;
+    padding: 0px;
+    margin-bottom: 20px;
+}
+
+.thumbnail > h4 {
+    padding: 7px 5px 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.thumbnail h4 .info {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 0.6em;
+    padding-left: 15px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 4px;
+    border-radius: 0px;
+    border-bottom-left-radius: 5px;
+    cursor:  pointer;
+}
+
+.thumbnail h4 .info > span {
+    margin-right: 10px;
+}
+
+.thumbnail img {
+    width: 200px;
+    height: 300px;
+}
+
+.thumbnail a.btn {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
 .vcenter {
     display: inline-block;
     vertical-align: middle;

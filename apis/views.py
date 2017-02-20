@@ -73,29 +73,41 @@ def cp_daily(req):
     return JSONResponse(list(daily_list))
 
 
-@api_view(['GET'])
-def shop(req):
+def get_shop():
     client_id = "cC0cf4zyUuLFmj_kKUum"
     client_secret = "EYop6SBs44"
-    # 추후 parameter 로 변경
-    enc_text = parse.quote("문재인")
-    # json 결과
-    url = "https://openapi.naver.com/v1/search/book.json?query=" + enc_text
 
-    send_request = request.Request(url)
-    send_request.add_header("X-Naver-Client-Id", client_id)
-    send_request.add_header("X-Naver-Client-Secret", client_secret)
-    response = request.urlopen(send_request)
-    code = response.getcode()
+    candidates = ['문재인', '안희정', '이재명', '유승민', '황교안', '안철수']
+    results = []
 
-    if code == 200:
-        response_body = response.read()
-        print(response_body.decode('utf-8'))
-        return JSONResponse(response_body)
+    for candidate in candidates:
+        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + parse.quote(candidate) + "&d_auth=" + parse.quote(
+            candidate) + "&sort=date&d_dafr=20150101&d_dato=20171231"
 
-    else:
-        print("Error Code:" + code)
-        return HttpResponse(status=code)
+        send_request = request.Request(url)
+        send_request.add_header("X-Naver-Client-Id", client_id)
+        send_request.add_header("X-Naver-Client-Secret", client_secret)
+        response = request.urlopen(send_request)
+        code = response.getcode()
+
+        if code == 200:
+            try:
+                response_body = response.read()
+                result = json.loads(response_body)
+
+                for obj in result['items']:
+                    obj['image'] = obj['image'].replace('type=m1&', '')
+                    results.append(obj)
+            except:
+                print('response read error')
+
+    results = sorted(results, key=itemgetter('pubdate'), reverse=True)
+    return results
+
+
+@cache_page(60 * 10)
+def shop(req):
+    return JSONResponse(get_shop())
 
 
 @cache_page(60 * 10)
@@ -232,28 +244,21 @@ def timeline(req):
 
 
 @api_view(['GET'])
-@cache_page(60 * 60)
 def love_test(req):
-    cache = caches['default']
-    cache.delete('lovetest')
-
-    number = [('문재인', 1), ('안희정', 2), ('이재명', 3), ('안철수', 4), ('유승민', 5), ('황교안', 6)]
+    candidate_dict = {'문재인': 1, '안희정': 2, '이재명': 3, '안철수': 4, '유승민': 5, '황교안': 6, '남경필': 7}
+    keyword_dict = {'1-2': '생각중', '2-1': '신뢰', '4-1': '자신있음', '3-2': '경계중', '5-6':'관둬라'} # 추출중
     result_list = []
     result_db_list = LoveOrHate.objects.values('speaker', 'target').annotate(s_cnt=Count('speaker'), t_cnt=Count('target'))
     speaker, target, count, arrows = result_db_list[0]['speaker'], result_db_list[0]['target'], result_db_list[0]['t_cnt'], 'to'
     for result in result_db_list:
         if speaker != result['speaker']:
-            for n in number:
-                if n[0] == speaker:
-                    speaker = n[1]
-                if n[0] == target:
-                    target = n[1]
-            result_list.append({'from': speaker, 'to': target, 'arrows': arrows, 'label': '싫어함', 'font': {'align': 'bottom'}})
+            result_list.append({'from': candidate_dict[speaker], 'to': candidate_dict[target],
+                                'arrows': arrows, 'label': keyword_dict[str(candidate_dict[speaker])+'-' +str(candidate_dict[target])], 'font': {'align': 'bottom'}})
             speaker, target, count = result['speaker'], result['target'], result['t_cnt']
 
         if count < result['t_cnt']:
             count, target = result['t_cnt'], result['target']
             if count > 20:
                 arrows = {'to': {'scaleFactor': '2'}}
-
+    print(list(result_list))
     return JSONResponse(list(result_list))

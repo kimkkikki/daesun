@@ -110,10 +110,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-1 col-md-1 col-sm-1 d-timeline-more displayNone">
-                    <button class="btn btn-default d-timeline-more-btn"> < </button>
-                </div>
+                <!-- <div class="col-xs-1 col-md-1 col-sm-1 d-timeline-more displayNone">
+
+                </div> -->
                 <div class="col-xs-12 col-sm-12 col-md-12 d-timeline-body">
+                    <button class="btn btn-default d-timeline-more-btn" style="position:absolute"> < </button>
                     <div id="visualization"></div>
                 </div>
             </div>
@@ -269,12 +270,12 @@
                 </div>
             </div>
             <div class="row">
-                <ul class="list-inline" style="vertical-align: middle;">
-                    <li><img src="{% static 'img/moon.jpeg' %}" class="img-circle img-responsive" width="50"></li>
-                    <li><h4 class="inline">공약제목이당</h4></li>
-                    <li><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 123</li>
-                    <li><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 123</li>
-                </ul>
+                <!--<ul class="list-inline" style="vertical-align: middle;">-->
+                    <!--<li><img src="{% static 'img/moon.jpeg' %}" class="img-circle img-responsive" width="50"></li>-->
+                    <!--<li><h4 class="inline">공약제목이당</h4></li>-->
+                    <!--<li><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 123</li>-->
+                    <!--<li><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 123</li>-->
+                <!--</ul>-->
                 <table class="table table-condensed">
                     <tbody id="rankTable">
                     </tbody>
@@ -394,36 +395,7 @@
                         <p class="text-muted">R2fresh</p>
                     </div>
                 </div>
-
-
-
             </div>
-
-            <!-- <div class="row">
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <h4>Backend</h4>
-                        <p class="text-muted">kimkkikki</p>
-                        <p class="text-muted">minchoco</p>
-                        <ul class="list-inline social-buttons">
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <h4>Front</h4>
-                        <p class="text-muted">r2refresh</p>
-                        <p class="text-muted">wonchoel</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <h4>Design</h4>
-                        <p class="text-muted">haneol</p>
-                        <p class="text-muted">minh</p>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </section>
 
@@ -434,6 +406,23 @@
                     <h2 class="section-heading">대선책방</h2>
                     <h3 class="section-subheading text-muted">대선 주자들의 책들입니다</h3>
                 </div>
+            </div>
+            <div class="row">
+                {% for book in book_list %}
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="thumbnail">
+                        <h4>
+                            {{ book.title|striptags }}
+                            <span class="label label-info info">
+                                <span data-toggle="tooltip" title="{{ book.title|striptags }}">{{ book.pubdate }}</span>
+                            </span>
+                        </h4>
+                        <img src="{{ book.image }}" alt="...">
+                        <a href="{{ book.link }}" class="btn btn-primary col-xs-12" role="button">사러 가기</a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
