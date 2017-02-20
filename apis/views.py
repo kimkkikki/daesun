@@ -203,7 +203,6 @@ def name_chemistry(req):
 
 
 @api_view(['GET'])
-@cache_page(60 * 30)
 def timeline(req):
     param = int(req.GET.get('param', 1))
 
@@ -226,9 +225,10 @@ def timeline(req):
                 candidate__contains=c['candidate']).filter(created_at__contains=data_group['created_at'])
             for ck in candidate_keyword_list:
                 inner_keyword = {'keyword': ck['keyword'], 'count': ck['count']}
-                scraps = [scraps for scraps in
-                          Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').filter(
-                              title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
+                scraps = [{'title': scraps['title'], 'link': scraps['link'], 'cp': scraps['cp'],
+                           'created_at': scraps['created_at'].strftime('%Y-%m-%d %H:%M:%S')} for scraps in
+                          Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').
+                              filter(title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
                 inner_keyword['news'] = scraps
                 keyword_list.append(inner_keyword)
 
