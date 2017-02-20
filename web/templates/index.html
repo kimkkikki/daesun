@@ -111,7 +111,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 d-timeline-body">
-                    <button class="btn btn-default d-timeline-more-btn displayNone" style="position:absolute;z-index:5;"> < </button>
+                    <button class="btn btn-warning d-timeline-more-btn displayNone"><strong><i class="fa fa-hand-o-left" aria-hidden="true"></i> 이전 대선 키워드</strong></button>
                     <div id="visualization"></div>
                 </div>
             </div>
@@ -120,13 +120,17 @@
                     {% verbatim %}
                     <script class="d-timeline-keyword-tpl" type="text/x-handlebars-template">
                         {{#keywords}}
-                        <div class="panel panel-default">
+                        <div class="panel {{panelClass}}" style="margin-top:20px;">
                             <div class="panel-heading">
-                                <h3 class="panel-title">{{keyword}}</h3>
+                                <h3 class="panel-title"> <i class="fa fa-search" aria-hidden="true"></i> {{keyword}}</h3>
                             </div>
                             <ul class="list-group">
                                 {{#news}}
-                                <li class="list-group-item">{{cp}} / {{created_at}} / {{title}}</li>
+                                <li class="list-group-item">
+                                    <a href="{{link}}" target="_blank" class="d_keyword">
+                                    <strong> {{created_at}} / {{title}} </strong><span class="label label-default">{{cp}}</span>
+                                    </a>
+                                </li>
                                 {{/news}}
                             </ul>
                         </div>
@@ -318,7 +322,7 @@
                 <!-- <br> -->
                 <!-- <div class="panel-group">
                     <div class="row" id="panelGroup">
-                        여기에 패널 생성 됨  
+                        여기에 패널 생성 됨
                     </div>
                 </div> -->
             <!--</div>-->

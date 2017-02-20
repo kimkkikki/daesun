@@ -85,6 +85,7 @@ define([
                     obj.content = '<div class="title">' + candiate + '</div>';
 
                     var keyword = ''
+                    var panelClass = '';
 
                     for(var k=0; k<modify_data[i].data[j].keywords.length; ++k) {
                         keyword += '<span class="label label-info" style="margin-right:5px">' + modify_data[i].data[j].keywords[k].keyword + '</span>'
@@ -99,21 +100,30 @@ define([
                         case '이재명':
                         case '안희정':
                             obj.className = "d-together-item"
+                            panelClass = 'panel-primary';
                         break;
                         case '유승민':
                         case '남경필':
                             obj.className = 'd-right-item';
+                            panelClass = 'panel-info';
                         break;
                         case '황교안':
                             obj.className = 'd-freekorea-item';
+                            panelClass = 'panel-danger';
                         break;
                         case '안철수':
                             obj.className = 'd-people-item';
+                            panelClass = 'panel-success';
                         break;
                         default:
                             obj.className = 'd-etc-item';
+                            panelClass = 'panel-default';
                         break;
                     }
+
+                    _.each(modify_data[i].data[j].keywords,function(item){
+                        item.panelClass = panelClass;
+                    })
 
                     modifyData.push(obj);
 
@@ -130,7 +140,7 @@ define([
             var container = document.getElementById('visualization');
 
             if(this.pageNum > 1){
-                this.timelineData.push(data)
+                this.timelineData = this.timelineData.concat(data)
                 this.items.add(data)
                 this.timeline.setOptions({
                     min : new Date( moment(data[data.length-1].start).subtract(1,'hours')),
@@ -156,6 +166,8 @@ define([
 
                 this.timeline.on('rangechanged',Function.prototype.bind.call(this.onRangechanged,this) )
             }
+
+            console.log(this.timelineData)
         },
         onRangechanged : function(e){
             if( moment(e.start).format('HH:mm') == moment( this.timeline.range.options.min ).format('HH:mm'))  {
