@@ -2,6 +2,11 @@
     display: none;
 }
 
+.vis-item-content .label{
+    background-color: #ffffff;
+    color : #000;
+}
+
 .vis-item,
 .vis-item.vis-box.vis-selected{
     background-color: rgb(24, 112, 185);
@@ -23,28 +28,28 @@
     color : #fff;
 }
 
-.d-right-item {
+.vis-item.d-right-item {
     background-color: #4ca0e6;
     border-color: #4ca0e6;
     font-weight: bold;
     color : #fff;
 }
 
-.d-freekorea-item {
+.vis-item.d-freekorea-item {
     background-color: #c9151e;
     border-color: #c9151e;
     font-weight: bold;
     color : #fff;
 }
 
-.d-people-item {
+.vis-item.d-people-item {
     background-color: #036242;
     border-color: #036242;
     font-weight: bold;
     color : #fff;
 }
 
-.d-etc-item {
+.vis-item.d-etc-item {
     background-color: #5d5d5d;
     border-color: #5d5d5d;
     font-weight: bold;
@@ -75,23 +80,33 @@
     z-index: 0;
 }
 
-
-
-
-
-
-
-
-
-.label {
-    background-color: #ffffff;
-    color : #000;
+.d_keyword {
+    color:#000
 }
 
-.vis-group > .vis-item.vis-line.vis-selected {
+.d_keyword:hover,
+.d_keyword:active{
+    text-decoration:none;
+    color:#000
+}
+
+.d_keyword:focus {
+    text-decoration:none;
+    color:#333
+}
+
+#timeline .d-timeline-more-btn {
+    position:absolute;
+    z-index:5;
+    top:10px;
+    left:25px;
+}
+
+
+/*.vis-group > .vis-item.vis-line.vis-selected {
 .vis-group > .vis-item.vis-selected {
     z-index:0;
-}
+}*/
 
 .thumbnail {
     position: relative;
