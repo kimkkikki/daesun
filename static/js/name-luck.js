@@ -17,7 +17,6 @@ $(document).ready(function(){
 	var getNameLuckList = function(){
 	    waitMe($('#chemistry'));
 		$.ajax({
-			// 적용할 때, 아래 코드의 주석을 풀어줘야 합니다.
 			url: nameluckUrl + userName,
 			headers: {
 		        'Content-Type':'application/json'
@@ -51,8 +50,6 @@ $(document).ready(function(){
 	}
 
 	var createNameLuck = function(nameLuckData){
-		$('#panelGroup').empty();
-
 		var nameLuckData = nameLuckData;
 		
 		for(var i=0; i< nameLuckData.length; i++){
@@ -78,23 +75,28 @@ $(document).ready(function(){
 				updown_pic += '_down.jpg';
 			}
 
+
+			// <a href="#blindChemistryModal" data-toggle="modal">
 			$("#panelGroup").append(
 			            "<div class='col-xs-12 col-md-6'>"+
 			                "<div class='panel panel-default'>"+
 			                    "<div class='panel-body'>"+
-		                            "<div class='col-xs-4 text-center vcenter'>"+
-	                                    // "<div class='col-xs-12'>"+
-	                                        // "<p style='font-size:30px;'><strong>"+nameLuckData[i].candidate+"</strong></p>"+
-	                                        "<p style='font-size:25px;'><strong>"+(i+1)+"위</strong></p>"+
-	                                        "<p style='font-size:17px;'><strong>"+nameLuckData[i].candidate+"</strong></p>"+
-	                                    // "</div>"+
-		                            "</div>"+
-		                            "<div class='col-xs-4 text-center vcenter'>"+
-		                                // "<img src='/img/nameLuck_pic/"+updown_pic+"' class='img-circle'/>"+
-		                                "<img src='/static/img/nameLuck_pic/"+updown_pic+"' width='100px' height='100px' class='img-circle img-responsive'/>"+
-		                            "</div>"+
-		                            "<div class='col-xs-4 text-center vcenter'>"+
-		                                "<p style='font-size:25px;'><strong>"+nameLuckData[i].score_to+"%</strong></p>"+
+			                    	"<div class='row'>"+
+			                            "<div class='col-xs-4 vcenter'>"+
+	                                        "<h3><strong>"+(i+1)+"위</strong></h3>"+
+	                                        "<h4>"+nameLuckData[i].candidate+"</h4>"+
+			                            "</div>"+
+			                            "<div class='col-xs-4 vcenter'>"+
+			                            	"<div style='text-align: center'>"+
+											    "<div style='display: inline-block;'>"+
+					                                "<span class='helper'></span>"+
+					                                "<img src='/static/img/nameLuck_pic/"+updown_pic+"' class='img-circle img-responsive'/>"+
+				                                "</div>"+
+			                                "</div>"+
+			                            "</div>"+
+			                            "<div class='col-xs-4 vcenter'>"+
+			                                "<h3><strong>"+nameLuckData[i].score_to+" %</strong></h3>"+
+			                            "</div>"+
 		                            "</div>"+
 			                    "</div>"+
 			                "</div>"+
@@ -102,21 +104,27 @@ $(document).ready(function(){
 		}
 	}
 
-	var justOne = false;
+	//modal open
+	$('#blindChemistryModal').on('shown.bs.modal', function () {
+		getNameLuckList();
+		$('#snsBtnGroup').removeClass('displayNone');
+	});
+	//modal close
+	$('#blindChemistryModal').on('hidden.bs.modal', function () {
+		$('#panelGroup').empty();
+		$('#snsBtnGroup').addClass('displayNone');
+	});
+	
 	$('#buttonUserName').click(function(){
 		var input_name = $('#inputUserName')
-		var isEmpty = name_validation(input_name);
-		console.log(isEmpty);
-		if (isEmpty){
-			if(userName !== $('#inputUserName').val()){
-				userName = $('#inputUserName').val();
-				justOne = false;
-			}
-			//이름점 리스트
-			if (justOne === false){
-				getNameLuckList();
-				justOne = true;
-			}	
+		var isValidate = name_validation(input_name);
+
+		if (isValidate){
+			userName = input_name.val();
+			//show modal
+			$('#blindChemistryModal').modal({
+		        show: true
+		    });		
 		} else {
 			input_name.focus();
 		}
@@ -155,8 +163,6 @@ $(document).ready(function(){
 		var txt = '2017 대선 닷컴을 소개합니다.';
 		sendSns(sns, url, txt);
 	});
-
-
 
 	var fnCopy = function() {
 	    html2canvas($("#divSource"), {
