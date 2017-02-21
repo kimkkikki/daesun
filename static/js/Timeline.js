@@ -17,7 +17,7 @@ define([
             this.timelineKeywordTpl = this.$el.find('.d-timeline-keyword-tpl').html();
         },
         render:function(){
-            this.getKeyword();
+            this.getKeyword()
         },
         onTimelineMoreClick:function(e){
             this.pageNum += 1;
@@ -77,7 +77,7 @@ define([
                 for(var j=0; j<modify_data[i].data.length; ++j) {
 
                     var obj = {
-                        start : new Date(modify_data[i].created_at)
+                        'start' : moment(modify_data[i].created_at)
                     }
 
                     var candiate = modify_data[i].data[j].candidate;
@@ -160,6 +160,8 @@ define([
                     locale: 'ko'
                 };
                 this.timeline = new vis.Timeline(container, this.items, options);
+
+                this.timeline.redraw();
 
                 this.timeline.zoomIn(0.8);
                 this.timeline.moveTo(new Date( moment(data[0].start).add(1,'hours')))
