@@ -227,7 +227,7 @@ $(document).ready(function(){
     getRatingList();
 
     function getRatingSuccess(data) {
-        result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명']];
+        result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
         for (var i = 0; i < data.length; i++) {
             obj = data[i];
             if (!result_list[0].includes(obj.date)) {
@@ -252,6 +252,9 @@ $(document).ready(function(){
                     break;
                 case '이재명':
                     result_list[6].push(obj.rating);
+                    break;
+                case '유승민':
+                    result_list[7].push(obj.rating);
                     break;
             }
         }

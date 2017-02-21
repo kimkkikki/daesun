@@ -281,12 +281,17 @@
                 <table class="table table-condensed">
                     <tbody id="rankTable">
                     {% for pledge in pledge_rank_list %}
-                        <tr>
+                        <tr data-toggle="collapse" data-target="#pledge_rank_{{ forloop.counter }}" class="clickable">
                             <td>{{ forloop.counter }}</td>
                             <td>{{ pledge.title }}</td>
                             <td>{{ pledge.candidate }}</td>
                             <td>{{ pledge.like }}</td>
                             <td>{{ pledge.unlike }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div id="pledge_rank_{{ forloop.counter }}" class="collapse">{{ pledge.contents }}</div>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -426,7 +431,7 @@
             </div>
             <div class="row">
                 {% for book in book_list %}
-                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 thumb">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-2 thumb">
                     <a class="thumbnail" href="{{ book.link }}">
                         <img class="img-responsive" src="{{ book.image }}" alt="...">
                     </a>
