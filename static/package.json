@@ -10,5 +10,6 @@
   "license": "ISC",
   "devDependencies": {
     "bower": "^1.8.0"
-  }
+  },
+  "dependencies": {}
 }
