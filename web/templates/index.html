@@ -39,7 +39,7 @@
     <script src="{% static 'lib/handlebars/handlebars.min.js' %}" charset="utf-8"></script>
     <script src="{% static 'lib/d3/d3.min.js' %}"></script>
     <script src="{% static 'lib/c3/c3.min.js' %}"></script>
-    <script src="{% static 'lib/vis/dist/vis.min.js' %}"></script>
+
 
     <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
@@ -47,6 +47,8 @@
 
     <script type="text/javascript" src="{% static 'lib/html5shiv/dist/html5shiv.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/respond/dest/respond.min.js' %}"></script>
+
+    <script src="{% static 'lib/vis/dist/vis.js' %}"></script>
 
     <script src="{% static 'js/utils/common.js' %}" charset="utf-8"></script>
 
@@ -98,9 +100,10 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">2017 대선닷컴에 오신 여러분 환영합니다</div>
-                <div class="intro-heading">당신의 선택에 대한민국의 미래가 달려있습니다</div>
-                <!--<a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>-->
+                <div class="intro-lead-in">대한민국의 미래를 책임질 대통령</div>
+                <div class="intro-heading">당신은 누구를 고르시습니까?</div>
+                <p class="text-center">2017대선닷컴은 특정 후보를 지지하지 않습니다.</p>
+                <p class="text-center">본 사이트의 모든 콘텐츠는 오직 <strong>재미</strong>를 위해 만들어 졌습니다.</p>
             </div>
         </div>
     </header>
@@ -284,12 +287,17 @@
                 <table class="table table-condensed">
                     <tbody id="rankTable">
                     {% for pledge in pledge_rank_list %}
-                        <tr>
+                        <tr data-toggle="collapse" data-target="#pledge_rank_{{ forloop.counter }}" class="clickable">
                             <td>{{ forloop.counter }}</td>
                             <td>{{ pledge.title }}</td>
                             <td>{{ pledge.candidate }}</td>
                             <td>{{ pledge.like }}</td>
                             <td>{{ pledge.unlike }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div id="pledge_rank_{{ forloop.counter }}" class="collapse">{{ pledge.contents }}</div>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -431,7 +439,7 @@
             </div>
             <div class="row">
                 {% for book in book_list %}
-                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-2 thumb">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-2 thumb">
                     <a class="thumbnail" href="{{ book.link }}">
                         <img class="img-responsive" src="{{ book.image }}" alt="...">
                     </a>

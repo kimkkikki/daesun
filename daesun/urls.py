@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from apis import views
+from web import views
 
 urlpatterns = [
     url(r'^', include('web.urls')),

@@ -24,21 +24,27 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-def google_app_engine_health_check(req):
-    return HttpResponse(status=200)
-
-
 @cache_page(60 * 1)
 def index(req):
     scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')[0:100]
     return JSONResponse(list(scraps))
 
 
-@cache_page(60 * 10)
-def cp_group(req):
-    candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-                        Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
-                        Q(title__contains='남경필'))
+# @cache_page(60 * 10)
+def cp_group(request):
+    start_date = request.GET.get('start_date', None)
+    end_date = request.GET.get('end_date', None)
+
+    if start_date is not None and end_date is not None:
+        start = datetime.strptime(start_date, '%Y%m%d')
+        end = datetime.strptime(end_date, '%Y%m%d') + timedelta(days=1)
+        candidate_q_list =  Q(created_at__range=[start, end]) & (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
+                            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+                            Q(title__contains='남경필'))
+    else:
+        candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
+                            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+                            Q(title__contains='남경필'))
 
     group_list = Scraps.objects.filter(candidate_q_list).values('cp').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
@@ -80,7 +86,8 @@ def get_shop():
     for candidate in candidates:
         url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + candidate + "&d_auth=" + candidate + "&sort=date&d_dafr=20150101&d_dato=20171231"
 
-        response = requests.get(url, headers={'X-Naver-Client-Id': 'cC0cf4zyUuLFmj_kKUum', 'X-Naver-Client-Secret': 'EYop6SBs44'})
+        response = requests.get(url, headers={'X-Naver-Client-Id': 'cC0cf4zyUuLFmj_kKUum',
+                                              'X-Naver-Client-Secret': 'EYop6SBs44'})
         result = response.json()
 
         if 'items' in result:
@@ -105,8 +112,7 @@ def pledge_rank_list():
 
 @cache_page(60 * 10)
 def pledge_rank_api(req):
-    pledges = Pledge.objects.annotate(score=Sum(F('like') - F('unlike'))).order_by('-score')[0:10]
-    return JSONResponse(list(pledges.values()))
+    return JSONResponse(pledge_rank_list())
 
 
 @csrf_exempt
@@ -150,7 +156,8 @@ def pledge(req):
                 Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1, updated=datetime.now())
                 candidate_dict[candidate_list[i].get('candidate')] += 1
             elif result == -1 or result == '-1':
-                Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1, updated=datetime.now())
+                Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1,
+                                                                             updated=datetime.now())
                 candidate_dict[candidate_list[i].get('candidate')] -= 1
 
         result_list = [{'candidate': '문재인', 'count': candidate_dict['문재인']},
@@ -159,7 +166,7 @@ def pledge(req):
                        {'candidate': '유승민', 'count': candidate_dict['유승민']},
                        {'candidate': '안희정', 'count': candidate_dict['안희정']},
                        {'candidate': '황교안', 'count': candidate_dict['황교안']},
-                       {'candidate': '남경필', 'count': candidate_dict['남경필']},]
+                       {'candidate': '남경필', 'count': candidate_dict['남경필']}, ]
         result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
 
         return JSONResponse(result_list)
@@ -169,8 +176,8 @@ def pledge(req):
 def approval_rating(req):
     cp = req.GET.get('cp', None)
     if cp is None:
-        approval_ratings = ApprovalRating.objects.filter(type=1).extra({'date': 'date(date)'})\
-        .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
+        approval_ratings = ApprovalRating.objects.filter(type=1).extra({'date': 'date(date)'}) \
+            .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
     else:
         approval_ratings = ApprovalRating.objects.filter(type=1, cp=cp).extra({'date': 'date(date)'}) \
             .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
@@ -239,14 +246,18 @@ def timeline(req):
 @api_view(['GET'])
 def love_test(req):
     candidate_dict = {'문재인': 1, '안희정': 2, '이재명': 3, '안철수': 4, '유승민': 5, '황교안': 6, '남경필': 7}
-    keyword_dict = {'1-2': '생각중', '2-1': '신뢰', '4-1': '자신있음', '3-2': '경계중', '5-6':'관둬라'} # 추출중
+    keyword_dict = {'1-2': '생각중', '2-1': '신뢰', '4-1': '자신있음', '3-2': '경계중', '5-6': '관둬라'}  # 추출중
     result_list = []
-    result_db_list = LoveOrHate.objects.values('speaker', 'target').annotate(s_cnt=Count('speaker'), t_cnt=Count('target'))
-    speaker, target, count, arrows = result_db_list[0]['speaker'], result_db_list[0]['target'], result_db_list[0]['t_cnt'], 'to'
+    result_db_list = LoveOrHate.objects.values('speaker', 'target').annotate(s_cnt=Count('speaker'),
+                                                                             t_cnt=Count('target'))
+    speaker, target, count, arrows = result_db_list[0]['speaker'], result_db_list[0]['target'], result_db_list[0][
+        't_cnt'], 'to'
     for result in result_db_list:
         if speaker != result['speaker']:
             result_list.append({'from': candidate_dict[speaker], 'to': candidate_dict[target],
-                                'arrows': arrows, 'label': keyword_dict[str(candidate_dict[speaker])+'-' +str(candidate_dict[target])], 'font': {'align': 'bottom'}})
+                                'arrows': arrows,
+                                'label': keyword_dict[str(candidate_dict[speaker]) + '-' + str(candidate_dict[target])],
+                                'font': {'align': 'bottom'}})
             speaker, target, count = result['speaker'], result['target'], result['t_cnt']
 
         if count < result['t_cnt']:
