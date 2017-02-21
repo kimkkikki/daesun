@@ -24,6 +24,8 @@
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jssocials.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jssocials-theme-flat.css' %}">
 
     <!--  Timeline Javascript @r2fresh -->
     <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
@@ -40,6 +42,8 @@
 
 
     <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jssocials.min.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'lib/html5shiv/dist/html5shiv.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/respond/dest/respond.min.js' %}"></script>
@@ -359,10 +363,12 @@
                 <div class='snsBtnGroup displayNone' id='snsBtnGroup'>
                     <hr/>
                     <h4 class="modal-title"><i class="fa fa-share-alt"></i> Share</h4>
-                    <a class="btn btn-social-icon btn-twitter" id='twitter'><span class="fa fa-twitter"></span></a>
+                    <!-- <a class="btn btn-social-icon btn-twitter" id='twitter'><span class="fa fa-twitter"></span></a>
                     <a class="btn btn-social-icon btn-facebook" id='facebook'><span class="fa fa-facebook"></span></a>
                     <a class="btn btn-social-icon btn-kakaostory" id='kakaostory'><img src='https://dev.kakao.com/sdk/js/resources/story/icon_small.png'/></a>
-                    <a class="btn btn-social-icon btn-kakaotalk" id='kakaotalk'><img src='https://dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png'/></a>
+                    <a class="btn btn-social-icon btn-kakaotalk" id='kakaotalk'><img src='https://dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png'/></a> -->
+                    
+                    <div id="share"></div>
                 </div>
             </div>
         </div>
