@@ -15,6 +15,12 @@ from datetime import datetime, timedelta
 from rest_framework.decorators import api_view
 from operator import itemgetter
 import requests
+import twitter
+import pytz
+
+
+candidates = ['문재인', '안희정', '이재명', '유승민', '황교안', '안철수']
+candidate_twitters = ['Jaemyung_Lee', 'steelroot', 'cheolsoo0919', 'moonriver365']
 
 
 class JSONResponse(HttpResponse):
@@ -30,7 +36,7 @@ def index(req):
     return JSONResponse(list(scraps))
 
 
-# @cache_page(60 * 10)
+@cache_page(60 * 10)
 def cp_group(request):
     start_date = request.GET.get('start_date', None)
     end_date = request.GET.get('end_date', None)
@@ -38,9 +44,11 @@ def cp_group(request):
     if start_date is not None and end_date is not None:
         start = datetime.strptime(start_date, '%Y%m%d')
         end = datetime.strptime(end_date, '%Y%m%d') + timedelta(days=1)
-        candidate_q_list =  Q(created_at__range=[start, end]) & (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-                            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
-                            Q(title__contains='남경필'))
+        candidate_q_list =  Q(created_at__range=[start, end]) & \
+                            (Q(title__contains='문재인') | Q(title__contains='안철수') |
+                             Q(title__contains='이재명') |
+                             Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+                             Q(title__contains='남경필'))
     else:
         candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                             Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
@@ -80,7 +88,6 @@ def cp_daily(req):
 
 
 def get_shop():
-    candidates = ['문재인', '안희정', '이재명', '유승민', '황교안', '안철수']
     results = []
 
     for candidate in candidates:
@@ -192,7 +199,6 @@ def name_chemistry(req):
     if name is None:
         return JSONResponse({'message': 'param is missing'}, status=400)
 
-    candidates = ['문재인', '이재명', '안철수', '안희정', '황교안', '남경필']
     result_list = []
     for candidate in candidates:
         score_to = hangle.name_chemistry(name, candidate)
@@ -266,3 +272,31 @@ def love_test(req):
                 arrows = {'to': {'scaleFactor': '2'}}
     print(list(result_list))
     return JSONResponse(list(result_list))
+
+
+def get_candidate_sns_list():
+    api = twitter.Api(access_token_key='833848464979079168-qhskxnXzEstVFlOtD6RDyA47OJetk4H',
+                      access_token_secret='rJQaE6OrI6pFjcpXC7Aheq9ebslHyRVlVuLmt5FRWvVYv',
+                      consumer_key='MHJ7LJmm1nGHLlNrN7lntMSB8',
+                      consumer_secret='lxpIYyImUVVyIQfDyrEPi5HIh71CZLrnNBF2uRPfuNrmVUqICM')
+
+    candidate_twit_list = []
+    for screen_name in candidate_twitters:
+        statuses = api.GetUserTimeline(screen_name=screen_name)
+
+        for status in statuses:
+            created = datetime.strptime(status.created_at, '%a %b %d %H:%M:%S %z %Y').astimezone(pytz.timezone('Asia/Seoul'))
+            to_dict = {'name': status.user.name, 'created': created, 'contents': status.text,
+                       'profile_image': status.user.profile_image_url}
+
+            if status.media is not None:
+                to_dict['media_url'] = status.media[0].media_url
+
+            candidate_twit_list.append(to_dict)
+
+    candidate_twit_list = sorted(candidate_twit_list, key=itemgetter('created'), reverse=True)
+    return candidate_twit_list
+
+
+def get_candidate_sns_api(request):
+    return JSONResponse(get_candidate_sns_list())

@@ -6,7 +6,8 @@ from django.http import HttpResponse
 def index(request):
     book_list = views.get_shop()
     pledge_rank_list = views.pledge_rank_list()
-    return render(request, 'index.html', {'book_list': book_list, 'pledge_rank_list': pledge_rank_list})
+    sns_list = views.get_candidate_sns_list()
+    return render(request, 'index.html', {'book_list': book_list, 'pledge_rank_list': pledge_rank_list, 'sns_list': sns_list})
 
 
 def graphs(request):

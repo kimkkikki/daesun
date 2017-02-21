@@ -11,6 +11,8 @@
 - pip install pylibmc
 - pip install hiredis
 - pip install django-redis-cache
+- pip install python-twitter
+- pip install pytz
 
 # DB Connenction
 1. gcloud 인증 설정
