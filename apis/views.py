@@ -234,7 +234,7 @@ def timeline(req):
                 scraps = [{'title': scraps['title'], 'link': scraps['link'], 'cp': scraps['cp'],
                            'created_at': scraps['created_at'].strftime('%Y-%m-%d %H:%M:%S')} for scraps in
                           Scraps.objects.values('title', 'link', 'cp', 'created_at').order_by('-created_at').
-                              filter(title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
+                          filter(title__contains=ck['candidate']).filter(title__contains=ck['keyword'])[:5]]
                 inner_keyword['news'] = scraps
                 keyword_list.append(inner_keyword)
 
@@ -286,10 +286,20 @@ def get_candidate_sns_list():
 
         for status in statuses:
             created = datetime.strptime(status.created_at, '%a %b %d %H:%M:%S %z %Y').astimezone(pytz.timezone('Asia/Seoul'))
-            to_dict = {'name': status.user.name, 'created': created, 'contents': status.text,
+            contents_split = status.text.split('https')
+            contents = ''
+            url = ''
+            for string in contents_split:
+                if string.startswith('://'):
+                    url = 'https' + string
+                else:
+                    contents += string
+
+            to_dict = {'name': status.user.name, 'created': created, 'contents': contents, 'url': url,
                        'profile_image': status.user.profile_image_url}
 
             if status.media is not None:
+                to_dict['media_type'] = status.media[0].type
                 to_dict['media_url'] = status.media[0].media_url
 
             candidate_twit_list.append(to_dict)
