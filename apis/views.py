@@ -302,11 +302,12 @@ def get_candidate_sns_list():
                 to_dict['media_type'] = status.media[0].type
                 to_dict['media_url'] = status.media[0].media_url
 
-            candidate_twit_list.append(to_dict)
+                candidate_twit_list.append(to_dict)
 
     candidate_twit_list = sorted(candidate_twit_list, key=itemgetter('created'), reverse=True)
     return candidate_twit_list
 
 
+@cache_page(60 * 10)
 def get_candidate_sns_api(request):
     return JSONResponse(get_candidate_sns_list())
