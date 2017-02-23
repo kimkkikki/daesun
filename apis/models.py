@@ -100,3 +100,16 @@ class LoveOrHate(models.Model):
 class LoveOrHateAdmin(admin.ModelAdmin):
     list_display = ('id', 'speaker', 'target', 'scraps')
     list_filter = ['speaker', 'target']
+
+
+class IssueKeyword(models.Model):
+    class Meta:
+        db_table = 'issue_keyword'
+    id = models.AutoField(primary_key=True)
+    candidate = models.CharField(max_length=10, db_index=True)
+    keywords = models.CharField(max_length=200)
+    date = models.DateField(default=datetime.now)
+
+
+class IssueKeywordAdmin(admin.ModelAdmin):
+    list_display = ('id', 'candidate', 'keywords', 'date')
