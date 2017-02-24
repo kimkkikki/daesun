@@ -107,8 +107,8 @@ class IssueKeyword(models.Model):
         db_table = 'issue_keyword'
     id = models.AutoField(primary_key=True)
     candidate = models.CharField(max_length=10, db_index=True)
-    keywords = models.CharField(max_length=200)
-    date = models.DateField(default=datetime.now)
+    keywords = models.TextField(max_length=200)
+    date = models.DateField(default=datetime.now, db_index=True)
 
 
 class IssueKeywordAdmin(admin.ModelAdmin):

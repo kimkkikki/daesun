@@ -1,4 +1,4 @@
-from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate
+from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword
 from django.http import HttpResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -311,3 +311,18 @@ def get_candidate_sns_list():
 @cache_page(60 * 10)
 def get_candidate_sns_api(request):
     return JSONResponse(get_candidate_sns_list())
+
+
+def get_issue_keyword_list():
+    issue_keywords = IssueKeyword.objects.all().order_by('-date')
+
+    results = []
+    for issue in issue_keywords:
+        issue_dict = {'candidate': issue.candidate, 'keywords': eval(issue.keywords), 'date': issue.date}
+        results.append(issue_dict)
+
+    return results
+
+
+def get_issue_keyword_api(request):
+    return JSONResponse(get_issue_keyword_list())
