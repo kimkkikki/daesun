@@ -125,12 +125,12 @@
                     <div>
                         <h3 class="text-muted">{{ issue.date|date:"Y.m.d" }}의 이슈 키워드</h3>
                         {% for item in issue.items %}
-                        <p>
-                            {{ item.candidate }}
-                        </p>
+                        <h4>
+                            <span class="label label-primary">{{ item.candidate }}</span>
+                        </h4>
                         <p>
                             {% for keyword in item.keywords %}
-                            {{ keyword }}
+                            <span class="label label-default">{{ keyword }}</span>
                             {% endfor %}
                         </p>
                         {% endfor%}
