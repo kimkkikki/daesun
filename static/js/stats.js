@@ -270,7 +270,7 @@ $(document).ready(function(){
             },
             axis: {
                 x: {
-//                    extent: [result_list[0][data.length - 7], result_list[0][data.length]],
+                    extent: [result_list[0][result_list.length - 7], result_list[0][result_list.length]],
                     type: 'timeseries',
                     tick: {
                         format: '%Y-%m-%d'

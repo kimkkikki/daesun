@@ -7,7 +7,9 @@ def index(request):
     book_list = views.get_shop()
     pledge_rank_list = views.pledge_rank_list()
     sns_list = views.get_candidate_sns_list()
-    return render(request, 'index.html', {'book_list': book_list, 'pledge_rank_list': pledge_rank_list, 'sns_list': sns_list})
+    issue_list = views.get_issue_keyword_list()
+    return render(request, 'index.html', {'book_list': book_list, 'pledge_rank_list': pledge_rank_list, 'sns_list': sns_list,
+                                          'issue_list': issue_list})
 
 
 def graphs(request):

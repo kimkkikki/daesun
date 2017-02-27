@@ -317,9 +317,25 @@ def get_issue_keyword_list():
     issue_keywords = IssueKeyword.objects.all().order_by('-date')
 
     results = []
-    for issue in issue_keywords:
-        issue_dict = {'candidate': issue.candidate, 'keywords': eval(issue.keywords), 'date': issue.date}
-        results.append(issue_dict)
+    temps = []
+    temp_date = None
+    for idx, issue in enumerate(issue_keywords):
+        if idx == 0:
+            temp_date = issue.date
+
+        issue_dict = {'candidate': issue.candidate, 'keywords': eval(issue.keywords)}
+
+        if temp_date == issue.date:
+            temps.append(issue_dict)
+        else:
+            temps = sorted(temps, key=itemgetter('candidate'))
+            results.append({'items': temps, 'date': temp_date})
+            temp_date = issue.date
+            temps = []
+
+    if len(temps) != 0:
+        temps = sorted(temps, key=itemgetter('candidate'))
+        results.append({'items': temps, 'date': temp_date})
 
     return results
 
