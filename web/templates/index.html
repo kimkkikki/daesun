@@ -350,7 +350,7 @@
             <div class="row text-center">
                 <div class="col-xs-4 col-md-4 col-sm-4 text-center"></div>
                 <div class="col-xs-4 col-md-4 col-sm-4 text-center">
-                    <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4" required autofocus>
+                    <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
                 </div>
                 <div class="col-xs-4 col-md-4 col-sm-4 text-center"></div>
             </div>
@@ -506,7 +506,13 @@
                     {% for obj in sns_list %}
                     <article class="white-panel">
                         {% if obj.media_url %}
+                        {% if obj.media_type == 'video' %}
+                        <video class="video-pint" controls>
+                            <source src="{{ obj.media_url }}">
+                        </video>
+                        {% else %}
                         <img class="img-pint" src="{{ obj.media_url }}" alt="">
+                        {% endif %}
                         {% endif %}
                         <h4><a href="{{ obj.url }}">{{ obj.name }}</a></h4>
                         <p>{{ obj.created|date:"Y.m.d G:i" }}</p>

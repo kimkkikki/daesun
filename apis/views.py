@@ -299,8 +299,12 @@ def get_candidate_sns_list():
                        'profile_image': status.user.profile_image_url}
 
             if status.media is not None:
-                to_dict['media_type'] = status.media[0].type
-                to_dict['media_url'] = status.media[0].media_url
+                media_type =  status.media[0].type
+                to_dict['media_type'] = media_type
+                if media_type == 'video':
+                    to_dict['media_url'] = status.media[0].video_info['variants'][2]['url']
+                else:
+                    to_dict['media_url'] = status.media[0].media_url
 
                 candidate_twit_list.append(to_dict)
 

@@ -161,6 +161,11 @@
   max-width: 100%;
   height: auto;
 }
+.video-pint {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
 .white-panel {
   position: absolute;
   background: white;
