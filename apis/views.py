@@ -327,15 +327,17 @@ def get_issue_keyword_list():
         if idx == 0:
             temp_date = issue.date
 
-        issue_dict = {'candidate': issue.candidate, 'keywords': eval(issue.keywords)}
+        keywords = eval(issue.keywords)
+        if len(keywords) != 0:
+            issue_dict = {'candidate': issue.candidate, 'keywords': keywords}
 
-        if temp_date == issue.date:
-            temps.append(issue_dict)
-        else:
-            temps = sorted(temps, key=itemgetter('candidate'))
-            results.append({'items': temps, 'date': temp_date})
-            temp_date = issue.date
-            temps = []
+            if temp_date == issue.date:
+                temps.append(issue_dict)
+            else:
+                temps = sorted(temps, key=itemgetter('candidate'))
+                results.append({'items': temps, 'date': temp_date})
+                temp_date = issue.date
+                temps = []
 
     if len(temps) != 0:
         temps = sorted(temps, key=itemgetter('candidate'))

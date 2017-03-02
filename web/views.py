@@ -5,6 +5,7 @@ from django.http import HttpResponse
 
 def index(request):
     book_list = views.get_shop()
+    # book_list = []
     pledge_rank_list = views.pledge_rank_list()
     sns_list = views.get_candidate_sns_list()
     issue_list = views.get_issue_keyword_list()
