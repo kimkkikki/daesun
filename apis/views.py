@@ -44,9 +44,8 @@ def cp_group(request):
     if start_date is not None and end_date is not None:
         start = datetime.strptime(start_date, '%Y%m%d')
         end = datetime.strptime(end_date, '%Y%m%d') + timedelta(days=1)
-        candidate_q_list =  Q(created_at__range=[start, end]) & \
-                            (Q(title__contains='문재인') | Q(title__contains='안철수') |
-                             Q(title__contains='이재명') |
+        candidate_q_list = Q(created_at__range=[start, end]) & \
+                            (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                              Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
                              Q(title__contains='남경필'))
     else:
@@ -299,7 +298,7 @@ def get_candidate_sns_list():
                        'profile_image': status.user.profile_image_url}
 
             if status.media is not None:
-                media_type =  status.media[0].type
+                media_type = status.media[0].type
                 to_dict['media_type'] = media_type
                 if media_type == 'video':
                     to_dict['media_url'] = status.media[0].video_info['variants'][2]['url']
