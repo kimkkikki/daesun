@@ -17,6 +17,7 @@ from operator import itemgetter
 import requests
 import twitter
 import pytz
+import re
 
 
 candidates = ['문재인', '안희정', '이재명', '유승민', '황교안', '안철수']
@@ -251,7 +252,6 @@ def timeline(req):
 @api_view(['GET'])
 def love_test(req):
     candidate_dict = {'문재인': 1, '안희정': 2, '이재명': 3, '안철수': 4, '유승민': 5, '황교안': 6, '남경필': 7}
-    keyword_dict = {'1-2': '생각중', '2-1': '신뢰', '4-1': '자신있음', '3-2': '경계중', '5-6': '관둬라'}  # 추출중
     result_list = []
     result_db_list = LoveOrHate.objects.values('speaker', 'target').annotate(s_cnt=Count('speaker'),
                                                                              t_cnt=Count('target'))
@@ -260,9 +260,7 @@ def love_test(req):
     for result in result_db_list:
         if speaker != result['speaker']:
             result_list.append({'from': candidate_dict[speaker], 'to': candidate_dict[target],
-                                'arrows': arrows,
-                                'label': keyword_dict[str(candidate_dict[speaker]) + '-' + str(candidate_dict[target])],
-                                'font': {'align': 'bottom'}})
+                                'arrows': arrows})
             speaker, target, count = result['speaker'], result['target'], result['t_cnt']
 
         if count < result['t_cnt']:
@@ -293,6 +291,48 @@ def get_candidate_sns_list():
                     url = 'https' + string
                 else:
                     contents += string
+
+            temp = {}
+            if '일정' in contents :
+                contents += '\n'
+                print('=============')
+                print(status.user.name, contents)
+
+                date_format_1 = re.compile('\d+[.]\d+')  # 00.00
+                date_format_2 = re.compile('\d+월\s*\d+일')  # 00월 00일
+                hour_format_1 = re.compile('(\d+:\d+)\s*(.+?)\n')  # 00:00
+                hour_format_2 = re.compile('\n(\D+?)\s*(\d+시\s?\d*분?)\s?(.+?)\n')  # (오전) 00시 00분
+
+                month, day = created.month, created.day
+                if contents.find('내일') > 0:
+                    date = created + timedelta(days=1)
+                    month, day = date.month, date.day
+                elif date_format_1.search(contents) is not None:
+                    month, day = int(date_format_1.search(contents).group().split('.')[0]), int(date_format_1.search(contents).group().split('.')[1])
+                elif date_format_2.search(contents) is not None:
+                    month, day = int(date_format_2.search(contents).group().split('월')[0]), int(date_format_2.search(contents).group().split('월')[1].replace('일', '').strip())
+
+                temp['candidate'] = status.user.name
+                schedules = []
+                if hour_format_1.findall(contents) is not None:
+                    for time in hour_format_1.finditer(contents):
+                        hour, minute = int(time.group(1).split(':')[0]), int(time.group(1).split(':')[1])
+                        schedules.append({'when': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'what': time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
+                if hour_format_2.findall(contents) is not None:
+                    for time in hour_format_2.finditer(contents):
+                        hour, minute = int(time.group(time.lastindex-1).split('시')[0]), 00
+                        if time.group(time.lastindex-1).split('시')[1] != ' ':
+                            minute = int(time.group(2).split('시')[1].replace('분', '').strip()[:2])
+
+                        if time.lastindex == 3:
+                            if any(word in time.group(time.lastindex-2) for word in ['오후', '저녁', '밤']):
+                                hour += 12
+
+                        schedules.append({'when': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'what': time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
+
+                temp['schedule'] = schedules
+                print('--> ', temp)
+                continue
 
             to_dict = {'name': status.user.name, 'created': created, 'contents': contents, 'url': url,
                        'profile_image': status.user.profile_image_url}
