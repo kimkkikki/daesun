@@ -278,6 +278,8 @@ def get_candidate_sns_list():
                       consumer_secret='lxpIYyImUVVyIQfDyrEPi5HIh71CZLrnNBF2uRPfuNrmVUqICM')
 
     candidate_twit_list = []
+    schedules = []
+
     for screen_name in candidate_twitters:
         statuses = api.GetUserTimeline(screen_name=screen_name)
 
@@ -292,11 +294,8 @@ def get_candidate_sns_list():
                 else:
                     contents += string
 
-            temp = {}
             if '일정' in contents :
                 contents += '\n'
-                print('=============')
-                print(status.user.name, contents)
 
                 date_format_1 = re.compile('\d+[.]\d+')  # 00.00
                 date_format_2 = re.compile('\d+월\s*\d+일')  # 00월 00일
@@ -312,12 +311,10 @@ def get_candidate_sns_list():
                 elif date_format_2.search(contents) is not None:
                     month, day = int(date_format_2.search(contents).group().split('월')[0]), int(date_format_2.search(contents).group().split('월')[1].replace('일', '').strip())
 
-                temp['candidate'] = status.user.name
-                schedules = []
                 if hour_format_1.findall(contents) is not None:
                     for time in hour_format_1.finditer(contents):
                         hour, minute = int(time.group(1).split(':')[0]), int(time.group(1).split(':')[1])
-                        schedules.append({'when': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'what': time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
+                        schedules.append({'who': status.user.name, 'when': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'what': time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
                 if hour_format_2.findall(contents) is not None:
                     for time in hour_format_2.finditer(contents):
                         hour, minute = int(time.group(time.lastindex-1).split('시')[0]), 00
@@ -328,10 +325,8 @@ def get_candidate_sns_list():
                             if any(word in time.group(time.lastindex-2) for word in ['오후', '저녁', '밤']):
                                 hour += 12
 
-                        schedules.append({'when': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'what': time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
+                        schedules.append({'who': status.user.name, 'when': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'what': time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
 
-                temp['schedule'] = schedules
-                print('--> ', temp)
                 continue
 
             to_dict = {'name': status.user.name, 'created': created, 'contents': contents, 'url': url,
@@ -346,6 +341,10 @@ def get_candidate_sns_list():
                     to_dict['media_url'] = status.media[0].media_url
 
                 candidate_twit_list.append(to_dict)
+
+    schedules = sorted(schedules, key=lambda k: k['when'])
+    for item in schedules:
+        print(item)
 
     candidate_twit_list = sorted(candidate_twit_list, key=itemgetter('created'), reverse=True)
     return candidate_twit_list
