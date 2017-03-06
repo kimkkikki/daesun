@@ -318,8 +318,8 @@ def get_candidate_sns_list():
                 if hour_format_2.findall(contents) is not None:
                     for time in hour_format_2.finditer(contents):
                         hour, minute = int(time.group(time.lastindex-1).split('시')[0]), 00
-                        if time.group(time.lastindex-1).split('시')[1] != ' ':
-                            minute = int(time.group(2).split('시')[1].replace('분', '').strip()[:2])
+                        if time.group(time.lastindex-1).find('분') > 0:
+                            minute = int(time.group(2).split('시')[1].replace('분',''))
 
                         if time.lastindex == 3:
                             if any(word in time.group(time.lastindex-2) for word in ['오후', '저녁', '밤']):
