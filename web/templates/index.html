@@ -11,14 +11,9 @@
     <!--  Timeline stylesheet @r2fresh -->
     <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}">
 
-    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    <!--<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">-->
-    <!--<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>-->
-    <!--<link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>-->
-    <!--<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>-->
-
-    <link href="{% static 'css/nanumbarungothic.css' %}" rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/earlyaccess/nanumpenscript.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel='stylesheet' href="{% static 'css/nanumbarungothic.css' %}" type='text/css'>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/earlyaccess/nanumpenscript.css' type='text/css'>
 
     <link rel="stylesheet" href="{% static 'lib/vis/dist/vis.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
@@ -31,6 +26,8 @@
     <link rel="stylesheet" href="{% static 'css/slick.css' %}">
     <link rel="stylesheet" href="{% static 'css/slick-theme.css' %}">
     <link rel="stylesheet" href="{% static 'css/agency.css' %}">
+    <link rel="stylesheet" href="/static/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/agency.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <!--  Timeline Javascript @r2fresh -->
@@ -108,14 +105,13 @@
 
     <header>
         <div class="container">
-            <!--<img src="{% static 'img/background-main.jpg' %}">-->
             <div class="intro-text">
                 <div class="intro-lead-in">대한민국의 미래를 책임질 대통령</div>
                 <div class="intro-heading">당신은 누구를 고르시습니까?</div>
-                <p class="intro-guide">
+                <div class="intro-guide">
                     2017대선닷컴은 특정 후보를 지지하지 않습니다.<br>
                     본 사이트의 모든 콘텐츠는 오직 <strong>재미</strong>를 위해 만들어 졌습니다.
-                </p>
+                </div>
             </div>
         </div>
     </header>
@@ -433,60 +429,60 @@
         </div>
     </div>
 
-    <section id="team" class="bg-light-gray">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Team Daesun</h2>
-                    <h3 class="section-subheading text-muted">Introduce Team</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4 col-sm-4">
-                    <div class="team-member">
-                        <img src="{% static 'img/team/donggeun-kim.jpg' %}" class="img-responsive img-circle" alt="">
-                        <h4>Backend</h4>
-                        <p class="text-muted">Kim Dong Geun</p>
-                    </div>
-                </div>
-                <div class="col-xs-4 col-sm-4">
-                    <div class="team-member">
-                        <img src="{% static 'img/team/minjeong-song.jpg' %}" class="img-responsive img-circle" alt="">
-                        <h4>Backend</h4>
-                        <p class="text-muted">Song Min Jeong</p>
-                    </div>
-                </div>
-                <div class="col-xs-4 col-sm-4">
-                    <div class="team-member">
-                        <img src="{% static 'img/team/minhyang-lee.jpg' %}" class="img-responsive img-circle" alt="">
-                        <h4>Design</h4>
-                        <p class="text-muted">Lee Min Hyang</p>
-                    </div>
-                </div>
-                <div class="col-xs-4 col-sm-4">
-                    <div class="team-member">
-                        <img src="{% static 'img/team/haneol-chae.jpg' %}" class="img-responsive img-circle" alt="">
-                        <h4>Design</h4>
-                        <p class="text-muted">Chae Han eol</p>
-                    </div>
-                </div>
-                <div class="col-xs-4 col-sm-4">
-                    <div class="team-member">
-                        <img src="{% static 'img/team/woncheol-jang.jpg' %}" class="img-responsive img-circle" alt="">
-                        <h4>Front</h4>
-                        <p class="text-muted">Jang Won Cheol</p>
-                    </div>
-                </div>
-                <div class="col-xs-4 col-sm-4">
-                    <div class="team-member">
-                        <img src="{% static 'img/team/r2fresh.jpg' %}" class="img-responsive img-circle" alt="">
-                        <h4>Front</h4>
-                        <p class="text-muted">R2fresh</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!--<section id="team" class="bg-light-gray">-->
+        <!--<div class="container">-->
+            <!--<div class="row">-->
+                <!--<div class="col-lg-12 text-center">-->
+                    <!--<h2 class="section-heading">Team Daesun</h2>-->
+                    <!--<h3 class="section-subheading text-muted">Introduce Team</h3>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-xs-4 col-sm-4">-->
+                    <!--<div class="team-member">-->
+                        <!--<img src="{% static 'img/team/donggeun-kim.jpg' %}" class="img-responsive img-circle" alt="">-->
+                        <!--<h4>Backend</h4>-->
+                        <!--<p class="text-muted">Kim Dong Geun</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-xs-4 col-sm-4">-->
+                    <!--<div class="team-member">-->
+                        <!--<img src="{% static 'img/team/minjeong-song.jpg' %}" class="img-responsive img-circle" alt="">-->
+                        <!--<h4>Backend</h4>-->
+                        <!--<p class="text-muted">Song Min Jeong</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-xs-4 col-sm-4">-->
+                    <!--<div class="team-member">-->
+                        <!--<img src="{% static 'img/team/minhyang-lee.jpg' %}" class="img-responsive img-circle" alt="">-->
+                        <!--<h4>Design</h4>-->
+                        <!--<p class="text-muted">Lee Min Hyang</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-xs-4 col-sm-4">-->
+                    <!--<div class="team-member">-->
+                        <!--<img src="{% static 'img/team/haneol-chae.jpg' %}" class="img-responsive img-circle" alt="">-->
+                        <!--<h4>Design</h4>-->
+                        <!--<p class="text-muted">Chae Han eol</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-xs-4 col-sm-4">-->
+                    <!--<div class="team-member">-->
+                        <!--<img src="{% static 'img/team/woncheol-jang.jpg' %}" class="img-responsive img-circle" alt="">-->
+                        <!--<h4>Front</h4>-->
+                        <!--<p class="text-muted">Jang Won Cheol</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-xs-4 col-sm-4">-->
+                    <!--<div class="team-member">-->
+                        <!--<img src="{% static 'img/team/r2fresh.jpg' %}" class="img-responsive img-circle" alt="">-->
+                        <!--<h4>Front</h4>-->
+                        <!--<p class="text-muted">R2fresh</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</section>-->
 
     <section id="books">
         <div class="container">
@@ -508,7 +504,7 @@
         </div>
     </section>
 
-    <section id="sponsor" class="bg-light-gray">
+    <section id="sponsor">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -519,7 +515,7 @@
         </div>
     </section>
 
-    <section id="sns">
+    <section id="sns" class="bg-light-gray">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">

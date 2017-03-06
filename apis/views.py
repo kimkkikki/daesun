@@ -294,7 +294,7 @@ def get_candidate_sns_list():
                 else:
                     contents += string
 
-            if '일정' in contents :
+            if '일정' in contents:
                 contents += '\n'
 
                 date_format_1 = re.compile('\d+[.]\d+')  # 00.00
