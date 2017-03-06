@@ -277,7 +277,6 @@ def get_candidate_sns_list():
                       consumer_key='MHJ7LJmm1nGHLlNrN7lntMSB8',
                       consumer_secret='lxpIYyImUVVyIQfDyrEPi5HIh71CZLrnNBF2uRPfuNrmVUqICM')
 
-    candidate_twit_list = []
     schedules = []
 
     for screen_name in candidate_twitters:
@@ -287,12 +286,8 @@ def get_candidate_sns_list():
             created = datetime.strptime(status.created_at, '%a %b %d %H:%M:%S %z %Y').astimezone(pytz.timezone('Asia/Seoul'))
             contents_split = status.text.split('https')
             contents = ''
-            url = ''
             for string in contents_split:
-                if string.startswith('://'):
-                    url = 'https' + string
-                else:
-                    contents += string
+                contents += string
 
             if '일정' in contents:
                 contents += '\n'
@@ -329,24 +324,7 @@ def get_candidate_sns_list():
 
                 continue
 
-            to_dict = {'name': status.user.name, 'created': created, 'contents': contents, 'url': url,
-                       'profile_image': status.user.profile_image_url}
-
-            if status.media is not None:
-                media_type = status.media[0].type
-                to_dict['media_type'] = media_type
-                if media_type == 'video':
-                    to_dict['media_url'] = status.media[0].video_info['variants'][2]['url']
-                else:
-                    to_dict['media_url'] = status.media[0].media_url
-
-                candidate_twit_list.append(to_dict)
-
     schedules = sorted(schedules, key=lambda k: k['start'])
-    for item in schedules:
-        print(item)
-
-    candidate_twit_list = sorted(candidate_twit_list, key=itemgetter('created'), reverse=True)
     return schedules
 
 
