@@ -30,6 +30,10 @@
     <link rel="stylesheet" href="/static/css/agency.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+    <!-- full calendar -->
+    <link href="{% static 'css/fullcalendar.min.css'%}" rel='stylesheet' />
+    <link href="{% static 'css/fullcalendar.print.min.css'%}" rel='stylesheet' media='print' />
+
     <!--  Timeline Javascript @r2fresh -->
     <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
@@ -44,6 +48,8 @@
     <script src="{% static 'lib/handlebars/handlebars.min.js' %}" charset="utf-8"></script>
     <script src="{% static 'lib/d3/d3.min.js' %}"></script>
     <script src="{% static 'lib/c3/c3.min.js' %}"></script>
+
+    <script src="{% static 'js/fullcalendar.min.js'%}"></script>
 
     <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
@@ -81,7 +87,7 @@
                         <a class="page-scroll" href="#timeline">타임키워드</a>
                     </li>
                      <li>
-                        <a class="page-scroll" href="#timeline_schedule">타임키워드</a>
+                        <a class="page-scroll" href="#schedule">캘린더</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#charts">각종차트</a>
@@ -187,18 +193,17 @@
         </div>
     </section>
 
-    <section id="timeline_schedule">
+    <section id="schedule">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">대선주자 행보</h2>
-                    <h3 class="section-subheading text-muted">시간별로 뭐하고 있었나..</h3>
+                    <h2 class="section-heading">캘린더</h2>
+                    <h3 class="section-subheading text-muted">대선주자 일정</h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 d-timeline-body">
-                    <button class="btn btn-warning d-timeline-more-btn displayNone"><strong><i class="fa fa-hand-o-left" aria-hidden="true"></i> 이전 행보</strong></button>
-                    <div id="visualization_schedule"></div>
+                    <div id="calendar"></div>
                 </div>
             </div>
         </div>
@@ -582,6 +587,43 @@
             source : ''
         });
     }
+
+    $(document).ready(function() {
+
+        var url = "/apis/sns";
+        var data_set;
+        $.ajax({
+                url: url,
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                async: true,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    data_set = data;
+                    console.log(data)
+                    $('#calendar').fullCalendar({
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay,listWeek'
+                        },
+                        defaultDate: '2017-02-12',
+                        navLinks: true, // can click day/week names to navigate views
+                        editable: true,
+                        eventLimit: true, // allow "more" link when too many events
+                        events: data_set
+                    });
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                }
+        });
+
+
+
+	});
 </script>
 <script type="text/javascript" src="{% static '/js/stats.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/name-luck.js' %}"></script>

@@ -314,7 +314,7 @@ def get_candidate_sns_list():
                 if hour_format_1.findall(contents) is not None:
                     for time in hour_format_1.finditer(contents):
                         hour, minute = int(time.group(1).split(':')[0]), int(time.group(1).split(':')[1])
-                        schedules.append({'who': status.user.name, 'when': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'what': time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
+                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'title' : status.user.name + ', ' + time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
                 if hour_format_2.findall(contents) is not None:
                     for time in hour_format_2.finditer(contents):
                         hour, minute = int(time.group(time.lastindex-1).split('시')[0]), 00
@@ -325,7 +325,7 @@ def get_candidate_sns_list():
                             if any(word in time.group(time.lastindex-2) for word in ['오후', '저녁', '밤']):
                                 hour += 12
 
-                        schedules.append({'who': status.user.name, 'when': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'what': time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
+                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'title': status.user.name + ', ' + time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
 
                 continue
 
@@ -342,12 +342,12 @@ def get_candidate_sns_list():
 
                 candidate_twit_list.append(to_dict)
 
-    schedules = sorted(schedules, key=lambda k: k['when'])
+    schedules = sorted(schedules, key=lambda k: k['start'])
     for item in schedules:
         print(item)
 
     candidate_twit_list = sorted(candidate_twit_list, key=itemgetter('created'), reverse=True)
-    return candidate_twit_list
+    return schedules
 
 
 @cache_page(60 * 10)
