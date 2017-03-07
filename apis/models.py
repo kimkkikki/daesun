@@ -113,3 +113,17 @@ class IssueKeyword(models.Model):
 
 class IssueKeywordAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'keywords', 'date')
+
+
+class CheeringMessage(models.Model):
+    class Meta:
+        db_table = 'cheering_message'
+    id = models.AutoField(primary_key=True)
+    candidate = models.CharField(max_length=10, db_index=True)
+    message = models.TextField(max_length=200)
+    ip = models.CharField(max_length=15)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+
+class CheeringMessageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'candidate', 'message', 'ip', 'created')

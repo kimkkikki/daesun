@@ -99,7 +99,7 @@
                         <a class="page-scroll" href="#chemistry">이름점</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#team">팀소개</a>
+                        <a class="page-scroll" href="#cheering">응원메세지</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#books">대선책방</a>
@@ -338,12 +338,6 @@
                 </div>
             </div>
             <div class="row">
-                <!--<ul class="list-inline" style="vertical-align: middle;">-->
-                    <!--<li><img src="{% static 'img/moon.jpeg' %}" class="img-circle img-responsive" width="50"></li>-->
-                    <!--<li><h4 class="inline">공약제목이당</h4></li>-->
-                    <!--<li><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 123</li>-->
-                    <!--<li><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 123</li>-->
-                <!--</ul>-->
                 <table class="table table-condensed">
                     <tbody id="rankTable">
                     {% for pledge in pledge_rank_list %}
@@ -434,60 +428,41 @@
         </div>
     </div>
 
-    <!--<section id="team" class="bg-light-gray">-->
-        <!--<div class="container">-->
-            <!--<div class="row">-->
-                <!--<div class="col-lg-12 text-center">-->
-                    <!--<h2 class="section-heading">Team Daesun</h2>-->
-                    <!--<h3 class="section-subheading text-muted">Introduce Team</h3>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="row">-->
-                <!--<div class="col-xs-4 col-sm-4">-->
-                    <!--<div class="team-member">-->
-                        <!--<img src="{% static 'img/team/donggeun-kim.jpg' %}" class="img-responsive img-circle" alt="">-->
-                        <!--<h4>Backend</h4>-->
-                        <!--<p class="text-muted">Kim Dong Geun</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xs-4 col-sm-4">-->
-                    <!--<div class="team-member">-->
-                        <!--<img src="{% static 'img/team/minjeong-song.jpg' %}" class="img-responsive img-circle" alt="">-->
-                        <!--<h4>Backend</h4>-->
-                        <!--<p class="text-muted">Song Min Jeong</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xs-4 col-sm-4">-->
-                    <!--<div class="team-member">-->
-                        <!--<img src="{% static 'img/team/minhyang-lee.jpg' %}" class="img-responsive img-circle" alt="">-->
-                        <!--<h4>Design</h4>-->
-                        <!--<p class="text-muted">Lee Min Hyang</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xs-4 col-sm-4">-->
-                    <!--<div class="team-member">-->
-                        <!--<img src="{% static 'img/team/haneol-chae.jpg' %}" class="img-responsive img-circle" alt="">-->
-                        <!--<h4>Design</h4>-->
-                        <!--<p class="text-muted">Chae Han eol</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xs-4 col-sm-4">-->
-                    <!--<div class="team-member">-->
-                        <!--<img src="{% static 'img/team/woncheol-jang.jpg' %}" class="img-responsive img-circle" alt="">-->
-                        <!--<h4>Front</h4>-->
-                        <!--<p class="text-muted">Jang Won Cheol</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xs-4 col-sm-4">-->
-                    <!--<div class="team-member">-->
-                        <!--<img src="{% static 'img/team/r2fresh.jpg' %}" class="img-responsive img-circle" alt="">-->
-                        <!--<h4>Front</h4>-->
-                        <!--<p class="text-muted">R2fresh</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</section>-->
+    <section id="cheering" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <a class="pull-right">응원메세제 더보기</a>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">대선주자 응원하기</h2>
+                    <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <select class="form-control">
+                        <option>문재인</option>
+                        <option>안희정</option>
+                        <option>황교안</option>
+                        <option>안철수</option>
+                        <option>남경필</option>
+                        <option>유승민</option>
+                        <option>이재명</option>
+                    </select>
+                    <span class="input-group-addon">
+                    </span>
+                    <input class="form-control" type="text">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">등록</button>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+        </div>
+    </section>
 
     <section id="books">
         <div class="container">
@@ -509,43 +484,12 @@
         </div>
     </section>
 
-    <section id="sponsor">
+    <section id="sponsor" class="bg-light-gray">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">후원하기</h2>
                     <h3 class="section-subheading text-muted">서버비가 없어서 후원 받아야 해요</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="sns" class="bg-light-gray">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">대선주자 SNS</h2>
-                    <h3 class="section-subheading text-muted">현재는 Twitter만 가져옴</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div id="pinBoot">
-                    {% for obj in sns_list %}
-                    <article class="white-panel">
-                        {% if obj.media_url %}
-                        {% if obj.media_type == 'video' %}
-                        <video class="video-pint" controls>
-                            <source src="{{ obj.media_url }}">
-                        </video>
-                        {% else %}
-                        <img class="img-pint" src="{{ obj.media_url }}" alt="">
-                        {% endif %}
-                        {% endif %}
-                        <h4><a href="{{ obj.url }}">{{ obj.name }}</a></h4>
-                        <p>{{ obj.created|date:"Y.m.d G:i" }}</p>
-                        <p>{{ obj.contents|safe }}</p>
-                    </article>
-                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -635,6 +579,12 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('.slick-test').slick();
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $.get('http://jsonip.com/', function(r){ console.log(r.ip); });
 });
 </script>
 

@@ -1,4 +1,4 @@
-from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword
+from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage
 from django.http import HttpResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -364,3 +364,32 @@ def get_issue_keyword_list():
 
 def get_issue_keyword_api(request):
     return JSONResponse(get_issue_keyword_list())
+
+
+def get_cheering_message_list(page):
+    messages = CheeringMessage.objects.all().values('message', 'ip', 'created').order_by('-created')[page * 10:page * 10 + 10]
+    return list(messages)
+
+
+@csrf_exempt
+def cheering_message_api(request):
+    if request.method == 'GET':
+        page = request.GET.get('page', None)
+        if page is None:
+            page = 0
+        return JSONResponse(get_cheering_message_list(page=page))
+
+    elif request.method == 'POST':
+        body = JSONParser().parse(request)
+        candidate = body.get('candidate', None)
+        message = body.get('message', None)
+        ip = body.get('ip', None)
+
+        if candidate is not None and message is not None and ip is not None:
+            new_message = CheeringMessage(candidate=candidate, message=message, ip=ip)
+            new_message.save()
+
+            return JSONResponse({'message': 'success'})
+
+        else:
+            return JSONResponse({'message': 'failure'})

@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^sns$', views.get_candidate_sns_api, name='candidate_sns_api'),
     url(r'^issue$', views.get_issue_keyword_api, name='issue_keyword_api'),
+    url(r'^cheering$', views.cheering_message_api, name='cheering_message'),
 ]
