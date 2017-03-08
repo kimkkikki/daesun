@@ -278,6 +278,8 @@ def get_candidate_sns_list():
                       consumer_secret='lxpIYyImUVVyIQfDyrEPi5HIh71CZLrnNBF2uRPfuNrmVUqICM')
 
     schedules = []
+    candidate_dict = {'문재인': '#337ab7', '안희정': '#337ab7', '이재명': '#337ab7',
+                      '안철수': '#669966', '유승민': '#4ca0e6', '황교안': '#c9151e', '남경필': '#c9151e'}
 
     for screen_name in candidate_twitters:
         statuses = api.GetUserTimeline(screen_name=screen_name)
@@ -287,7 +289,7 @@ def get_candidate_sns_list():
             contents_split = status.text.split('https')
             contents = ''
             for string in contents_split:
-                contents += string
+                contents += string.replace('&lt;', '').replace('&gt;', '')
 
             if '일정' in contents:
                 contents += '\n'
@@ -297,30 +299,46 @@ def get_candidate_sns_list():
                 hour_format_1 = re.compile('(\d+:\d+)\s*(.+?)\n')  # 00:00
                 hour_format_2 = re.compile('\n(\D+?)\s*(\d+시\s?\d*분?)\s?(.+?)\n')  # (오전) 00시 00분
 
-                month, day = created.month, created.day
+                month, day, hour, minute = created.month, created.day, 00, 00
                 if contents.find('내일') > 0:
                     date = created + timedelta(days=1)
                     month, day = date.month, date.day
                 elif date_format_1.search(contents) is not None:
-                    month, day = int(date_format_1.search(contents).group().split('.')[0]), int(date_format_1.search(contents).group().split('.')[1])
+                    date = date_format_1.search(contents).group().split('.')
+                    month, day = int(date[0]), int(date[1])
                 elif date_format_2.search(contents) is not None:
-                    month, day = int(date_format_2.search(contents).group().split('월')[0]), int(date_format_2.search(contents).group().split('월')[1].replace('일', '').strip())
+                    date = date_format_2.search(contents).group().split('월')
+                    month, day = int(date[0]), int(date[1].replace('일', '').strip())
 
                 if hour_format_1.findall(contents) is not None:
                     for time in hour_format_1.finditer(contents):
-                        hour, minute = int(time.group(1).split(':')[0]), int(time.group(1).split(':')[1])
-                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'title' : status.user.name + ', ' + time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
+                        schedule_time = time.group(1).split(':')
+                        hour, minute = int(schedule_time[0]), int(schedule_time[1])
+                        title = time.group(time.lastindex)
+                        if status.user.name == '문재인':
+                            title = re.compile('일정]\s(.+?)\n').search(contents).group(1)
+
+                        if title.find('…') > 0:
+                            continue
+                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'),
+                                          'title': status.user.name + ', ' + title, 'color': candidate_dict[status.user.name]})
+
                 if hour_format_2.findall(contents) is not None:
                     for time in hour_format_2.finditer(contents):
-                        hour, minute = int(time.group(time.lastindex-1).split('시')[0]), 00
+                        schedule_time = time.group(time.lastindex-1).split('시')
+                        hour = int(schedule_time[0])
                         if time.group(time.lastindex-1).find('분') > 0:
-                            minute = int(time.group(2).split('시')[1].replace('분',''))
+                            minute = int(schedule_time[1].replace('분', ''))
 
                         if time.lastindex == 3:
                             if any(word in time.group(time.lastindex-2) for word in ['오후', '저녁', '밤']):
                                 hour += 12
 
-                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'), 'title': status.user.name + ', ' + time.group(time.lastindex).replace('&lt;', '').replace('&gt;', '')})
+                        title = time.group(time.lastindex).replace('에는', '')
+                        if title.find('…') > 0:
+                            continue
+                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'),
+                                          'title': status.user.name + ', ' + title, 'color': candidate_dict[status.user.name]})
 
                 continue
 
