@@ -190,3 +190,8 @@ stylize any heading tags withing white-panel below
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+
+.input-group {
+    padding-left: 10px;
+    padding-right: 10px;
+}
