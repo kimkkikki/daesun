@@ -24,6 +24,7 @@ SECRET_KEY = 'x-g(o_(ep7rhy+h7w5*zpjey4cb818z5&@+8y+yf*jc)#5j)+0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 

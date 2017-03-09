@@ -495,7 +495,7 @@
     <section id="cheering" class="bg-light-gray">
         <div class="container">
             <div class="row">
-                <a class="pull-right">응원메세제 더보기</a>
+                <a class="pull-right">응원메세지 더보기</a>
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -505,7 +505,7 @@
             </div>
             <div class="row">
                 <div class="input-group">
-                    <select class="form-control">
+                    <select class="form-control" id="cheering-candidate">
                         <option>문재인</option>
                         <option>안희정</option>
                         <option>황교안</option>
@@ -516,14 +516,16 @@
                     </select>
                     <span class="input-group-addon">
                     </span>
-                    <input class="form-control" type="text">
+                    <input class="form-control" type="text" id="cheering-message">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">등록</button>
+                        <button class="btn btn-default" type="button" id="post-cheering">등록</button>
                     </span>
                 </div>
             </div>
             <div class="row">
-
+                <div id="cheering-table">
+                    {% include 'cheering_table.html' %}
+                </div>
             </div>
         </div>
     </section>
@@ -539,7 +541,7 @@
             <div class="row">
                 {% for book in book_list %}
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-2 thumb">
-                    <a class="thumbnail" href="{{ book.link }}">
+                    <a class="thumbnail" href="{{ book.link }}" target="_blank">
                         <img class="img-responsive" src="{{ book.image }}" alt="...">
                     </a>
                 </div>
@@ -600,14 +602,14 @@
             </div>
             <div class="col-md-4">
                 <ul class="list-inline social-buttons">
-                    <li><a href="https://twitter.com/intent/tweet?text=2017대선닷컴&url=2017daesun.com"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="http://www.facebook.com/sharer/sharer.php?u=2017daesun.com"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/intent/tweet?text=2017대선닷컴&url=2017daesun.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="http://www.facebook.com/sharer/sharer.php?u=2017daesun.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
                 </ul>
             </div>
             <div class="col-md-4">
                 <ul class="list-inline quicklinks">
-                    <li><a href="#">이용약관</a></li>
-                    <li><a href="#">Cantact Us</a></li>
+                    <li><a href="#" target="_blank">이용약관</a></li>
+                    <li><a href="#" target="_blank">Cantact Us</a></li>
                 </ul>
             </div>
         </div>
@@ -698,8 +700,39 @@ $(document).ready(function(){
 </script>
 
 <script type="text/javascript">
+var ip = '';
 $(document).ready(function(){
-    $.get('http://jsonip.com/', function(r){ console.log(r.ip); });
+    $.get('http://jsonip.com/', function(r){ ip = r.ip; });
+
+    $('#post-cheering').click(function() {
+        var candidate_select = document.getElementById("cheering-candidate");
+        var candidate = candidate_select.options[candidate_select.selectedIndex].text;
+        var message = document.getElementById("cheering-message").value;
+
+        waitMe($('#cheering'));
+
+        $.ajax({
+			url: '/cheering',
+			headers: {
+		        'Content-Type':'application/json'
+		    },
+		    async: true,
+			type: 'POST',
+			data: JSON.stringify({
+                    'candidate': candidate,
+                    'message': message,
+                    'ip': ip,
+                }),
+			success: function(data) {
+                $('#cheering-table').html(data);
+                $('#cheering').waitMe('hide');
+			},
+			error: function(data, status, err) {
+                alert('응원메세지 등록이 실패하였습니다');
+                $('#cheering').waitMe('hide');
+			}
+		});
+    });
 });
 </script>
 

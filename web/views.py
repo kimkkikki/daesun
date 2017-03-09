@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from apis import views
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -9,8 +10,9 @@ def index(request):
     pledge_rank_list = views.pledge_rank_list()
     sns_list = views.get_candidate_sns_list()
     issue_list = views.get_issue_keyword_list()
+    cheerings = views.get_cheering_message_list(0)
     return render(request, 'index.html', {'book_list': book_list, 'pledge_rank_list': pledge_rank_list, 'sns_list': sns_list,
-                                          'issue_list': issue_list})
+                                          'issue_list': issue_list, 'cheering_list': cheerings})
 
 
 def graphs(request):
@@ -28,3 +30,13 @@ def lets_encrypt(request, authorization_code):
 
 def google_app_engine_health_check(req):
     return HttpResponse(status=200)
+
+
+@csrf_exempt
+def cheering(request):
+    if request.method == 'POST':
+        views.create_cheering_message(request)
+
+    lists = views.get_cheering_message_list(0)
+
+    return render_to_response('cheering_table.html', {'cheering_list': lists})

@@ -389,6 +389,22 @@ def get_cheering_message_list(page):
     return list(messages)
 
 
+def create_cheering_message(request):
+    body = JSONParser().parse(request)
+    candidate = body.get('candidate', None)
+    message = body.get('message', None)
+    ip = body.get('ip', None)
+
+    if candidate is not None and message is not None and ip is not None:
+        new_message = CheeringMessage(candidate=candidate, message=message, ip=ip)
+        new_message.save()
+        print('cheering created success')
+    else:
+        print('failure')
+
+    return
+
+
 @csrf_exempt
 def cheering_message_api(request):
     if request.method == 'GET':
