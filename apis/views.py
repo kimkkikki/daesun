@@ -385,7 +385,7 @@ def get_issue_keyword_api(request):
 
 
 def get_cheering_message_list(page):
-    messages = CheeringMessage.objects.all().values('message', 'ip', 'created').order_by('-created')[page * 10:page * 10 + 10]
+    messages = CheeringMessage.objects.all().values('candidate', 'message', 'ip', 'created').order_by('-created')[page * 10:page * 10 + 10]
     return list(messages)
 
 
@@ -398,11 +398,9 @@ def create_cheering_message(request):
     if candidate is not None and message is not None and ip is not None:
         new_message = CheeringMessage(candidate=candidate, message=message, ip=ip)
         new_message.save()
-        print('cheering created success')
-    else:
-        print('failure')
+        return True
 
-    return
+    return False
 
 
 @csrf_exempt
@@ -414,16 +412,7 @@ def cheering_message_api(request):
         return JSONResponse(get_cheering_message_list(page=page))
 
     elif request.method == 'POST':
-        body = JSONParser().parse(request)
-        candidate = body.get('candidate', None)
-        message = body.get('message', None)
-        ip = body.get('ip', None)
-
-        if candidate is not None and message is not None and ip is not None:
-            new_message = CheeringMessage(candidate=candidate, message=message, ip=ip)
-            new_message.save()
-
+        if create_cheering_message(request):
             return JSONResponse({'message': 'success'})
-
         else:
             return JSONResponse({'message': 'failure'})
