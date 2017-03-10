@@ -338,13 +338,6 @@
                 </div>
             </div>
             <div class="row">
-               <!-- <ul class="list-inline" style="vertical-align: middle;">
-                    <li><img src="{% static 'img/moon.jpeg' %}" class="img-circle img-responsive" width="50"></li>
-                    <li><h4 class="inline">공약제목이당</h4></li>
-                    <li><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 123</li>
-                    <li><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 123</li>
-                </ul>-->
-
                 <table class="table table-condensed">
                     <tbody id="rankTable">
                     {% for pledge in pledge_rank_list %}
@@ -438,9 +431,6 @@
     <section id="cheering" class="bg-light-gray">
         <div class="container">
             <div class="row">
-                <a class="pull-right">응원메세지 더보기</a>
-            </div>
-            <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">대선주자 응원하기</h2>
                     <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
@@ -466,9 +456,14 @@
                 </div>
             </div>
             <div class="row">
-                <div id="cheering-table">
-                    {% include 'cheering_table.html' %}
-                </div>
+                <table class="table table-condensed">
+                    <tbody id="cheering-table">
+                        {% include 'cheering_table.html' %}
+                    </tbody>
+                    <tfoot>
+                        <tr><td colspan="4"><button id="cheering-more" class="btn btn-default btn-block">응원메세지 더보기</button></td></tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </section>
@@ -603,6 +598,7 @@
 <script type="text/javascript" src="{% static '/js/blind-test.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/love-test.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/pint-boot.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/cheering.js' %}"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -610,41 +606,5 @@ $(document).ready(function(){
 });
 </script>
 
-<script type="text/javascript">
-var ip = '';
-$(document).ready(function(){
-    $.get('http://jsonip.com/', function(r){ ip = r.ip; });
-
-    $('#post-cheering').click(function() {
-        var candidate_select = document.getElementById("cheering-candidate");
-        var candidate = candidate_select.options[candidate_select.selectedIndex].text;
-        var message = document.getElementById("cheering-message").value;
-
-        waitMe($('#cheering'));
-
-        $.ajax({
-			url: '/cheering',
-			headers: {
-		        'Content-Type':'application/json'
-		    },
-		    async: true,
-			type: 'POST',
-			data: JSON.stringify({
-                    'candidate': candidate,
-                    'message': message,
-                    'ip': ip,
-                }),
-			success: function(data) {
-                $('#cheering-table').html(data);
-                $('#cheering').waitMe('hide');
-			},
-			error: function(data, status, err) {
-                alert('응원메세지 등록이 실패하였습니다');
-                $('#cheering').waitMe('hide');
-			}
-		});
-    });
-});
-</script>
 
 </html>

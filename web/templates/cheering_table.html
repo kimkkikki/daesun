@@ -1,12 +1,8 @@
-<table class="table table-condensed">
-    <tbody>
-    {% for obj in cheering_list %}
-        <tr>
-            <td>{{ obj.candidate }}</td>
-            <td>{{ obj.message }}</td>
-            <td>{{ obj.ip }}</td>
-            <td>{{ obj.created }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{% for obj in cheering_list %}
+<tr>
+    <td>{{ obj.candidate }}</td>
+    <td>{{ obj.message }}</td>
+    <td>{{ obj.ip }}</td>
+    <td>{{ obj.created }}</td>
+</tr>
+{% endfor %}

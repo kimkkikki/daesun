@@ -37,6 +37,12 @@ def cheering(request):
     if request.method == 'POST':
         views.create_cheering_message(request)
 
-    lists = views.get_cheering_message_list(0)
+    page = request.GET.get('page', None)
+    if page is None:
+        page = 0
+    else:
+        page = int(page)
+
+    lists = views.get_cheering_message_list(page)
 
     return render_to_response('cheering_table.html', {'cheering_list': lists})
