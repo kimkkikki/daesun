@@ -1,0 +1,75 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>2017 대선닷컴</title>
+
+    <!-- Font CSS -->
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel='stylesheet' href="{% static 'css/nanumbarungothic.css' %}" type='text/css'>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/earlyaccess/nanumpenscript.css' type='text/css'>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap-theme.min.css' %}">
+
+    <!-- Library CSS -->
+    <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
+
+    <!-- Jquery -->
+    <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+    <!-- Library -->
+    <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
+</head>
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> 메뉴 <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">2017 대선닷컴</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#rating">지지율</a>
+                    </li>
+                     <li>
+                        <a class="page-scroll" href="#pledge">공약</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#lucky">럭키박스</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#press">언론</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#cheering">응원메세지</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#donate">기부하기</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</body>
+</html>

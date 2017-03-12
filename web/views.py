@@ -15,6 +15,10 @@ def index(request):
                                           'issue_list': issue_list, 'cheering_list': cheerings})
 
 
+def main(request):
+    return render(request, 'main.html')
+
+
 def graphs(request):
     return render(request, template_name='graphs.html')
 
