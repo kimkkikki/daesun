@@ -10,7 +10,7 @@ from django.core.cache import caches
 from django.views.decorators.cache import cache_page
 import json
 import uuid
-from .util import hangle
+from .util import hangle, constellation
 from datetime import datetime, timedelta
 from rest_framework.decorators import api_view
 from operator import itemgetter
@@ -179,17 +179,24 @@ def pledge(req):
         return JSONResponse(result_list)
 
 
-@cache_page(60 * 10)
-def approval_rating(req):
-    cp = req.GET.get('cp', None)
-    if cp is None:
-        approval_ratings = ApprovalRating.objects.filter(type=1).extra({'date': 'date(date)'}) \
-            .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
+def approval_rating_list(cp, is_last):
+    if is_last:
+        last = ApprovalRating.objects.latest('date').date
+        approval_ratings = ApprovalRating.objects.filter(date=last).values('candidate', 'date')\
+            .annotate(rating=Avg(F('rating'))).order_by('-rating')
     else:
-        approval_ratings = ApprovalRating.objects.filter(type=1, cp=cp).extra({'date': 'date(date)'}) \
-            .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
+        if cp is None:
+            approval_ratings = ApprovalRating.objects.filter(type=1) \
+                .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
+        else:
+            approval_ratings = ApprovalRating.objects.filter(type=1, cp=cp) \
+                .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
+    return list(approval_ratings)
 
-    return JSONResponse(list(approval_ratings))
+
+@cache_page(60 * 10)
+def approval_rating(request):
+    return JSONResponse(approval_rating_list(request.GET.get('cp', None), False))
 
 
 @cache_page(60 * 1)
@@ -416,3 +423,19 @@ def cheering_message_api(request):
             return JSONResponse({'message': 'success'})
         else:
             return JSONResponse({'message': 'failure'})
+
+
+@csrf_exempt
+def constellation_api(request):
+    if request.method == 'POST':
+        body = JSONParser().parse(request)
+        month = body.get('month', None)
+        day = body.get('day', None)
+
+        request_constellation = constellation.get_constellation((month, day))
+        print(request_constellation)
+
+        result = constellation.constellation_chemistry(request_constellation)
+        print(result)
+
+        return JSONResponse(result)

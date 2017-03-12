@@ -20,6 +20,10 @@
 
     <!-- Library CSS -->
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
     <!-- Jquery -->
     <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
@@ -31,6 +35,7 @@
     <!-- Library -->
     <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
 </head>
+
 <body id="page-top">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -71,5 +76,40 @@
         </div>
     </nav>
 
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">대한민국의 미래를 책임질 대통령</div>
+                <div class="intro-heading">당신은 누구를 고르시습니까?</div>
+                <div class="intro-guide">
+                    2017대선닷컴은 특정 후보를 지지하지 않습니다.<br>
+                    본 사이트의 모든 콘텐츠는 오직 <strong>재미</strong>를 위해 만들어 졌습니다.
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="calendar">
+        <div class="container">
+            <div class="row">
+                대선 중요 일정 여기에
+            </div>
+        </div>
+    </section>
+
+    <section id="rating">
+        <div class="container">
+            <div class="page-header">
+                <h3>지지율</h3>
+            </div>
+            <div class="row">
+                {% for rating in ratings %}
+                    {{ rating.candidate }}
+                    {{ rating.date }}
+                    {{ rating.rating }}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 </body>
 </html>

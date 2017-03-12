@@ -16,7 +16,8 @@ def index(request):
 
 
 def main(request):
-    return render(request, 'main.html')
+    ratings = views.approval_rating_list(None, True)
+    return render(request, 'main.html', {'ratings': ratings})
 
 
 def graphs(request):
