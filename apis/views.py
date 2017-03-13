@@ -1,4 +1,4 @@
-from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage
+from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage, LuckyRating
 from django.http import HttpResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -29,6 +29,11 @@ class JSONResponse(HttpResponse):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
+
+
+def save_lucky_rating(candidate, type):
+    lucky_rating = LuckyRating(candidate=candidate, type=type)
+    lucky_rating.save()
 
 
 @cache_page(60 * 1)
@@ -199,9 +204,13 @@ def approval_rating(request):
     return JSONResponse(approval_rating_list(request.GET.get('cp', None), False))
 
 
-@cache_page(60 * 1)
-def name_chemistry(req):
-    name = req.GET.get('name', None)
+@csrf_exempt
+def name_chemistry(request):
+    if request.method == 'GET':
+        name = request.GET.get('name', None)
+    else:
+        body = JSONParser().parse(request)
+        name = body.get('name', None)
 
     if name is None:
         return JSONResponse({'message': 'param is missing'}, status=400)
@@ -210,7 +219,11 @@ def name_chemistry(req):
     for candidate in candidates:
         score_to = hangle.name_chemistry(name, candidate)
         score_from = hangle.name_chemistry(candidate, name)
-        result_list.append({'candidate': candidate, 'score_to': score_to, 'score_from': score_from})
+        result_list.append({'candidate': candidate, 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
+
+    if len(result_list) > 0:
+        result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
+        save_lucky_rating(result_list[0]['candidate'], 'name')
 
     return JSONResponse({'list': result_list})
 
@@ -433,9 +446,8 @@ def constellation_api(request):
         day = body.get('day', None)
 
         request_constellation = constellation.get_constellation((month, day))
-        print(request_constellation)
-
         result = constellation.constellation_chemistry(request_constellation)
-        print(result)
+        result = sorted(result, key=itemgetter('score'), reverse=True)
+        save_lucky_rating(result[0]['candidate'], 'star')
 
         return JSONResponse(result)

@@ -127,3 +127,16 @@ class CheeringMessage(models.Model):
 
 class CheeringMessageAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'message', 'ip', 'created')
+
+
+class LuckyRating(models.Model):
+    class Meta:
+        db_table = 'lucky_rating'
+    id = models.AutoField(primary_key=True)
+    candidate = models.CharField(max_length=10, db_index=True)
+    type = models.CharField(max_length=10, db_index=True)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+
+class LuckyRatingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'candidate', 'type', 'created')

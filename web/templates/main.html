@@ -17,6 +17,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap-theme.min.css' %}">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <!-- Library CSS -->
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
@@ -31,6 +32,7 @@
 
     <!-- Bootstrap JS -->
     <script src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <!-- Library -->
     <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
@@ -89,19 +91,19 @@
         </div>
     </header>
 
-    <section id="calendar">
-        <div class="container">
-            <div class="row">
-                대선 중요 일정 여기에
-            </div>
+    <div id="calendar" class="container">
+        <div class="row">
+            대선 중요 일정 여기에
         </div>
-    </section>
+    </div>
 
     <section id="rating">
         <div class="container">
-            <div class="page-header">
-                <h3>지지율</h3>
+            <div class="pull-right input-group">
+                <input type="checkbox" checked data-toggle="toggle" data-on="여론조사" data-off="우주의기운" data-onstyle="success" data-offstyle="danger">
+                <button class="btn btn-default">그래프 보기</button>
             </div>
+            <h2 class="section-heading">지지율</h2>
             <div class="row">
                 {% for rating in ratings %}
                     {{ rating.candidate }}
@@ -111,5 +113,32 @@
             </div>
         </div>
     </section>
+
+    <section id="pledge">
+        <div class="container">
+        </div>
+    </section>
 </body>
+
+<script type="text/javascript">
+$('.btn-toggle').click(function() {
+    $(this).find('.btn').toggleClass('active');
+
+    if ($(this).find('.btn-primary').size()>0) {
+    	$(this).find('.btn').toggleClass('btn-primary');
+    }
+    if ($(this).find('.btn-danger').size()>0) {
+    	$(this).find('.btn').toggleClass('btn-danger');
+    }
+    if ($(this).find('.btn-success').size()>0) {
+    	$(this).find('.btn').toggleClass('btn-success');
+    }
+    if ($(this).find('.btn-info').size()>0) {
+    	$(this).find('.btn').toggleClass('btn-info');
+    }
+
+    $(this).find('.btn').toggleClass('btn-default');
+});
+</script>
+
 </html>
