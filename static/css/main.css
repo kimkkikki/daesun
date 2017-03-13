@@ -16,24 +16,22 @@ header {
   color: white;
 }
 header .intro-text {
-  padding-top: 100px;
-  padding-bottom: 25px;
+  padding-top: 130px;
+  padding-bottom: 30px;
 }
 header .intro-text .intro-lead-in {
-  font-size: 22px;
+  font-size: 14px;
   line-height: 22px;
-  margin-bottom: 25px;
 }
 header .intro-text .intro-heading {
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 50px;
+  font-size: 30px;
   line-height: 50px;
-  margin-bottom: 25px;
 }
 header .intro-guide {
     font-family: 'Nanum Barun Gothic UltraLight', sans-serif;
-	font-size: 14px;
+	font-size: 10px;
 	font-weight: 200;
 	font-style: normal;
 	font-stretch: normal;
@@ -42,7 +40,7 @@ header .intro-guide {
 }
 @media (min-width: 768px) {
     header .intro-text {
-        padding-top: 450px;
+        padding-top: 300px;
         padding-bottom: 25px;
     }
     header .intro-text .intro-lead-in {
