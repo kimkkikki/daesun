@@ -26,6 +26,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
+    <!-- lucky > name -->
+
+    <link href="{% static 'css/jquery.bracket.min.css' %}" rel="stylesheet">
     <!-- Jquery -->
     <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
@@ -37,6 +40,11 @@
     <!-- Library -->
     <script src="{% static 'js/waitMe.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+
+
+    <!-- lucky > name -->
+    <script src="{% static 'js/jquery.bracket.min.js'%}"></script>
+
 </head>
 
 <body id="page-top">
@@ -164,6 +172,8 @@
                     <h3 class="section-subheading text-muted">이름점</h3>
                      <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
                     <button type="button" class="btn btn-primary" id='buttonUserName'>확인</button>
+
+                    <div class="demo"></div>
                 </div>
             </div>
         </div>
@@ -208,6 +218,7 @@
         </div>
     </section>
 </body>
+
 
 <script type="text/javascript" src="{% static '/js/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/lucky-name-test.js' %}"></script>
