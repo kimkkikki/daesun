@@ -192,10 +192,10 @@ def approval_rating_list(cp, is_last):
     else:
         if cp is None:
             approval_ratings = ApprovalRating.objects.filter(type=1) \
-                .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
+                .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('date')
         else:
             approval_ratings = ApprovalRating.objects.filter(type=1, cp=cp) \
-                .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('-date')
+                .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('date')
     return list(approval_ratings)
 
 

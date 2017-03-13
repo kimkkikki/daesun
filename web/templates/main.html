@@ -35,7 +35,8 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <!-- Library -->
-    <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
+    <script src="{% static 'js/waitMe.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -109,7 +110,7 @@
                 </div>
                 <div class="col-md-3 text-center input-group">
                     <input id="rating-toggle" type="checkbox" checked data-toggle="toggle" data-on="여론조사" data-off="우주의기운" data-onstyle="success" data-offstyle="danger">
-                    <button class="btn btn-default">그래프 보기</button>
+                    <button id="rating-graph-button" class="btn btn-info" data-toggle="modal" data-target="#rating-modal">그래프 보기</button>
                 </div>
             </div>
             <div class="row">
@@ -125,6 +126,24 @@
             </div>
         </div>
     </section>
+
+    <!-- Rating Modal -->
+    <div id="rating-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">여론조사 지지율 차트</h4>
+                </div>
+                <div class="modal-body">
+                    <canvas id="ratingChart" width="400" height="400"></canvas>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section id="pledge">
         <div class="container">
@@ -216,7 +235,120 @@ $(function() {
             console.log('lucky');
         }
     })
-})
+});
+
+    // 지지율 차트
+	var getRatingList = function(){
+		$.ajax({
+			url: '/apis/rating',
+			headers: {
+		        'Content-Type':'application/json'
+		    },
+		    async: true,
+			type: 'GET',
+			dataType: 'json',
+			success: function(data) {
+				getRatingSuccess(data);
+                $('#rating-modal').waitMe('hide');
+			},
+			error: function(data, status, err) {
+				console.log(err);
+                $('#rating-modal').waitMe('hide');
+			}
+		});
+	}
+
+    function getRatingSuccess(data) {
+        result_list = [[], [], [], [], [], [], [], []];
+        for (var i = 0; i < data.length; i++) {
+            obj = data[i];
+            if (!result_list[0].includes(obj.date)) {
+                result_list[0].push(obj.date);
+            }
+
+            switch (obj.candidate) {
+                case '문재인':
+                    result_list[1].push(obj.rating);
+                    break;
+                case '안철수':
+                    result_list[2].push(obj.rating);
+                    break;
+                case '황교안':
+                    result_list[3].push(obj.rating);
+                    break;
+                case '남경필':
+                    result_list[4].push(obj.rating);
+                    break;
+                case '안희정':
+                    result_list[5].push(obj.rating);
+                    break;
+                case '이재명':
+                    result_list[6].push(obj.rating);
+                    break;
+                case '유승민':
+                    result_list[7].push(obj.rating);
+                    break;
+            }
+        }
+
+        var ctx = document.getElementById("ratingChart");
+        var ratingChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: result_list[0],
+                datasets: [{
+                            label: '문재인',
+                            borderColor: "rgba(255, 99, 132, 1)",
+                            fill: false,
+                            data: result_list[1]
+                        },
+                        {
+                            label: '안철수',
+                            borderColor: "rgba(54, 162, 235, 1)",
+                            fill: false,
+                            data: result_list[2]
+                        },
+                        {
+                            label: '황교안',
+                            borderColor: "rgba(255, 206, 86, 1)",
+                            fill: false,
+                            data: result_list[3]
+                        },
+                        {
+                            label: '남경필',
+                            borderColor: "rgba(75, 192, 192, 1)",
+                            fill: false,
+                            data: result_list[4]
+                        },
+                        {
+                            label: '안희정',
+                            borderColor: "rgba(153, 102, 255, 1)",
+                            fill: false,
+                            data: result_list[5]
+                        },
+                        {
+                            label: '이재명',
+                            borderColor: "rgba(255, 159, 64, 1)",
+                            fill: false,
+                            data: result_list[6]
+                        }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    $('#rating-graph-button').click(function() {
+        waitMe($('#rating-modal'));
+        getRatingList();
+    });
 </script>
 
 </html>
