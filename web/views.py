@@ -17,15 +17,8 @@ def index(request):
 
 def main(request):
     ratings = views.approval_rating_list(None, True)
-    return render(request, 'main.html', {'ratings': ratings})
-
-
-def graphs(request):
-    return render(request, template_name='graphs.html')
-
-
-def name(request):
-    return render(request, template_name='nameLuck.html')
+    cheerings = views.get_cheering_message_list(0)
+    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings})
 
 
 def lets_encrypt(request, authorization_code):

@@ -1,6 +1,6 @@
 body {
   overflow-x: hidden;
-  font-family: 'Nanum Barun Gothic', sans-serif;
+  font-family: 'Nanum Barun Gothic UltraLight', sans-serif;
 }
 
 header {
@@ -69,15 +69,15 @@ header .intro-guide {
 }
 
 section {
-  padding: 100px 0;
+  padding: 80px 0;
 }
 section h2.section-heading {
-  font-size: 40px;
+  font-size: 30px;
   margin-top: 0;
   margin-bottom: 15px;
 }
 section h3.section-subheading {
-  font-size: 16px;
+  font-size: 14px;
   text-transform: none;
   font-style: italic;
   font-weight: 400;

@@ -99,16 +99,28 @@
 
     <section id="rating">
         <div class="container">
-            <div class="pull-right input-group">
-                <input type="checkbox" checked data-toggle="toggle" data-on="여론조사" data-off="우주의기운" data-onstyle="success" data-offstyle="danger">
-                <button class="btn btn-default">그래프 보기</button>
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    .
+                </div>
+                <div class="col-md-6 text-center">
+                    <h2 class="section-heading">지지율</h2>
+                    <h3 class="section-subheading text-muted">여론조사 / 우주의기운이 돕는 지지율입니다</h3>
+                </div>
+                <div class="col-md-3 text-center input-group">
+                    <input id="rating-toggle" type="checkbox" checked data-toggle="toggle" data-on="여론조사" data-off="우주의기운" data-onstyle="success" data-offstyle="danger">
+                    <button class="btn btn-default">그래프 보기</button>
+                </div>
             </div>
-            <h2 class="section-heading">지지율</h2>
             <div class="row">
                 {% for rating in ratings %}
-                    {{ rating.candidate }}
-                    {{ rating.date }}
-                    {{ rating.rating }}
+                <div class="col-md-2 col-sm-2 col-xs-2 text-center">
+                    {% with 'img/candidate/'|add:rating.candidate|add:'.jpg' as image_static %}
+                    <img class="img-responsive img-circle" src="{% static image_static %}">
+                    {% endwith %}
+                    <h4>{{ rating.candidate }}</h4>
+                    <p>{{ rating.rating }}</p>
+                </div>
                 {% endfor %}
             </div>
         </div>
@@ -116,29 +128,80 @@
 
     <section id="pledge">
         <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">공약 이상형</h2>
+                    <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cheering">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">대선주자 응원하기</h2>
+                    <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <select class="form-control" id="cheering-candidate">
+                        <option>문재인</option>
+                        <option>안희정</option>
+                        <option>황교안</option>
+                        <option>안철수</option>
+                        <option>남경필</option>
+                        <option>유승민</option>
+                        <option>이재명</option>
+                    </select>
+                    <span class="input-group-addon">@</span>
+                    <input class="form-control" type="text" id="cheering-message">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="post-cheering">등록</button>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-condensed">
+                    <tbody id="cheering-table">
+                        {% include 'cheering_table.html' %}
+                    </tbody>
+                    <tfoot>
+                        <tr><td colspan="4"><button id="cheering-more" class="btn btn-default btn-block">응원메세지 더보기</button></td></tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </section>
 </body>
 
+<script type="text/javascript" src="{% static '/js/cheering.js' %}"></script>
 <script type="text/javascript">
-$('.btn-toggle').click(function() {
-    $(this).find('.btn').toggleClass('active');
+function waitMe(element) {
+    element.waitMe({
+        effect : 'facebook',
+        text : '로딩 중입니다',
+        bg : 'rgba(255,255,255,0.7)',
+        color : '#000',
+        maxSize : '',
+        textPos : 'vertical',
+        fontSize : '',
+        source : ''
+    });
+}
 
-    if ($(this).find('.btn-primary').size()>0) {
-    	$(this).find('.btn').toggleClass('btn-primary');
-    }
-    if ($(this).find('.btn-danger').size()>0) {
-    	$(this).find('.btn').toggleClass('btn-danger');
-    }
-    if ($(this).find('.btn-success').size()>0) {
-    	$(this).find('.btn').toggleClass('btn-success');
-    }
-    if ($(this).find('.btn-info').size()>0) {
-    	$(this).find('.btn').toggleClass('btn-info');
-    }
-
-    $(this).find('.btn').toggleClass('btn-default');
-});
+$(function() {
+    $('#rating-toggle').change(function() {
+        is_rating = $(this).prop('checked');
+        if (is_rating) {
+            console.log('rating');
+        } else {
+            console.log('lucky');
+        }
+    })
+})
 </script>
 
 </html>
