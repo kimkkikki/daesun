@@ -165,10 +165,49 @@
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">럭키박스</h2>
                     <h3 class="section-subheading text-muted">이름점</h3>
-                     <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
-                    <button type="button" class="btn btn-primary" id='buttonUserName'>확인</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h4>이름점</h4>
+                    <div class="input-group">
+                        <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" id='buttonUserName'>확인</button>
+                        </span>
+                    </div>
 
                     <div class="demo"></div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h4>별자리</h4>
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-8 input-group text-center">
+                        <select class="form-control" id="constellation-month" title="월">
+                            {% for i in "xxxxxxxxxxxx" %}
+                            <option value="{{ forloop.counter }}">{{ forloop.counter }}월</option>
+                            {% endfor %}
+                        </select>
+                        <span class="input-group-addon">-</span>
+                        <select class="form-control col-xs-2" id="constellation-day" title="일">
+                            {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
+                            <option value="{{ forloop.counter }}">{{ forloop.counter }}일</option>
+                            {% endfor %}
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="constellation-button" type="button" class="btn btn-default">확인</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h4>혈액형</h4>
+
+                </div>
+                <div class="col-md-6 text-center">
+                    <h4>룰렛</h4>
+
                 </div>
             </div>
         </div>
@@ -272,7 +311,6 @@ $(function() {
                     headers: {
                         'Content-Type':'application/json'
                     },
-                    async: true,
                     type: 'POST',
                     data: JSON.stringify({
                             'type': 'lucky'
@@ -425,34 +463,32 @@ $('#rating-graph-button').click(function() {
             headers: {
                 'Content-Type':'application/json'
             },
-            async: true,
             type: 'GET',
             success: function(data) {
                 $('#pledge-test').html(data);
-            },
-            error: function(data, status, err) {
-                console.log(err);
-                $('#pledge').waitMe('hide');
-            }
-        });
-        $.ajax({
-            url: '/apis/pledge',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            async: true,
-            dataType: 'json',
-            cache: false,
-            type: 'GET',
-            success: function(data) {
-                blindResult = [];
-                blindToken = data.token;
-                blindList = data.list;
-                blindLoopIndex = 1;
+                $.ajax({
+                    url: '/apis/pledge',
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    dataType: 'json',
+                    cache: false,
+                    type: 'GET',
+                    success: function(data) {
+                        blindResult = [];
+                        blindToken = data.token;
+                        blindList = data.list;
+                        blindLoopIndex = 1;
 
-                $('#pledge-test-title').html(blindList[0].title);
-                $('#pledge-test-contents').html(blindList[0].contents);
-                $('#pledge').waitMe('hide');
+                        $('#pledge-test-title').html(blindList[0].title);
+                        $('#pledge-test-contents').html(blindList[0].contents);
+                        $('#pledge').waitMe('hide');
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        $('#pledge').waitMe('hide');
+                    }
+                });
             },
             error: function(data, status, err) {
                 console.log(err);
@@ -496,6 +532,34 @@ function blindNextButtonClick(button) {
             });
     }
 }
+</script>
+
+<script type="text/javascript">
+    $('#constellation-button').click(function() {
+        var month = $('#constellation-month').val();
+        var day = $('#constellation-day').val();
+        waitMe($('#lucky'));
+        $.ajax({
+                url: '/apis/constellation',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                cache: false,
+                type: 'POST',
+                data: JSON.stringify({
+                    'month': Number(month),
+                    'day': Number(day)
+                }),
+                success: function(data) {
+                    console.log(data);
+                    $('#lucky').waitMe('hide');
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    $('#lucky').waitMe('hide');
+                }
+            });
+    });
 </script>
 
 </html>
