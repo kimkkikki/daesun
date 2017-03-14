@@ -242,6 +242,33 @@ def name_chemistry(request):
     return JSONResponse({'list': result_list})
 
 
+@csrf_exempt
+def lucky_name_chemistry(request):
+    if request.method == 'GET':
+        name = request.GET.get('name', None)
+    else:
+        body = JSONParser().parse(request)
+        name = body.get('name', None)
+
+    if name is None:
+        return JSONResponse({'message': 'param is missing'}, status=400)
+
+    result_list = []
+    score, _to, _from = 0, '', ''
+    for candidate in candidates:
+        score_to, score_to_list = hangle.name_chemistry(name, candidate)
+        score_from, score_from_list = hangle.name_chemistry(candidate, name)
+        result_list.append({'candidate': candidate, 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
+        if score < score_to + score_from:
+            score, score_to, score_from = score_to + score_from, score_to, score_from
+
+    if len(result_list) > 0:
+        result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
+        save_lucky_rating(result_list[0]['candidate'], 'name')
+
+    return JSONResponse({'list': result_list, 'score_to_list': score_to_list, 'score_from_list': score_from_list})
+
+
 @api_view(['GET'])
 def timeline(req):
     param = int(req.GET.get('param', 1))

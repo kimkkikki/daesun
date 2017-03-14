@@ -19,4 +19,6 @@ urlpatterns = [
     url(r'^issue$', views.get_issue_keyword_api, name='issue_keyword_api'),
     url(r'^cheering$', views.cheering_message_api, name='cheering_message'),
     url(r'^constellation$', views.constellation_api, name='constellation_api'),
+    url(r'^luckyname', views.lucky_name_chemistry, name='lucky_name_api'),
+
 ]
