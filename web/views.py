@@ -44,3 +44,11 @@ def cheering(request):
     lists = views.get_cheering_message_list(page)
 
     return render_to_response('cheering_table.html', {'cheering_list': lists})
+
+
+def rating(request):
+    if request.method == 'POST':
+        ratings = views.lucky_rating_list()
+        return render_to_response('rating.html', {'ratings': ratings})
+    else:
+        return HttpResponse(status=404)

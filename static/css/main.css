@@ -1,33 +1,30 @@
 body {
-  overflow-x: hidden;
-  font-family: 'Nanum Barun Gothic UltraLight', sans-serif;
+    overflow-x: hidden;
+    font-family: 'Nanum Barun Gothic UltraLight', sans-serif;
 }
 
 header {
-  background-image: url('../img/header.png');
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-  text-align: center;
-  color: white;
+    background: url('../img/header.png') no-repeat scroll center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    text-align: center;
+    color: white;
 }
 header .intro-text {
-  padding-top: 130px;
-  padding-bottom: 30px;
+    padding-top: 130px;
+    padding-bottom: 30px;
 }
 header .intro-text .intro-lead-in {
-  font-size: 14px;
-  line-height: 22px;
+    font-size: 14px;
+    line-height: 22px;
 }
 header .intro-text .intro-heading {
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 30px;
-  line-height: 50px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 30px;
+     line-height: 50px;
 }
 header .intro-guide {
     font-family: 'Nanum Barun Gothic UltraLight', sans-serif;
@@ -67,22 +64,22 @@ header .intro-guide {
 }
 
 section {
-  padding: 80px 0;
+    padding: 80px 0;
 }
 section h2.section-heading {
-  font-size: 30px;
-  margin-top: 0;
-  margin-bottom: 15px;
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: 15px;
 }
 section h3.section-subheading {
-  font-size: 14px;
-  text-transform: none;
-  font-style: italic;
-  font-weight: 400;
-  margin-bottom: 75px;
+    font-size: 14px;
+    text-transform: none;
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 75px;
 }
 @media (min-width: 768px) {
-  section {
-    padding: 150px 0;
-  }
+    section {
+        padding: 150px 0;
+    }
 }

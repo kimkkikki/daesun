@@ -135,8 +135,9 @@ class LuckyRating(models.Model):
     id = models.AutoField(primary_key=True)
     candidate = models.CharField(max_length=10, db_index=True)
     type = models.CharField(max_length=10, db_index=True)
+    input = models.CharField(max_length=50, null=True)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
 
 
 class LuckyRatingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'candidate', 'type', 'created')
+    list_display = ('id', 'candidate', 'type', 'input', 'created')

@@ -11,7 +11,7 @@ var blindTestEnd = function(data) {
     document.getElementById('blindResultTitle').innerHTML = data[0].candidate;
     document.getElementById('blindResultContents').innerHTML = data[0].candidate + ' 후보의 공약을 좋아하시네요';
     isTestEnd = true;
-}
+};
 
 function blindNextButtonClick(button) {
 
@@ -39,7 +39,7 @@ function blindNextButtonClick(button) {
                 data: JSON.stringify({
                     'token': blindToken,
                     'list': blindResult,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
                 }),
                 dataType: 'json',
                 success: function(data) {
@@ -51,7 +51,7 @@ function blindNextButtonClick(button) {
                     console.log(err);
                 }
             });
-        }
+        };
 
         sendPledgeResult();
     }
@@ -71,7 +71,7 @@ function blindTestButtonClick() {
             success: function(data) {
                 console.log(data);
                 $('#blindTestModal').waitMe('hide');
-                blindResult = new Array();
+                blindResult = [];
                 blindToken = data.token;
                 blindList = data.list;
                 blindLoopIndex = 1;
@@ -84,7 +84,7 @@ function blindTestButtonClick() {
                 $('#blindTestModal').waitMe('hide');
             }
         });
-    }
+    };
 
     if (!isTestEnd) {
         waitMe($('#blindTestModal'));

@@ -8,7 +8,7 @@ $(document).ready(function(){
             $('#charts').waitMe('hide');
             end = 0;
         }
-    }
+    };
 
 	 var press_url = "/apis/cp/group";
 //	var press_url = "cp.json";
@@ -55,7 +55,7 @@ $(document).ready(function(){
 				endApis();
 			}
 		});
-	}
+	};
 
 	var pressSuccess = function() {
         var total_data = [
@@ -65,7 +65,7 @@ $(document).ready(function(){
                     ['유승민', total_you],
                     ['황교안', total_hwang],
                     ['안철수', total_ahn],
-                    ['남경필', total_nam]]
+                    ['남경필', total_nam]];
 
         var press_chart = c3.generate({
             bindto: '#press_chart',
@@ -97,14 +97,14 @@ $(document).ready(function(){
                 //선택한 것과 데이터의 이름이 같은 것 찾기
                for (var i=0; i < press_data.length; i++){
                     if ($(this).val() == press_data[i].cp){
-                        var temp_press_data = []
-                        temp_press_data.push(['문재인', press_data[i].moon])
-                        temp_press_data.push(['이재명', press_data[i].lee])
-                        temp_press_data.push(['안희정', press_data[i].hee])
-                        temp_press_data.push(['유승민', press_data[i].you])
-                        temp_press_data.push(['황교안', press_data[i].hwang])
-                        temp_press_data.push(['안철수', press_data[i].ahn])
-                        temp_press_data.push(['남경필', press_data[i].nam])
+                        var temp_press_data = [];
+                        temp_press_data.push(['문재인', press_data[i].moon]);
+                        temp_press_data.push(['이재명', press_data[i].lee]);
+                        temp_press_data.push(['안희정', press_data[i].hee]);
+                        temp_press_data.push(['유승민', press_data[i].you]);
+                        temp_press_data.push(['황교안', press_data[i].hwang]);
+                        temp_press_data.push(['안철수', press_data[i].ahn]);
+                        temp_press_data.push(['남경필', press_data[i].nam]);
 
                         press_chart = c3.generate({
                             bindto: '#press_chart',
@@ -121,7 +121,7 @@ $(document).ready(function(){
                 }
             }
         });
-	}
+	};
 
 	//언론사별 대선 주자 언급 횟수
 	getPressList();
@@ -150,28 +150,28 @@ $(document).ready(function(){
 				endApis();
 			}
 		});
-	}
+	};
 	//날짜별 대선 주자 언급 횟수
 	getDailyList();
 
 	var dailySuccess = function() {
-        var timeMenu = ['x']
-        var moon 	= ['문재인']
-        var lee 	= ['이재명']
-        var hee 	= ['안희정']
-        var you 	= ['유승민']
-        var hwang 	= ['황교안']
-        var ahn 	= ['안철수']
-        // var nam 	= ['남경필']
+        var timeMenu = ['x'];
+        var moon 	= ['문재인'];
+        var lee 	= ['이재명'];
+        var hee 	= ['안희정'];
+        var you 	= ['유승민'];
+        var hwang 	= ['황교안'];
+        var ahn 	= ['안철수'];
+        // var nam 	= ['남경필'];
 
         for (var i=0; i< daily_data.length; i++){
-            timeMenu.push(daily_data[i].date)
-            moon.push(daily_data[i].moon)
-            lee.push(daily_data[i].lee)
-            hee.push(daily_data[i].hee)
-            you.push(daily_data[i].you)
-            hwang.push(daily_data[i].hwang)
-            ahn.push(daily_data[i].ahn)
+            timeMenu.push(daily_data[i].date);
+            moon.push(daily_data[i].moon);
+            lee.push(daily_data[i].lee);
+            hee.push(daily_data[i].hee);
+            you.push(daily_data[i].you);
+            hwang.push(daily_data[i].hwang);
+            ahn.push(daily_data[i].ahn);
             // nam.push(daily_data[i].nam)
         }
 
@@ -202,7 +202,7 @@ $(document).ready(function(){
                 }
             }
         });
-	}
+	};
 
     // 지지율 차트
 	var getRatingList = function(){
@@ -223,13 +223,13 @@ $(document).ready(function(){
 				endApis();
 			}
 		});
-	}
+	};
     getRatingList();
 
     function getRatingSuccess(data) {
-        result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
+        var result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
         for (var i = 0; i < data.length; i++) {
-            obj = data[i];
+            var obj = data[i];
             if (!result_list[0].includes(obj.date)) {
                 result_list[0].push(obj.date);
             }

@@ -1,0 +1,27 @@
+{% for rating in ratings %}
+<div class="col-md-2 col-sm-2 col-xs-2 text-center">
+    {% if rating.candidate == '문재인' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/문재인.jpg">
+    {% elif rating.candidate == '안철수' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/안철수.jpg">
+    {% elif rating.candidate == '이재명' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/이재명.jpg">
+    {% elif rating.candidate == '안희정' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/안희정.jpg">
+    {% elif rating.candidate == '심상정' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/심상정.jpg">
+    {% elif rating.candidate == '유승민' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/유승민.jpg">
+    {% elif rating.candidate == '남경필' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/남경필.jpg">
+    {% elif rating.candidate == '황교안' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/황교안.jpg">
+    {% elif rating.candidate == '홍준표' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/홍준표.jpg">
+    {% elif rating.candidate == '손학규' %}
+    <img class="img-responsive img-circle" src="/static/img/candidate/손학규.jpg">
+    {% endif %}
+    <h4>{{ rating.candidate }}</h4>
+    <p>{{ rating.rating }}</p>
+</div>
+{% endfor %}

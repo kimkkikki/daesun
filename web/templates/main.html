@@ -37,6 +37,7 @@
     <!-- Library -->
     <script src="{% static 'js/waitMe.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+    <script src="{% static 'js/js.cookie.js' %}"></script>
 </head>
 
 <body id="page-top">
@@ -114,15 +115,9 @@
                 </div>
             </div>
             <div class="row">
-                {% for rating in ratings %}
-                <div class="col-md-2 col-sm-2 col-xs-2 text-center">
-                    {% with 'img/candidate/'|add:rating.candidate|add:'.jpg' as image_static %}
-                    <img class="img-responsive img-circle" src="{% static image_static %}">
-                    {% endwith %}
-                    <h4>{{ rating.candidate }}</h4>
-                    <p>{{ rating.rating }}</p>
+                <div id="rating-template">
+                {% include 'rating.html' %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </section>
@@ -166,7 +161,7 @@
             </div>
             <div class="row">
                 <div class="input-group">
-                    <select class="form-control" id="cheering-candidate">
+                    <select class="form-control" id="cheering-candidate" title="대선주자">
                         <option>문재인</option>
                         <option>안희정</option>
                         <option>황교안</option>
@@ -176,7 +171,7 @@
                         <option>이재명</option>
                     </select>
                     <span class="input-group-addon">@</span>
-                    <input class="form-control" type="text" id="cheering-message">
+                    <input class="form-control" type="text" id="cheering-message" title="메세지">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button" id="post-cheering">등록</button>
                     </span>
@@ -211,129 +206,183 @@ function waitMe(element) {
     });
 }
 
+var csrftoken = Cookies.get('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+
+<script type="text/javascript">
 $(function() {
+    var before = null;
     $('#rating-toggle').change(function() {
-        is_rating = $(this).prop('checked');
+        var is_rating = $(this).prop('checked');
+        var template;
+        var temp;
         if (is_rating) {
             console.log('rating');
+            if (before != null) {
+                template = $('#rating-template');
+                temp = template.html();
+                template.html(before);
+                before = temp;
+            }
         } else {
             console.log('lucky');
+            if (before == null) {
+                waitMe($('#rating'));
+                $.ajax({
+                    url: '/rating',
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    async: true,
+                    type: 'POST',
+                    data: JSON.stringify({
+                            'type': 'lucky'
+                        }),
+                    success: function(data) {
+                        var template = $('#rating-template');
+                        before = template.html();
+                        template.html(data);
+                        $('#rating').waitMe('hide');
+                        page = 1;
+                    },
+                    error: function() {
+                        alert('우주의기운 지지율을 가져오는데 실패하였습니다');
+                        $('#rating').waitMe('hide');
+                    }
+                });
+            } else {
+                template = $('#rating-template');
+                temp = template.html();
+                template.html(before);
+                before = temp;
+            }
         }
     })
 });
 
-    // 지지율 차트
-	var getRatingList = function(){
-		$.ajax({
-			url: '/apis/rating',
-			headers: {
-		        'Content-Type':'application/json'
-		    },
-		    async: true,
-			type: 'GET',
-			dataType: 'json',
-			success: function(data) {
-				getRatingSuccess(data);
-                $('#rating-modal').waitMe('hide');
-			},
-			error: function(data, status, err) {
-				console.log(err);
-                $('#rating-modal').waitMe('hide');
-			}
-		});
-	}
+// 지지율 차트
+var getRatingList = function(){
+    $.ajax({
+        url: '/apis/rating',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        async: true,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            getRatingSuccess(data);
+            $('#rating-modal').waitMe('hide');
+        },
+        error: function(data, status, err) {
+            console.log(err);
+            $('#rating-modal').waitMe('hide');
+        }
+    });
+};
 
-    function getRatingSuccess(data) {
-        result_list = [[], [], [], [], [], [], [], []];
-        for (var i = 0; i < data.length; i++) {
-            obj = data[i];
-            if (!result_list[0].includes(obj.date)) {
-                result_list[0].push(obj.date);
-            }
-
-            switch (obj.candidate) {
-                case '문재인':
-                    result_list[1].push(obj.rating);
-                    break;
-                case '안철수':
-                    result_list[2].push(obj.rating);
-                    break;
-                case '황교안':
-                    result_list[3].push(obj.rating);
-                    break;
-                case '남경필':
-                    result_list[4].push(obj.rating);
-                    break;
-                case '안희정':
-                    result_list[5].push(obj.rating);
-                    break;
-                case '이재명':
-                    result_list[6].push(obj.rating);
-                    break;
-                case '유승민':
-                    result_list[7].push(obj.rating);
-                    break;
-            }
+function getRatingSuccess(data) {
+    var result_list = [[], [], [], [], [], [], [], []];
+    for (var i = 0; i < data.length; i++) {
+        var obj = data[i];
+        if (!result_list[0].includes(obj.date)) {
+            result_list[0].push(obj.date);
         }
 
-        var ctx = document.getElementById("ratingChart");
-        var ratingChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: result_list[0],
-                datasets: [{
-                            label: '문재인',
-                            borderColor: "rgba(255, 99, 132, 1)",
-                            fill: false,
-                            data: result_list[1]
-                        },
-                        {
-                            label: '안철수',
-                            borderColor: "rgba(54, 162, 235, 1)",
-                            fill: false,
-                            data: result_list[2]
-                        },
-                        {
-                            label: '황교안',
-                            borderColor: "rgba(255, 206, 86, 1)",
-                            fill: false,
-                            data: result_list[3]
-                        },
-                        {
-                            label: '남경필',
-                            borderColor: "rgba(75, 192, 192, 1)",
-                            fill: false,
-                            data: result_list[4]
-                        },
-                        {
-                            label: '안희정',
-                            borderColor: "rgba(153, 102, 255, 1)",
-                            fill: false,
-                            data: result_list[5]
-                        },
-                        {
-                            label: '이재명',
-                            borderColor: "rgba(255, 159, 64, 1)",
-                            fill: false,
-                            data: result_list[6]
-                        }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                }
-            }
-        });
+        switch (obj.candidate) {
+            case '문재인':
+                result_list[1].push(obj.rating);
+                break;
+            case '안철수':
+                result_list[2].push(obj.rating);
+                break;
+            case '황교안':
+                result_list[3].push(obj.rating);
+                break;
+            case '남경필':
+                result_list[4].push(obj.rating);
+                break;
+            case '안희정':
+                result_list[5].push(obj.rating);
+                break;
+            case '이재명':
+                result_list[6].push(obj.rating);
+                break;
+            case '유승민':
+                result_list[7].push(obj.rating);
+                break;
+        }
     }
 
-    $('#rating-graph-button').click(function() {
-        waitMe($('#rating-modal'));
-        getRatingList();
+    var ctx = document.getElementById("ratingChart");
+    var ratingChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: result_list[0],
+            datasets: [{
+                        label: '문재인',
+                        borderColor: "rgba(255, 99, 132, 1)",
+                        fill: false,
+                        data: result_list[1]
+                    },
+                    {
+                        label: '안철수',
+                        borderColor: "rgba(54, 162, 235, 1)",
+                        fill: false,
+                        data: result_list[2]
+                    },
+                    {
+                        label: '황교안',
+                        borderColor: "rgba(255, 206, 86, 1)",
+                        fill: false,
+                        data: result_list[3]
+                    },
+                    {
+                        label: '남경필',
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        fill: false,
+                        data: result_list[4]
+                    },
+                    {
+                        label: '안희정',
+                        borderColor: "rgba(153, 102, 255, 1)",
+                        fill: false,
+                        data: result_list[5]
+                    },
+                    {
+                        label: '이재명',
+                        borderColor: "rgba(255, 159, 64, 1)",
+                        fill: false,
+                        data: result_list[6]
+                    }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
     });
+}
+
+$('#rating-graph-button').click(function() {
+    waitMe($('#rating-modal'));
+    getRatingList();
+});
 </script>
 
 </html>

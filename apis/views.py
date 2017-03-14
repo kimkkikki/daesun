@@ -31,8 +31,8 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-def save_lucky_rating(candidate, type):
-    lucky_rating = LuckyRating(candidate=candidate, type=type)
+def save_lucky_rating(candidate, type, input):
+    lucky_rating = LuckyRating(candidate=candidate, type=type, input=input)
     lucky_rating.save()
 
 
@@ -184,6 +184,20 @@ def pledge(req):
         return JSONResponse(result_list)
 
 
+def lucky_rating_list():
+    lucky_ratings = LuckyRating.objects.all().values('candidate').annotate(count=Count('candidate')).order_by('-count')
+
+    total = 0
+    for lucky in lucky_ratings:
+        total += lucky['count']
+
+    for lucky in lucky_ratings:
+        lucky['rating'] = round((lucky['count'] / total) * 100, 1)
+
+    print(lucky_ratings)
+    return list(lucky_ratings)
+
+
 def approval_rating_list(cp, is_last):
     if is_last:
         last = ApprovalRating.objects.latest('date').date
@@ -223,7 +237,7 @@ def name_chemistry(request):
 
     if len(result_list) > 0:
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
-        save_lucky_rating(result_list[0]['candidate'], 'name')
+        save_lucky_rating(result_list[0]['candidate'], 'name', name)
 
     return JSONResponse({'list': result_list})
 
@@ -448,6 +462,6 @@ def constellation_api(request):
         request_constellation = constellation.get_constellation((month, day))
         result = constellation.constellation_chemistry(request_constellation)
         result = sorted(result, key=itemgetter('score'), reverse=True)
-        save_lucky_rating(result[0]['candidate'], 'star')
+        save_lucky_rating(result[0]['candidate'], 'star', str((month, day)))
 
         return JSONResponse(result)

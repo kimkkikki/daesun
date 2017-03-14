@@ -33,7 +33,7 @@ $(document).ready(function(){
                 $('#pledgeRank').waitMe('hide');
 			}
 		});
-	}
+	};
 
 	getRanks();
 });
