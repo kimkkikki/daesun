@@ -188,6 +188,7 @@
                         <option>남경필</option>
                         <option>유승민</option>
                         <option>이재명</option>
+                        <option>심상정</option>
                     </select>
                     <span class="input-group-addon">@</span>
                     <input class="form-control" type="text" id="cheering-message" title="메세지">
@@ -213,8 +214,11 @@
 
 <script type="text/javascript" src="{% static '/js/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/lucky-name-test.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/wow.js' %}"></script>
 
 <script type="text/javascript">
+new WOW().init();
+
 function waitMe(element) {
     element.waitMe({
         effect : 'facebook',
@@ -247,18 +251,15 @@ $(function() {
     var before = null;
     $('#rating-toggle').change(function() {
         var is_rating = $(this).prop('checked');
-        var template;
+        var template = $('#rating-template');
         var temp;
         if (is_rating) {
-            console.log('rating');
             if (before != null) {
-                template = $('#rating-template');
                 temp = template.html();
                 template.html(before);
                 before = temp;
             }
         } else {
-            console.log('lucky');
             if (before == null) {
                 waitMe($('#rating'));
                 $.ajax({
@@ -272,7 +273,6 @@ $(function() {
                             'type': 'lucky'
                         }),
                     success: function(data) {
-                        var template = $('#rating-template');
                         before = template.html();
                         template.html(data);
                         $('#rating').waitMe('hide');
@@ -284,7 +284,6 @@ $(function() {
                     }
                 });
             } else {
-                template = $('#rating-template');
                 temp = template.html();
                 template.html(before);
                 before = temp;
