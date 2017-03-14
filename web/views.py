@@ -1,7 +1,6 @@
 from django.shortcuts import render, render_to_response
 from apis import views
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -30,7 +29,6 @@ def google_app_engine_health_check(req):
     return HttpResponse(status=200)
 
 
-@csrf_exempt
 def cheering(request):
     if request.method == 'POST':
         views.create_cheering_message(request)
@@ -52,3 +50,11 @@ def rating(request):
         return render_to_response('rating.html', {'ratings': ratings})
     else:
         return HttpResponse(status=404)
+
+
+def pledge(request):
+    if request.method == 'GET':
+        return render_to_response('pledge_test.html')
+    else:
+        results = views.pledge_post(request)
+        return render_to_response('pledge_result.html', {'results': results})

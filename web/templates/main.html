@@ -40,7 +40,6 @@
     <!-- Library -->
     <script src="{% static 'js/waitMe.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
-    <script src="{% static 'js/js.cookie.js' %}"></script>
     <script src="{% static 'js/jquery.bracket.min.js'%}"></script>
 </head>
 
@@ -114,7 +113,7 @@
                     <h3 class="section-subheading text-muted">여론조사 / 우주의기운이 돕는 지지율입니다</h3>
                 </div>
                 <div class="col-md-3 text-center input-group">
-                    <input id="rating-toggle" type="checkbox" checked data-toggle="toggle" data-on="여론조사" data-off="우주의기운" data-onstyle="success" data-offstyle="danger">
+                    <input id="rating-toggle" type="checkbox" checked data-toggle="toggle" data-on="여론조사" data-off="우주의기운" data-onstyle="success" data-offstyle="danger" title="지지율 토글 버튼">
                     <button id="rating-graph-button" class="btn btn-info" data-toggle="modal" data-target="#rating-modal">그래프 보기</button>
                 </div>
             </div>
@@ -150,6 +149,11 @@
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">공약 이상형</h2>
                     <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div id="pledge-test" class="text-center">
+                    <button id="pledge-test-start-button" class="btn btn-primary">시작하기</button>
                 </div>
             </div>
         </div>
@@ -212,9 +216,10 @@
 </body>
 
 
-<script type="text/javascript" src="{% static '/js/cheering.js' %}"></script>
-<script type="text/javascript" src="{% static '/js/lucky-name-test.js' %}"></script>
-<script type="text/javascript" src="{% static '/js/wow.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/cheering.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/wow.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
 
 <script type="text/javascript">
 new WOW().init();
@@ -404,6 +409,93 @@ $('#rating-graph-button').click(function() {
     waitMe($('#rating-modal'));
     getRatingList();
 });
+</script>
+
+<script type="text/javascript">
+    var blindResult;
+    var blindToken;
+    var blindList;
+    var blindLoopIndex;
+
+    $('#pledge-test-start-button').click(function () {
+        console.log('pledge start');
+        waitMe($('#pledge'));
+        $.ajax({
+            url: '/pledge',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            async: true,
+            type: 'GET',
+            success: function(data) {
+                $('#pledge-test').html(data);
+            },
+            error: function(data, status, err) {
+                console.log(err);
+                $('#pledge').waitMe('hide');
+            }
+        });
+        $.ajax({
+            url: '/apis/pledge',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            async: true,
+            dataType: 'json',
+            cache: false,
+            type: 'GET',
+            success: function(data) {
+                blindResult = [];
+                blindToken = data.token;
+                blindList = data.list;
+                blindLoopIndex = 1;
+
+                $('#pledge-test-title').html(blindList[0].title);
+                $('#pledge-test-contents').html(blindList[0].contents);
+                $('#pledge').waitMe('hide');
+            },
+            error: function(data, status, err) {
+                console.log(err);
+                $('#pledge').waitMe('hide');
+            }
+        });
+    });
+
+function blindNextButtonClick(button) {
+    if (blindLoopIndex < 10) {
+        $('#pledge-test-title').html(blindList[blindLoopIndex].title);
+        $('#pledge-test-contents').html(blindList[blindLoopIndex].contents);
+        blindLoopIndex += 1;
+        blindResult.push(button.value);
+    } else {
+        waitMe($('#pledge'));
+        blindLoopIndex += 1;
+        blindResult.push(button.value);
+
+        console.log(blindResult);
+        $.ajax({
+                url: '/pledge',
+                cache: false,
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                async: true,
+                type: 'POST',
+                data: JSON.stringify({
+                    'token': blindToken,
+                    'list': blindResult
+                }),
+                success: function(data) {
+                    $('#pledge').waitMe('hide');
+                    $('#pledge-test').html(data);
+                },
+                error: function(data, status, err) {
+                    $('#pledge').waitMe('hide');
+                    console.log(err);
+                }
+            });
+    }
+}
 </script>
 
 </html>

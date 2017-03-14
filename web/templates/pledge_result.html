@@ -1,0 +1,12 @@
+<div class="wow fadeInUp">
+    <h1>result!!</h1>
+    {% for result in results %}
+        {{ result.candidate }}
+        {{ result.count }}
+    {% endfor %}
+    <div>
+        <button type="button" class="btn btn-success">다시하기</button>
+        <button type="button" class="btn btn-danger">공유하기</button>
+        <button type="button" class="btn btn-default">랭킹보기</button>
+    </div>
+</div>

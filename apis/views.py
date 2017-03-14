@@ -127,61 +127,70 @@ def pledge_rank_api(req):
     return JSONResponse(pledge_rank_list())
 
 
-@csrf_exempt
-def pledge(req):
+def pledge_get():
     cache = caches['default']
+    evaluate_token = str(uuid.uuid4())
+    cache_key = 'pledge_evaluate|' + evaluate_token
 
-    if req.method == 'GET':
-        pledge_obj = Pledge.objects.all().order_by('updated')[0:10]
-        pledges = list(pledge_obj.values())
-        print(pledges)
+    pledge_obj = Pledge.objects.all().order_by('updated')[0:10]
+    pledges = list(pledge_obj.values())
+    print(pledges)
 
-        # 10개 공약 순서대로 누군지 저장해야함
-        evaluate_token = str(uuid.uuid4())
-        cache_key = 'pledge_evaluate|' + evaluate_token
+    data = {"token": evaluate_token, "list": pledges}
+    # 10개 공약 순서대로 누군지 저장해야함
+    cache.set(cache_key, json.dumps(data, cls=DjangoJSONEncoder), timeout=600)
 
-        data = {"token": evaluate_token, "list": pledges}
-        cache.set(cache_key, json.dumps(data, cls=DjangoJSONEncoder), timeout=600)
+    return data
 
-        return JSONResponse(data)
 
-    elif req.method == 'POST':
-        body = JSONParser().parse(req)
-        token = body.get('token', None)
-        result_list = body.get('list', None)
-        cache_key = 'pledge_evaluate|' + token
-        cache_data = cache.get(cache_key)
-        cache.delete(cache_key)
+def pledge_post(request):
+    cache = caches['default']
+    body = JSONParser().parse(request)
+    token = body.get('token', None)
+    result_list = body.get('list', None)
+    cache_key = 'pledge_evaluate|' + token
+    cache_data = cache.get(cache_key)
+    cache.delete(cache_key)
 
-        print(cache_data)
+    print(cache_data)
 
-        if cache_data is None:
-            # Expire
-            return JSONResponse({'message': '10분 이내에 입력해야 합니다'}, status=400)
+    if cache_data is None:
+        # Expire
+        return JSONResponse({'message': '10분 이내에 입력해야 합니다'}, status=400)
 
-        cache_data = json.loads(cache_data)
-        candidate_list = cache_data['list']
-        candidate_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '황교안': 0, '남경필': 0}
+    cache_data = json.loads(cache_data)
 
-        for i, result in enumerate(result_list):
-            if result == 1 or result == '1':
-                Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1, updated=datetime.now())
-                candidate_dict[candidate_list[i].get('candidate')] += 1
-            elif result == -1 or result == '-1':
-                Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1,
-                                                                             updated=datetime.now())
-                candidate_dict[candidate_list[i].get('candidate')] -= 1
+    candidate_list = cache_data['list']
+    candidate_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '황교안': 0, '남경필': 0}
 
-        result_list = [{'candidate': '문재인', 'count': candidate_dict['문재인']},
-                       {'candidate': '안철수', 'count': candidate_dict['안철수']},
-                       {'candidate': '이재명', 'count': candidate_dict['이재명']},
-                       {'candidate': '유승민', 'count': candidate_dict['유승민']},
-                       {'candidate': '안희정', 'count': candidate_dict['안희정']},
-                       {'candidate': '황교안', 'count': candidate_dict['황교안']},
-                       {'candidate': '남경필', 'count': candidate_dict['남경필']}, ]
-        result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
+    for i, result in enumerate(result_list):
+        if result == 1 or result == '1':
+            Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1, updated=datetime.now())
+            candidate_dict[candidate_list[i].get('candidate')] += 1
+        elif result == -1 or result == '-1':
+            Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1,
+                                                                         updated=datetime.now())
+            candidate_dict[candidate_list[i].get('candidate')] -= 1
 
-        return JSONResponse(result_list)
+    result_list = [{'candidate': '문재인', 'count': candidate_dict['문재인']},
+               {'candidate': '안철수', 'count': candidate_dict['안철수']},
+               {'candidate': '이재명', 'count': candidate_dict['이재명']},
+               {'candidate': '유승민', 'count': candidate_dict['유승민']},
+               {'candidate': '안희정', 'count': candidate_dict['안희정']},
+               {'candidate': '황교안', 'count': candidate_dict['황교안']},
+               {'candidate': '남경필', 'count': candidate_dict['남경필']}, ]
+    result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
+
+    return result_list
+
+
+@csrf_exempt
+def pledge(request):
+    if request.method == 'GET':
+        return JSONResponse(pledge_get())
+
+    elif request.method == 'POST':
+        return JSONResponse(pledge_post(request))
 
 
 def lucky_rating_list():
