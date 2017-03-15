@@ -71,6 +71,7 @@ def name_chemistry(name1, name2):
         if i < len(name2_split):
             sum_list.append(name2_split[i])
 
+    score_list.append(sum_list)
     while len(sum_list) > 2:
         result_list = []
         for i, obj in enumerate(sum_list):
@@ -79,9 +80,9 @@ def name_chemistry(name1, name2):
         sum_list = result_list
         score_list.append(sum_list)
 
+    print(score_list)
     score = sum_list[0] * 10 + sum_list[1]
 
     if score == 0:
         score = 100
-
     return score, score_list

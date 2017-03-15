@@ -22,7 +22,7 @@
     <!-- Library CSS -->
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
-    <link rel="stylesheet" href="{% static 'css/jquery.bracket.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/vis/dist/vis.min.css' %}">
     <link rel="stylesheet" href="{% static 'lib/c3/c3.min.css' %}">
 
     <!-- Custom CSS -->
@@ -39,7 +39,7 @@
     <!-- Library -->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>-->
     <script src="{% static 'js/waitMe.min.js' %}"></script>
-    <script src="{% static 'js/jquery.bracket.min.js'%}"></script>
+    <script src="{% static 'lib/vis/dist/vis.min.js'%}"></script>
     <script src="{% static 'lib/d3/d3.min.js' %}"></script>
     <script src="{% static 'lib/c3/c3.min.js' %}"></script>
 </head>
@@ -178,7 +178,7 @@
                         </span>
                     </div>
 
-                    <div class="demo"></div>
+                    <div id="mynetwork" style="height:200px"></div>
                 </div>
                 <div class="col-md-6 text-center">
                     <h4>별자리</h4>

@@ -5,59 +5,97 @@ $(document).ready(function(){
             type:'GET',
             success:function(data){
                 console.log(data.list)
+                draw(data.nodes);
             }
         });
         return false;
     });
 
 
-    var singleElimination = {
-      "teams": [              // Matchups
-        ["Team 1", "Team 2"], // First match
-        ["Team 3", "Team 4"]  // Second match
-      ],
-      "results": [            // List of brackets (single elimination, so only one bracket)
-        [                     // List of rounds in bracket
-          [                   // First round in this bracket
-            [1, 2],           // Team 1 vs Team 2
-            [2, 3],           // Team 2 vs Team 3
-            [3, 4]            // Team 3 vs Team 4
-          ],
-          [                   // Second (final) round in single elimination bracket
-            [5, 6],           // Match for first place
-            [7, 8],           // Match for first place
-            [9, 10]            // Match for 3rd place
-          ]
-        ]
-      ]
-    }
+        var nodes = null;
+        var edges = null;
+        var network = null;
+        var directionInput ='DU';
 
-    var doubleElimination = {
-      "teams": [
-        ["Team 1", "Team 2"],
-        ["Team 3", "Team 4"]
-      ],
-      "results": [            // List of brackets (three since this is double elimination)
-        [                     // Winner bracket
-          [[1, 2], [3, 4]],   // First round and results
-          [[5, 6]]            // Second round
-        ],
-        [                     // Loser bracket
-          [[7, 8]],           // First round
-          [[9, 10]]           // Second round
-        ],
-        [                     // Final "bracket"
-          [                   // First round
-            [11, 12],         // Match to determine 1st and 2nd
-            [13, 14]          // Match to determine 3rd and 4th
-          ],
-          [                   // Second round
-            [15, 16]          // LB winner won first round (11-12) so need a final decisive round
-          ]
-        ]
-      ]
-    }
-    $('.demo').bracket({
-      init: singleElimination
-    });
+        function destroy() {
+            if (network !== null) {
+                network.destroy();
+                network = null;
+            }
+        }
+
+        function draw(data) {
+            destroy();
+            nodes = [];
+            edges = [];
+            var connectionCount = [];
+
+            for(var i=0; i < data.length ;i++){
+                nodes.push(data[i]);
+            }
+
+            edges.push({from: 0, to: 6});
+            edges.push({from: 1, to: 6});
+            edges.push({from: 1, to: 7});
+            edges.push({from: 2, to: 7});
+            edges.push({from: 2, to: 8});
+            edges.push({from: 3, to: 8});
+            edges.push({from: 3, to: 9});
+            edges.push({from: 4, to: 9});
+            edges.push({from: 4, to: 10});
+            edges.push({from: 5, to: 10});
+            edges.push({from: 6, to: 11});
+            edges.push({from: 7, to: 11});
+            edges.push({from: 7, to: 12});
+            edges.push({from: 8, to: 12});
+            edges.push({from: 8, to: 13});
+            edges.push({from: 9, to: 13});
+            edges.push({from: 9, to: 14});
+            edges.push({from: 10, to: 14});
+            edges.push({from: 11, to: 15});
+            edges.push({from: 12, to: 15});
+            edges.push({from: 12, to: 16});
+            edges.push({from: 13, to: 16});
+            edges.push({from: 13, to: 17});
+            edges.push({from: 14, to: 17});
+            edges.push({from: 15, to: 18});
+            edges.push({from: 16, to: 18});
+            edges.push({from: 16, to: 19});
+            edges.push({from: 17, to: 19});
+
+
+            // create a network
+            var container = document.getElementById('mynetwork');
+            var data = {
+                nodes: nodes,
+                edges: edges
+            };
+
+            var options = {
+                edges: {
+                    smooth: {
+                        type: 'cubicBezier',
+                        forceDirection: 'horizontal',
+                        roundness: 0.4
+                    }
+                },
+                nodes: {
+                    font: {
+                      size: 40, // px
+                     },
+                    color: {
+                      background: '#ffffff',
+                    }
+                },
+                layout: {
+                    hierarchical: {
+                        direction: 'DU'
+                    }
+                },
+                physics:false
+            };
+            network = new vis.Network(container, data, options);
+
+        }
+
 });
