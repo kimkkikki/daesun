@@ -22,13 +22,12 @@
     <!-- Library CSS -->
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.bracket.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/c3/c3.min.css' %}">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
-    <!-- lucky > name -->
-
-    <link href="{% static 'css/jquery.bracket.min.css' %}" rel="stylesheet">
     <!-- Jquery -->
     <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
@@ -38,9 +37,11 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <!-- Library -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>-->
     <script src="{% static 'js/waitMe.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
     <script src="{% static 'js/jquery.bracket.min.js'%}"></script>
+    <script src="{% static 'lib/d3/d3.min.js' %}"></script>
+    <script src="{% static 'lib/c3/c3.min.js' %}"></script>
 </head>
 
 <body id="page-top">
@@ -134,7 +135,7 @@
                     <h4 class="modal-title">여론조사 지지율 차트</h4>
                 </div>
                 <div class="modal-body">
-                    <canvas id="ratingChart" width="400" height="400"></canvas>
+                    <div id="ratingChart"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -233,6 +234,16 @@
                     <h3 class="section-subheading text-muted">키워드로 보는 대선후보 동향</h3>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 text-center">
+                    <h4>언론 언급 점유율</h4>
+                    <div id="press-chart-pie"></div>
+                </div>
+                <div class="col-md-6 col-sm-6 text-center">
+                    <h4>언론 언급 횟수</h4>
+                    <div id="press-chart-line"></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -271,6 +282,50 @@
                     <tfoot>
                         <tr><td colspan="4"><button id="cheering-more" class="btn btn-default btn-block">응원메세지 더보기</button></td></tr>
                     </tfoot>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="donate">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">기부하기</h2>
+                    <h3 class="section-subheading text-muted">대선후보/대선닷컴에 기부하세요</h3>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>후원 대상</th>
+                            <th>후원 계좌</th>
+                            <th>예금주</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>문재인</td>
+                            <td>우리은행 1006-901-451607</td>
+                            <td>문재인후원회</td>
+                        </tr>
+                        <tr>
+                            <td>안희정</td>
+                            <td>농협 301-0206-6146-11</td>
+                            <td>김태영</td>
+                        </tr>
+                        <tr>
+                            <td>이재명</td>
+                            <td>농협 302-0207-1611-11</td>
+                            <td>이재명후원회</td>
+                        </tr>
+                        <tr>
+                            <td>대선닷컴</td>
+                            <td>우리은행 계좌개설해야지</td>
+                            <td>대선닷컴</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -361,116 +416,74 @@ $(function() {
 });
 
 // 지지율 차트
-var getRatingList = function(){
-    $.ajax({
-        url: '/apis/rating',
-        headers: {
-            'Content-Type':'application/json'
-        },
-        async: true,
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            getRatingSuccess(data);
-            $('#rating-modal').waitMe('hide');
-        },
-        error: function(data, status, err) {
-            console.log(err);
-            $('#rating-modal').waitMe('hide');
-        }
-    });
-};
-
-function getRatingSuccess(data) {
-    var result_list = [[], [], [], [], [], [], [], []];
-    for (var i = 0; i < data.length; i++) {
-        var obj = data[i];
-        if (!result_list[0].includes(obj.date)) {
-            result_list[0].push(obj.date);
-        }
-
-        switch (obj.candidate) {
-            case '문재인':
-                result_list[1].push(obj.rating);
-                break;
-            case '안철수':
-                result_list[2].push(obj.rating);
-                break;
-            case '황교안':
-                result_list[3].push(obj.rating);
-                break;
-            case '남경필':
-                result_list[4].push(obj.rating);
-                break;
-            case '안희정':
-                result_list[5].push(obj.rating);
-                break;
-            case '이재명':
-                result_list[6].push(obj.rating);
-                break;
-            case '유승민':
-                result_list[7].push(obj.rating);
-                break;
-        }
-    }
-
-    var ctx = document.getElementById("ratingChart");
-    var ratingChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: result_list[0],
-            datasets: [{
-                        label: '문재인',
-                        borderColor: "rgba(255, 99, 132, 1)",
-                        fill: false,
-                        data: result_list[1]
-                    },
-                    {
-                        label: '안철수',
-                        borderColor: "rgba(54, 162, 235, 1)",
-                        fill: false,
-                        data: result_list[2]
-                    },
-                    {
-                        label: '황교안',
-                        borderColor: "rgba(255, 206, 86, 1)",
-                        fill: false,
-                        data: result_list[3]
-                    },
-                    {
-                        label: '남경필',
-                        borderColor: "rgba(75, 192, 192, 1)",
-                        fill: false,
-                        data: result_list[4]
-                    },
-                    {
-                        label: '안희정',
-                        borderColor: "rgba(153, 102, 255, 1)",
-                        fill: false,
-                        data: result_list[5]
-                    },
-                    {
-                        label: '이재명',
-                        borderColor: "rgba(255, 159, 64, 1)",
-                        fill: false,
-                        data: result_list[6]
-                    }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-}
-
+var ratingChart = null;
 $('#rating-graph-button').click(function() {
-    waitMe($('#rating-modal'));
-    getRatingList();
+    if (ratingChart == null) {
+        waitMe($('#rating-modal'));
+        $.ajax({
+            url: '/apis/rating',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            async: true,
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
+                for (var i = 0; i < data.length; i++) {
+                    var obj = data[i];
+                    if (!result_list[0].includes(obj.date)) {
+                        result_list[0].push(obj.date);
+                    }
+
+                    switch (obj.candidate) {
+                        case '문재인':
+                            result_list[1].push(obj.rating);
+                            break;
+                        case '안철수':
+                            result_list[2].push(obj.rating);
+                            break;
+                        case '황교안':
+                            result_list[3].push(obj.rating);
+                            break;
+                        case '남경필':
+                            result_list[4].push(obj.rating);
+                            break;
+                        case '안희정':
+                            result_list[5].push(obj.rating);
+                            break;
+                        case '이재명':
+                            result_list[6].push(obj.rating);
+                            break;
+                        case '유승민':
+                            result_list[7].push(obj.rating);
+                            break;
+                    }
+                }
+
+                c3.generate({
+                    bindto: '#ratingChart',
+                    data: {
+                        x: 'x',
+                        columns: result_list
+                    },
+                    axis: {
+                        x: {
+                            type: 'timeseries',
+                            tick: {
+                                format: '%Y-%m-%d'
+                            }
+                        }
+                    }
+                });
+                $('#rating-modal').waitMe('hide');
+            },
+            error: function(data, status, err) {
+                console.log(err);
+                $('#rating-modal').waitMe('hide');
+            }
+        });
+    }
 });
 </script>
 
@@ -609,9 +622,113 @@ function blindNextButtonClick(button) {
 </script>
 
 <script type="text/javascript">
-    $('#press').waypoint(function() {
-       console.log('The element has appeared on the screen.');
+    var isLoadChart = false;
+    $('#lucky').waypoint(function () {
+        if (!isLoadChart) {
+            createPressChart();
+        }
     });
+    $('#press').waypoint(function() {
+        if (!isLoadChart) {
+            createPressChart();
+        }
+    });
+    $('#donate').waypoint(function() {
+        if (!isLoadChart) {
+            createPressChart();
+        }
+    });
+
+    function createPressChart() {
+        var count = 0;
+        isLoadChart = true;
+        waitMe($('#press'));
+        $.ajax({
+                url: '/apis/cp/group',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                cache: false,
+                type: 'GET',
+                success: function(data) {
+                    var result = [['문재인', 0], ['이재명', 0], ['안희정', 0], ['유승민', 0], ['황교안', 0], ['안철수', 0], ['남경필', 0]];
+
+                    for (var i = 0; i < data.length; i++) {
+                        result[0][1] += data[i].moon;
+                        result[1][1] += data[i].lee;
+                        result[2][1] += data[i].hee;
+                        result[3][1] += data[i].you;
+                        result[4][1] += data[i].hwang;
+                        result[5][1] += data[i].ahn;
+                        result[6][1] += data[i].nam;
+                    }
+
+                    press_chart = c3.generate({
+                        bindto: '#press-chart-pie',
+                        data: {
+                            columns: result,
+                            type : 'pie'
+                        }
+                    });
+
+                    if (count == 0) {
+                        count++;
+                    } else {
+                        $('#press').waitMe('hide');
+                    }
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                }
+            });
+        $.ajax({
+                url: '/apis/cp/daily',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                cache: false,
+                type: 'GET',
+                success: function(data) {
+                    var result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
+                    for (var i = 0; i < data.length; i++) {
+                        var obj = data[i];
+                        result_list[0].push(obj.date);
+                        result_list[1].push(obj.moon);
+                        result_list[2].push(obj.ahn);
+                        result_list[3].push(obj.hwang);
+                        result_list[4].push(obj.nam);
+                        result_list[5].push(obj.hee);
+                        result_list[6].push(obj.lee);
+                        result_list[7].push(obj.you);
+                    }
+
+                    c3.generate({
+                        bindto: '#press-chart-line',
+                        data: {
+                            x: 'x',
+                            columns: result_list
+                        },
+                        axis: {
+                            x: {
+                                type: 'timeseries',
+                                tick: {
+                                    format: '%Y-%m-%d'
+                                }
+                            }
+                        }
+                    });
+
+                    if (count == 0) {
+                        count++;
+                    } else {
+                        $('#press').waitMe('hide');
+                    }
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                }
+            });
+    }
 </script>
 
 </html>
