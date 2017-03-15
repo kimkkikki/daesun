@@ -207,7 +207,30 @@
                 </div>
                 <div class="col-md-6 text-center">
                     <h4>룰렛</h4>
+                    <div class="roulette">
+                        <img src="{% static 'img/candidate/moon.jpg' %}"/>
+                        <img src="{% static 'img/candidate/ahn1.jpg' %}"/>
+                        <img src="{% static 'img/candidate/ahn2.jpg' %}"/>
+                        <img src="{% static 'img/candidate/hong.jpg' %}"/>
+                        <img src="{% static 'img/candidate/hwang.jpg' %}"/>
+                        <img src="{% static 'img/candidate/lee.jpg' %}"/>
+                        <img src="{% static 'img/candidate/nam.jpg' %}"/>
+                        <img src="{% static 'img/candidate/sim.jpg' %}"/>
+                        <img src="{% static 'img/candidate/son.jpg' %}"/>
+                        <img src="{% static 'img/candidate/you.jpg' %}"/>
+                    </div>
+                    <button id="roulette-start" type="button" class="btn btn-default">룰렛 돌리기</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="press">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">언론</h2>
+                    <h3 class="section-subheading text-muted">키워드로 보는 대선후보 동향</h3>
                 </div>
             </div>
         </div>
@@ -259,6 +282,8 @@
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/wow.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/roulette.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
 
 <script type="text/javascript">
 new WOW().init();
@@ -559,6 +584,33 @@ function blindNextButtonClick(button) {
                     $('#lucky').waitMe('hide');
                 }
             });
+    });
+</script>
+
+<script type="text/javascript">
+    var option = {
+        speed : 10,
+        duration : 3,
+        startCallback : function() {
+            console.log('start');
+        },
+        slowDownCallback : function() {
+            console.log('slowDown');
+        },
+        stopCallback : function($stopElm) {
+            console.log('stop');
+        }
+    };
+	var rouletter = $('div.roulette');
+    rouletter.roulette(option);
+	$('#roulette-start').click(function(){
+		rouletter.roulette('start');
+	});
+</script>
+
+<script type="text/javascript">
+    $('#press').waypoint(function() {
+       console.log('The element has appeared on the screen.');
     });
 </script>
 
