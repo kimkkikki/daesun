@@ -58,3 +58,9 @@ def pledge(request):
     else:
         results = views.pledge_post(request)
         return render_to_response('pledge_result.html', {'results': results})
+
+
+def constellation_chemistry(request):
+    if request.method == 'POST':
+        results = views.constellation_post(request)
+        return render_to_response('constellation_modal.html', {'constellation_result': results})

@@ -488,16 +488,21 @@ def cheering_message_api(request):
             return JSONResponse({'message': 'failure'})
 
 
+def constellation_post(request):
+    body = JSONParser().parse(request)
+    month = body.get('month', None)
+    day = body.get('day', None)
+
+    request_constellation = constellation.get_constellation((month, day))
+    result = constellation.constellation_chemistry(request_constellation)
+    result = sorted(result, key=itemgetter('score'), reverse=True)
+    save_lucky_rating(result[0]['candidate'], 'star', str((month, day)))
+
+    return result
+
+
 @csrf_exempt
 def constellation_api(request):
     if request.method == 'POST':
-        body = JSONParser().parse(request)
-        month = body.get('month', None)
-        day = body.get('day', None)
-
-        request_constellation = constellation.get_constellation((month, day))
-        result = constellation.constellation_chemistry(request_constellation)
-        result = sorted(result, key=itemgetter('score'), reverse=True)
-        save_lucky_rating(result[0]['candidate'], 'star', str((month, day)))
-
+        result = constellation_post(request)
         return JSONResponse(result)
