@@ -27,13 +27,12 @@ def get_constellation(birthday):
 
 def constellation_chemistry(cons):
     candidates_constellation = [{'candidate': '문재인', 'constellation': '물병'},
-                                {'candidate': '안희정', 'constellation': '염소'},
-                                {'candidate': '이재명', 'constellation': '황소'},
+                                {'candidate': '안희정', 'constellation': '황소'},
+                                {'candidate': '이재명', 'constellation': '물병'},
                                 {'candidate': '심상정', 'constellation': '물고기'},
                                 {'candidate': '유승민', 'constellation': '염소'},
                                 {'candidate': '남경필', 'constellation': '물병'},
-                                {'candidate': '황교안', 'constellation': '양'},
-                                {'candidate': '안희정', 'constellation': '황소'}]
+                                {'candidate': '안철수', 'constellation': '물고기'}]
 
     for candidate in candidates_constellation:
         score = constellation_chemistry_man_to_woman(cons, candidate.get('constellation')) + \

@@ -129,3 +129,19 @@ ul.social-buttons li a {
 .section-contents {
     margin-top: 75px;
 }
+
+.lucky-box {
+    padding-top:40px;
+    padding-bottom:40px;
+}
+
+.randomizeMachine {
+    width: 100px;
+    height: 100px;
+}
+@media (min-width: 768px) {
+    .randomizeMachine {
+        width: 130px;
+        height: 130px;
+    }
+}
