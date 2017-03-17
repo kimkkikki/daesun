@@ -8,7 +8,6 @@ $(document).ready(function(){
             url:'/apis/luckyname?name='+$('#inputUserName')[0].value,
             type:'GET',
             success:function(data){
-                console.log(data.list)
                 result = data.list;
                 $('#your_name')[0].textContent = $('#inputUserName')[0].value;
 
@@ -27,16 +26,11 @@ $(document).ready(function(){
                         //var image = new Image();
                         //image.setAttribute("src", getImage(obj.candidate));
                         node.append(text);
-
                         $('#lucky_name_result_rest')[0].appendChild(node);
                         //$('#lucky_name_result_rest')[0].appendChild(image);
-
                     }
-
                 }
-
                 draw(data.nodes);
-
 
                 $('#lucky-name-modal').waitMe('hide');
             },
@@ -89,6 +83,7 @@ $(document).ready(function(){
     }
 
     function draw(nodeList) {
+
         destroy();
         nodes = [];
         edges = [];
@@ -97,35 +92,71 @@ $(document).ready(function(){
             nodes.push(nodeList[i]);
         }
 
-        edges.push({from: 0, to: 6});
-        edges.push({from: 1, to: 6});
-        edges.push({from: 1, to: 7});
-        edges.push({from: 2, to: 7});
-        edges.push({from: 2, to: 8});
-        edges.push({from: 3, to: 8});
-        edges.push({from: 3, to: 9});
-        edges.push({from: 4, to: 9});
-        edges.push({from: 4, to: 10});
-        edges.push({from: 5, to: 10});
-        edges.push({from: 6, to: 11});
-        edges.push({from: 7, to: 11});
-        edges.push({from: 7, to: 12});
-        edges.push({from: 8, to: 12});
-        edges.push({from: 8, to: 13});
-        edges.push({from: 9, to: 13});
-        edges.push({from: 9, to: 14});
-        edges.push({from: 10, to: 14});
-        edges.push({from: 11, to: 15});
-        edges.push({from: 12, to: 15});
-        edges.push({from: 12, to: 16});
-        edges.push({from: 13, to: 16});
-        edges.push({from: 13, to: 17});
-        edges.push({from: 14, to: 17});
-        edges.push({from: 15, to: 18});
-        edges.push({from: 16, to: 18});
-        edges.push({from: 16, to: 19});
-        edges.push({from: 17, to: 19});
+        // 6개
+        // - 10
+        /*
+         7자
+          - 12 2*(7-1)
+          - 10 2*5
+          - 8 2*4
+          - 6 2*3
+          - 4 2*2
 
+         6자
+          - 10 2*5
+
+          - 8 2*4
+          - 6 2*3
+          - 4 2*2
+
+         5자
+          - 8 2*4
+          - 6
+          - 4
+         */
+        // 이름 3글자인 사람들
+        name_length = 6;
+        var left = 0;
+        var right = name_length;
+        var left_name = 99;
+        var right_name = 0;
+
+        for(var time =0; time < 2; time++){
+
+            for(var last = 0; last < 6;last++){
+                edges.push({from: left_name-- , to: right_name++});
+            }
+
+            for(var i= name_length - 1; i*2 >= 4; i--){
+                for(var j = 0; j <i; j++) {
+                    edges.push({from: left, to: right})
+                    edges.push({from: left + 1, to: right})
+                    left++;
+                    right++;
+                }
+                left++;
+            }
+            left += 2;
+            right += name_length;
+            right_name = left;
+
+        }
+        console.log(edges);
+
+       /*
+        edges.push({from: 99, to: 0});
+        edges.push({from: 98, to: 1});
+        edges.push({from: 97, to: 2});
+        edges.push({from: 96, to: 3});
+        edges.push({from: 95, to: 4});
+        edges.push({from: 94, to: 5});
+
+        edges.push({from: 93, to: 20});
+        edges.push({from: 92, to: 21});
+        edges.push({from: 91, to: 22});
+        edges.push({from: 90, to: 23});
+        edges.push({from: 89, to: 24});
+        edges.push({from: 88, to: 25});*/
 
         // create a network
         var container = document.getElementById('lucky_name_result');
@@ -137,7 +168,7 @@ $(document).ready(function(){
         var options = {
             autoResize: true,
             height: '100%',
-            width: '50%',
+            width: '100%',
             edges: {
                 smooth: {
                     type: 'cubicBezier',
@@ -165,3 +196,31 @@ $(document).ready(function(){
     }
 
 });
+
+
+[{'id': 93, 'label': '문', 'level': 5},
+    {'id': 92, 'label': '송', 'level': 5},
+    {'id': 91, 'label': '재', 'level': 5},
+    {'id': 90, 'label': '민', 'level': 5},
+    {'id': 89, 'label': '인', 'level': 5},
+    {'id': 88, 'label': '정', 'level': 5},
+    {'id': 20, 'label': 8, 'level': 4},
+    {'id': 21, 'label': 5, 'level': 4},
+    {'id': 22, 'label': 6, 'level': 4},
+    {'id': 23, 'label': 7, 'level': 4},
+    {'id': 24, 'label': 4, 'level': 4},
+    {'id': 25, 'label': 6, 'level': 4},
+    {'id': 26, 'label': 3, 'level': 3},
+    {'id': 27, 'label': 1, 'level': 3},
+    {'id': 28, 'label': 3, 'level': 3},
+    {'id': 29, 'label': 1, 'level': 3},
+    {'id': 30, 'label': 0, 'level': 3},
+    {'id': 31, 'label': 4, 'level': 2},
+    {'id': 32, 'label': 4, 'level': 2},
+    {'id': 33, 'label': 4, 'level': 2},
+    {'id': 34, 'label': 1, 'level': 2},
+    {'id': 35, 'label': 8, 'level': 1},
+    {'id': 36, 'label': 8, 'level': 1},
+    {'id': 37, 'label': 5, 'level': 1},
+    {'id': 38, 'label': 6, 'level': 0},
+    {'id': 39, 'label': 3, 'level': 0}]

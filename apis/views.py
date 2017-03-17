@@ -265,31 +265,45 @@ def lucky_name_chemistry(request):
     result_list = []
     score, best_to, best_from = 0, [], []
     for candidate in candidates:
-        score_to, score_to_list = hangle.name_chemistry(name, candidate)
-        score_from, score_from_list = hangle.name_chemistry(candidate, name)
+        score_to, score_to_list, name_to_list = hangle.name_chemistry(name, candidate)
+        score_from, score_from_list, name_from_list = hangle.name_chemistry(candidate, name)
         result_list.append({'candidate': candidate, 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
         if score < score_to + score_from:
-            best_to, best_from = score_to_list, score_from_list
+            best_to, best_from, best_to_name, best_from_name = score_to_list, score_from_list, name_to_list, name_from_list
             score = score_to + score_from
 
     if len(result_list) > 0:
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
         # save_lucky_rating(result_list[0]['candidate'], 'name')
 
-    i, j, length, nodes = 0, 0, len(best_to), []
-    for one in list(name):
-        nodes.append({'id': 99-j, 'label': one, 'level': length})
-        j -= 1
+    i, j, length, to_nodes, from_nodes = 0, 0, len(best_to), [], []
+
+    for name in best_to_name:
+        to_nodes.append({'id': 99-j, 'label': name, 'level': length})
+        j += 1
 
     for item in best_to:
         for score in item:
-            nodes.append({'id': i, 'label': score, 'level': length-1})
+            to_nodes.append({'id': i, 'label': score, 'level': length-1})
+            i += 1
+        length -= 1
+
+    length = len(best_from)
+
+    for name in best_from_name:
+        from_nodes.append({'id': 99-j, 'label': name, 'level': length})
+        j += 1
+
+    for item in best_from:
+        for score in item:
+            from_nodes.append({'id': i, 'label': score, 'level': length-1})
             i += 1
         length -= 1
 
     print(result_list)
-    print(nodes)
-    return JSONResponse({'list': result_list, 'nodes': nodes})
+    print(to_nodes)
+    print(from_nodes)
+    return JSONResponse({'list': result_list, 'nodes': to_nodes + from_nodes})
 
 
 @api_view(['GET'])

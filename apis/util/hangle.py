@@ -62,8 +62,13 @@ def name_chemistry(name1, name2):
     if length < len(name2_split):
         length = len(name2_split)
 
-    score_list = []
-    sum_list = []
+    name_list, score_list, sum_list = [], [], []
+
+    for i in range(0, length):
+        if i < len(list(name1)):
+            name_list.append(name1[i])
+        if i < len(list(name2)):
+            name_list.append(name2[i])
 
     for i in range(0, length):
         if i < len(name1_split):
@@ -85,4 +90,4 @@ def name_chemistry(name1, name2):
 
     if score == 0:
         score = 100
-    return score, score_list
+    return score, score_list, name_list
