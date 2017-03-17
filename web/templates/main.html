@@ -30,24 +30,6 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-
-    <!-- Jquery -->
-    <script src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
-    <script src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
-    <!-- Library -->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>-->
-    <script src="{% static 'js/waitMe.min.js' %}"></script>
-    <script src="{% static 'lib/vis/dist/vis.min.js'%}"></script>
-    <script src="{% static 'lib/d3/d3.min.js' %}"></script>
-    <script src="{% static 'lib/c3/c3.min.js' %}"></script>
-    <script src="{% static 'lib/moment/min/moment.min.js' %}"></script>
-    <script src="{% static 'js/fullcalendar.min.js'%}"></script>
-    <script src="{% static 'js/main/jquery.slotmachine.min.js'%}"></script>
 </head>
 
 <body id="page-top">
@@ -248,12 +230,20 @@
                     <p>혈액형으로 보는 후보자와의 궁합</p>
                     <div class="col-md-2">&nbsp;</div>
                     <div class="col-md-8 input-group text-center">
-                        <select id="blood-type" class="form-control" title="혈액형">
-                            <option value="A">A형</option>
-                            <option value="B">B형</option>
-                            <option value="O">O형</option>
-                            <option value="AB">AB형</option>
-                        </select>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                <input type="radio" name="blood-type" id="option1" autocomplete="off" value="A" checked>A형
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="blood-type" id="option2" autocomplete="off" value="B">B형
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="blood-type" id="option3" autocomplete="off" value="AB">AB형
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="blood-type" id="option4" autocomplete="off" value="O">O형
+                            </label>
+                        </div>
                         <span class="input-group-btn">
                             <button id="blood-type-button" type="button" class="btn btn-default">확인</button>
                         </span>
@@ -262,11 +252,11 @@
                 <div class="col-md-6 text-center lucky-box">
                     <h3>후보자 룰렛</h3>
                     <p>누구찍을지 모르겠다 돌려보자</p>
-                    <button id="roulette-start" type="button" class="btn btn-default">룰렛 돌리기</button>
+                    <button id="slot-start" type="button" class="btn btn-default">룰렛 돌리기</button>
                     <!--TODO::-->
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div id="roulette-machine-1" class="randomizeMachine">
+                            <div id="slot-machine-1" class="randomizeMachine">
                                 <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
                                 <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
                                 <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
@@ -280,7 +270,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div id="roulette-machine-2" class="randomizeMachine">
+                            <div id="slot-machine-2" class="randomizeMachine">
                                 <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
                                 <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
                                 <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
@@ -294,7 +284,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div id="roulette-machine-3" class="randomizeMachine">
+                            <div id="slot-machine-3" class="randomizeMachine">
                                 <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
                                 <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
                                 <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
@@ -314,7 +304,7 @@
     </section>
 
     <!-- 룰렛 모달뷰 -->
-    <div id="roulette-modal" class="modal fade" role="dialog">
+    <div id="slot-modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -504,41 +494,30 @@
 </body>
 
 
-<script type="text/javascript" src="{% static 'js/cheering.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
+<!-- Jquery -->
+<script type="text/javascript" src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
+
+<!-- Bootstrap JS -->
+<script type="text/javascript" src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<!-- Library -->
+<script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/vis/dist/vis.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'lib/d3/d3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/c3/c3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/moment/min/moment.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/fullcalendar.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/main/jquery.slotmachine.min.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/main/wow.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
 
-<script type="text/javascript">
-new WOW().init();
-
-function waitMe(element) {
-    element.waitMe({
-        effect : 'facebook',
-        text : '로딩 중입니다',
-        bg : 'rgba(255,255,255,0.7)',
-        color : '#000',
-        maxSize : '',
-        textPos : 'vertical',
-        fontSize : '',
-        source : ''
-    });
-}
-
-var csrftoken = Cookies.get('csrftoken');
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
-</script>
+<!-- Custom JS -->
+<script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/cheering.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
 
 <script type="text/javascript">
 $(function() {
@@ -799,26 +778,36 @@ function blindNextButtonClick(button) {
 </script>
 
 <script type="text/javascript">
-    //TODO: 룰렛
-    var machine1 = $("#roulette-machine-1").slotMachine({
+    //TODO: 슬롯머신
+    var machine1 = $("#slot-machine-1").slotMachine({
 					active	: 0,
 					delay	: 500
 				});
-    var machine2 = $("#roulette-machine-2").slotMachine({
+    var machine2 = $("#slot-machine-2").slotMachine({
 					active	: 1,
 					delay	: 500
 				});
-    var machine3 = $("#roulette-machine-3").slotMachine({
+    var machine3 = $("#slot-machine-3").slotMachine({
 					active	: 2,
 					delay	: 500
 				});
 
 
     function onComplete(active){
-        console.log("oncomplete");
+        switch(this.element[0].id){
+            case 'slot-machine-1':
+                console.log("oncomplete1 "+this.active);
+                break;
+            case 'slot-machine-2':
+                console.log("oncomplete2 "+this.active);
+                break;
+            case 'slot-machine-3':
+                console.log("oncomplete3 "+this.active);
+                break;
+        }
     }
 
-	$('#roulette-start').click(function(){
+	$('#slot-start').click(function(){
         machine1.shuffle(5, onComplete);
         machine2.shuffle(10, onComplete);
         machine3.shuffle(15, onComplete);
@@ -1010,5 +999,13 @@ function blindNextButtonClick(button) {
 //                console.log(err);
 //            }
 //        });
+</script>
+
+<script type="text/javascript">
+    //TODO: 혈액형 궁합 구현해야지
+    $('#blood-type-button').click(function () {
+        var value = $(":input:radio[name=blood-type]:checked").val();
+        console.log(value)
+    });
 </script>
 </html>
