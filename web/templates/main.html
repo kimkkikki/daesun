@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{% static 'lib/c3/c3.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/fullcalendar.min.css'%}">
     <link rel="stylesheet" href="{% static 'css/fullcalendar.print.min.css'%}" media='print'>
+    <link rel="stylesheet" href="{% static 'css/jquery.slotmachine.min.css'%}">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
@@ -46,6 +47,7 @@
     <script src="{% static 'lib/c3/c3.min.js' %}"></script>
     <script src="{% static 'lib/moment/min/moment.min.js' %}"></script>
     <script src="{% static 'js/fullcalendar.min.js'%}"></script>
+    <script src="{% static 'js/main/jquery.slotmachine.min.js'%}"></script>
 </head>
 
 <body id="page-top">
@@ -208,8 +210,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 text-center">
-                    <h4>이름점</h4>
+                <div class="col-md-6 text-center lucky-box">
+                    <h3>이름점</h3>
+                    <p>자음모음 획수로 보는 후보자와의 궁합</p>
                     <div class="input-group">
                         <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
                         <span class="input-group-btn">
@@ -217,8 +220,9 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-md-6 text-center">
-                    <h4>별자리</h4>
+                <div class="col-md-6 text-center lucky-box">
+                    <h3>별자리점</h3>
+                    <p>로맨틱한 밤하늘로 알아보는 궁합</p>
                     <div class="col-md-2">&nbsp;</div>
                     <div class="col-md-8 input-group text-center">
                         <select class="form-control" id="constellation-month" title="월">
@@ -237,42 +241,95 @@
                         </span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 text-center">
-                        <h4>혈액형</h4>
-                        <div class="col-md-2">&nbsp;</div>
-                        <div class="col-md-8 input-group text-center">
-                            <select id="blood-type" class="form-control" title="혈액형">
-                                <option value="A">A형</option>
-                                <option value="B">B형</option>
-                                <option value="O">O형</option>
-                                <option value="AB">AB형</option>
-                            </select>
-                            <span class="input-group-btn">
-                                <button id="blood-type-button" type="button" class="btn btn-default">확인</button>
-                            </span>
-                        </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center lucky-box">
+                    <h3>혈액형점</h3>
+                    <p>혈액형으로 보는 후보자와의 궁합</p>
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-8 input-group text-center">
+                        <select id="blood-type" class="form-control" title="혈액형">
+                            <option value="A">A형</option>
+                            <option value="B">B형</option>
+                            <option value="O">O형</option>
+                            <option value="AB">AB형</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="blood-type-button" type="button" class="btn btn-default">확인</button>
+                        </span>
                     </div>
-                    <div class="col-md-6 text-center">
-                        <h4>룰렛</h4>
-                        <div class="roulette">
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}"/>
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn1.jpg' %}"/>
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn2.jpg' %}"/>
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/hong.jpg' %}"/>
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/hwang.jpg' %}"/>
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/lee.jpg' %}"/>
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/nam.jpg' %}"/>
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/sim.jpg' %}"/>
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/son.jpg' %}"/>
-                            <img class="img-responsive img-circle" src="{% static 'img/candidate/you.jpg' %}"/>
+                </div>
+                <div class="col-md-6 text-center lucky-box">
+                    <h3>후보자 룰렛</h3>
+                    <p>누구찍을지 모르겠다 돌려보자</p>
+                    <button id="roulette-start" type="button" class="btn btn-default">룰렛 돌리기</button>
+                    <!--TODO::-->
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div id="roulette-machine-1" class="randomizeMachine">
+                                <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/hwang.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
+                            </div>
                         </div>
-                        <button id="roulette-start" type="button" class="btn btn-default">룰렛 돌리기</button>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div id="roulette-machine-2" class="randomizeMachine">
+                                <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/hwang.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div id="roulette-machine-3" class="randomizeMachine">
+                                <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/hwang.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
+                                <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- 룰렛 모달뷰 -->
+    <div id="roulette-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">후보자 룰렛 결과</h4>
+                </div>
+                <div class="modal-body">
+                    <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 이름점 모달뷰 -->
     <div id="lucky-name-modal" class="modal fade" role="dialog">
@@ -359,7 +416,15 @@
                 </div>
             </div>
             <div class="row">
-                <table class="table table-condensed">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>응원후보</th>
+                            <th>응원메세지</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                    </thead>
                     <tbody id="cheering-table">
                         {% include 'cheering_table.html' %}
                     </tbody>
@@ -443,7 +508,6 @@
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/wow.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main/roulette.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
 
 <script type="text/javascript">
@@ -735,23 +799,29 @@ function blindNextButtonClick(button) {
 </script>
 
 <script type="text/javascript">
-    var option = {
-        speed : 10,
-        duration : 3,
-        startCallback : function() {
-            console.log('start');
-        },
-        slowDownCallback : function() {
-            console.log('slowDown');
-        },
-        stopCallback : function($stopElm) {
-            console.log('stop');
-        }
-    };
-	var rouletter = $('div.roulette');
-    rouletter.roulette(option);
+    //TODO: 룰렛
+    var machine1 = $("#roulette-machine-1").slotMachine({
+					active	: 0,
+					delay	: 500
+				});
+    var machine2 = $("#roulette-machine-2").slotMachine({
+					active	: 1,
+					delay	: 500
+				});
+    var machine3 = $("#roulette-machine-3").slotMachine({
+					active	: 2,
+					delay	: 500
+				});
+
+
+    function onComplete(active){
+        console.log("oncomplete");
+    }
+
 	$('#roulette-start').click(function(){
-		rouletter.roulette('start');
+        machine1.shuffle(5, onComplete);
+        machine2.shuffle(10, onComplete);
+        machine3.shuffle(15, onComplete);
 	});
 </script>
 
