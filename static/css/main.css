@@ -76,10 +76,25 @@ section h3.section-subheading {
     text-transform: none;
     font-style: italic;
     font-weight: 400;
-    margin-bottom: 75px;
 }
 @media (min-width: 768px) {
     section {
         padding: 150px 0;
     }
+}
+
+.btn-schedule {
+    font-size: 10px;
+    padding: 3px 6px;
+    font-family: 'Nanum Barun Gothic UltraLight', sans-serif;
+}
+@media (min-width: 768px) {
+    .btn-schedule {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+}
+
+.section-contents {
+    margin-top: 75px;
 }

@@ -16,7 +16,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap-theme.min.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap-theme.min.css' %}">-->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <!-- Library CSS -->
@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="{% static 'lib/vis/dist/vis.min.css' %}">
     <link rel="stylesheet" href="{% static 'lib/c3/c3.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fullcalendar.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/fullcalendar.print.min.css'%}" media='print'>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
@@ -42,6 +44,8 @@
     <script src="{% static 'lib/vis/dist/vis.min.js'%}"></script>
     <script src="{% static 'lib/d3/d3.min.js' %}"></script>
     <script src="{% static 'lib/c3/c3.min.js' %}"></script>
+    <script src="{% static 'lib/moment/min/moment.min.js' %}"></script>
+    <script src="{% static 'js/fullcalendar.min.js'%}"></script>
 </head>
 
 <body id="page-top">
@@ -97,19 +101,37 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group btn-group-justified">
             <div class="btn-group">
-                <button type="button" class="btn btn-default">D-50<br>예비후보 등록일</button>
+                <button id="calendar-button-1" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">D-50<br>예비후보 등록일</button>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-default">D-23<br>후보자등록마감</button>
+                <button id="calendar-button-2" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">D-23<br>후보자등록마감</button>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-default">D-13<br>재외투표소시작</button>
+                <button id="calendar-button-3" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">D-13<br>재외투표소시작</button>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-default">D-6<br>사전투표</button>
+                <button id="calendar-button-4" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">D-6<br>사전투표</button>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-default">D-day<br>대통령선거</button>
+                <button id="calendar-button-5" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">D-day<br>대통령선거</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Modal -->
+    <div id="calendar-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">대선 주요 일정</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="calendar"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                </div>
             </div>
         </div>
     </div>
@@ -126,7 +148,7 @@
                     <input id="rating-toggle" type="checkbox" checked data-toggle="toggle" data-on="여론조사" data-off="우주의기운" data-onstyle="success" data-offstyle="danger" title="지지율 토글 버튼">
                 </div>
             </div>
-            <div class="row">
+            <div class="row section-contents">
                 <div id="rating-template">
                 {% include 'rating.html' %}
                 </div>
@@ -165,7 +187,7 @@
                     <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
                 </div>
             </div>
-            <div class="row">
+            <div class="row section-contents">
                 <div id="pledge-test" class="text-center">
                     <button id="pledge-test-start-button" class="btn btn-primary">시작하기</button>
                     <button id="pledge-rank-button" class="btn btn-default">랭킹보기</button>
@@ -182,70 +204,72 @@
                     <h3 class="section-subheading text-muted">이름점</h3>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 text-center">
-                    <h4>이름점</h4>
-                    <div class="input-group">
-                        <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-primary" id='buttonUserName'>확인</button>
-                        </span>
-                    </div>
+            <div class="section-contents">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <h4>이름점</h4>
+                        <div class="input-group">
+                            <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary" id='buttonUserName'>확인</button>
+                            </span>
+                        </div>
 
-                    <div id="mynetwork" style="height:200px"></div>
-                </div>
-                <div class="col-md-6 text-center">
-                    <h4>별자리</h4>
-                    <div class="col-md-2">&nbsp;</div>
-                    <div class="col-md-8 input-group text-center">
-                        <select class="form-control" id="constellation-month" title="월">
-                            {% for i in "xxxxxxxxxxxx" %}
-                            <option value="{{ forloop.counter }}">{{ forloop.counter }}월</option>
-                            {% endfor %}
-                        </select>
-                        <span class="input-group-addon">-</span>
-                        <select class="form-control col-xs-2" id="constellation-day" title="일">
-                            {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
-                            <option value="{{ forloop.counter }}">{{ forloop.counter }}일</option>
-                            {% endfor %}
-                        </select>
-                        <span class="input-group-btn">
-                            <button id="constellation-button" type="button" class="btn btn-default">확인</button>
-                        </span>
+                        <div id="mynetwork" style="height:200px"></div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <h4>별자리</h4>
+                        <div class="col-md-2">&nbsp;</div>
+                        <div class="col-md-8 input-group text-center">
+                            <select class="form-control" id="constellation-month" title="월">
+                                {% for i in "xxxxxxxxxxxx" %}
+                                <option value="{{ forloop.counter }}">{{ forloop.counter }}월</option>
+                                {% endfor %}
+                            </select>
+                            <span class="input-group-addon">-</span>
+                            <select class="form-control col-xs-2" id="constellation-day" title="일">
+                                {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
+                                <option value="{{ forloop.counter }}">{{ forloop.counter }}일</option>
+                                {% endfor %}
+                            </select>
+                            <span class="input-group-btn">
+                                <button id="constellation-button" type="button" class="btn btn-default">확인</button>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 text-center">
-                    <h4>혈액형</h4>
-                    <div class="col-md-2">&nbsp;</div>
-                    <div class="col-md-8 input-group text-center">
-                        <select id="blood-type" class="form-control" title="혈액형">
-                            <option value="A">A형</option>
-                            <option value="B">B형</option>
-                            <option value="O">O형</option>
-                            <option value="AB">AB형</option>
-                        </select>
-                        <span class="input-group-btn">
-                            <button id="blood-type-button" type="button" class="btn btn-default">확인</button>
-                        </span>
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <h4>혈액형</h4>
+                        <div class="col-md-2">&nbsp;</div>
+                        <div class="col-md-8 input-group text-center">
+                            <select id="blood-type" class="form-control" title="혈액형">
+                                <option value="A">A형</option>
+                                <option value="B">B형</option>
+                                <option value="O">O형</option>
+                                <option value="AB">AB형</option>
+                            </select>
+                            <span class="input-group-btn">
+                                <button id="blood-type-button" type="button" class="btn btn-default">확인</button>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 text-center">
-                    <h4>룰렛</h4>
-                    <div class="roulette">
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}"/>
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn1.jpg' %}"/>
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn2.jpg' %}"/>
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/hong.jpg' %}"/>
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/hwang.jpg' %}"/>
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/lee.jpg' %}"/>
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/nam.jpg' %}"/>
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/sim.jpg' %}"/>
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/son.jpg' %}"/>
-                        <img class="img-responsive img-circle" src="{% static 'img/candidate/you.jpg' %}"/>
+                    <div class="col-md-6 text-center">
+                        <h4>룰렛</h4>
+                        <div class="roulette">
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}"/>
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn1.jpg' %}"/>
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn2.jpg' %}"/>
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/hong.jpg' %}"/>
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/hwang.jpg' %}"/>
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/lee.jpg' %}"/>
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/nam.jpg' %}"/>
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/sim.jpg' %}"/>
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/son.jpg' %}"/>
+                            <img class="img-responsive img-circle" src="{% static 'img/candidate/you.jpg' %}"/>
+                        </div>
+                        <button id="roulette-start" type="button" class="btn btn-default">룰렛 돌리기</button>
                     </div>
-                    <button id="roulette-start" type="button" class="btn btn-default">룰렛 돌리기</button>
                 </div>
             </div>
         </div>
@@ -263,7 +287,7 @@
                     <h3 class="section-subheading text-muted">키워드로 보는 대선후보 동향</h3>
                 </div>
             </div>
-            <div class="row">
+            <div class="row section-contents">
                 <div class="col-md-6 col-sm-6 text-center">
                     <h4>언론 언급 점유율</h4>
                     <div id="press-chart-pie"></div>
@@ -284,7 +308,7 @@
                     <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
                 </div>
             </div>
-            <div class="row">
+            <div class="row section-contents">
                 <div class="input-group">
                     <select class="form-control" id="cheering-candidate" title="대선주자">
                         <option>문재인</option>
@@ -324,7 +348,7 @@
                     <h3 class="section-subheading text-muted">대선후보/대선닷컴에 기부하세요</h3>
                 </div>
             </div>
-            <div class="row">
+            <div class="row section-contents">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -788,6 +812,63 @@ function blindNextButtonClick(button) {
                 }
             });
     }
+</script>
+
+<script type="text/javascript">
+    var isCalendarLoad = false;
+    $('#calendar-button-1, #calendar-button-2, #calendar-button-3, #calendar-button-4, #calendar-button-5').click(function () {
+        if (!isCalendarLoad) {
+            waitMe($('#calendar-modal'));
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd='0'+dd
+            }
+            if(mm<10) {
+                mm='0'+mm
+            }
+
+            $.ajax({
+                    url: "/apis/sns",
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    async: true,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#calendar').fullCalendar({
+                            header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'listDay, listWeek, month'
+                            },
+                            views: {
+                                listDay: { buttonText: '오늘' },
+                                listWeek: { buttonText: '이번주' },
+                                month: { buttonText: '이번달' }
+                            },
+                            defaultView: 'listDay',
+                            defaultDate: yyyy + '-' + mm + '-' + dd,
+                            navLinks: true, // can click day/week names to navigate views
+                            editable: true,
+                            eventLimit: true, // allow "more" link when too many events
+                            events: data,
+                            eventOrder: "start"
+                        });
+                        $('#calendar-modal').waitMe('hide');
+                        isCalendarLoad = true;
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        $('#calendar-modal').waitMe('hide');
+                    }
+            });
+        }
+    });
 </script>
 
 </html>
