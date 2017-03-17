@@ -1,0 +1,35 @@
+<div id="pledge-rank">
+    <div id="pledge-rank-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">공약 이상형 랭킹</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-condensed">
+                        <tbody id="rankTable">
+                        {% for pledge in pledge_rank_list %}
+                            <tr data-toggle="collapse" data-target="#pledge_rank_{{ forloop.counter }}" class="clickable">
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ pledge.title }}</td>
+                                <td>{{ pledge.candidate }}</td>
+                                <td>{{ pledge.like }}</td>
+                                <td>{{ pledge.unlike }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <div id="pledge_rank_{{ forloop.counter }}" class="collapse">{{ pledge.contents }}</div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

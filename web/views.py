@@ -1,6 +1,7 @@
 from django.shortcuts import render, render_to_response
 from apis import views
 from django.http import HttpResponse
+from datetime import datetime
 
 
 def index(request):
@@ -17,7 +18,7 @@ def index(request):
 def main(request):
     ratings = views.approval_rating_list(None, True)
     cheerings = views.get_cheering_message_list(0)
-    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings})
+    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings, 'today': datetime.today()})
 
 
 def lets_encrypt(request, authorization_code):
@@ -40,8 +41,7 @@ def cheering(request):
         page = int(page)
 
     lists = views.get_cheering_message_list(page)
-
-    return render_to_response('cheering_table.html', {'cheering_list': lists})
+    return render_to_response('cheering_table.html', {'cheering_list': lists, 'today': datetime.today()})
 
 
 def rating(request):
@@ -54,7 +54,12 @@ def rating(request):
 
 def pledge(request):
     if request.method == 'GET':
-        return render_to_response('pledge_test.html')
+        type = request.GET.get('type', None)
+        if type is None:
+            return render_to_response('pledge_test.html')
+        elif type == 'rank':
+            results = views.pledge_rank_list()
+            return render_to_response('pledge_rank_modal.html', {'pledge_rank_list': results})
     else:
         results = views.pledge_post(request)
         return render_to_response('pledge_result.html', {'results': results})
