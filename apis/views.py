@@ -276,12 +276,18 @@ def lucky_name_chemistry(request):
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
         # save_lucky_rating(result_list[0]['candidate'], 'name')
 
-    i, length, nodes = 0, len(best_to), []
+    i, j, length, nodes = 0, 0, len(best_to), []
+    for one in list(name):
+        nodes.append({'id': 99-j, 'label': one, 'level': length})
+        j -= 1
+
     for item in best_to:
         for score in item:
             nodes.append({'id': i, 'label': score, 'level': length-1})
             i += 1
         length -= 1
+
+    print(result_list)
     print(nodes)
     return JSONResponse({'list': result_list, 'nodes': nodes})
 

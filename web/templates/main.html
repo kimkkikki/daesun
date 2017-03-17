@@ -174,11 +174,9 @@
                     <div class="input-group">
                         <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-primary" id='buttonUserName'>확인</button>
+                            <button type="button" class="btn btn-primary" id='buttonUserName' data-toggle="modal" data-target="#lucky-name-modal">확인</button>
                         </span>
                     </div>
-
-                    <div id="mynetwork" style="height:200px"></div>
                 </div>
                 <div class="col-md-6 text-center">
                     <h4>별자리</h4>
@@ -225,6 +223,38 @@
             </div>
         </div>
     </section>
+
+    <!-- 이름점 모달뷰 -->
+    <div id="lucky-name-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">이름점 결과</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <h4><span id="your_name"></span>님과<br>이름점 궁합이 최고입니다</h4>
+                            <img id="best_candidate_picture"/>
+                            <span id="best_candidate"></span>
+                            <span id="best_score"></span>
+                        </div>
+                        <div class="col-md-8 text-center">
+                            <div id="lucky_name_result" style="width:350px;height:300px;"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="lucky_name_result_rest"></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--TODO: 별자리 모달뷰 디자인-->
     <div id="constellation-result">
