@@ -196,6 +196,9 @@
         </div>
     </section>
 
+    <!-- Pledge Rank Modal -->
+    {% include 'pledge_rank_modal.html' %}
+
     <section id="lucky">
         <div class="container">
             <div class="row">
@@ -567,6 +570,26 @@ $('#rating-graph-button').click(function() {
 </script>
 
 <script type="text/javascript">
+    $('#pledge-rank-button').click(function () {
+        waitMe($('#pledge'));
+        $.ajax({
+            url: '/pledge?type=rank',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            type: 'GET',
+            success: function(data) {
+                $('#pledge-rank').html(data);
+                $('#pledge-rank-modal').modal('show');
+                $('#pledge').waitMe('hide');
+            },
+            error: function(data, status, err) {
+                console.log(err);
+                $('#pledge').waitMe('hide');
+            }
+        });
+    });
+
     var blindResult;
     var blindToken;
     var blindList;
@@ -726,50 +749,12 @@ function blindNextButtonClick(button) {
         var count = 0;
         isLoadChart = true;
         waitMe($('#press'));
-        $.ajax({
-                url: '/apis/cp/group',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                cache: false,
-                type: 'GET',
-                success: function(data) {
-                    var result = [['문재인', 0], ['이재명', 0], ['안희정', 0], ['유승민', 0], ['황교안', 0], ['안철수', 0], ['남경필', 0]];
 
-                    for (var i = 0; i < data.length; i++) {
-                        result[0][1] += data[i].moon;
-                        result[1][1] += data[i].lee;
-                        result[2][1] += data[i].hee;
-                        result[3][1] += data[i].you;
-                        result[4][1] += data[i].hwang;
-                        result[5][1] += data[i].ahn;
-                        result[6][1] += data[i].nam;
-                    }
-
-                    press_chart = c3.generate({
-                        bindto: '#press-chart-pie',
-                        data: {
-                            columns: result,
-                            type : 'pie'
-                        }
-                    });
-
-                    if (count == 0) {
-                        count++;
-                    } else {
-                        $('#press').waitMe('hide');
-                    }
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                }
-            });
         $.ajax({
                 url: '/apis/cp/daily',
                 headers: {
                     'Content-Type':'application/json'
                 },
-                cache: false,
                 type: 'GET',
                 success: function(data) {
                     var result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
@@ -811,6 +796,44 @@ function blindNextButtonClick(button) {
                     console.log(err);
                 }
             });
+        $.ajax({
+                url: '/apis/cp/group',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                type: 'GET',
+                success: function(data) {
+                    var result = [['문재인', 0], ['이재명', 0], ['안희정', 0], ['유승민', 0], ['황교안', 0], ['안철수', 0], ['남경필', 0]];
+
+                    for (var i = 0; i < data.length; i++) {
+                        result[0][1] += data[i].moon;
+                        result[1][1] += data[i].lee;
+                        result[2][1] += data[i].hee;
+                        result[3][1] += data[i].you;
+                        result[4][1] += data[i].hwang;
+                        result[5][1] += data[i].ahn;
+                        result[6][1] += data[i].nam;
+                    }
+
+                    press_chart = c3.generate({
+                        bindto: '#press-chart-pie',
+                        data: {
+                            columns: result,
+                            type : 'pie'
+                        }
+                    });
+
+                    if (count == 0) {
+                        count++;
+                    } else {
+                        $('#press').waitMe('hide');
+                    }
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                }
+            });
+
     }
 </script>
 
@@ -871,4 +894,23 @@ function blindNextButtonClick(button) {
     });
 </script>
 
+<script type="text/javascript">
+//    TODO: 이슈키워드 쓰고싶다...
+//    var issueKeywords;
+//    // daily issue keywords
+//    $.ajax({
+//            url: '/apis/issue',
+//            headers: {
+//                'Content-Type':'application/json'
+//            },
+//            type: 'GET',
+//            success: function(data) {
+//                issueKeywords = data;
+//
+//            },
+//            error: function(data, status, err) {
+//                console.log(err);
+//            }
+//        });
+</script>
 </html>

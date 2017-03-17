@@ -3,6 +3,11 @@
     <td>{{ obj.candidate }}</td>
     <td>{{ obj.message }}</td>
     <td>{{ obj.ip }}</td>
-    <td>{{ obj.created }}</td>
+    {% if obj.created.date < today.date %}
+    <td>{{ obj.created|date:"Y.m.d" }}</td>
+    {% else %}
+    <td>오늘 {{ obj.created|date:"G:i" }}</td>
+    {% endif %}
+
 </tr>
 {% endfor %}
