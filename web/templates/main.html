@@ -87,41 +87,53 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">대한민국의 미래를 책임질 대통령</div>
+                <div class="intro-lead-in">대한민국을 책임질 대통령</div>
                 <div class="intro-heading">당신은 누구를 고르시습니까?</div>
-                <div class="intro-guide">
-                    2017대선닷컴은 특정 후보를 지지하지 않습니다.<br>
-                    본 사이트의 모든 콘텐츠는 오직 <strong>재미</strong>를 위해 만들어 졌습니다.
-                </div>
+                <div class="intro-guide">2017대선닷컴은 특정 후보를 지지하지 않습니다.<br>본 사이트의 모든 콘텐츠는 오직 <strong>재미</strong>를 위해 만들어 졌습니다.</div>
             </div>
         </div>
     </header>
 
-    <div id="calendar" class="container">
-        <div class="row">
-            대선 중요 일정 여기에
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">D-50<br>예비후보 등록일</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">D-23<br>후보자등록마감</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">D-13<br>재외투표소시작</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">D-6<br>사전투표</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">D-day<br>대통령선거</button>
+            </div>
         </div>
     </div>
 
     <section id="rating">
         <div class="container">
             <div class="row">
-                <div class="col-md-3 text-center">
-                    .
+                <div class="col-md-2 col-sm-2 text-center">&nbsp;</div>
+                <div class="col-md-8 col-sm-8 text-center">
+                    <h2 class="section-heading">누가누가 잘하나</h2>
+                    <h3 class="section-subheading text-muted">여론조사결과로 보는 대선 지지율 결과와<br>2017 대선닷컴의 럭키박스 결과를 기반으로 한 운빨 결과를 보여드립니다</h3>
                 </div>
-                <div class="col-md-6 text-center">
-                    <h2 class="section-heading">지지율</h2>
-                    <h3 class="section-subheading text-muted">여론조사 / 우주의기운이 돕는 지지율입니다</h3>
-                </div>
-                <div class="col-md-3 text-center input-group">
+                <div class="col-md-2 col-sm-2 text-center">
                     <input id="rating-toggle" type="checkbox" checked data-toggle="toggle" data-on="여론조사" data-off="우주의기운" data-onstyle="success" data-offstyle="danger" title="지지율 토글 버튼">
-                    <button id="rating-graph-button" class="btn btn-info" data-toggle="modal" data-target="#rating-modal">그래프 보기</button>
                 </div>
             </div>
             <div class="row">
                 <div id="rating-template">
                 {% include 'rating.html' %}
                 </div>
+            </div>
+            <div class="row text-center">
+                <p id="rating-description">리얼미터가 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터 홈페이지를 참고하세요</p>
+                <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">그래프 보기</button>
             </div>
         </div>
     </section>
@@ -132,10 +144,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">여론조사 지지율 차트</h4>
+                    <h4 class="modal-title text-center">여론조사 지지율 차트</h4>
                 </div>
                 <div class="modal-body">
                     <div id="ratingChart"></div>
+                    <p class="text-center">리얼미터와 한국갤럽의 여론조사 결과를 재구성한 것입니다.<br>출처: 리얼미터, 한국갤럽</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -155,6 +168,7 @@
             <div class="row">
                 <div id="pledge-test" class="text-center">
                     <button id="pledge-test-start-button" class="btn btn-primary">시작하기</button>
+                    <button id="pledge-rank-button" class="btn btn-default">랭킹보기</button>
                 </div>
             </div>
         </div>
@@ -204,21 +218,32 @@
             <div class="row">
                 <div class="col-md-6 text-center">
                     <h4>혈액형</h4>
-
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-8 input-group text-center">
+                        <select id="blood-type" class="form-control" title="혈액형">
+                            <option value="A">A형</option>
+                            <option value="B">B형</option>
+                            <option value="O">O형</option>
+                            <option value="AB">AB형</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="blood-type-button" type="button" class="btn btn-default">확인</button>
+                        </span>
+                    </div>
                 </div>
                 <div class="col-md-6 text-center">
                     <h4>룰렛</h4>
                     <div class="roulette">
-                        <img src="{% static 'img/candidate/moon.jpg' %}"/>
-                        <img src="{% static 'img/candidate/ahn1.jpg' %}"/>
-                        <img src="{% static 'img/candidate/ahn2.jpg' %}"/>
-                        <img src="{% static 'img/candidate/hong.jpg' %}"/>
-                        <img src="{% static 'img/candidate/hwang.jpg' %}"/>
-                        <img src="{% static 'img/candidate/lee.jpg' %}"/>
-                        <img src="{% static 'img/candidate/nam.jpg' %}"/>
-                        <img src="{% static 'img/candidate/sim.jpg' %}"/>
-                        <img src="{% static 'img/candidate/son.jpg' %}"/>
-                        <img src="{% static 'img/candidate/you.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn1.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn2.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/hong.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/hwang.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/lee.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/nam.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/sim.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/son.jpg' %}"/>
+                        <img class="img-responsive img-circle" src="{% static 'img/candidate/you.jpg' %}"/>
                     </div>
                     <button id="roulette-start" type="button" class="btn btn-default">룰렛 돌리기</button>
                 </div>
@@ -334,6 +359,28 @@
             </div>
         </div>
     </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; 2017daesun.com 2017</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="https://twitter.com/intent/tweet?text=2017대선닷컴&url=2017daesun.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="http://www.facebook.com/sharer/sharer.php?u=2017daesun.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="#" target="_blank">이용약관</a></li>
+                        <li><a href="#" target="_blank">Cantact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 
 
@@ -378,16 +425,19 @@ $.ajaxSetup({
 $(function() {
     var before = null;
     $('#rating-toggle').change(function() {
+        var description = $('#rating-description');
         var is_rating = $(this).prop('checked');
         var template = $('#rating-template');
         var temp;
         if (is_rating) {
+            description.html("리얼미터가 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터 홈페이지를 참고하세요");
             if (before != null) {
                 temp = template.html();
                 template.html(before);
                 before = temp;
             }
         } else {
+            description.html("운빨 지지율은 2017대선닷컴의 럭키박스를 이용한 방문자 결과를 기반으로 계산되었습니다.<br>위의 결과는 철저히 랜덤함수에 의한 결과의 합임을 명심해주세요. 오해금지!");
             if (before == null) {
                 waitMe($('#rating'));
                 $.ajax({
@@ -420,9 +470,9 @@ $(function() {
 });
 
 // 지지율 차트
-var ratingChart = null;
+var isLoadRatingChart = false;
 $('#rating-graph-button').click(function() {
-    if (ratingChart == null) {
+    if (!isLoadRatingChart) {
         waitMe($('#rating-modal'));
         $.ajax({
             url: '/apis/rating',
@@ -481,6 +531,7 @@ $('#rating-graph-button').click(function() {
                     }
                 });
                 $('#rating-modal').waitMe('hide');
+                isLoadRatingChart = true;
             },
             error: function(data, status, err) {
                 console.log(err);
@@ -524,6 +575,7 @@ $('#rating-graph-button').click(function() {
 
                         $('#pledge-test-title').html(blindList[0].title);
                         $('#pledge-test-contents').html(blindList[0].contents);
+                        $('#pledge-test-count').html('1/' + blindList.length);
                         $('#pledge').waitMe('hide');
                     },
                     error: function(data, status, err) {
@@ -543,8 +595,10 @@ function blindNextButtonClick(button) {
     if (blindLoopIndex < 10) {
         $('#pledge-test-title').html(blindList[blindLoopIndex].title);
         $('#pledge-test-contents').html(blindList[blindLoopIndex].contents);
+        $('#pledge-test-count').html((blindLoopIndex + 1) + '/' + blindList.length);
         blindLoopIndex += 1;
         blindResult.push(button.value);
+
     } else {
         waitMe($('#pledge'));
         blindLoopIndex += 1;
