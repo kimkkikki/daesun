@@ -25,23 +25,16 @@ def get_constellation(birthday):
         return '염소'
 
 
-def constellation_chemistry(cons):
-    candidates_constellation = [{'candidate': '문재인', 'constellation': '물병'},
-                                {'candidate': '안희정', 'constellation': '황소'},
-                                {'candidate': '이재명', 'constellation': '물병'},
-                                {'candidate': '심상정', 'constellation': '물고기'},
-                                {'candidate': '유승민', 'constellation': '염소'},
-                                {'candidate': '남경필', 'constellation': '물병'},
-                                {'candidate': '안철수', 'constellation': '물고기'}]
+def constellation_chemistry(cons, candidate_dict):
 
-    for candidate in candidates_constellation:
+    for candidate in candidates_dict:
         score = constellation_chemistry_man_to_woman(cons, candidate.get('constellation')) + \
                 constellation_chemistry_man_to_woman(candidate.get('constellation'), cons) + \
                 constellation_chemistry_woman_to_man(cons, candidate.get('constellation')) + \
                 constellation_chemistry_woman_to_man(candidate.get('constellation'), cons)
         candidate['score'] = score
 
-    return candidates_constellation
+    return candidates_dict
 
 
 

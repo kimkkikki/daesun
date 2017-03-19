@@ -141,3 +141,4 @@ class LuckyRating(models.Model):
 
 class LuckyRatingAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'type', 'input', 'created')
+    list_filter = ['candidate']
