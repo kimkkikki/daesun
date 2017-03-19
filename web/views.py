@@ -69,3 +69,9 @@ def constellation_chemistry(request):
     if request.method == 'POST':
         results = views.constellation_post(request)
         return render_to_response('constellation_modal.html', {'constellation_result': results})
+
+
+def slot(request):
+    if request.method == 'POST':
+        result = views.save_lucky_result(request)
+        return render_to_response('slot_modal.html', {'lucky': result})

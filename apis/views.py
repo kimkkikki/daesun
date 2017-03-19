@@ -23,7 +23,7 @@ import re
 candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
                             {'candidate': '안희정', 'constellation': '황소', 'blood': 'A', 'twitter': 'steelroot'},
                             {'candidate': '이재명', 'constellation': '물병', 'blood': 'O', 'twitter': 'Jaemyung_Lee'},
-                            {'candidate': '심상정', 'constellation': '물고기', 'blood': 'B', 'twitter': ''},
+                            {'candidate': '심상정', 'constellation': '물고기', 'blood': 'B', 'twitter': 'sangjungsim'},
                             {'candidate': '유승민', 'constellation': '염소', 'blood': 'A', 'twitter': ''},
                             {'candidate': '남경필', 'constellation': '물병', 'blood': '', 'twitter': ''},
                             {'candidate': '안철수', 'constellation': '물고기', 'blood': 'AB', 'twitter': 'cheolsoo0919'}]
@@ -57,11 +57,11 @@ def cp_group(request):
         end = datetime.strptime(end_date, '%Y%m%d') + timedelta(days=1)
         candidate_q_list = Q(created_at__range=[start, end]) & \
                             (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-                             Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+                             Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
                              Q(title__contains='남경필'))
     else:
         candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-                            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+                            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
                             Q(title__contains='남경필'))
 
     group_list = Scraps.objects.filter(candidate_q_list).values('cp').annotate(
@@ -70,7 +70,7 @@ def cp_group(request):
         lee=Count(Case(When(title__contains='이재명', then=1))),
         you=Count(Case(When(title__contains='유승민', then=1))),
         hee=Count(Case(When(title__contains='안희정', then=1))),
-        hwang=Count(Case(When(title__contains='황교안', then=1))),
+        sim=Count(Case(When(title__contains='심상정', then=1))),
         nam=Count(Case(When(title__contains='남경필', then=1)))
     )
 
@@ -80,7 +80,7 @@ def cp_group(request):
 @cache_page(60 * 10)
 def cp_daily(req):
     candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-                        Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='황교안') |
+                        Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
                         Q(title__contains='남경필'))
 
     daily_list = Scraps.objects.filter(candidate_q_list).extra({'date': 'date(created_at)'}).values(
@@ -90,7 +90,7 @@ def cp_daily(req):
         lee=Count(Case(When(title__contains='이재명', then=1))),
         you=Count(Case(When(title__contains='유승민', then=1))),
         hee=Count(Case(When(title__contains='안희정', then=1))),
-        hwang=Count(Case(When(title__contains='황교안', then=1))),
+        sim=Count(Case(When(title__contains='심상정', then=1))),
         nam=Count(Case(When(title__contains='남경필', then=1)))
     )
 
@@ -167,7 +167,7 @@ def pledge_post(request):
     cache_data = json.loads(cache_data)
 
     candidate_list = cache_data['list']
-    candidate_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '황교안': 0, '남경필': 0}
+    candidate_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '심상정': 0, '남경필': 0}
 
     for i, result in enumerate(result_list):
         if result == 1 or result == '1':
@@ -183,7 +183,7 @@ def pledge_post(request):
                {'candidate': '이재명', 'count': candidate_dict['이재명']},
                {'candidate': '유승민', 'count': candidate_dict['유승민']},
                {'candidate': '안희정', 'count': candidate_dict['안희정']},
-               {'candidate': '황교안', 'count': candidate_dict['황교안']},
+               {'candidate': '심상정', 'count': candidate_dict['심상정']},
                {'candidate': '남경필', 'count': candidate_dict['남경필']}, ]
     result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
 
@@ -383,7 +383,7 @@ def get_candidate_sns_list():
 
     schedules = []
     candidate_dict = {'문재인': '#337ab7', '안희정': '#337ab7', '이재명': '#337ab7',
-                      '안철수': '#669966', '유승민': '#4ca0e6', '황교안': '#c9151e', '남경필': '#c9151e'}
+                      '안철수': '#669966', '유승민': '#4ca0e6', '심상정': '#c9151e', '남경필': '#c9151e'}
 
     for candidate in candidate_dict_list:
         statuses = api.GetUserTimeline(screen_name=candidate.get('twitter'))
@@ -557,13 +557,18 @@ def blood_type_chemistry_api(request):
         return JSONResponse(result_list)
 
 
-@csrf_exempt
 def save_lucky_result(request):
-    if request.method == 'POST':
-        body = JSONParser().parse(request)
-        lucky_type = body.get('type', None)
-        candidate = body.get('candidate', None)
-        count = body.get('count', None)
-        save_lucky_rating(candidate, lucky_type, count)
+    body = JSONParser().parse(request)
+    lucky_type = body.get('type', None)
+    candidate = body.get('candidate', None)
+    count = body.get('count', None)
+    save_lucky_rating(candidate, lucky_type, count)
 
+    return {'type': lucky_type, 'candidate': candidate, 'count': count}
+
+
+@csrf_exempt
+def save_lucky_result_api(request):
+    if request.method == 'POST':
+        save_lucky_result(request)
         return HttpResponse(status=200)

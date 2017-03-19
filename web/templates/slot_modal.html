@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<div id="slot-result" class="row text-center">
+    <h3>대선 잭팟에 당첨되었습니다</h3>
+    <p>후보 선정까지 총 {{ lucky.count }}번을 돌리셨습니다</p>
+    {% if lucky.candidate == '문재인' %}
+    <img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/>
+    {% elif lucky.candidate == '안철수' %}
+    <img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/>
+    {% elif lucky.candidate == '안희정' %}
+    <img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/>
+    {% elif lucky.candidate == '이재명' %}
+    <img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/>
+    {% elif lucky.candidate == '심상정' %}
+    <img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}">
+    {% elif lucky.candidate == '유승민' %}
+    <img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}">
+    {% elif lucky.candidate == '남경필' %}
+    <img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}">
+    {% elif lucky.candidate == '홍준표' %}
+    <img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}">
+    {% elif lucky.candidate == '손학규' %}
+    <img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}">
+    {% endif %}
+    <h1>{{ lucky.candidate }}</h1>
+</div>

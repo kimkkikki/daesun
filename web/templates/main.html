@@ -156,9 +156,6 @@
                     <div id="ratingChart"></div>
                     <p class="text-center">리얼미터와 한국갤럽의 여론조사 결과를 재구성한 것입니다.<br>출처: 리얼미터, 한국갤럽</p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-                </div>
             </div>
         </div>
     </div>
@@ -187,14 +184,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">대통령 머신</h2>
-                    <h3 class="section-subheading text-muted">도저히 모르겠다 돌려보자</h3>
+                    <h2 class="section-heading">대통령 슬롯 머신</h2>
+                    <h3 class="section-subheading text-muted">도저히 모르겠다 돌려보자 1%의 확률</h3>
                 </div>
             </div>
             <div class="row text-center">
                 <button id="slot-start" type="button" class="btn btn-default">룰렛 돌리기</button>
             </div>
-            <div class="row">
+            <div class="row section-contents">
                 <div class="col-md-4 col-sm-4 col-xs-4">
                     <div id="slot-machine-1" class="randomizeMachine">
                         <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
@@ -244,13 +241,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">후보자 룰렛 결과</h4>
+                    <h4 class="modal-title text-center">축하합니다</h4>
                 </div>
                 <div class="modal-body">
-                    <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}"/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                    <div id="slot-result" class="row text-center">
+                        <!--TODO 여기에 슬롯결과 표시됨-->
+                    </div>
+                    <div class="row text-center">
+                        <button id="slot-share" class="btn btn-primary">공유하고 명예의전당 등록</button>
+                        <button class="btn btn-default" data-dismiss="modal">다시하기</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -453,12 +453,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">대선닷컴 랩스</h2>
+                    <h2 class="section-heading">대선닷컴 연구소</h2>
                     <h3 class="section-subheading text-muted">만들다만 기능들을 보고싶다면 클릭하세요</h3>
                 </div>
             </div>
             <div class="row section-contents">
-                <a href="{% url 'labs' %}" id="labs-button" class="btn btn-info btn-block">기타 등등 기능 보러가기</a>
+                <a href="{% url 'labs' %}" id="labs-button" class="btn btn-info btn-block" target="_blank">기타 등등 기능 보러가기</a>
             </div>
         </div>
     </section>
@@ -771,9 +771,15 @@ function blindNextButtonClick(button) {
 </script>
 
 <script type="text/javascript">
+    $('#slot-share').click(function () {
+        console.log('slot-share click');
+    });
+</script>
+
+<script type="text/javascript">
     //TODO: 슬롯머신
     var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '남경필', '심상정', '손학규', '유승민'];
-    var count = 0;
+    var slot_count = 0;
     var machine1 = $("#slot-machine-1").slotMachine({
 					active	: 0,
 					delay	: 500
@@ -791,21 +797,19 @@ function blindNextButtonClick(button) {
     function onComplete(active){
         switch(this.element[0].id){
             case 'slot-machine-1':
-                console.log("oncomplete1 "+this.active);
-                result_1 = this.active;
+                result_1 = active;
                 break;
             case 'slot-machine-2':
-                console.log("oncomplete2 "+this.active);
-                result_2 = this.active;
+                result_2 = active;
                 break;
             case 'slot-machine-3':
-                count++;
-                console.log("oncomplete3 "+this.active);
-                result_3 = this.active;
+                slot_count++;
+                result_3 = active;
 
                 if (result_1 == result_2 && result_2 == result_3) {
+                    waitMe($('#slot'));
                     $.ajax({
-                            url: '/apis/lucky',
+                            url: '/slot',
                             headers: {
                                 'Content-Type':'application/json'
                             },
@@ -814,20 +818,21 @@ function blindNextButtonClick(button) {
                             data: JSON.stringify({
                                 'type': 'slot',
                                 'candidate': slot_candidates[result_1],
-                                'count': count
+                                'count': slot_count
                             }),
-                            success: function() {
-                                console.log('add success');
+                            success: function(data) {
+                                $('#slot-result').html(data);
+                                $('#slot-modal').modal('show');
                                 //TODO 슬롯 카운트 초기화 언제?
-                                count = 0;
+                                slot_count = 0;
+                                $('#slot').waitMe('hide');
                             },
                             error: function(data, status, err) {
                                 console.log(err);
+                                $('#slot').waitMe('hide');
                             }
                         });
-//                    $('#slot-modal').modal('show');
                 }
-                $('#slot-modal').modal('show');
                 break;
         }
     }
@@ -869,13 +874,13 @@ function blindNextButtonClick(button) {
                 },
                 type: 'GET',
                 success: function(data) {
-                    var result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
+                    var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
                     for (var i = 0; i < data.length; i++) {
                         var obj = data[i];
                         result_list[0].push(obj.date);
                         result_list[1].push(obj.moon);
                         result_list[2].push(obj.ahn);
-                        result_list[3].push(obj.hwang);
+                        result_list[3].push(obj.sim);
                         result_list[4].push(obj.nam);
                         result_list[5].push(obj.hee);
                         result_list[6].push(obj.lee);
@@ -915,14 +920,14 @@ function blindNextButtonClick(button) {
                 },
                 type: 'GET',
                 success: function(data) {
-                    var result = [['문재인', 0], ['이재명', 0], ['안희정', 0], ['유승민', 0], ['황교안', 0], ['안철수', 0], ['남경필', 0]];
+                    var result = [['문재인', 0], ['이재명', 0], ['안희정', 0], ['유승민', 0], ['심상정', 0], ['안철수', 0], ['남경필', 0]];
 
                     for (var i = 0; i < data.length; i++) {
                         result[0][1] += data[i].moon;
                         result[1][1] += data[i].lee;
                         result[2][1] += data[i].hee;
                         result[3][1] += data[i].you;
-                        result[4][1] += data[i].hwang;
+                        result[4][1] += data[i].sim;
                         result[5][1] += data[i].ahn;
                         result[6][1] += data[i].nam;
                     }
