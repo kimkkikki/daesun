@@ -142,3 +142,17 @@ class LuckyRating(models.Model):
 class LuckyRatingAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'type', 'input', 'created')
     list_filter = ['candidate']
+
+
+class Calendar(models.Model):
+    class Meta:
+        db_table = 'calendar'
+    id = models.AutoField(primary_key=True)
+    candidate = models.CharField(max_length=10, db_index=True)
+    title = models.CharField(max_length=50)
+    start = models.DateTimeField(default=datetime.now)
+    end = models.DateTimeField(null=True, blank=True)
+
+
+class CalendarAdmin(admin.ModelAdmin):
+    list_display = ('id', 'candidate', 'title', 'start', 'end')

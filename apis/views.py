@@ -1,5 +1,5 @@
-from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage, LuckyRating
-from django.http import HttpResponse
+from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage, LuckyRating, Calendar
+from django.http import HttpResponse, Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from django.db.models import Count
@@ -42,12 +42,6 @@ def save_lucky_rating(candidate, type, input):
     lucky_rating.save()
 
 
-@cache_page(60 * 1)
-def index(req):
-    scraps = Scraps.objects.all().values('title', 'cp', 'created_at').order_by('-created_at')[0:100]
-    return JSONResponse(list(scraps))
-
-
 @cache_page(60 * 10)
 def cp_group(request):
     start_date = request.GET.get('start_date', None)
@@ -79,7 +73,7 @@ def cp_group(request):
 
 
 @cache_page(60 * 10)
-def cp_daily(req):
+def cp_daily(request):
     candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                         Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
                         Q(title__contains='남경필'))
@@ -381,6 +375,8 @@ def get_candidate_sns_list():
                       '안철수': '#669966', '유승민': '#4ca0e6', '심상정': '#c9151e', '남경필': '#c9151e'}
 
     for candidate in candidate_dict_list:
+        if candidate.get('twitter') == '':
+            continue
         statuses = api.GetUserTimeline(screen_name=candidate.get('twitter'))
 
         for status in statuses:
@@ -415,7 +411,8 @@ def get_candidate_sns_list():
                         hour, minute = int(schedule_time[0]), int(schedule_time[1])
                         title = time.group(time.lastindex)
                         if status.user.name == '문재인':
-                            title = re.compile('일정]\s(.+?)\n').search(contents).group(1)
+                            if re.compile('일정]\s(.+?)\n').search(contents) is not None:
+                                title = re.compile('일정]\s(.+?)\n').search(contents).group(1)
 
                         if title.find('…') > 0:
                             continue
@@ -447,7 +444,20 @@ def get_candidate_sns_list():
 
 @cache_page(60 * 10)
 def get_candidate_sns_api(request):
-    return JSONResponse(get_candidate_sns_list())
+    if request.method == 'GET':
+        result_list = get_candidate_sns_list()
+        calendars = Calendar.objects.all()
+        for calendar in calendars:
+            if calendar.end is not None:
+                result_list.append({'title': calendar.title, 'color': '#d3d3d3',
+                                    'start': calendar.start.strftime('%Y-%m-%d %H:%M'),
+                                    'end': calendar.end.strftime('%Y-%m-%d %H:%M')})
+            else:
+                result_list.append({'title': calendar.title, 'color': '#d3d3d3',
+                                    'start': calendar.start.strftime('%Y-%m-%d %H:%M')})
+        return JSONResponse(result_list)
+    else:
+        return Http404
 
 
 def get_issue_keyword_list():
@@ -480,7 +490,10 @@ def get_issue_keyword_list():
 
 
 def get_issue_keyword_api(request):
-    return JSONResponse(get_issue_keyword_list())
+    if request.method == 'GET':
+        return JSONResponse(get_issue_keyword_list())
+    else:
+        return Http404
 
 
 def get_cheering_message_list(page):
@@ -535,6 +548,8 @@ def constellation_api(request):
     if request.method == 'POST':
         result = constellation_post(request)
         return JSONResponse(result)
+    else:
+        return Http404
 
 
 # 안씀
@@ -550,6 +565,8 @@ def blood_type_chemistry_api(request):
             result_list.append({'candidate': obj.get('candidate'), 'score': score})
 
         return JSONResponse(result_list)
+    else:
+        return Http404
 
 
 def save_lucky_result(request):
@@ -567,3 +584,5 @@ def save_lucky_result_api(request):
     if request.method == 'POST':
         save_lucky_result(request)
         return HttpResponse(status=200)
+    else:
+        return Http404

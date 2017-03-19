@@ -9,12 +9,8 @@ from datetime import datetime
 def labs(request):
     book_list = views.get_shop()
     # book_list = []
-    pledge_rank_list = views.pledge_rank_list()
-    sns_list = views.get_candidate_sns_list()
     issue_list = views.get_issue_keyword_list()
-    cheerings = views.get_cheering_message_list(0)
-    return render(request, 'labs.html', {'book_list': book_list, 'pledge_rank_list': pledge_rank_list, 'sns_list': sns_list,
-                                          'issue_list': issue_list, 'cheering_list': cheerings})
+    return render(request, 'labs.html', {'book_list': book_list, 'issue_list': issue_list})
 
 
 def main(request):
@@ -57,9 +53,7 @@ def rating(request):
 def pledge(request):
     if request.method == 'GET':
         type = request.GET.get('type', None)
-        if type is None:
-            return render_to_response('pledge_test.html')
-        elif type == 'rank':
+        if type == 'rank':
             results = views.pledge_rank_list()
             return render_to_response('pledge_rank_modal.html', {'pledge_rank_list': results})
     else:
