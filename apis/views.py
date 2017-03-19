@@ -303,7 +303,7 @@ def lucky_name_chemistry(request):
     print(result_list)
     print(to_nodes)
     print(from_nodes)
-    return JSONResponse({'list': result_list, 'nodes': to_nodes + from_nodes})
+    return JSONResponse({'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes})
 
 
 @api_view(['GET'])

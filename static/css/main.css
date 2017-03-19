@@ -133,6 +133,8 @@ ul.social-buttons li a {
 .lucky-box {
     padding-top:40px;
     padding-bottom:40px;
+    border-style:dashed;
+    border-width:1px;
 }
 
 .randomizeMachine {

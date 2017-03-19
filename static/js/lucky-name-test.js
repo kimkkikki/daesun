@@ -9,8 +9,9 @@ $(document).ready(function(){
             type:'GET',
             success:function(data){
                 result = data.list;
-                $('#your_name')[0].textContent = $('#inputUserName')[0].value;
 
+                $('#your_name')[0].textContent = $('#inputUserName')[0].value;
+                $('#lucky_name_result_rest')[0].textContent = null;
                 for(var i=0; i< result.length ; i++ ){
                     var obj = result[i];
                     console.log(obj);
@@ -23,14 +24,21 @@ $(document).ready(function(){
                     }else{
                         var node = document.createElement("span");
                         var text = document.createTextNode((i+1) + '등 ' + obj.candidate +' ' + obj.score + '점');
-                        //var image = new Image();
-                        //image.setAttribute("src", getImage(obj.candidate));
+
+                        var image = new Image();
+                        image.setAttribute("src", getImage(obj.candidate));
+                        image.setAttribute("class","img-responsive img-circle");
+                        image.setAttribute("style", "width:60px;")
+
                         node.append(text);
+                        node.appendChild(image);
                         $('#lucky_name_result_rest')[0].appendChild(node);
                         //$('#lucky_name_result_rest')[0].appendChild(image);
                     }
                 }
-                draw(data.nodes);
+                destroy();
+                draw('to', data.to_nodes, 'lucky_name_result_to');
+                draw('from', data.from_nodes, 'lucky_name_result_from');
 
                 $('#lucky-name-modal').waitMe('hide');
             },
@@ -49,9 +57,9 @@ $(document).ready(function(){
         if(candidate == '문재인'){
             imageUrl += 'moon.jpg';
         }else if(candidate =='안희정'){
-            imageUrl += 'ahn1.jpg';
-        }else if(candidate =='안철수'){
             imageUrl += 'ahn2.jpg';
+        }else if(candidate =='안철수'){
+            imageUrl += 'ahn1.jpg';
         }else if(candidate =='홍준표'){
             imageUrl += 'hong.jpg';
         }else if(candidate =='황교안'){
@@ -71,49 +79,32 @@ $(document).ready(function(){
     }
 
 
-    var nodes = null;
-    var edges = null;
-    var network = null;
+
+    var network_from = null;
+    var network_to = null;
 
     function destroy() {
-        if (network !== null) {
-            network.destroy();
-            network = null;
+
+        if (network_from !== null) {
+            network_from.destroy();
+            network_from = null;
+        }
+        if (network_to !== null) {
+            network_to.destroy();
+            network_to = null;
         }
     }
 
-    function draw(nodeList) {
+    function draw(to_from, nodeList, target) {
 
-        destroy();
-        nodes = [];
-        edges = [];
+
+        var nodes = [];
+        var edges = [];
 
         for(var i=0; i < nodeList.length ;i++){
             nodes.push(nodeList[i]);
         }
 
-        // 6개
-        // - 10
-        /*
-         7자
-          - 12 2*(7-1)
-          - 10 2*5
-          - 8 2*4
-          - 6 2*3
-          - 4 2*2
-
-         6자
-          - 10 2*5
-
-          - 8 2*4
-          - 6 2*3
-          - 4 2*2
-
-         5자
-          - 8 2*4
-          - 6
-          - 4
-         */
         // 이름 3글자인 사람들
         name_length = 6;
         var left = 0;
@@ -144,25 +135,19 @@ $(document).ready(function(){
         console.log(edges);
 
         // create a network
-        var container = document.getElementById('lucky_name_result');
+        var container = document.getElementById(target);
         var data = {
             nodes: nodes,
             edges: edges
         };
 
         var options = {
+            autoResize:true,
             height: '100%',
             width: '100%',
-            edges: {
-                smooth: {
-                    type: 'cubicBezier',
-                    forceDirection: 'horizontal',
-                    roundness: 0.4
-                }
-            },
             nodes: {
                 font: {
-                  size: 40, // px
+                  size: 50, // px
                  },
                 color: {
                   background: '#ffffff',
@@ -182,36 +167,48 @@ $(document).ready(function(){
                 solver: 'forceAtlas2Based'
             }
         };
-        network = new vis.Network(container, data, options);
-
+        if(to_from == 'to') {
+            network_to = new vis.Network(container, data, options);
+        }else{
+            network_from = new vis.Network(container, data, options);
+        }
     }
 
+    $('#name_share').click(function(){
+        html2canvas($("#lucky_name_best"), {
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                document.body.appendChild(canvas);
+
+                // Convert and download as image
+                var image = Canvas2Image.convertToImage(canvas);
+                $("#img-out").append(image);
+
+
+
+                console.log(Canvas2Image.getSrc(canvas));
+
+                Kakao.init('17c8317e213251d5ed0578e27ad3b8e9');
+                // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+
+                Kakao.Link.createTalkLinkButton({
+                  container: '#name_share',
+                  label: '당신의후보에게투표하세요',
+                  image: {
+                    src: "",
+                    width: '300',
+                    height: '200'
+                  },
+                  webButton: {
+                    text: '2017daesun.com',
+                    url: 'http://2017daesun.com'
+                  }
+                });
+
+                // Clean up
+                //document.body.removeChild(canvas);
+            }
+        });
+    });
+
 });
-
-
-[{'id': 93, 'label': '문', 'level': 5},
-    {'id': 92, 'label': '송', 'level': 5},
-    {'id': 91, 'label': '재', 'level': 5},
-    {'id': 90, 'label': '민', 'level': 5},
-    {'id': 89, 'label': '인', 'level': 5},
-    {'id': 88, 'label': '정', 'level': 5},
-    {'id': 20, 'label': 8, 'level': 4},
-    {'id': 21, 'label': 5, 'level': 4},
-    {'id': 22, 'label': 6, 'level': 4},
-    {'id': 23, 'label': 7, 'level': 4},
-    {'id': 24, 'label': 4, 'level': 4},
-    {'id': 25, 'label': 6, 'level': 4},
-    {'id': 26, 'label': 3, 'level': 3},
-    {'id': 27, 'label': 1, 'level': 3},
-    {'id': 28, 'label': 3, 'level': 3},
-    {'id': 29, 'label': 1, 'level': 3},
-    {'id': 30, 'label': 0, 'level': 3},
-    {'id': 31, 'label': 4, 'level': 2},
-    {'id': 32, 'label': 4, 'level': 2},
-    {'id': 33, 'label': 4, 'level': 2},
-    {'id': 34, 'label': 1, 'level': 2},
-    {'id': 35, 'label': 8, 'level': 1},
-    {'id': 36, 'label': 8, 'level': 1},
-    {'id': 37, 'label': 5, 'level': 1},
-    {'id': 38, 'label': 6, 'level': 0},
-    {'id': 39, 'label': 3, 'level': 0}]

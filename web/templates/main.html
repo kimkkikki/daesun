@@ -330,21 +330,25 @@
                     <h4 class="modal-title">이름점 결과</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="row" id="lucky_name_best">
                         <div class="col-md-4 text-center">
                             <h4><span id="your_name"></span>님과<br>이름점 궁합이 최고입니다</h4>
-                            <img id="best_candidate_picture"/>
+                            <img id="best_candidate_picture" class="img-responsive img-circle"/>
                             <span id="best_candidate"></span>
                             <span id="best_score"></span>
                         </div>
-                        <div class="col-md-8 text-center">
-                            <div id="lucky_name_result" style="width:350px;height:300px;"></div>
+                        <div class="col-md-4 text-center">
+                            <div id="lucky_name_result_to" style="width:180px;height:300px;"></div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div id="lucky_name_result_from" style="width:180px;height:300px;"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div id="lucky_name_result_rest"></div>
                     </div>
-
+                    <button type="button" class="btn btn-default" id="name_share">공유하기</button>
+                    <div id="img-out"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -513,11 +517,17 @@
 <script type="text/javascript" src="{% static 'js/main/wow.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Canvas2Image.js' %}"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 
 <!-- Custom JS -->
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
+
+
 
 <script type="text/javascript">
 $(function() {
