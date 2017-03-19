@@ -183,6 +183,79 @@
     <!-- Pledge Rank Modal -->
     {% include 'pledge_rank_modal.html' %}
 
+    <section id="slot">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">대통령 머신</h2>
+                    <h3 class="section-subheading text-muted">도저히 모르겠다 돌려보자</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <button id="slot-start" type="button" class="btn btn-default">룰렛 돌리기</button>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div id="slot-machine-1" class="randomizeMachine">
+                        <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div id="slot-machine-2" class="randomizeMachine">
+                        <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div id="slot-machine-3" class="randomizeMachine">
+                        <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
+                        <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 슬롯 모달뷰 -->
+    <div id="slot-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">후보자 룰렛 결과</h4>
+                </div>
+                <div class="modal-body">
+                    <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section id="lucky">
         <div class="container">
             <div class="row">
@@ -224,102 +297,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 text-center lucky-box">
-                    <h3>혈액형점</h3>
-                    <p>혈액형으로 보는 후보자와의 궁합</p>
-                    <div class="col-md-2">&nbsp;</div>
-                    <div class="col-md-8 input-group text-center">
-                        <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default active">
-                                <input type="radio" name="blood-type" id="option1" autocomplete="off" value="A" checked>A형
-                            </label>
-                            <label class="btn btn-default">
-                                <input type="radio" name="blood-type" id="option2" autocomplete="off" value="B">B형
-                            </label>
-                            <label class="btn btn-default">
-                                <input type="radio" name="blood-type" id="option3" autocomplete="off" value="AB">AB형
-                            </label>
-                            <label class="btn btn-default">
-                                <input type="radio" name="blood-type" id="option4" autocomplete="off" value="O">O형
-                            </label>
-                        </div>
-                        <span class="input-group-btn">
-                            <button id="blood-type-button" type="button" class="btn btn-default">확인</button>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-6 text-center lucky-box">
-                    <h3>후보자 룰렛</h3>
-                    <p>누구찍을지 모르겠다 돌려보자</p>
-                    <button id="slot-start" type="button" class="btn btn-default">룰렛 돌리기</button>
-
-                    <div class="row">
-                        <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div id="slot-machine-1" class="randomizeMachine">
-                                <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/hwang.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div id="slot-machine-2" class="randomizeMachine">
-                                <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/hwang.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4">
-                            <div id="slot-machine-3" class="randomizeMachine">
-                                <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/hwang.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
-                                <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
-
-    <!-- 룰렛 모달뷰 -->
-    <div id="slot-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">후보자 룰렛 결과</h4>
-                </div>
-                <div class="modal-body">
-                    <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}"/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- 이름점 모달뷰 -->
     <div id="lucky-name-modal" class="modal fade" role="dialog">
@@ -466,6 +445,20 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="labs">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">대선닷컴 랩스</h2>
+                    <h3 class="section-subheading text-muted">만들다만 기능들을 보고싶다면 클릭하세요</h3>
+                </div>
+            </div>
+            <div class="row section-contents">
+                <a href="{% url 'labs' %}" id="labs-button" class="btn btn-info btn-block">기타 등등 기능 보러가기</a>
             </div>
         </div>
     </section>
@@ -779,6 +772,8 @@ function blindNextButtonClick(button) {
 
 <script type="text/javascript">
     //TODO: 슬롯머신
+    var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '남경필', '심상정', '손학규', '유승민'];
+    var count = 0;
     var machine1 = $("#slot-machine-1").slotMachine({
 					active	: 0,
 					delay	: 500
@@ -804,10 +799,32 @@ function blindNextButtonClick(button) {
                 result_2 = this.active;
                 break;
             case 'slot-machine-3':
+                count++;
                 console.log("oncomplete3 "+this.active);
                 result_3 = this.active;
 
                 if (result_1 == result_2 && result_2 == result_3) {
+                    $.ajax({
+                            url: '/apis/lucky',
+                            headers: {
+                                'Content-Type':'application/json'
+                            },
+                            async: true,
+                            type: 'POST',
+                            data: JSON.stringify({
+                                'type': 'slot',
+                                'candidate': slot_candidates[result_1],
+                                'count': count
+                            }),
+                            success: function() {
+                                console.log('add success');
+                                //TODO 슬롯 카운트 초기화 언제?
+                                count = 0;
+                            },
+                            error: function(data, status, err) {
+                                console.log(err);
+                            }
+                        });
 //                    $('#slot-modal').modal('show');
                 }
                 $('#slot-modal').modal('show');
@@ -1009,11 +1026,4 @@ function blindNextButtonClick(button) {
 //        });
 </script>
 
-<script type="text/javascript">
-    //TODO: 혈액형 궁합 구현해야지
-    $('#blood-type-button').click(function () {
-        var value = $(":input:radio[name=blood-type]:checked").val();
-        console.log(value)
-    });
-</script>
 </html>

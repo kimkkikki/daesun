@@ -141,7 +141,7 @@ ul.social-buttons li a {
 }
 @media (min-width: 768px) {
     .randomizeMachine {
-        width: 130px;
-        height: 130px;
+        width: 200px;
+        height: 200px;
     }
 }

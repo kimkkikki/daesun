@@ -4,14 +4,14 @@ from django.http import HttpResponse
 from datetime import datetime
 
 
-def index(request):
+def labs(request):
     book_list = views.get_shop()
     # book_list = []
     pledge_rank_list = views.pledge_rank_list()
     sns_list = views.get_candidate_sns_list()
     issue_list = views.get_issue_keyword_list()
     cheerings = views.get_cheering_message_list(0)
-    return render(request, 'index.html', {'book_list': book_list, 'pledge_rank_list': pledge_rank_list, 'sns_list': sns_list,
+    return render(request, 'labs.html', {'book_list': book_list, 'pledge_rank_list': pledge_rank_list, 'sns_list': sns_list,
                                           'issue_list': issue_list, 'cheering_list': cheerings})
 
 

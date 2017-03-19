@@ -542,6 +542,7 @@ def constellation_api(request):
         return JSONResponse(result)
 
 
+# 안씀
 @csrf_exempt
 def blood_type_chemistry_api(request):
     if request.method == 'POST':
@@ -554,3 +555,15 @@ def blood_type_chemistry_api(request):
             result_list.append({'candidate': obj.get('candidate'), 'score': score})
 
         return JSONResponse(result_list)
+
+
+@csrf_exempt
+def save_lucky_result(request):
+    if request.method == 'POST':
+        body = JSONParser().parse(request)
+        lucky_type = body.get('type', None)
+        candidate = body.get('candidate', None)
+        count = body.get('count', None)
+        save_lucky_rating(candidate, lucky_type, count)
+
+        return HttpResponse(status=200)
