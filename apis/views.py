@@ -18,6 +18,7 @@ import requests
 import twitter
 import pytz
 import re
+from django.utils.safestring import mark_safe
 
 
 candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
@@ -257,23 +258,20 @@ def name_chemistry(request):
     return JSONResponse({'list': result_list})
 
 
-@csrf_exempt
-def lucky_name_chemistry(request):
+def lucky_name(request):
     if request.method == 'GET':
         name = request.GET.get('name', None)
     else:
         body = JSONParser().parse(request)
         name = body.get('name', None)
-
-    if name is None:
-        return JSONResponse({'message': 'param is missing'}, status=400)
-
+    print(name)
     result_list = []
     score, best_to, best_from = 0, [], []
     for obj in candidate_dict_list:
         score_to, score_to_list, name_to_list = hangle.name_chemistry(name, obj.get('candidate'))
         score_from, score_from_list, name_from_list = hangle.name_chemistry(obj.get('candidate'), name)
-        result_list.append({'candidate': obj.get('candidate'), 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
+        result_list.append({'candidate': obj.get('candidate'), 'score_to': score_to, 'score_from': score_from,
+                            'score': score_to + score_from})
         if score < score_to + score_from:
             best_to, best_from, best_to_name, best_from_name = score_to_list, score_from_list, name_to_list, name_from_list
             score = score_to + score_from
@@ -284,32 +282,29 @@ def lucky_name_chemistry(request):
 
     i, j, length, to_nodes, from_nodes = 0, 0, len(best_to), [], []
 
-    for name in best_to_name:
-        to_nodes.append({'id': 99-j, 'label': name, 'level': length})
+    for name_one in best_to_name:
+        to_nodes.append({"id": 99 - j, "label": name_one, "level": length})
         j += 1
 
     for item in best_to:
         for score in item:
-            to_nodes.append({'id': i, 'label': score, 'level': length-1})
+            to_nodes.append({"id": i, "label": score, "level": length - 1})
             i += 1
         length -= 1
 
     length = len(best_from)
 
-    for name in best_from_name:
-        from_nodes.append({'id': 99-j, 'label': name, 'level': length})
+    for name_one in best_from_name:
+        from_nodes.append({"id": 99 - j, "label": name_one, "level": length})
         j += 1
 
     for item in best_from:
         for score in item:
-            from_nodes.append({'id': i, 'label': score, 'level': length-1})
+            from_nodes.append({"id": i, "label": score, "level": length - 1})
             i += 1
         length -= 1
 
-    print(result_list)
-    print(to_nodes)
-    print(from_nodes)
-    return JSONResponse({'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes})
+    return {'name': name, 'best_one': result_list[0], 'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes}
 
 
 @api_view(['GET'])

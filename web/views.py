@@ -1,4 +1,6 @@
 from django.shortcuts import render, render_to_response
+from django.views.decorators.csrf import csrf_exempt
+
 from apis import views
 from django.http import HttpResponse
 from datetime import datetime
@@ -75,3 +77,10 @@ def slot(request):
     if request.method == 'POST':
         result = views.save_lucky_result(request)
         return render_to_response('slot_modal.html', {'lucky': result})
+
+
+@csrf_exempt
+def luckyname(request):
+    result = views.lucky_name(request)
+    print(result)
+    return render_to_response('lucky_name_modal.html', result)

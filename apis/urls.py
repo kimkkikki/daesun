@@ -20,6 +20,6 @@ urlpatterns = [
     url(r'^cheering$', views.cheering_message_api, name='cheering_message'),
     url(r'^constellation$', views.constellation_api, name='constellation_api'),
     url(r'^blood$', views.blood_type_chemistry_api, name='blood_type_chemistry_api'),
-    url(r'^lucky', views.save_lucky_result_api, name='save_lucky_result'),
-    url(r'^luckyname$', views.lucky_name_chemistry, name='lucky_name_api'),
+    url(r'^lucky$', views.save_lucky_result_api, name='save_lucky_result'),
+
 ]
