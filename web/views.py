@@ -55,9 +55,7 @@ def rating(request):
 def pledge(request):
     if request.method == 'GET':
         type = request.GET.get('type', None)
-        if type is None:
-            return render_to_response('pledge_test.html')
-        elif type == 'rank':
+        if type == 'rank':
             results = views.pledge_rank_list()
             return render_to_response('pledge_rank_modal.html', {'pledge_rank_list': results})
     else:

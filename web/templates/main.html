@@ -169,13 +169,38 @@
                 </div>
             </div>
             <div class="row section-contents">
-                <div id="pledge-test" class="text-center">
+                <div class="text-center">
                     <button id="pledge-test-start-button" class="btn btn-primary">시작하기</button>
                     <button id="pledge-rank-button" class="btn btn-default">랭킹보기</button>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- 공약 이상형 모달 -->
+    <div id="pledge-test-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">공약 이상형</h4>
+                </div>
+                <div id="pledge-test" class="modal-body">
+                    <div class="well well-lg text-center">
+                        <p id="pledge-test-count" class="pull-right"></p>
+                        <p>&nbsp;</p>
+                        <h4 id="pledge-test-title"></h4>
+                        <p id="pledge-test-contents"></p>
+                    </div>
+                    <div class="row text-center">
+                        <button type="button" class="btn btn-success" value="1" onclick="blindNextButtonClick(this);">좋아요</button>
+                        <button type="button" class="btn btn-danger" value="-1" onclick="blindNextButtonClick(this);">싫어요</button>
+                        <button type="button" class="btn btn-default" value="0" onclick="blindNextButtonClick(this);">몰라요</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Pledge Rank Modal -->
     {% include 'pledge_rank_modal.html' %}
@@ -485,7 +510,6 @@
     </footer>
 </body>
 
-
 <!-- Jquery -->
 <script type="text/javascript" src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
@@ -511,28 +535,34 @@
 <script type="text/javascript" src="{% static 'js/main/rating.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/constellation.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/press.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/cheering.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
 
 <script type="text/javascript">
+    var isLoadPledgeRank = false;
     $('#pledge-rank-button').click(function () {
-        waitMe($('#pledge'));
-        $.ajax({
-            url: '/pledge?type=rank',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            type: 'GET',
-            success: function(data) {
-                $('#pledge-rank').html(data);
-                $('#pledge-rank-modal').modal('show');
-                $('#pledge').waitMe('hide');
-            },
-            error: function(data, status, err) {
-                console.log(err);
-                $('#pledge').waitMe('hide');
-            }
-        });
+        if (!isLoadPledgeRank) {
+            waitMe($('#pledge'));
+            $.ajax({
+                url: '/pledge?type=rank',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                type: 'GET',
+                success: function(data) {
+                    $('#pledge-rank').html(data);
+                    $('#pledge-rank-modal').modal('show');
+                    $('#pledge').waitMe('hide');
+                    isLoadPledgeRank = true;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    $('#pledge').waitMe('hide');
+                }
+            });
+        } else {
+            $('#pledge-rank-modal').modal('show');
+        }
     });
 
     var blindResult;
@@ -544,37 +574,24 @@
         console.log('pledge start');
         waitMe($('#pledge'));
         $.ajax({
-            url: '/pledge',
+            url: '/apis/pledge',
             headers: {
                 'Content-Type':'application/json'
             },
+            dataType: 'json',
+            cache: false,
             type: 'GET',
             success: function(data) {
-                $('#pledge-test').html(data);
-                $.ajax({
-                    url: '/apis/pledge',
-                    headers: {
-                        'Content-Type':'application/json'
-                    },
-                    dataType: 'json',
-                    cache: false,
-                    type: 'GET',
-                    success: function(data) {
-                        blindResult = [];
-                        blindToken = data.token;
-                        blindList = data.list;
-                        blindLoopIndex = 1;
+                blindResult = [];
+                blindToken = data.token;
+                blindList = data.list;
+                blindLoopIndex = 1;
 
-                        $('#pledge-test-title').html(blindList[0].title);
-                        $('#pledge-test-contents').html(blindList[0].contents);
-                        $('#pledge-test-count').html('1/' + blindList.length);
-                        $('#pledge').waitMe('hide');
-                    },
-                    error: function(data, status, err) {
-                        console.log(err);
-                        $('#pledge').waitMe('hide');
-                    }
-                });
+                $('#pledge-test-title').html(blindList[0].title);
+                $('#pledge-test-contents').html(blindList[0].contents);
+                $('#pledge-test-count').html('1/' + blindList.length);
+                $('#pledge').waitMe('hide');
+                $('#pledge-test-modal').modal('show');
             },
             error: function(data, status, err) {
                 console.log(err);
