@@ -27,10 +27,10 @@
             <span id="best_score">{{ best_one.score }}점</span>
         </div>
         <div class="col-md-4 text-center">
-            <div id="lucky_name_result_to" style="width:180px;height:300px;"></div>
+            <div id="lucky_name_result_to"></div>
         </div>
         <div class="col-md-4 text-center">
-            <div id="lucky_name_result_from" style="width:180px;height:300px;"></div>
+            <div id="lucky_name_result_from"></div>
         </div>
     </div>
     <div class="row"  style="margin-left:0; margin-right:0">
@@ -84,13 +84,23 @@
         }
     }
 
+    function fit() {
+
+        if (network_from !== null) {
+            network_from.fit();
+        }
+        if (network_to !== null) {
+            network_to.fit();
+        }
+    }
+
     function draw(to_from, nodeList, target) {
 
         var nodes = nodeList;
         var edges = [];
 
         // 이름 3글자인 사람들
-        name_length = 6;
+        name_length = parseInt('{{ name_length }}');
         var left = 0;
         var right = name_length;
         var left_name = 99;
@@ -98,7 +108,7 @@
 
         for(var time =0; time < 2; time++){
 
-            for(var last = 0; last < 6;last++){
+            for(var last = 0; last < name_length;last++){
                 edges.push({from: left_name-- , to: right_name++});
             }
 
@@ -117,6 +127,8 @@
 
         }
 
+        console.log(edges);
+
         // create a network
         var container = document.getElementById(target);
         var data = {
@@ -126,8 +138,8 @@
 
         var options = {
             autoResize:true,
-            height: '100%',
-            width: '100%',
+            height: '300px',
+            width: '180px',
             nodes: {
                 font: {
                   size: 50, // px
@@ -142,7 +154,6 @@
                 }
             },
             physics: {
-                enabled: true,
                 forceAtlas2Based: {
                   springLength: 100
                 },
@@ -156,6 +167,7 @@
         };
         if(to_from == 'to') {
             network_to = new vis.Network(container, data, options);
+            alert('done');
         }else{
             network_from = new vis.Network(container, data, options);
         }
@@ -165,6 +177,6 @@ $(document).ready(function(){
     destroy();
     draw('to', JSON.parse('{{ to_nodes | escapejs  }}'.replace(/'/gi, "\"")), 'lucky_name_result_to');
     draw('from', JSON.parse('{{ from_nodes | escapejs  }}'.replace(/'/gi, "\"")), 'lucky_name_result_from');
-
+    fit();
 });
 </script>

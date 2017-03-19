@@ -298,7 +298,7 @@ def lucky_name(request):
             i += 1
         length -= 1
 
-    return {'name': name, 'best_one': result_list[0], 'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes}
+    return {'name_length': len(name)+3, 'name': name, 'best_one': result_list[0], 'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes}
 
 
 @api_view(['GET'])
