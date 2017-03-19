@@ -151,3 +151,7 @@ ul.social-buttons li a {
 .img-responsive {
     margin: 0 auto;
 }
+
+.modal-body{
+    max-height: 100%;
+}

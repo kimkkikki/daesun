@@ -374,7 +374,6 @@
                     <select class="form-control" id="cheering-candidate" title="대선주자">
                         <option>문재인</option>
                         <option>안희정</option>
-                        <option>황교안</option>
                         <option>안철수</option>
                         <option>남경필</option>
                         <option>유승민</option>
@@ -482,7 +481,7 @@
                 <div class="col-md-4">
                     <ul class="list-inline quicklinks">
                         <li><a href="#" target="_blank">이용약관</a></li>
-                        <li><a href="#" target="_blank">Cantact Us</a></li>
+                        <li><a href="mailto:kimkkikki1@gmail.com">Cantact Us</a></li>
                     </ul>
                 </div>
             </div>
@@ -517,131 +516,13 @@
 
 <!-- Custom JS -->
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/rating.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/constellation.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/press.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
 
 
-
-<script type="text/javascript">
-$(function() {
-    var before = null;
-    $('#rating-toggle').change(function() {
-        var description = $('#rating-description');
-        var is_rating = $(this).prop('checked');
-        var template = $('#rating-template');
-        var temp;
-        if (is_rating) {
-            description.html("리얼미터가 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터 홈페이지를 참고하세요");
-            if (before != null) {
-                temp = template.html();
-                template.html(before);
-                before = temp;
-            }
-        } else {
-            description.html("운빨 지지율은 2017대선닷컴의 럭키박스를 이용한 방문자 결과를 기반으로 계산되었습니다.<br>위의 결과는 철저히 랜덤함수에 의한 결과의 합임을 명심해주세요. 오해금지!");
-            if (before == null) {
-                waitMe($('#rating'));
-                $.ajax({
-                    url: '/rating',
-                    headers: {
-                        'Content-Type':'application/json'
-                    },
-                    type: 'POST',
-                    data: JSON.stringify({
-                            'type': 'lucky'
-                        }),
-                    success: function(data) {
-                        before = template.html();
-                        template.html(data);
-                        $('#rating').waitMe('hide');
-                        page = 1;
-                    },
-                    error: function() {
-                        alert('우주의기운 지지율을 가져오는데 실패하였습니다');
-                        $('#rating').waitMe('hide');
-                    }
-                });
-            } else {
-                temp = template.html();
-                template.html(before);
-                before = temp;
-            }
-        }
-    })
-});
-
-// 지지율 차트
-var isLoadRatingChart = false;
-$('#rating-graph-button').click(function() {
-    if (!isLoadRatingChart) {
-        waitMe($('#rating-modal'));
-        $.ajax({
-            url: '/apis/rating',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            async: true,
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                var result_list = [['x'], ['문재인'], ['안철수'], ['황교안'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
-                for (var i = 0; i < data.length; i++) {
-                    var obj = data[i];
-                    if (!result_list[0].includes(obj.date)) {
-                        result_list[0].push(obj.date);
-                    }
-
-                    switch (obj.candidate) {
-                        case '문재인':
-                            result_list[1].push(obj.rating);
-                            break;
-                        case '안철수':
-                            result_list[2].push(obj.rating);
-                            break;
-                        case '황교안':
-                            result_list[3].push(obj.rating);
-                            break;
-                        case '남경필':
-                            result_list[4].push(obj.rating);
-                            break;
-                        case '안희정':
-                            result_list[5].push(obj.rating);
-                            break;
-                        case '이재명':
-                            result_list[6].push(obj.rating);
-                            break;
-                        case '유승민':
-                            result_list[7].push(obj.rating);
-                            break;
-                    }
-                }
-
-                c3.generate({
-                    bindto: '#ratingChart',
-                    data: {
-                        x: 'x',
-                        columns: result_list
-                    },
-                    axis: {
-                        x: {
-                            type: 'timeseries',
-                            tick: {
-                                format: '%Y-%m-%d'
-                            }
-                        }
-                    }
-                });
-                $('#rating-modal').waitMe('hide');
-                isLoadRatingChart = true;
-            },
-            error: function(data, status, err) {
-                console.log(err);
-                $('#rating-modal').waitMe('hide');
-            }
-        });
-    }
-});
-</script>
 
 <script type="text/javascript">
     $('#pledge-rank-button').click(function () {
@@ -752,35 +633,6 @@ function blindNextButtonClick(button) {
 </script>
 
 <script type="text/javascript">
-    $('#constellation-button').click(function() {
-        var month = $('#constellation-month').val();
-        var day = $('#constellation-day').val();
-        waitMe($('#lucky'));
-        $.ajax({
-                url: '/constellation',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                cache: false,
-                type: 'POST',
-                data: JSON.stringify({
-                    'month': Number(month),
-                    'day': Number(day)
-                }),
-                success: function(data) {
-                    $('#constellation-result').html(data);
-                    $('#constellation-modal').modal('show');
-                    $('#lucky').waitMe('hide');
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                    $('#lucky').waitMe('hide');
-                }
-            });
-    });
-</script>
-
-<script type="text/javascript">
     $('#slot-share').click(function () {
         console.log('slot-share click');
     });
@@ -842,6 +694,8 @@ function blindNextButtonClick(button) {
                                 $('#slot').waitMe('hide');
                             }
                         });
+                } else {
+
                 }
                 break;
         }
@@ -852,116 +706,6 @@ function blindNextButtonClick(button) {
         machine2.shuffle(10, onComplete);
         machine3.shuffle(15, onComplete);
 	});
-</script>
-
-<script type="text/javascript">
-    var isLoadChart = false;
-    $('#lucky').waypoint(function () {
-        if (!isLoadChart) {
-            createPressChart();
-        }
-    });
-    $('#press').waypoint(function() {
-        if (!isLoadChart) {
-            createPressChart();
-        }
-    });
-    $('#donate').waypoint(function() {
-        if (!isLoadChart) {
-            createPressChart();
-        }
-    });
-
-    function createPressChart() {
-        var count = 0;
-        isLoadChart = true;
-        waitMe($('#press'));
-
-        $.ajax({
-                url: '/apis/cp/daily',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                type: 'GET',
-                success: function(data) {
-                    var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
-                    for (var i = 0; i < data.length; i++) {
-                        var obj = data[i];
-                        result_list[0].push(obj.date);
-                        result_list[1].push(obj.moon);
-                        result_list[2].push(obj.ahn);
-                        result_list[3].push(obj.sim);
-                        result_list[4].push(obj.nam);
-                        result_list[5].push(obj.hee);
-                        result_list[6].push(obj.lee);
-                        result_list[7].push(obj.you);
-                    }
-
-                    c3.generate({
-                        bindto: '#press-chart-line',
-                        data: {
-                            x: 'x',
-                            columns: result_list
-                        },
-                        axis: {
-                            x: {
-                                type: 'timeseries',
-                                tick: {
-                                    format: '%Y-%m-%d'
-                                }
-                            }
-                        }
-                    });
-
-                    if (count == 0) {
-                        count++;
-                    } else {
-                        $('#press').waitMe('hide');
-                    }
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                }
-            });
-        $.ajax({
-                url: '/apis/cp/group',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                type: 'GET',
-                success: function(data) {
-                    var result = [['문재인', 0], ['이재명', 0], ['안희정', 0], ['유승민', 0], ['심상정', 0], ['안철수', 0], ['남경필', 0]];
-
-                    for (var i = 0; i < data.length; i++) {
-                        result[0][1] += data[i].moon;
-                        result[1][1] += data[i].lee;
-                        result[2][1] += data[i].hee;
-                        result[3][1] += data[i].you;
-                        result[4][1] += data[i].sim;
-                        result[5][1] += data[i].ahn;
-                        result[6][1] += data[i].nam;
-                    }
-
-                    press_chart = c3.generate({
-                        bindto: '#press-chart-pie',
-                        data: {
-                            columns: result,
-                            type : 'pie'
-                        }
-                    });
-
-                    if (count == 0) {
-                        count++;
-                    } else {
-                        $('#press').waitMe('hide');
-                    }
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                }
-            });
-
-    }
 </script>
 
 <script type="text/javascript">
