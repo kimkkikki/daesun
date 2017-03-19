@@ -386,6 +386,8 @@ def get_candidate_sns_list():
                       '안철수': '#669966', '유승민': '#4ca0e6', '심상정': '#c9151e', '남경필': '#c9151e'}
 
     for candidate in candidate_dict_list:
+        if (candidate.get('twitter') == ''):
+            continue
         statuses = api.GetUserTimeline(screen_name=candidate.get('twitter'))
 
         for status in statuses:
@@ -420,7 +422,8 @@ def get_candidate_sns_list():
                         hour, minute = int(schedule_time[0]), int(schedule_time[1])
                         title = time.group(time.lastindex)
                         if status.user.name == '문재인':
-                            title = re.compile('일정]\s(.+?)\n').search(contents).group(1)
+                            if re.compile('일정]\s(.+?)\n').search(contents) != None:
+                                title = re.compile('일정]\s(.+?)\n').search(contents).group(1)
 
                         if title.find('…') > 0:
                             continue
