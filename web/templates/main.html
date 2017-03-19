@@ -647,15 +647,15 @@ function blindNextButtonClick(button) {
     var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '남경필', '심상정', '손학규', '유승민'];
     var slot_count = 0;
     var machine1 = $("#slot-machine-1").slotMachine({
-					active	: 0,
+					active	: Math.floor(Math.random() * 10),
 					delay	: 500
 				});
     var machine2 = $("#slot-machine-2").slotMachine({
-					active	: 1,
+					active	: Math.floor(Math.random() * 10),
 					delay	: 500
 				});
     var machine3 = $("#slot-machine-3").slotMachine({
-					active	: 2,
+					active	: Math.floor(Math.random() * 10),
 					delay	: 500
 				});
 
