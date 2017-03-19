@@ -143,21 +143,6 @@ $(document).ready(function(){
         }
         console.log(edges);
 
-       /*
-        edges.push({from: 99, to: 0});
-        edges.push({from: 98, to: 1});
-        edges.push({from: 97, to: 2});
-        edges.push({from: 96, to: 3});
-        edges.push({from: 95, to: 4});
-        edges.push({from: 94, to: 5});
-
-        edges.push({from: 93, to: 20});
-        edges.push({from: 92, to: 21});
-        edges.push({from: 91, to: 22});
-        edges.push({from: 90, to: 23});
-        edges.push({from: 89, to: 24});
-        edges.push({from: 88, to: 25});*/
-
         // create a network
         var container = document.getElementById('lucky_name_result');
         var data = {
@@ -166,7 +151,6 @@ $(document).ready(function(){
         };
 
         var options = {
-            autoResize: true,
             height: '100%',
             width: '100%',
             edges: {
@@ -189,7 +173,14 @@ $(document).ready(function(){
                     direction: 'DU'
                 }
             },
-            physics:false
+            physics: {
+                forceAtlas2Based: {
+                  springLength: 100
+                },
+                maxVelocity: 11,
+                minVelocity: 0.37,
+                solver: 'forceAtlas2Based'
+            }
         };
         network = new vis.Network(container, data, options);
 
