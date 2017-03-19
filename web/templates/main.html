@@ -253,7 +253,7 @@
                     <h3>후보자 룰렛</h3>
                     <p>누구찍을지 모르겠다 돌려보자</p>
                     <button id="slot-start" type="button" class="btn btn-default">룰렛 돌리기</button>
-                    <!--TODO::-->
+
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-xs-4">
                             <div id="slot-machine-1" class="randomizeMachine">
@@ -792,17 +792,25 @@ function blindNextButtonClick(button) {
 					delay	: 500
 				});
 
-
+    var result_1, result_2, result_3;
     function onComplete(active){
         switch(this.element[0].id){
             case 'slot-machine-1':
                 console.log("oncomplete1 "+this.active);
+                result_1 = this.active;
                 break;
             case 'slot-machine-2':
                 console.log("oncomplete2 "+this.active);
+                result_2 = this.active;
                 break;
             case 'slot-machine-3':
                 console.log("oncomplete3 "+this.active);
+                result_3 = this.active;
+
+                if (result_1 == result_2 && result_2 == result_3) {
+//                    $('#slot-modal').modal('show');
+                }
+                $('#slot-modal').modal('show');
                 break;
         }
     }

@@ -10,7 +10,7 @@ from django.core.cache import caches
 from django.views.decorators.cache import cache_page
 import json
 import uuid
-from .util import hangle, constellation
+from .util import hangle, constellation, blood_type
 from datetime import datetime, timedelta
 from rest_framework.decorators import api_view
 from operator import itemgetter
@@ -20,8 +20,13 @@ import pytz
 import re
 
 
-candidates = ['문재인', '안희정', '이재명', '유승민', '황교안', '안철수']
-candidate_twitters = ['Jaemyung_Lee', 'steelroot', 'cheolsoo0919', 'moonriver365']
+candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
+                            {'candidate': '안희정', 'constellation': '황소', 'blood': 'A', 'twitter': 'steelroot'},
+                            {'candidate': '이재명', 'constellation': '물병', 'blood': 'O', 'twitter': 'Jaemyung_Lee'},
+                            {'candidate': '심상정', 'constellation': '물고기', 'blood': 'B', 'twitter': ''},
+                            {'candidate': '유승민', 'constellation': '염소', 'blood': 'A', 'twitter': ''},
+                            {'candidate': '남경필', 'constellation': '물병', 'blood': '', 'twitter': ''},
+                            {'candidate': '안철수', 'constellation': '물고기', 'blood': 'AB', 'twitter': 'cheolsoo0919'}]
 
 
 class JSONResponse(HttpResponse):
@@ -95,8 +100,9 @@ def cp_daily(req):
 def get_shop():
     results = []
 
-    for candidate in candidates:
-        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + candidate + "&d_auth=" + candidate + "&sort=date&d_dafr=20150101&d_dato=20171231"
+    for obj in candidate_dict_list:
+        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + obj.get('candidate') +\
+              "&d_auth=" + obj.get('candidate') + "&sort=date&d_dafr=20150101&d_dato=20171231"
 
         response = requests.get(url, headers={'X-Naver-Client-Id': 'cC0cf4zyUuLFmj_kKUum',
                                               'X-Naver-Client-Secret': 'EYop6SBs44'})
@@ -239,10 +245,10 @@ def name_chemistry(request):
         return JSONResponse({'message': 'param is missing'}, status=400)
 
     result_list = []
-    for candidate in candidates:
-        score_to = hangle.name_chemistry(name, candidate)
-        score_from = hangle.name_chemistry(candidate, name)
-        result_list.append({'candidate': candidate, 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
+    for obj in candidate_dict_list:
+        score_to = hangle.name_chemistry(name, obj.get('candidate'))
+        score_from = hangle.name_chemistry(obj.get('candidate'), name)
+        result_list.append({'candidate': obj.get('candidate'), 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
 
     if len(result_list) > 0:
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
@@ -264,10 +270,10 @@ def lucky_name_chemistry(request):
 
     result_list = []
     score, best_to, best_from = 0, [], []
-    for candidate in candidates:
-        score_to, score_to_list, name_to_list = hangle.name_chemistry(name, candidate)
-        score_from, score_from_list, name_from_list = hangle.name_chemistry(candidate, name)
-        result_list.append({'candidate': candidate, 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
+    for obj in candidate_dict_list:
+        score_to, score_to_list, name_to_list = hangle.name_chemistry(name, obj.get('candidate'))
+        score_from, score_from_list, name_from_list = hangle.name_chemistry(obj.get('candidate'), name)
+        result_list.append({'candidate': obj.get('candidate'), 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
         if score < score_to + score_from:
             best_to, best_from, best_to_name, best_from_name = score_to_list, score_from_list, name_to_list, name_from_list
             score = score_to + score_from
@@ -379,8 +385,8 @@ def get_candidate_sns_list():
     candidate_dict = {'문재인': '#337ab7', '안희정': '#337ab7', '이재명': '#337ab7',
                       '안철수': '#669966', '유승민': '#4ca0e6', '황교안': '#c9151e', '남경필': '#c9151e'}
 
-    for screen_name in candidate_twitters:
-        statuses = api.GetUserTimeline(screen_name=screen_name)
+    for candidate in candidate_dict_list:
+        statuses = api.GetUserTimeline(screen_name=candidate.get('twitter'))
 
         for status in statuses:
             created = datetime.strptime(status.created_at, '%a %b %d %H:%M:%S %z %Y').astimezone(pytz.timezone('Asia/Seoul'))
@@ -522,7 +528,7 @@ def constellation_post(request):
     day = body.get('day', None)
 
     request_constellation = constellation.get_constellation((month, day))
-    result = constellation.constellation_chemistry(request_constellation)
+    result = constellation.constellation_chemistry(request_constellation, candidate_dict_list)
     result = sorted(result, key=itemgetter('score'), reverse=True)
     save_lucky_rating(result[0]['candidate'], 'star', str((month, day)))
 
@@ -534,3 +540,17 @@ def constellation_api(request):
     if request.method == 'POST':
         result = constellation_post(request)
         return JSONResponse(result)
+
+
+@csrf_exempt
+def blood_type_chemistry_api(request):
+    if request.method == 'POST':
+        body = JSONParser().parse(request)
+        blood = body.get('blood', None)
+
+        result_list = []
+        for obj in candidate_dict_list:
+            score = blood_type.blood_chemistry(blood, obj.get('blood'))
+            result_list.append({'candidate': obj.get('candidate'), 'score': score})
+
+        return JSONResponse(result_list)
