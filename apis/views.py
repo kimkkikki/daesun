@@ -2,8 +2,7 @@ from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, Is
 from django.http import HttpResponse, Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
-from django.db.models import Count
-from django.db.models import Q, Case, When, Sum, F, Avg
+from django.db.models import Q, Case, When, Sum, F, Avg, Count
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import caches
@@ -18,6 +17,11 @@ import requests
 import twitter
 import pytz
 import re
+import base64
+import random
+
+
+from django.core.files.base import ContentFile
 
 
 candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
@@ -259,7 +263,7 @@ def lucky_name(request):
         name = body.get('name', None)
     print(name)
     result_list = []
-    score, best_to, best_from = 0, [], []
+    score, best_to, best_from, best_to_name, best_from_name = 0, [], [], [], []
     for obj in candidate_dict_list:
         score_to, score_to_list, name_to_list = hangle.name_chemistry(name, obj.get('candidate'))
         score_from, score_from_list, name_from_list = hangle.name_chemistry(obj.get('candidate'), name)
@@ -585,3 +589,18 @@ def save_lucky_result_api(request):
         return HttpResponse(status=200)
     else:
         return Http404
+
+
+@csrf_exempt
+def upload(request):
+    if request.method == 'POST':
+        body = JSONParser().parse(request)
+        format, imgstr = str(body.get('image')).split(';base64,')
+        ext = format.split('/')[-1]
+        file_name = "share" + str(random.random()) + "." + ext
+        f = open(file_name, "wb")
+        f.write(base64.b64decode(imgstr))
+        f.close()
+
+    return HttpResponse('allowed only via POST')
+
