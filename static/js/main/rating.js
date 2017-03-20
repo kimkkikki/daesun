@@ -1,17 +1,17 @@
 $(function() {
     var before = null;
-    $('#rating-toggle').change(function() {
+    $('input[type=radio][name=rating-radio]').change(function() {
         var description = $('#rating-description');
-        var is_rating = $(this).prop('checked');
         var template = $('#rating-template');
         var temp;
-        if (is_rating) {
+        if (this.value == 'real') {
             description.html("리얼미터가 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터 홈페이지를 참고하세요");
             if (before != null) {
                 temp = template.html();
                 template.html(before);
                 before = temp;
             }
+
         } else {
             description.html("운빨 지지율은 2017대선닷컴의 럭키박스를 이용한 방문자 결과를 기반으로 계산되었습니다.<br>위의 결과는 철저히 랜덤함수에 의한 결과의 합임을 명심해주세요. 오해금지!");
             if (before == null) {
@@ -42,7 +42,7 @@ $(function() {
                 before = temp;
             }
         }
-    })
+    });
 });
 
 // 지지율 차트

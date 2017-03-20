@@ -1,33 +1,31 @@
 {% load staticfiles %}
 {% for rating in ratings %}
 {% if forloop.counter0 == 0 and rating.date %}
-<div class="col-md-12">
+<div class="col col-12">
     <p class="text-center">{{ rating.date|date:"Y.m.d" }}에 발표된 여론조사 결과</p>
 </div>
-<div class="col-md-12">
 {% endif %}
-<div class="col-md-2 col-sm-3 col-xs-3 text-center">
+<div class="col-2 text-center">
     {% if rating.candidate == '문재인' %}
-    <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}">
+    <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
     {% elif rating.candidate == '안철수' %}
-    <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn1.jpg' %}">
+    <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}">
     {% elif rating.candidate == '이재명' %}
-    <img class="img-responsive img-circle" src="{% static 'img/candidate/lee.jpg' %}">
+    <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}">
     {% elif rating.candidate == '안희정' %}
-    <img class="img-responsive img-circle" src="{% static 'img/candidate/ahn2.jpg' %}">
+    <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}">
     {% elif rating.candidate == '심상정' %}
-    <img class="img-responsive img-circle" src="{% static 'img/candidate/sim.jpg' %}">
+    <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}">
     {% elif rating.candidate == '유승민' %}
-    <img class="img-responsive img-circle" src="{% static 'img/candidate/you.jpg' %}">
+    <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}">
     {% elif rating.candidate == '남경필' %}
-    <img class="img-responsive img-circle" src="{% static 'img/candidate/nam.jpg' %}">
+    <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}">
     {% elif rating.candidate == '홍준표' %}
-    <img class="img-responsive img-circle" src="{% static 'img/candidate/hong.jpg' %}">
+    <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}">
     {% elif rating.candidate == '손학규' %}
-    <img class="img-responsive img-circle" src="{% static 'img/candidate/son.jpg' %}">
+    <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
     {% endif %}
-    <h5>{{ rating.candidate }}</h5>
+    <p>{{ rating.candidate }}</p>
     <p>{{ rating.rating }}</p>
 </div>
 {% endfor %}
-</div>

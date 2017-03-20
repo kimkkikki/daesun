@@ -18,7 +18,6 @@ import requests
 import twitter
 import pytz
 import re
-from django.utils.safestring import mark_safe
 
 
 candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
@@ -59,7 +58,7 @@ def cp_group(request):
                             Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
                             Q(title__contains='남경필'))
 
-    group_list = Scraps.objects.filter(candidate_q_list).values('cp').annotate(
+    group_list = Scraps.objects.filter(Q(created_at__gte=datetime.now() - timedelta(days=30)) & candidate_q_list).values('cp').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
         ahn=Count(Case(When(title__contains='안철수', then=1))),
         lee=Count(Case(When(title__contains='이재명', then=1))),
@@ -78,7 +77,7 @@ def cp_daily(request):
                         Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
                         Q(title__contains='남경필'))
 
-    daily_list = Scraps.objects.filter(candidate_q_list).extra({'date': 'date(created_at)'}).values(
+    daily_list = Scraps.objects.filter(Q(created_at__gte=datetime.now() - timedelta(days=30)) & candidate_q_list).extra({'date': 'date(created_at)'}).values(
         'date').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
         ahn=Count(Case(When(title__contains='안철수', then=1))),
@@ -215,10 +214,10 @@ def approval_rating_list(cp, is_last):
             .annotate(rating=Avg(F('rating'))).order_by('-rating')
     else:
         if cp is None:
-            approval_ratings = ApprovalRating.objects.filter(type=1) \
+            approval_ratings = ApprovalRating.objects.filter(type=1, date__gte=datetime.now() - timedelta(days=30)) \
                 .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('date')
         else:
-            approval_ratings = ApprovalRating.objects.filter(type=1, cp=cp) \
+            approval_ratings = ApprovalRating.objects.filter(type=1, date__gte=datetime.now() - timedelta(days=30), cp=cp) \
                 .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('date')
     return list(approval_ratings)
 

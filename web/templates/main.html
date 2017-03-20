@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>2017 대선닷컴</title>
@@ -15,9 +16,9 @@
     <link rel='stylesheet' href='http://fonts.googleapis.com/earlyaccess/nanumpenscript.css' type='text/css'>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}">-->
     <!--<link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap-theme.min.css' %}">-->
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <!-- Library CSS -->
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
@@ -33,47 +34,38 @@
 </head>
 
 <body id="page-top">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span> <i class="fa fa-bars"></i> 메뉴
-                </button>
-                <a class="navbar-brand" href="#page-top">2017대선닷컴</a>
-            </div>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#page-top">2017대선닷컴</a>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div id="navbar-collapse" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li>
-                        <a href="#rating">지지율</a>
-                    </li>
-                     <li>
-                        <a href="#pledge">공약</a>
-                    </li>
-                    <li>
-                        <a href="#lucky">럭키박스</a>
-                    </li>
-                    <li>
-                        <a href="#press">언론</a>
-                    </li>
-                    <li>
-                        <a href="#cheering">응원메세지</a>
-                    </li>
-                    <li>
-                        <a href="#donate">기부하기</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="collapse navbar-collapse justify-content-md-center" id="navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#rating">지지율 </a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="#pledge">공약</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#lucky">럭키박스</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#press">언론</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#cheering">응원메세지</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#donate">기부하기</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
     <header>
-        <div class="container">
+        <div class="container-fluid">
             <div class="intro-text">
                 <div class="intro-lead-in">대한민국을 책임질 대통령</div>
                 <div class="intro-heading">당신은 누구를 고르시습니까?</div>
@@ -82,22 +74,22 @@
         </div>
     </header>
 
-    <div class="btn-toolbar" role="toolbar">
+    <div role="toolbar">
         <div class="btn-group btn-group-justified">
             <div class="btn-group">
-                <button id="calendar-button-1" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">3.10<br>예비후보자 등록</button>
+                <button id="calendar-button-1" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">3.10<br>예비후보자 등록</button>
             </div>
             <div class="btn-group">
-                <button id="calendar-button-2" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.15 ~ 16<br>후보자 등록</button>
+                <button id="calendar-button-2" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.15 ~ 16<br>후보자 등록</button>
             </div>
             <div class="btn-group">
-                <button id="calendar-button-3" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.25 ~ 30<br>재외투표소 투표</button>
+                <button id="calendar-button-3" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.25 ~ 30<br>재외투표소 투표</button>
             </div>
             <div class="btn-group">
-                <button id="calendar-button-4" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.4 ~ 5<br>사전투표소 투표</button>
+                <button id="calendar-button-4" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.4 ~ 5<br>사전투표소 투표</button>
             </div>
             <div class="btn-group">
-                <button id="calendar-button-5" type="button" class="btn btn-default btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.9<br>대통령선거</button>
+                <button id="calendar-button-5" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.9<br>대통령선거</button>
             </div>
         </div>
     </div>
@@ -119,23 +111,27 @@
 
     <section id="rating" class="light-bg">
         <div class="container">
-            <div class="row">
-                <div class="col-md-2 col-sm-2 text-center">&nbsp;</div>
-                <div class="col-md-8 col-sm-8 text-center">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">누가누가 잘하나</h2>
                     <h3 class="section-subheading text-muted">여론조사결과로 보는 대선 지지율 결과와<br>2017 대선닷컴의 럭키박스 결과를 기반으로 한 운빨 결과를 보여드립니다</h3>
                 </div>
-                <div class="col-md-2 col-sm-2 text-center">
-                    <input id="rating-toggle" type="checkbox" checked data-toggle="toggle" data-on="여론조사" data-off="우주의기운" data-onstyle="success" data-offstyle="danger" title="지지율 토글 버튼">
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="btn-group mx-auto" data-toggle="buttons">
+                    <label class="btn btn-outline-success active">
+                        <input type="radio" name="rating-radio" autocomplete="off" value="real" checked>여론조사
+                    </label>
+                    <label class="btn btn-outline-danger">
+                        <input type="radio" name="rating-radio" autocomplete="off" value="lucky">우주의기운
+                    </label>
                 </div>
             </div>
-            <div class="row section-contents">
-                <div id="rating-template">
+            <div id="rating-template" class="row section-contents">
                 {% include 'rating.html' %}
-                </div>
             </div>
-            <div class="col-md-12 text-center">
-                <p id="rating-description">리얼미터가 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터 홈페이지를 참고하세요</p>
+            <div class="col col-12">
+                <p class="text-center" id="rating-description">리얼미터가 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터 홈페이지를 참고하세요</p>
                 <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">그래프 보기</button>
             </div>
         </div>
@@ -143,11 +139,13 @@
 
     <!-- Rating Modal -->
     <div id="rating-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title text-center">여론조사 지지율 차트</h4>
+                    <h5 class="modal-title text-center">여론조사 지지율 차트</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div id="ratingChart"></div>
@@ -159,16 +157,16 @@
 
     <section id="pledge">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">공약 이상형</h2>
                     <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
                 </div>
             </div>
-            <div class="row section-contents">
-                <div class="text-center">
+            <div class="row justify-content-md-center section-contents">
+                <div class="mx-auto">
                     <button id="pledge-test-start-button" class="btn btn-primary">시작하기</button>
-                    <button id="pledge-rank-button" class="btn btn-default">랭킹보기</button>
+                    <button id="pledge-rank-button" class="btn btn-secondary">랭킹보기</button>
                 </div>
             </div>
         </div>
@@ -179,20 +177,26 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title text-center">공약 이상형</h4>
+                    <h5 class="modal-title text-center">공약 이상형</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div id="pledge-test" class="modal-body">
-                    <div class="well well-lg text-center">
+                    <div class="jumbotron text-center">
                         <p id="pledge-test-count" class="pull-right"></p>
                         <p>&nbsp;</p>
                         <h4 id="pledge-test-title"></h4>
                         <p id="pledge-test-contents"></p>
                     </div>
-                    <div class="row text-center">
-                        <button type="button" class="btn btn-success" value="1" onclick="blindNextButtonClick(this);">좋아요</button>
-                        <button type="button" class="btn btn-danger" value="-1" onclick="blindNextButtonClick(this);">싫어요</button>
-                        <button type="button" class="btn btn-default" value="0" onclick="blindNextButtonClick(this);">몰라요</button>
+                    <div class="row justify-content-md-center">
+                        <div class="mx-auto">
+                            <div class="btn-group" role="group" aria-label="공약 이상형 버튼">
+                                <button id="pledge-test-button-1" type="button" class="btn btn-success" value="1">좋아요</button>
+                                <button id="pledge-test-button-2" type="button" class="btn btn-danger" value="-1">싫어요</button>
+                                <button id="pledge-test-button-3" type="button" class="btn btn-secondary" value="0">몰라요</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -204,74 +208,104 @@
 
     <section id="slot" class="light-bg">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">대통령 슬롯 머신</h2>
-                    <h3 class="section-subheading text-muted">도저히 모르겠다 돌려보자 1%의 확률</h3>
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-auto text-center">
+                    <h2 class="section-heading">돌려돌려 대선 돌림판</h2>
+                    <h3 class="section-subheading text-muted">도저히 모르겠다 돌려보자(1%의 확률)</h3>
                 </div>
             </div>
-            <div class="row text-center">
-                <button id="slot-start" type="button" class="btn btn-default">룰렛 돌리기</button>
+            <div class="row justify-content-md-center">
+                <div class="mx-auto">
+                    <button id="slot-start" type="button" class="btn btn-secondary">룰렛 돌리기</button>
+                    <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
+                </div>
             </div>
-            <div class="row section-contents">
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <div id="slot-machine-1" class="randomizeMachine">
-                        <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
+            <div class="row justify-content-md-center section-contents">
+                <div class="col-4">
+                    <div id="slot-machine-1" class="randomizeMachine text-center">
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <div id="slot-machine-2" class="randomizeMachine">
-                        <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
+                <div class="col-4">
+                    <div id="slot-machine-2" class="randomizeMachine text-center">
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-4">
-                    <div id="slot-machine-3" class="randomizeMachine">
-                        <div><img class="img-responsive" src="{% static 'img/candidate/moon.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn1.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/ahn2.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/hong.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/lee.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/nam.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/sim.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/son.jpg' %}"/></div>
-                        <div><img class="img-responsive" src="{% static 'img/candidate/you.jpg' %}"/></div>
+                <div class="col-4">
+                    <div id="slot-machine-3" class="randomizeMachine text-center">
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
+                        <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 슬롯 모달뷰 -->
+    <!-- 슬롯 결과 모달뷰 -->
     <div id="slot-modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title text-center">축하합니다</h4>
+                    <h5 class="modal-title text-center">축하합니다</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <div id="slot-result" class="row text-center">
+                    <div id="slot-result" class="row justify-content-md-center text-center">
                         <!--TODO 여기에 슬롯결과 표시됨-->
                     </div>
-                    <div class="row text-center">
-                        <button id="slot-share" class="btn btn-primary">공유하고 명예의전당 등록</button>
-                        <button class="btn btn-default" data-dismiss="modal">다시하기</button>
+                    <div class="row justify-content-md-center text-center">
+                        <div class="mx-auto">
+                            <button id="slot-share" class="btn btn-primary">공유하고 명예의전당 등록</button>
+                            <button class="btn btn-secondary" data-dismiss="modal">다시하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 명예의 전당 모달뷰 -->
+    <div id="slot-honor-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">멍예의 전당</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="slot-honor-result" class="row text-center">
+                        <div class="col-2">
+                            <h2>문재인</h2>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
+                            <p>#1 asdfasdf 3</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -280,14 +314,14 @@
 
     <section id="lucky">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">럭키박스</h2>
-                    <h3 class="section-subheading text-muted">이름점</h3>
+                    <h3 class="section-subheading text-muted">후보자를 고르는 가장 재밌는 방법</h3>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 text-center lucky-box">
+            <div class="row section-contents">
+                <div class="col-12 col-md-6 text-center lucky-box">
                     <h3>이름점</h3>
                     <p>자음모음 획수로 보는 후보자와의 궁합</p>
                     <div class="input-group">
@@ -297,25 +331,21 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-md-6 text-center lucky-box">
+                <div class="col-12 col-md-6 text-center lucky-box">
                     <h3>별자리점</h3>
                     <p>로맨틱한 밤하늘로 알아보는 궁합</p>
-                    <div class="col-md-2">&nbsp;</div>
-                    <div class="col-md-8 input-group text-center">
-                        <select class="form-control" id="constellation-month" title="월">
+                    <div class="justify-content-md-center text-center mx-auto">
+                        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="constellation-month" title="월">
                             {% for i in "xxxxxxxxxxxx" %}
                             <option value="{{ forloop.counter }}">{{ forloop.counter }}월</option>
                             {% endfor %}
                         </select>
-                        <span class="input-group-addon">-</span>
-                        <select class="form-control col-xs-2" id="constellation-day" title="일">
+                        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="constellation-day" title="일">
                             {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
                             <option value="{{ forloop.counter }}">{{ forloop.counter }}일</option>
                             {% endfor %}
                         </select>
-                        <span class="input-group-btn">
-                            <button id="constellation-button" type="button" class="btn btn-default">확인</button>
-                        </span>
+                        <button id="constellation-button" type="button" class="btn btn-primary">확인</button>
                     </div>
                 </div>
             </div>
@@ -324,20 +354,21 @@
 
     <!-- 이름점 모달뷰 -->
     <div id="lucky-name-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">이름점 결과</h4>
+                    <h5 class="modal-title">이름점 결과</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div id="lucky-name-result" class="row text-center">
                         <!--TODO 여기에 이름점 결과 표시됨-->
                     </div>
-                    <button type="button" class="btn btn-default" id="name_share">공유하기</button>
-                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-secondary" id="name_share">공유하기</button>
+                </div>
                 </div>
             </div>
         </div>
@@ -349,10 +380,10 @@
 
     <section id="press" class="light-bg">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">언론</h2>
-                    <h3 class="section-subheading text-muted">키워드로 보는 대선후보 동향</h3>
+                    <h3 class="section-subheading text-muted">최근 30일간 언론 언급으로 보는 대선후보 이슈정도</h3>
                 </div>
             </div>
             <div class="row section-contents">
@@ -370,14 +401,14 @@
 
     <section id="cheering">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">대선주자 응원하기</h2>
                     <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
                 </div>
             </div>
-            <div class="col-md-12 section-contents input-group">
-                <select class="form-control" id="cheering-candidate" title="대선주자">
+            <div class="row justify-content-md-center section-contents input-group">
+                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="cheering-candidate" title="대선주자">
                     <option>문재인</option>
                     <option>안희정</option>
                     <option>안철수</option>
@@ -386,26 +417,24 @@
                     <option>이재명</option>
                     <option>심상정</option>
                 </select>
-                <span class="input-group-addon">@</span>
                 <input class="form-control" type="text" id="cheering-message" title="메세지">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="post-cheering">등록</button>
+                    <button class="btn btn-secondary" type="button" id="post-cheering">등록</button>
                 </span>
             </div>
-            <table class="col-md-12 table table-hover">
+            <table class="table table-hover">
                 <thead>
-                    <tr>
-                        <th>응원후보</th>
-                        <th>응원메세지</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
+                    <tr class="row m-0">
+                        <th class="col-2">응원후보</th>
+                        <th class="col-6 col-md-8">응원메세지</th>
+                        <th class="col-4 col-md-2">작성자</th>
                     </tr>
                 </thead>
                 <tbody id="cheering-table">
                     {% include 'cheering_table.html' %}
                 </tbody>
                 <tfoot>
-                    <tr><td colspan="4"><button id="cheering-more" class="btn btn-default btn-block">응원메세지 더보기</button></td></tr>
+                    <tr><td colspan="4"><button id="cheering-more" class="btn btn-secondary btn-block">응원메세지 더보기</button></td></tr>
                 </tfoot>
             </table>
         </div>
@@ -413,8 +442,8 @@
 
     <section id="donate" class="light-bg">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">기부하기</h2>
                     <h3 class="section-subheading text-muted">대선후보/대선닷컴에 기부하세요</h3>
                 </div>
@@ -457,20 +486,20 @@
 
     <section id="labs">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">대선닷컴 연구소</h2>
                     <h3 class="section-subheading text-muted">만들다만 기능들을 보고싶다면 클릭하세요</h3>
                 </div>
             </div>
-            <div class="row section-contents text-center">
-                <a href="{% url 'labs' %}" id="labs-button" class="btn btn-info" target="_blank">기타 등등 기능 보러가기</a>
+            <div class="row justify-content-md-center section-contents">
+                <a href="{% url 'labs' %}" id="labs-button" class="btn btn-info mx-auto" target="_blank">기타 등등 기능 보러가기</a>
             </div>
         </div>
     </section>
 
     <footer class="light-bg">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4">
                     <span class="copyright">Copyright &copy; 2017daesun.com 2017</span>
@@ -495,10 +524,11 @@
 <!-- Jquery -->
 <script type="text/javascript" src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 
 <!-- Bootstrap JS -->
-<script type="text/javascript" src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-<script type="text/javascript" src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>-->
 
 <!-- Library -->
 <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
@@ -588,43 +618,42 @@
         });
     });
 
-function blindNextButtonClick(button) {
-    if (blindLoopIndex < 10) {
-        $('#pledge-test-title').html(blindList[blindLoopIndex].title);
-        $('#pledge-test-contents').html(blindList[blindLoopIndex].contents);
-        $('#pledge-test-count').html((blindLoopIndex + 1) + '/' + blindList.length);
-        blindLoopIndex += 1;
-        blindResult.push(button.value);
+    $('#pledge-test-button-1, #pledge-test-button-2, #pledge-test-button-3').click(function () {
+        if (blindLoopIndex < 10) {
+            $('#pledge-test-title').html(blindList[blindLoopIndex].title);
+            $('#pledge-test-contents').html(blindList[blindLoopIndex].contents);
+            $('#pledge-test-count').html((blindLoopIndex + 1) + '/' + blindList.length);
+            blindLoopIndex += 1;
+            blindResult.push(this.value);
+        } else {
+            waitMe($('#pledge'));
+            blindLoopIndex += 1;
+            blindResult.push(this.value);
 
-    } else {
-        waitMe($('#pledge'));
-        blindLoopIndex += 1;
-        blindResult.push(button.value);
-
-        console.log(blindResult);
-        $.ajax({
-                url: '/pledge',
-                cache: false,
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                async: true,
-                type: 'POST',
-                data: JSON.stringify({
-                    'token': blindToken,
-                    'list': blindResult
-                }),
-                success: function(data) {
-                    $('#pledge').waitMe('hide');
-                    $('#pledge-test').html(data);
-                },
-                error: function(data, status, err) {
-                    $('#pledge').waitMe('hide');
-                    console.log(err);
-                }
-            });
-    }
-}
+            console.log(blindResult);
+            $.ajax({
+                    url: '/pledge',
+                    cache: false,
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    async: true,
+                    type: 'POST',
+                    data: JSON.stringify({
+                        'token': blindToken,
+                        'list': blindResult
+                    }),
+                    success: function(data) {
+                        $('#pledge').waitMe('hide');
+                        $('#pledge-test').html(data);
+                    },
+                    error: function(data, status, err) {
+                        $('#pledge').waitMe('hide');
+                        console.log(err);
+                    }
+                });
+        }
+    });
 </script>
 
 <script type="text/javascript">
@@ -701,6 +730,10 @@ function blindNextButtonClick(button) {
         machine2.shuffle(10, onComplete);
         machine3.shuffle(15, onComplete);
 	});
+
+    $('#slot-honor-button').click(function () {
+        $('#slot-honor-modal').modal('show');
+    });
 </script>
 
 <script type="text/javascript">

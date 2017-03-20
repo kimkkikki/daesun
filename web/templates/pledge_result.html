@@ -1,13 +1,13 @@
-<div class="row text-center">
-    <h1>공약 이상형 결과</h1>
-    <p>나와 가장 잘 맞는 후보는 xxx입니다</p>
+<div class="row justify-content-md-center text-center">
+    <h1 class="col-12">공약 이상형 결과</h1>
+    <p class="col-12">나와 가장 잘 맞는 후보는 xxx입니다</p>
     {% for result in results %}
         {{ result.candidate }}
         {{ result.count }}
     {% endfor %}
-    <div>
+    <div class="mx-auto">
         <button type="button" class="btn btn-success">다시하기</button>
         <button type="button" class="btn btn-danger">공유하기</button>
-        <button type="button" class="btn btn-default">랭킹보기</button>
+        <button type="button" class="btn btn-secondary">랭킹보기</button>
     </div>
 </div>
