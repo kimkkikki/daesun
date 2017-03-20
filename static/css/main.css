@@ -147,8 +147,12 @@ ul.social-buttons li a {
     }
 }
 
-.img-responsive {
-    margin: 0 auto;
+.btn-group.special {
+  display: flex;
+}
+
+.special .btn {
+  flex: 1
 }
 
 .light-bg {

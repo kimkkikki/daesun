@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -17,8 +16,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <!--<link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}">-->
-    <!--<link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap-theme.min.css' %}">-->
 
     <!-- Library CSS -->
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
@@ -75,22 +72,12 @@
     </header>
 
     <div role="toolbar">
-        <div class="btn-group btn-group-justified">
-            <div class="btn-group">
-                <button id="calendar-button-1" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">3.10<br>예비후보자 등록</button>
-            </div>
-            <div class="btn-group">
-                <button id="calendar-button-2" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.15 ~ 16<br>후보자 등록</button>
-            </div>
-            <div class="btn-group">
-                <button id="calendar-button-3" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.25 ~ 30<br>재외투표소 투표</button>
-            </div>
-            <div class="btn-group">
-                <button id="calendar-button-4" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.4 ~ 5<br>사전투표소 투표</button>
-            </div>
-            <div class="btn-group">
-                <button id="calendar-button-5" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.9<br>대통령선거</button>
-            </div>
+        <div class="btn-group special" role="group">
+            <button id="calendar-button-1" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">3.10<br>예비후보자 등록</button>
+            <button id="calendar-button-2" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.15 ~ 16<br>후보자 등록</button>
+            <button id="calendar-button-3" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.25 ~ 30<br>재외투표소 투표</button>
+            <button id="calendar-button-4" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.4 ~ 5<br>사전투표소 투표</button>
+            <button id="calendar-button-5" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.9<br>대통령선거</button>
         </div>
     </div>
 
@@ -99,8 +86,10 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title text-center">대선 주요 일정</h4>
+                    <h5 class="modal-title text-center">대선 주요 일정</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div id="calendar"></div>
@@ -142,7 +131,18 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-center">여론조사 지지율 차트</h5>
+                    <!--<h5 class="modal-title text-center">여론조사 지지율 차트</h5>-->
+                    <div class="btn-group mx-auto" data-toggle="buttons">
+                        <label class="btn btn-outline-info active">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="all" checked>전체
+                        </label>
+                        <label class="btn btn-outline-success">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="realmeter">리얼미터
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="gallup">한국갤럽
+                        </label>
+                    </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -500,20 +500,20 @@
 
     <footer class="light-bg">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
+            <div class="row justify-content-md-center">
+                <div class="col-4 mx-auto">
                     <span class="copyright">Copyright &copy; 2017daesun.com 2017</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-4 mx-auto">
                     <ul class="list-inline social-buttons">
-                        <li><a href="https://twitter.com/intent/tweet?text=2017대선닷컴&url=2017daesun.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="http://www.facebook.com/sharer/sharer.php?u=2017daesun.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="https://twitter.com/intent/tweet?text=2017대선닷컴&url=2017daesun.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="http://www.facebook.com/sharer/sharer.php?u=2017daesun.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
                     </ul>
                 </div>
-                <div class="col-md-4">
+                <div class="col-4 mx-auto">
                     <ul class="list-inline quicklinks">
-                        <li><a href="#" target="_blank">이용약관</a></li>
-                        <li><a href="mailto:kimkkikki1@gmail.com">개발자에게 의견보내기</a></li>
+                        <li class="list-inline-item"><a href="#" target="_blank">이용약관</a></li>
+                        <li class="list-inline-item"><a href="mailto:kimkkikki1@gmail.com">개발자에게 의견보내기</a></li>
                     </ul>
                 </div>
             </div>
@@ -524,11 +524,10 @@
 <!-- Jquery -->
 <script type="text/javascript" src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'lib/jquery-ui/jquery-ui.min.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 
 <!-- Bootstrap JS -->
+<script type="text/javascript" src="{% static 'js/tether.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-<!--<script type="text/javascript" src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>-->
 
 <!-- Library -->
 <script type="text/javascript" src="{% static 'js/waitMe.min.js' %}"></script>
@@ -545,7 +544,6 @@
 <script type="text/javascript" src="{% static 'js/Canvas2Image.js' %}"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-
 <!-- Custom JS -->
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/rating.js' %}"></script>
@@ -553,8 +551,6 @@
 <script type="text/javascript" src="{% static 'js/main/press.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
-
-
 
 <script type="text/javascript">
     var isLoadPledgeRank = false;
