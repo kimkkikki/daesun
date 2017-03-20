@@ -33,39 +33,39 @@
 </head>
 
 <body id="page-top">
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> 메뉴 <i class="fa fa-bars"></i>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span> <i class="fa fa-bars"></i> 메뉴
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">2017 대선닷컴</a>
+                <a class="navbar-brand" href="#page-top">2017대선닷컴</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div id="navbar-collapse" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#rating">지지율</a>
+                        <a href="#rating">지지율</a>
                     </li>
                      <li>
-                        <a class="page-scroll" href="#pledge">공약</a>
+                        <a href="#pledge">공약</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#lucky">럭키박스</a>
+                        <a href="#lucky">럭키박스</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#press">언론</a>
+                        <a href="#press">언론</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#cheering">응원메세지</a>
+                        <a href="#cheering">응원메세지</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#donate">기부하기</a>
+                        <a href="#donate">기부하기</a>
                     </li>
                 </ul>
             </div>
@@ -134,7 +134,7 @@
                 {% include 'rating.html' %}
                 </div>
             </div>
-            <div class="row text-center">
+            <div class="col-md-12 text-center">
                 <p id="rating-description">리얼미터가 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터 홈페이지를 참고하세요</p>
                 <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">그래프 보기</button>
             </div>
@@ -376,42 +376,38 @@
                     <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
                 </div>
             </div>
-            <div class="row section-contents">
-                <div class="input-group">
-                    <select class="form-control" id="cheering-candidate" title="대선주자">
-                        <option>문재인</option>
-                        <option>안희정</option>
-                        <option>안철수</option>
-                        <option>남경필</option>
-                        <option>유승민</option>
-                        <option>이재명</option>
-                        <option>심상정</option>
-                    </select>
-                    <span class="input-group-addon">@</span>
-                    <input class="form-control" type="text" id="cheering-message" title="메세지">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" id="post-cheering">등록</button>
-                    </span>
-                </div>
+            <div class="col-md-12 section-contents input-group">
+                <select class="form-control" id="cheering-candidate" title="대선주자">
+                    <option>문재인</option>
+                    <option>안희정</option>
+                    <option>안철수</option>
+                    <option>남경필</option>
+                    <option>유승민</option>
+                    <option>이재명</option>
+                    <option>심상정</option>
+                </select>
+                <span class="input-group-addon">@</span>
+                <input class="form-control" type="text" id="cheering-message" title="메세지">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="post-cheering">등록</button>
+                </span>
             </div>
-            <div class="row">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>응원후보</th>
-                            <th>응원메세지</th>
-                            <th>작성자</th>
-                            <th>작성일</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cheering-table">
-                        {% include 'cheering_table.html' %}
-                    </tbody>
-                    <tfoot>
-                        <tr><td colspan="4"><button id="cheering-more" class="btn btn-default btn-block">응원메세지 더보기</button></td></tr>
-                    </tfoot>
-                </table>
-            </div>
+            <table class="col-md-12 table table-hover">
+                <thead>
+                    <tr>
+                        <th>응원후보</th>
+                        <th>응원메세지</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                </thead>
+                <tbody id="cheering-table">
+                    {% include 'cheering_table.html' %}
+                </tbody>
+                <tfoot>
+                    <tr><td colspan="4"><button id="cheering-more" class="btn btn-default btn-block">응원메세지 더보기</button></td></tr>
+                </tfoot>
+            </table>
         </div>
     </section>
 

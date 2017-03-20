@@ -1,11 +1,12 @@
 {% load staticfiles %}
 {% for rating in ratings %}
 {% if forloop.counter0 == 0 and rating.date %}
-<div class="row">
+<div class="col-md-12">
     <p class="text-center">{{ rating.date|date:"Y.m.d" }}에 발표된 여론조사 결과</p>
 </div>
+<div class="col-md-12">
 {% endif %}
-<div class="col-md-2 col-sm-2 col-xs-2 text-center wow fadeInRight">
+<div class="col-md-2 col-sm-3 col-xs-3 text-center">
     {% if rating.candidate == '문재인' %}
     <img class="img-responsive img-circle" src="{% static 'img/candidate/moon.jpg' %}">
     {% elif rating.candidate == '안철수' %}
@@ -25,7 +26,8 @@
     {% elif rating.candidate == '손학규' %}
     <img class="img-responsive img-circle" src="{% static 'img/candidate/son.jpg' %}">
     {% endif %}
-    <h4>{{ rating.candidate }}</h4>
+    <h5>{{ rating.candidate }}</h5>
     <p>{{ rating.rating }}</p>
 </div>
 {% endfor %}
+</div>
