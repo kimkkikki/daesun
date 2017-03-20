@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
     var ip = '';
     $.get('http://jsonip.com/', function(r){
@@ -7,13 +6,22 @@ $(document).ready(function(){
     });
     var page = 1;
 
+    var cheering_candidate_select = null;
+    var cheering_candidate_button = $('#cheering-candidate-button');
+    $('.cheering-candidate-select').click(function () {
+        cheering_candidate_select = this.value;
+        cheering_candidate_button.html(this.value);
+    });
+
     $('#post-cheering').click(function() {
-        var candidate_select = document.getElementById("cheering-candidate");
-        var candidate = candidate_select.options[candidate_select.selectedIndex].text;
-        var message = document.getElementById("cheering-message").value;
+        if (cheering_candidate_select == null) {
+            alert('대선후보를 선택해야 합니다');
+            return;
+        }
 
+        var message = $("#cheering-message").val();
+        console.log(message);
         waitMe($('#cheering'));
-
         $.ajax({
 			url: '/cheering',
 			headers: {
@@ -22,7 +30,7 @@ $(document).ready(function(){
 		    async: true,
 			type: 'POST',
 			data: JSON.stringify({
-                    'candidate': candidate,
+                    'candidate': cheering_candidate_select,
                     'message': message,
                     'ip': ip
                 }),

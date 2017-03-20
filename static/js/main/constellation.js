@@ -2,9 +2,24 @@
  * Created by kimkkikki on 2017. 3. 19..
  */
 
+var month = null;
+var month_button = $('#constellation-month');
+var day = null;
+var day_button = $('#constellation-day');
+$('.constellation-month').click(function () {
+    month = this.value;
+    month_button.html(this.value + '월');
+});
+$('.constellation-day').click(function () {
+    day = this.value;
+    day_button.html(this.value + '일');
+});
+
 $('#constellation-button').click(function() {
-    var month = $('#constellation-month').val();
-    var day = $('#constellation-day').val();
+    if (month == null || day == null) {
+        alert('생일을 입력해야 합니다');
+        return;
+    }
     waitMe($('#lucky'));
     $.ajax({
             url: '/constellation',

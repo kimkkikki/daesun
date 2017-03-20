@@ -37,7 +37,7 @@
         </button>
         <a class="navbar-brand" href="#page-top">2017대선닷컴</a>
 
-        <div class="collapse navbar-collapse justify-content-md-center" id="navbar-collapse">
+        <div class="collapse navbar-collapse justify-content-center" id="navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#rating">지지율 </a>
@@ -100,13 +100,13 @@
 
     <section id="rating" class="light-bg">
         <div class="container">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">누가누가 잘하나</h2>
                     <h3 class="section-subheading text-muted">여론조사결과로 보는 대선 지지율 결과와<br>2017 대선닷컴의 럭키박스 결과를 기반으로 한 운빨 결과를 보여드립니다</h3>
                 </div>
             </div>
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="btn-group mx-auto" data-toggle="buttons">
                     <label class="btn btn-outline-success active">
                         <input type="radio" name="rating-radio" autocomplete="off" value="real" checked>여론조사
@@ -157,13 +157,13 @@
 
     <section id="pledge">
         <div class="container">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">공약 이상형</h2>
                     <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
                 </div>
             </div>
-            <div class="row justify-content-md-center section-contents">
+            <div class="row justify-content-center section-contents">
                 <div class="mx-auto">
                     <button id="pledge-test-start-button" class="btn btn-primary">시작하기</button>
                     <button id="pledge-rank-button" class="btn btn-secondary">랭킹보기</button>
@@ -189,7 +189,7 @@
                         <h4 id="pledge-test-title"></h4>
                         <p id="pledge-test-contents"></p>
                     </div>
-                    <div class="row justify-content-md-center">
+                    <div class="row justify-content-center">
                         <div class="mx-auto">
                             <div class="btn-group" role="group" aria-label="공약 이상형 버튼">
                                 <button id="pledge-test-button-1" type="button" class="btn btn-success" value="1">좋아요</button>
@@ -208,19 +208,19 @@
 
     <section id="slot" class="light-bg">
         <div class="container">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">돌려돌려 대선 돌림판</h2>
                     <h3 class="section-subheading text-muted">도저히 모르겠다 돌려보자(1%의 확률)</h3>
                 </div>
             </div>
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="mx-auto">
                     <button id="slot-start" type="button" class="btn btn-secondary">룰렛 돌리기</button>
                     <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
                 </div>
             </div>
-            <div class="row justify-content-md-center section-contents">
+            <div class="row justify-content-center section-contents">
                 <div class="col-4">
                     <div id="slot-machine-1" class="randomizeMachine text-center">
                         <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
@@ -275,10 +275,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div id="slot-result" class="row justify-content-md-center text-center">
+                    <div id="slot-result" class="row justify-content-center text-center">
                         <!--TODO 여기에 슬롯결과 표시됨-->
                     </div>
-                    <div class="row justify-content-md-center text-center">
+                    <div class="row justify-content-center text-center">
                         <div class="mx-auto">
                             <button id="slot-share" class="btn btn-primary">공유하고 명예의전당 등록</button>
                             <button class="btn btn-secondary" data-dismiss="modal">다시하기</button>
@@ -294,7 +294,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-center">멍예의 전당</h5>
+                    <h5 class="modal-title text-center">명예의 전당</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -314,13 +314,13 @@
 
     <section id="lucky">
         <div class="container">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">럭키박스</h2>
                     <h3 class="section-subheading text-muted">후보자를 고르는 가장 재밌는 방법</h3>
                 </div>
             </div>
-            <div class="row section-contents">
+            <div class="row justify-content-center section-contents">
                 <div class="col-12 col-md-6 text-center lucky-box">
                     <h3>이름점</h3>
                     <p>자음모음 획수로 보는 후보자와의 궁합</p>
@@ -334,18 +334,26 @@
                 <div class="col-12 col-md-6 text-center lucky-box">
                     <h3>별자리점</h3>
                     <p>로맨틱한 밤하늘로 알아보는 궁합</p>
-                    <div class="justify-content-md-center text-center mx-auto">
-                        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="constellation-month" title="월">
-                            {% for i in "xxxxxxxxxxxx" %}
-                            <option value="{{ forloop.counter }}">{{ forloop.counter }}월</option>
-                            {% endfor %}
-                        </select>
-                        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="constellation-day" title="일">
-                            {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
-                            <option value="{{ forloop.counter }}">{{ forloop.counter }}일</option>
-                            {% endfor %}
-                        </select>
-                        <button id="constellation-button" type="button" class="btn btn-primary">확인</button>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-btn">
+                            <button id="constellation-month" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">몇월</button>
+                            <div class="dropdown-menu">
+                                {% for i in "xxxxxxxxxxxx" %}
+                                <button class="dropdown-item constellation-month" value="{{ forloop.counter }}">{{ forloop.counter }}월</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="input-group-btn">
+                            <button id="constellation-day" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">몇일</button>
+                            <div class="dropdown-menu">
+                                {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
+                                <button class="dropdown-item constellation-day" value="{{ forloop.counter }}">{{ forloop.counter }}일</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <span class="input-group-btn">
+                            <button id="constellation-button" type="button" class="btn btn-primary">확인</button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -380,7 +388,7 @@
 
     <section id="press" class="light-bg">
         <div class="container">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">언론</h2>
                     <h3 class="section-subheading text-muted">최근 30일간 언론 언급으로 보는 대선후보 이슈정도</h3>
@@ -401,22 +409,26 @@
 
     <section id="cheering">
         <div class="container">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">대선주자 응원하기</h2>
                     <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
                 </div>
             </div>
-            <div class="row justify-content-md-center section-contents input-group">
-                <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="cheering-candidate" title="대선주자">
-                    <option>문재인</option>
-                    <option>안희정</option>
-                    <option>안철수</option>
-                    <option>남경필</option>
-                    <option>유승민</option>
-                    <option>이재명</option>
-                    <option>심상정</option>
-                </select>
+            <div class="input-group justify-content-center">
+                <div class="input-group-btn">
+                    <button id="cheering-candidate-button" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">대선후보</button>
+                    <div class="dropdown-menu">
+                        <button class="dropdown-item cheering-candidate-select" value="문재인">문재인</button>
+                        <button class="dropdown-item cheering-candidate-select" value="안희정">안희정</button>
+                        <button class="dropdown-item cheering-candidate-select" value="안철수">안철수</button>
+                        <button class="dropdown-item cheering-candidate-select" value="남경필">남경필</button>
+                        <button class="dropdown-item cheering-candidate-select" value="유승민">유승민</button>
+                        <button class="dropdown-item cheering-candidate-select" value="이재명">이재명</button>
+                        <button class="dropdown-item cheering-candidate-select" value="심상정">심상정</button>
+                        <button class="dropdown-item cheering-candidate-select" value="홍준표">홍준표</button>
+                    </div>
+                </div>
                 <input class="form-control" type="text" id="cheering-message" title="메세지">
                 <span class="input-group-btn">
                     <button class="btn btn-secondary" type="button" id="post-cheering">등록</button>
@@ -442,7 +454,7 @@
 
     <section id="donate" class="light-bg">
         <div class="container">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">기부하기</h2>
                     <h3 class="section-subheading text-muted">대선후보/대선닷컴에 기부하세요</h3>
@@ -486,13 +498,13 @@
 
     <section id="labs">
         <div class="container">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">대선닷컴 연구소</h2>
                     <h3 class="section-subheading text-muted">만들다만 기능들을 보고싶다면 클릭하세요</h3>
                 </div>
             </div>
-            <div class="row justify-content-md-center section-contents">
+            <div class="row justify-content-center section-contents">
                 <a href="{% url 'labs' %}" id="labs-button" class="btn btn-info mx-auto" target="_blank">기타 등등 기능 보러가기</a>
             </div>
         </div>
@@ -500,17 +512,17 @@
 
     <footer class="light-bg">
         <div class="container-fluid">
-            <div class="row justify-content-md-center">
-                <div class="col-4 mx-auto">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-4 mx-auto">
                     <span class="copyright">Copyright &copy; 2017daesun.com 2017</span>
                 </div>
-                <div class="col-4 mx-auto">
+                <div class="col-12 col-md-4 mx-auto">
                     <ul class="list-inline social-buttons">
                         <li class="list-inline-item"><a href="https://twitter.com/intent/tweet?text=2017대선닷컴&url=2017daesun.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
                         <li class="list-inline-item"><a href="http://www.facebook.com/sharer/sharer.php?u=2017daesun.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
                     </ul>
                 </div>
-                <div class="col-4 mx-auto">
+                <div class="col-12 col-md-4 mx-auto">
                     <ul class="list-inline quicklinks">
                         <li class="list-inline-item"><a href="#" target="_blank">이용약관</a></li>
                         <li class="list-inline-item"><a href="mailto:kimkkikki1@gmail.com">개발자에게 의견보내기</a></li>
