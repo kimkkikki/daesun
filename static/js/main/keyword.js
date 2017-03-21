@@ -59,6 +59,10 @@ function loadKeyword(date) {
                     issueKeywords[date] = data;
                     $('#keyword-body').html(data);
                     $('#keyword').waitMe('hide');
+
+                    $('.keyword').click(function () {
+                        keywordClick(this.title);
+                    });
                 },
                 error: function(data, status, err) {
                     console.log(err);
@@ -66,4 +70,29 @@ function loadKeyword(date) {
                 }
             });
     }
+}
+
+function keywordClick(data) {
+    console.log(data);
+    waitMe($('#keyword'));
+    $.ajax({
+            url: '/news',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            type: 'POST',
+			data: JSON.stringify({
+                    'keywords': data
+                }),
+            success: function(data) {
+                $('#keyword-modal-body').html(data);
+                var keywordModal = $('#keyword-modal');
+                keywordModal.modal('show');
+                $('#keyword').waitMe('hide');
+            },
+            error: function(data, status, err) {
+                console.log(err);
+                $('#keyword').waitMe('hide');
+            }
+        });
 }

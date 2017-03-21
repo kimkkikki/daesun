@@ -9,8 +9,7 @@ from datetime import datetime
 def labs(request):
     book_list = views.get_shop()
     # book_list = []
-    issue_list = views.get_issue_keyword_list()
-    return render(request, 'labs.html', {'book_list': book_list, 'issue_list': issue_list})
+    return render(request, 'labs.html', {'book_list': book_list})
 
 
 def main(request):
@@ -93,3 +92,10 @@ def keyword(request):
         return render_to_response('keyword.html', {'results': result[0]['items']})
     else:
         return render_to_response('keyword.html', {'results': []})
+
+
+@csrf_exempt
+def news(request):
+    if request.method == 'POST':
+        news_list = views.get_news_list(request)
+        return render_to_response('keyword_modal.html', {'results': news_list})

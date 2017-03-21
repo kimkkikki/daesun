@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^slot$', views.slot, name='slot'),
     url(r'^luckyname$', views.luckyname, name='luckyname'),
     url(r'^keyword$', views.keyword, name='keyword'),
+    url(r'^news$', views.news, name='news'),
 ]

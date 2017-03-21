@@ -24,9 +24,9 @@
         <img class="img-fluid rounded" src="{% static 'img/National_Assembly.gif' %}">
         {% endif %}
     </div>
-    <div class="col-10 col-md-11">
+    <div class="col-10 col-md-11 keyword-item">
         {% for keyword in result.keywords %}
-            <kbd>{{ keyword }}</kbd>
+            <a href="javascript:void(0)" class="keyword" title="{{ result.candidate }} {{ keyword }}"><kbd>{{ keyword }}</kbd></a>
         {% endfor %}
     </div>
 </div>
