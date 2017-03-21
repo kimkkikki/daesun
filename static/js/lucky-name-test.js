@@ -21,38 +21,34 @@ $(document).ready(function(){
 
 
     $('#name_share').click(function(){
-        html2canvas($("#lucky-name-result-detail"), {
+        html2canvas($("#lucky-name-result"), {
             onrendered: function(canvas) {
-                theCanvas = canvas;
-                document.body.appendChild(canvas);
-
-
+                var image = canvas.toDataURL("image/png");
+                //console.log(image)
                 // Convert and download as image
-                var image = Canvas2Image.convertToImage(canvas);
-
+                //var image = Canvas2Image.convertToImage(canvas);
+                //console.log(image.currentSrc)
+                //$("#img-out").append(canvas);
                 //var image = canvas.toDataURL();
 
                 $.ajax({
                     url:'/apis/upload',
                     headers: {
-                        'Content-Type':'multipart/form-data'
+                        'Content-Type':'application/json'
                     },
                     data: JSON.stringify({
-                        'image': image.currentSrc
+                        'image': image
                     }),
                     type:'POST',
                     success:function(data){
-
+                        console.log(data)
                         kakaotalk(data)
                     },
                     error: function(data, status, err) {
                         console.log(err);
                     }
                 });
-
-
-
-            }
+            },
         });
     });
 
