@@ -133,8 +133,7 @@ ul.social-buttons li a {
 .lucky-box {
     padding-top:40px;
     padding-bottom:40px;
-    border-style:dashed;
-    border-width:1px;
+    border: 1px dashed;
 }
 
 .randomizeMachine {
@@ -162,4 +161,12 @@ ul.social-buttons li a {
 .blind-test {
     height: 400px;
     overflow-y: scroll;
+}
+
+.keyword-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.keyword-date {
+    margin-bottom: 30px;
 }

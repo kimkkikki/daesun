@@ -486,8 +486,11 @@ def get_candidate_sns_api(request):
         return Http404
 
 
-def get_issue_keyword_list():
-    issue_keywords = IssueKeyword.objects.all().order_by('-date')
+def get_issue_keyword_list(date):
+    if date is None:
+        issue_keywords = IssueKeyword.objects.all().order_by('-date')
+    else:
+        issue_keywords = IssueKeyword.objects.filter(date=date)
 
     results = []
     temps = []
@@ -517,7 +520,7 @@ def get_issue_keyword_list():
 
 def get_issue_keyword_api(request):
     if request.method == 'GET':
-        return JSONResponse(get_issue_keyword_list())
+        return JSONResponse(get_issue_keyword_list(request.GET.get('date', None)))
     else:
         return Http404
 

@@ -461,7 +461,25 @@
         </div>
     </section>
 
-    <section id="cheering">
+    <section id="keyword">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-auto text-center">
+                    <h2 class="section-heading">데일리 뉴스 요약</h2>
+                    <h3 class="section-subheading text-muted">매일매일의 뉴스를 요약하여 뽑은 키워드 입니다</h3>
+                </div>
+            </div>
+            <div class="row justify-content-around align-items-center section-contents keyword-date">
+                <button type="button" class="btn btn-secondary keyword-date-button" value="yesterday">어제</button>
+                <h5 id="keyword-date"></h5>
+                <button type="button" class="btn btn-secondary keyword-date-button" value="tomorrow" id="keyword-tomorrow-button" disabled>내일</button>
+            </div>
+            <div id="keyword-body">
+            </div>
+        </div>
+    </section>
+
+    <section id="cheering" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
@@ -508,7 +526,7 @@
         </div>
     </section>
 
-    <section id="donate" class="light-bg">
+    <section id="donate">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
@@ -552,7 +570,7 @@
         </div>
     </section>
 
-    <section id="labs">
+    <section id="labs" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
@@ -566,7 +584,7 @@
         </div>
     </section>
 
-    <footer class="light-bg">
+    <footer>
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-4 mx-auto">
@@ -619,6 +637,7 @@
 <script type="text/javascript" src="{% static 'js/main/press.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/keyword.js' %}"></script>
 
 <script type="text/javascript">
     var isLoadPledgeRank = false;
@@ -860,26 +879,6 @@
             });
         }
     });
-</script>
-
-<script type="text/javascript">
-//    TODO: 이슈키워드 쓰고싶다...
-//    var issueKeywords;
-//    // daily issue keywords
-//    $.ajax({
-//            url: '/apis/issue',
-//            headers: {
-//                'Content-Type':'application/json'
-//            },
-//            type: 'GET',
-//            success: function(data) {
-//                issueKeywords = data;
-//
-//            },
-//            error: function(data, status, err) {
-//                console.log(err);
-//            }
-//        });
 </script>
 
 </html>
