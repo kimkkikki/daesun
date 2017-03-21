@@ -32,7 +32,6 @@ var pressGroupDict = {'all': null, 'asiae': null, 'chosun': null, 'donga': null,
 var dailyChart, groupChart;
 
 $('#press-select').change(function () {
-    console.log(this.value);
     var daily = pressDailyDict[this.value];
     var group = pressGroupDict[this.value];
 

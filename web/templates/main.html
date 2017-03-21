@@ -19,7 +19,7 @@
 
     <!-- Library CSS -->
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
     <link rel="stylesheet" href="{% static 'lib/vis/dist/vis.min.css' %}">
     <link rel="stylesheet" href="{% static 'lib/c3/c3.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/fullcalendar.min.css'%}">
@@ -202,6 +202,26 @@
         </div>
     </div>
 
+    <div id="pledge-result-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">공약 이상형 결과</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="pledge-result"></div>
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">다시하기</button>
+                        <button type="button" class="btn btn-danger">공유하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Pledge Rank Modal -->
     {% include 'pledge_rank_modal.html' %}
 
@@ -220,7 +240,7 @@
                 </div>
             </div>
             <div class="row justify-content-center section-contents">
-                <div class="col-4">
+                <div class="col-4" data-aos="fade-right">
                     <div id="slot-machine-1" class="randomizeMachine text-center">
                         <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
                         <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
@@ -233,7 +253,7 @@
                         <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4" data-aos="fade-up" data-aos-delay="250">
                     <div id="slot-machine-2" class="randomizeMachine text-center">
                         <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
                         <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
@@ -246,7 +266,7 @@
                         <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4" data-aos="fade-left" data-aos-delay="500">
                     <div id="slot-machine-3" class="randomizeMachine text-center">
                         <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
                         <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
@@ -260,7 +280,7 @@
                     </div>
                 </div>
             </div>
-            <div id="slot-machine-count" class="row justify-content-center"></div>
+            <div id="slot-machine-count" class="row justify-content-center" data-toggle="tooltip" data-placement="bottom" title="아까비.. 다시 돌릴래요?"></div>
         </div>
     </section>
 
@@ -585,7 +605,7 @@
 <script type="text/javascript" src="{% static 'lib/moment/min/moment.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/fullcalendar.min.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.slotmachine.min.js'%}"></script>
-<script type="text/javascript" src="{% static 'js/main/wow.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
@@ -688,8 +708,11 @@
                         'list': blindResult
                     }),
                     success: function(data) {
-                        $('#pledge-test-modal').waitMe('hide');
-                        $('#pledge-test').html(data);
+                        var testModal = $('#pledge-test-modal');
+                        testModal.waitMe('hide');
+                        testModal.modal('hide');
+                        $('#pledge-result').html(data);
+                        $('#pledge-result-modal').modal('show');
                     },
                     error: function(data, status, err) {
                         $('#pledge-test-modal').waitMe('hide');
@@ -764,7 +787,7 @@
                             }
                         });
                 } else {
-
+                    $('#slot-machine-count').tooltip('show');
                 }
                 break;
         }
@@ -774,6 +797,7 @@
         machine1.shuffle(5, onComplete);
         machine2.shuffle(10, onComplete);
         machine3.shuffle(15, onComplete);
+        $('#slot-machine-count').tooltip('hide');
 	});
 
     $('#slot-honor-button').click(function () {

@@ -2,7 +2,6 @@
 {% for result in results %}
     {% if forloop.counter0 == 0 %}
 <div class="row text-center">
-    <h3 class="col-12">공약 이상형 결과</h3>
     <p class="col-12">나와 가장 잘 맞는 후보는 {{ result.candidate }}입니다</p>
 </div>
 <div class="row justify-content-center">
@@ -67,11 +66,5 @@
         {% endif %}
     {% endif %}
 {% endfor %}
-    </div>
-</div>
-<div class="row justify-content-center">
-    <div class="mx-auto">
-        <button type="button" class="btn btn-success">다시하기</button>
-        <button type="button" class="btn btn-danger">공유하기</button>
     </div>
 </div>
