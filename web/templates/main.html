@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 
-<body id="page-top">
+<body id="page-top" data-spy="scroll" data-target=".navbar">
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -464,7 +464,42 @@
         </div>
     </section>
 
-    <section id="cheering">
+    <section id="keyword">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-auto text-center">
+                    <h2 class="section-heading">데일리 뉴스 요약</h2>
+                    <h3 class="section-subheading text-muted">매일매일의 뉴스를 요약하여 뽑은 키워드 입니다<br>키워드를 선택하면 관련 뉴스를 바로 볼 수 있어요</h3>
+                </div>
+            </div>
+            <div class="row justify-content-around align-items-center section-contents keyword-date">
+                <button type="button" class="btn btn-secondary keyword-date-button" value="yesterday">어제</button>
+                <h5 id="keyword-date"></h5>
+                <button type="button" class="btn btn-secondary keyword-date-button" value="tomorrow" id="keyword-tomorrow-button" disabled>내일</button>
+            </div>
+            <div id="keyword-body">
+            </div>
+        </div>
+    </section>
+
+    <!-- 키워드 모달뷰 -->
+    <div id="keyword-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">키워드 뉴스 리스트</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="keyword-modal-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="cheering" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
@@ -511,7 +546,7 @@
         </div>
     </section>
 
-    <section id="donate" class="light-bg">
+    <section id="donate">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
@@ -555,7 +590,7 @@
         </div>
     </section>
 
-    <section id="labs">
+    <section id="labs" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-auto text-center">
@@ -569,7 +604,7 @@
         </div>
     </section>
 
-    <footer class="light-bg">
+    <footer>
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-4 mx-auto">
@@ -622,6 +657,7 @@
 <script type="text/javascript" src="{% static 'js/main/press.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/keyword.js' %}"></script>
 
 <script type="text/javascript">
     var isLoadPledgeRank = false;
@@ -863,26 +899,6 @@
             });
         }
     });
-</script>
-
-<script type="text/javascript">
-//    TODO: 이슈키워드 쓰고싶다...
-//    var issueKeywords;
-//    // daily issue keywords
-//    $.ajax({
-//            url: '/apis/issue',
-//            headers: {
-//                'Content-Type':'application/json'
-//            },
-//            type: 'GET',
-//            success: function(data) {
-//                issueKeywords = data;
-//
-//            },
-//            error: function(data, status, err) {
-//                console.log(err);
-//            }
-//        });
 </script>
 
 </html>

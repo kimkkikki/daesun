@@ -2,6 +2,23 @@ AOS.init();
 
 $('[data-toggle="tooltip"]').tooltip();
 
+$(".navbar ul li a[href^='#']").on('click', function(e) {
+   e.preventDefault();
+
+   var hash = this.hash;
+
+   // animate
+   $('html, body').animate({
+       scrollTop: $(hash).offset().top
+     }, 300, function(){
+
+       // when done, add hash to url
+       // (default click behaviour)
+       window.location.hash = hash;
+     });
+
+});
+
 function waitMe(element) {
     element.waitMe({
         effect : 'facebook',

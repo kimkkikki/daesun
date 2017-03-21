@@ -13,7 +13,7 @@ $('#press').waypoint(function() {
         createPressChart();
     }
 });
-$('#donate').waypoint(function() {
+$('#keyword').waypoint(function() {
     if (!isLoadChart) {
         createPressChart();
     }

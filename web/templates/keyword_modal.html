@@ -1,0 +1,9 @@
+{% load staticfiles %}
+<div class="row">
+{% for result in results%}
+    <div class="col-3">{{ result.cp }}</div>
+    <div class="col-9">
+        <a href="{{ result.link }}">{{ result.title }}</a>
+    </div>
+{% endfor %}
+</div>

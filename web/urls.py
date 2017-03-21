@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^pledge$', views.pledge, name='pledge'),
     url(r'^constellation$', views.constellation_chemistry, name='constellation'),
     url(r'^slot$', views.slot, name='slot'),
-    url(r'^luckyname$', views.luckyname, name='slot'),
-
+    url(r'^luckyname$', views.luckyname, name='luckyname'),
+    url(r'^keyword$', views.keyword, name='keyword'),
+    url(r'^news$', views.news, name='news'),
 ]

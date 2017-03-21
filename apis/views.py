@@ -43,6 +43,24 @@ def save_lucky_rating(candidate, type, input):
     lucky_rating.save()
 
 
+def get_news_list(request):
+    body = JSONParser().parse(request)
+    keywords = body.get('keywords', None)
+    keywords = keywords.split(' ')
+    q_list = []
+    for keyword in keywords:
+        if keyword != 'ALL':
+            q_list.append(Q(title__contains=keyword))
+
+    query = q_list.pop()
+    for item in q_list:
+        query &= item
+
+    news_list = Scraps.objects.filter(query).order_by('-created_at')[0:10]
+
+    return news_list
+
+
 @cache_page(60 * 10)
 def cp_group(request):
     start_date = request.GET.get('start_date', None)
@@ -488,8 +506,11 @@ def get_candidate_sns_api(request):
         return Http404
 
 
-def get_issue_keyword_list():
-    issue_keywords = IssueKeyword.objects.all().order_by('-date')
+def get_issue_keyword_list(date):
+    if date is None:
+        issue_keywords = IssueKeyword.objects.all().order_by('-date')
+    else:
+        issue_keywords = IssueKeyword.objects.filter(date=date)
 
     results = []
     temps = []
@@ -519,7 +540,7 @@ def get_issue_keyword_list():
 
 def get_issue_keyword_api(request):
     if request.method == 'GET':
-        return JSONResponse(get_issue_keyword_list())
+        return JSONResponse(get_issue_keyword_list(request.GET.get('date', None)))
     else:
         return Http404
 
