@@ -5,7 +5,7 @@
     <p class="text-center">{{ rating.date|date:"Y.m.d" }}에 발표된 여론조사 결과</p>
 </div>
 {% endif %}
-<div class="col-3 col-md-2 text-center">
+<div class="col-3 col-md-2 text-center wow fadeInUp">
     {% if rating.candidate == '문재인' %}
     <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
     {% elif rating.candidate == '안철수' %}
@@ -25,6 +25,6 @@
     {% elif rating.candidate == '손학규' %}
     <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
     {% endif %}
-    <p>{{ rating.candidate }}<br>{{ rating.rating }}</p>
+    <p>{{ rating.candidate }}<br>{{ rating.rating }}%</p>
 </div>
 {% endfor %}

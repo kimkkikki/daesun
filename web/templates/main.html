@@ -183,11 +183,10 @@
                     </button>
                 </div>
                 <div id="pledge-test" class="modal-body">
-                    <div class="jumbotron text-center">
+                    <div class="jumbotron justify-content-center blind-test">
                         <p id="pledge-test-count" class="pull-right"></p>
-                        <p>&nbsp;</p>
-                        <h4 id="pledge-test-title"></h4>
-                        <p id="pledge-test-contents"></p>
+                        <h4 id="pledge-test-title" class="text-center"></h4>
+                        <p id="pledge-test-contents" class="text-center"></p>
                     </div>
                     <div class="row justify-content-center">
                         <div class="mx-auto">
@@ -671,7 +670,7 @@
             blindLoopIndex += 1;
             blindResult.push(this.value);
         } else {
-            waitMe($('#pledge'));
+            waitMe($('#pledge-test-modal'));
             blindLoopIndex += 1;
             blindResult.push(this.value);
 
@@ -689,11 +688,11 @@
                         'list': blindResult
                     }),
                     success: function(data) {
-                        $('#pledge').waitMe('hide');
+                        $('#pledge-test-modal').waitMe('hide');
                         $('#pledge-test').html(data);
                     },
                     error: function(data, status, err) {
-                        $('#pledge').waitMe('hide');
+                        $('#pledge-test-modal').waitMe('hide');
                         console.log(err);
                     }
                 });

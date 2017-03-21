@@ -1,13 +1,77 @@
-<div class="row justify-content-md-center text-center">
-    <h1 class="col-12">공약 이상형 결과</h1>
-    <p class="col-12">나와 가장 잘 맞는 후보는 xxx입니다</p>
-    {% for result in results %}
-        {{ result.candidate }}
-        {{ result.count }}
-    {% endfor %}
+{% load staticfiles %}
+{% for result in results %}
+    {% if forloop.counter0 == 0 %}
+<div class="row text-center">
+    <h3 class="col-12">공약 이상형 결과</h3>
+    <p class="col-12">나와 가장 잘 맞는 후보는 {{ result.candidate }}입니다</p>
+</div>
+<div class="row justify-content-center">
+    <div class="col-6 text-center">
+        {% if result.candidate == '문재인' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
+        {% elif result.candidate == '안철수' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}">
+        {% elif result.candidate == '이재명' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}">
+        {% elif result.candidate == '안희정' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}">
+        {% elif result.candidate == '심상정' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}">
+        {% elif result.candidate == '유승민' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}">
+        {% elif result.candidate == '남경필' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}">
+        {% elif result.candidate == '홍준표' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}">
+        {% elif result.candidate == '손학규' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
+        {% endif %}
+        <p>{{ result.candidate }}</p>
+        <div class="row align-items-center text-center">
+            <h5 class="col-12">{{ result.count }}개 일치함</h5>
+            {% for title in result.titles %}
+            <p class="col-12">{{ title }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-6">
+    {% else %}
+        {% if forloop.counter0 < 3 %}
+        <div class="row align-items-center">
+            <div class="col-6 text-center">
+                {% if result.candidate == '문재인' %}
+                <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
+                {% elif result.candidate == '안철수' %}
+                <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}">
+                {% elif result.candidate == '이재명' %}
+                <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}">
+                {% elif result.candidate == '안희정' %}
+                <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}">
+                {% elif result.candidate == '심상정' %}
+                <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}">
+                {% elif result.candidate == '유승민' %}
+                <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}">
+                {% elif result.candidate == '남경필' %}
+                <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}">
+                {% elif result.candidate == '홍준표' %}
+                <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}">
+                {% elif result.candidate == '손학규' %}
+                <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
+                {% endif %}
+                <p>{{ result.candidate }}</p>
+            </div>
+            <div class="col-6 text-center">
+                <h5>{{ result.count }}개 일치함</h5>
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+    </div>
+</div>
+<div class="row justify-content-center">
     <div class="mx-auto">
         <button type="button" class="btn btn-success">다시하기</button>
         <button type="button" class="btn btn-danger">공유하기</button>
-        <button type="button" class="btn btn-secondary">랭킹보기</button>
     </div>
 </div>
