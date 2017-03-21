@@ -172,3 +172,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     'static/',
 ]
+
+MEDIA_ROOT = '/Users/songminjeong/share/'
+MEDIA_URL = '/share/'
