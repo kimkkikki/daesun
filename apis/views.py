@@ -227,6 +227,7 @@ def approval_rating_list(cp, is_last):
 
 
 @cache_page(60 * 10)
+@csrf_exempt
 def approval_rating(request):
     return JSONResponse(approval_rating_list(request.GET.get('cp', None), False))
 
@@ -419,7 +420,15 @@ def get_candidate_sns_list():
 
                         if title.find('…') > 0:
                             continue
-                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'),
+
+                        if hour > 23:
+                            hour -= 24
+                            date = datetime(2017, month, day, hour, minute)
+                            date += timedelta(days=1)
+                        else:
+                            date = datetime(2017, month, day, hour, minute)
+
+                        schedules.append({'start': date.strftime('%Y-%m-%d %H:%M'),
                                           'title': status.user.name + ', ' + title, 'color': candidate_dict[status.user.name]})
 
                 if hour_format_2.findall(contents) is not None:
@@ -436,7 +445,15 @@ def get_candidate_sns_list():
                         title = time.group(time.lastindex).replace('에는', '')
                         if title.find('…') > 0:
                             continue
-                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'),
+
+                        if hour > 23:
+                            hour -= 24
+                            date = datetime(2017, month, day, hour, minute)
+                            date += timedelta(days=1)
+                        else:
+                            date = datetime(2017, month, day, hour, minute)
+
+                        schedules.append({'start': date.strftime('%Y-%m-%d %H:%M'),
                                           'title': status.user.name + ', ' + title, 'color': candidate_dict[status.user.name]})
 
                 continue

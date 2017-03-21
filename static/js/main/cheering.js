@@ -1,8 +1,12 @@
 $(document).ready(function(){
     var ip = '';
-    $.get('http://jsonip.com/', function(r){
-        var splits = r.ip.split('.');
-        ip = splits[0] + '.' + splits[1] + '.' + '***' + '.' + splits[3];
+    $.ajax({
+        url: 'http://jsonip.com/',
+        dataType: "jsonp",
+        success: function (data) {
+            var splits = data.ip.split('.');
+            ip = splits[0] + '.' + splits[1] + '.' + '***' + '.' + splits[3];
+        }
     });
     var page = 1;
 
