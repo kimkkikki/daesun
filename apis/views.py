@@ -73,9 +73,13 @@ def cp_group(request):
 
 @cache_page(60 * 10)
 def cp_daily(request):
+    cp = request.GET.get('cp', None)
     candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                         Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
                         Q(title__contains='남경필'))
+
+    if cp is not None:
+        candidate_q_list = (candidate_q_list & Q(cp=cp))
 
     daily_list = Scraps.objects.filter(Q(created_at__gte=datetime.now() - timedelta(days=30)) & candidate_q_list).extra({'date': 'date(created_at)'}).values(
         'date').annotate(

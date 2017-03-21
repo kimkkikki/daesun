@@ -19,6 +19,72 @@ $('#donate').waypoint(function() {
     }
 });
 
+var pressDailyDict = {'all': null, 'asiae': null, 'chosun': null, 'donga': null, 'edaily': null, 'hani': null, 'heraldcorp': null,
+    'ichannela': null, 'joins': null, 'jtbc': null, 'kbs': null, 'khan': null, 'kmib': null, 'mbc': null, 'mbn': null,
+    'mk': null, 'mt': null, 'munhwa': null, 'news1': null, 'newsis': null, 'ohmynews': null, 'sbs': null, 'sedaily': null,
+    'segye': null, 'seoul': null, 'sisain': null, 'tvchosun': null, 'yonhap': null, 'ytn': null};
+
+var pressGroupDict = {'all': null, 'asiae': null, 'chosun': null, 'donga': null, 'edaily': null, 'hani': null, 'heraldcorp': null,
+    'ichannela': null, 'joins': null, 'jtbc': null, 'kbs': null, 'khan': null, 'kmib': null, 'mbc': null, 'mbn': null,
+    'mk': null, 'mt': null, 'munhwa': null, 'news1': null, 'newsis': null, 'ohmynews': null, 'sbs': null, 'sedaily': null,
+    'segye': null, 'seoul': null, 'sisain': null, 'tvchosun': null, 'yonhap': null, 'ytn': null};
+
+var dailyChart, groupChart;
+
+$('#press-select').change(function () {
+    console.log(this.value);
+    var daily = pressDailyDict[this.value];
+    var group = pressGroupDict[this.value];
+
+    groupChart.load({
+        columns: group
+    });
+    if (daily == null) {
+        var value = this.value;
+        waitMe($('#press'));
+        $.ajax({
+            url: '/apis/cp/daily?cp=' + value,
+            headers: {
+                'Content-Type':'application/json'
+            },
+            type: 'GET',
+            success: function(data) {
+                $('#press').waitMe('hide');
+                var cp_daily_result = dailyDataParsing(data);
+                pressDailyDict[value] = cp_daily_result;
+                dailyChart.load({
+                    columns: cp_daily_result
+                });
+            },
+            error: function(data, status, err) {
+                $('#press').waitMe('hide');
+                console.log(err);
+            }
+        });
+    } else {
+        dailyChart.load({
+            columns: daily
+        });
+    }
+});
+
+function dailyDataParsing(data) {
+    var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
+    for (var i = 0; i < data.length; i++) {
+        var obj = data[i];
+        result_list[0].push(obj.date);
+        result_list[1].push(obj.moon);
+        result_list[2].push(obj.ahn);
+        result_list[3].push(obj.sim);
+        result_list[4].push(obj.nam);
+        result_list[5].push(obj.hee);
+        result_list[6].push(obj.lee);
+        result_list[7].push(obj.you);
+    }
+
+    return result_list
+}
+
 function createPressChart() {
     var count = 0;
     isLoadChart = true;
@@ -31,20 +97,10 @@ function createPressChart() {
             },
             type: 'GET',
             success: function(data) {
-                var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['남경필'], ['안희정'], ['이재명'], ['유승민']];
-                for (var i = 0; i < data.length; i++) {
-                    var obj = data[i];
-                    result_list[0].push(obj.date);
-                    result_list[1].push(obj.moon);
-                    result_list[2].push(obj.ahn);
-                    result_list[3].push(obj.sim);
-                    result_list[4].push(obj.nam);
-                    result_list[5].push(obj.hee);
-                    result_list[6].push(obj.lee);
-                    result_list[7].push(obj.you);
-                }
+                var result_list = dailyDataParsing(data);
+                pressDailyDict['all'] = result_list;
 
-                c3.generate({
+                dailyChart = c3.generate({
                     bindto: '#press-chart-line',
                     data: {
                         x: 'x',
@@ -87,9 +143,12 @@ function createPressChart() {
                     result[4][1] += data[i].sim;
                     result[5][1] += data[i].ahn;
                     result[6][1] += data[i].nam;
+                    pressGroupDict[data[i]['cp']] = [['문재인', data[i].moon], ['이재명', data[i].lee], ['안희정', data[i].hee],
+                        ['유승민', data[i].you], ['심상정', data[i].sim], ['안철수', data[i].ahn], ['남경필', data[i].nam]];
                 }
+                pressGroupDict['all'] = result;
 
-                press_chart = c3.generate({
+                groupChart = c3.generate({
                     bindto: '#press-chart-pie',
                     data: {
                         columns: result,
