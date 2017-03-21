@@ -163,3 +163,20 @@ ul.social-buttons li a {
     height: 400px;
     overflow-y: scroll;
 }
+
+.name-result{
+    font-size:0.7rem;
+}
+.name-result-rest {
+    font-size:0.6rem;
+}
+
+@media (min-width: 768px) {
+    .name-result {
+        font-size:1rem;
+    }
+
+    .name-result-rest {
+        font-size:1rem;
+    }
+}

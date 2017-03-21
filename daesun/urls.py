@@ -18,13 +18,15 @@ from django.contrib import admin
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from web import views
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     url(r'^', include('web.urls')),
     url(r'^apis/', include('apis.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^_ah/health', views.google_app_engine_health_check),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 # This enables static files to be served from the Gunicorn server

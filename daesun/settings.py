@@ -165,13 +165,14 @@ TIME_ZONE = 'Asia/Seoul'
 
 if os.getenv('GAE_INSTANCE'):
     STATIC_URL = 'https://storage.googleapis.com/daesun2017.appspot.com/static/'
+    MEDIA_URL = 'https://storage.googleapis.com/daesun2017.appspot.com/share/'
 else:
     STATIC_URL = '/static/'
+    MEDIA_URL = '/share/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     'static/',
 ]
 
-MEDIA_ROOT = '/Users/songminjeong/share/'
-MEDIA_URL = '/share/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'share/')

@@ -1,9 +1,9 @@
 {% load staticfiles %}
 <div id="lucky-name-result-detail" class="row" style="margin-left:0; margin-right:0">
 
-    <div class="row" id="lucky_name_best"  style="margin-left:0; margin-right:0">
+    <div class="row name-result" id="lucky_name_best"  style="margin-left:0; margin-right:0">
         <div class="col-4 text-center" data-aos="fade-in">
-            <h4><span id="your_name">{{ name }}</span>님과<br>이름점 궁합이<br>최고입니다</h4>
+            <span><span id="your_name" style="font-weight: bolder;">{{ name }}</span>님과<br>이름점 궁합이<br>최고입니다</span>
             {% if best_one.candidate == '문재인' %}
             <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
             {% elif best_one.candidate == '안철수' %}
@@ -26,14 +26,14 @@
             <span id="best_candidate">{{ best_one.candidate }}</span><br>
             <span id="best_score">{{ best_one.score }}점</span>
         </div>
-        <div class="col-4 text-center">
-            <div id="lucky_name_result_to"></div>
+        <div class="col-4 text-center name-result">
+            <div id="lucky_name_result_to" style="height:100%;"></div>
         </div>
-        <div class="col-4 text-center">
-            <div id="lucky_name_result_from"></div>
+        <div class="col-4 text-center name-result">
+            <div id="lucky_name_result_from" style="height:100%;"></div>
         </div>
     </div>
-    <div class="row" style="margin-left:0; margin-right:0">
+    <div class="row name-result-rest" style="margin-left:0; margin-right:0">
         {% for item in list %}
             {% if forloop.counter != 1 %}
                 <div class="col-2 text-center">
@@ -138,8 +138,8 @@
 
         var options = {
             autoResize:true,
-            height: '300px',
-            width: '180px',
+            width: '100%',
+            height: '100%',
             nodes: {
                 font: {
                   size: 50, // px
@@ -154,6 +154,7 @@
                 }
             },
             physics: {
+                enabled: false,
                 forceAtlas2Based: {
                   springLength: 100
                 },
@@ -167,7 +168,6 @@
         };
         if(to_from == 'to') {
             network_to = new vis.Network(container, data, options);
-            alert('done');
         }else{
             network_from = new vis.Network(container, data, options);
         }

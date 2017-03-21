@@ -622,10 +622,13 @@ def upload(request):
         body = JSONParser().parse(request)
         format, imgstr = str(body.get('image')).split(';base64,')
         ext = format.split('/')[-1]
-        file_name = settings.MEDIA_ROOT + "image/" + str(random.random()) + "." + ext
-        f = open(file_name, "wb")
+        file_name = "image/" + str(random.random()) + "." + ext
+        f = open(settings.MEDIA_ROOT + file_name, "wb")
         f.write(base64.b64decode(imgstr))
         f.close()
 
-    return HttpResponse(file_name)
+    print(settings.MEDIA_URL)
+    print(settings.MEDIA_ROOT)
+
+    return HttpResponse(settings.MEDIA_URL+file_name)
 
