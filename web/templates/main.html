@@ -398,9 +398,9 @@
                         <!--TODO 여기에 이름점 결과 표시됨-->
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="name_share">공유하기</button>
-                    <button type="button" class="btn btn-secondary" id="share_kakao">카카오톡</button>
-
+                    <a id="kakao-link-btn">
+                        <img src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+                    </a>
                     <img id="img-out"/>
                 </div>
                 </div>
@@ -648,7 +648,7 @@
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/Canvas2Image.js' %}"></script>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type="text/javascript" src="{% static 'js/kakao.min.js' %}"></script>
 
 <!-- Custom JS -->
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>

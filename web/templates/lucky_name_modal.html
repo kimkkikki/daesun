@@ -23,6 +23,7 @@
             {% elif best_one.candidate == '손학규' %}
             <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
             {% endif %}
+            <br>
             <span id="best_candidate">{{ best_one.candidate }}</span><br>
             <span id="best_score">{{ best_one.score }}점</span>
         </div>
@@ -67,7 +68,6 @@
 </div>
 
 <script type="text/javascript">
-
 
     var network_from = null;
     var network_to = null;
@@ -138,8 +138,8 @@
 
         var options = {
             autoResize:true,
-            width: '100%',
             height: '100%',
+            width: '100%',
             nodes: {
                 font: {
                   size: 50, // px
@@ -154,7 +154,6 @@
                 }
             },
             physics: {
-                enabled: false,
                 forceAtlas2Based: {
                   springLength: 100
                 },
@@ -168,6 +167,7 @@
         };
         if(to_from == 'to') {
             network_to = new vis.Network(container, data, options);
+            alert('done');
         }else{
             network_from = new vis.Network(container, data, options);
         }
@@ -179,4 +179,5 @@ $(document).ready(function(){
     draw('from', JSON.parse('{{ from_nodes | escapejs  }}'.replace(/'/gi, "\"")), 'lucky_name_result_from');
     fit();
 });
+
 </script>
