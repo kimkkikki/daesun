@@ -28,6 +28,7 @@ def google_app_engine_health_check(req):
     return HttpResponse(status=200)
 
 
+@csrf_exempt
 def cheering(request):
     if request.method == 'POST':
         views.create_cheering_message(request)
@@ -42,6 +43,7 @@ def cheering(request):
     return render_to_response('cheering_table.html', {'cheering_list': lists, 'today': datetime.today()})
 
 
+@csrf_exempt
 def rating(request):
     if request.method == 'POST':
         ratings = views.lucky_rating_list()
@@ -50,6 +52,7 @@ def rating(request):
         return HttpResponse(status=404)
 
 
+@csrf_exempt
 def pledge(request):
     if request.method == 'GET':
         type = request.GET.get('type', None)
@@ -61,12 +64,14 @@ def pledge(request):
         return render_to_response('pledge_result.html', {'results': results})
 
 
+@csrf_exempt
 def constellation_chemistry(request):
     if request.method == 'POST':
         results = views.constellation_post(request)
         return render_to_response('constellation_modal.html', {'constellation_result': results})
 
 
+@csrf_exempt
 def slot(request):
     if request.method == 'POST':
         result = views.save_lucky_result(request)

@@ -54,11 +54,11 @@ def cp_group(request):
         candidate_q_list = Q(created_at__range=[start, end]) & \
                             (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                              Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
-                             Q(title__contains='남경필'))
+                             Q(title__contains='남경필') | Q(title__contains='홍준표'))
     else:
         candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                             Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
-                            Q(title__contains='남경필'))
+                            Q(title__contains='남경필') | Q(title__contains='홍준표'))
 
     group_list = Scraps.objects.filter(Q(created_at__gte=datetime.now() - timedelta(days=30)) & candidate_q_list).values('cp').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
@@ -67,7 +67,8 @@ def cp_group(request):
         you=Count(Case(When(title__contains='유승민', then=1))),
         hee=Count(Case(When(title__contains='안희정', then=1))),
         sim=Count(Case(When(title__contains='심상정', then=1))),
-        nam=Count(Case(When(title__contains='남경필', then=1)))
+        nam=Count(Case(When(title__contains='남경필', then=1))),
+        hong=Count(Case(When(title__contains='홍준표', then=1)))
     )
 
     return JSONResponse(list(group_list))
@@ -75,9 +76,13 @@ def cp_group(request):
 
 @cache_page(60 * 10)
 def cp_daily(request):
+    cp = request.GET.get('cp', None)
     candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                         Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
-                        Q(title__contains='남경필'))
+                        Q(title__contains='남경필') | Q(title__contains='홍준표'))
+
+    if cp is not None:
+        candidate_q_list = (candidate_q_list & Q(cp=cp))
 
     daily_list = Scraps.objects.filter(Q(created_at__gte=datetime.now() - timedelta(days=30)) & candidate_q_list).extra({'date': 'date(created_at)'}).values(
         'date').annotate(
@@ -87,7 +92,8 @@ def cp_daily(request):
         you=Count(Case(When(title__contains='유승민', then=1))),
         hee=Count(Case(When(title__contains='안희정', then=1))),
         sim=Count(Case(When(title__contains='심상정', then=1))),
-        nam=Count(Case(When(title__contains='남경필', then=1)))
+        nam=Count(Case(When(title__contains='남경필', then=1))),
+        hong=Count(Case(When(title__contains='홍준표', then=1)))
     )
 
     return JSONResponse(list(daily_list))
@@ -163,24 +169,28 @@ def pledge_post(request):
     cache_data = json.loads(cache_data)
 
     candidate_list = cache_data['list']
-    candidate_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '심상정': 0, '남경필': 0}
+    count_dict = {'문재인': 0, '안철수': 0, '이재명': 0, '유승민': 0, '안희정': 0, '심상정': 0, '남경필': 0, '홍준표': 0}
+    title_dict = {'문재인': [], '안철수': [], '이재명': [], '유승민': [], '안희정': [], '심상정': [], '남경필': [], '홍준표': []}
 
     for i, result in enumerate(result_list):
         if result == 1 or result == '1':
             Pledge.objects.filter(id=candidate_list[i].get('id')).update(like=F('like') + 1, updated=datetime.now())
-            candidate_dict[candidate_list[i].get('candidate')] += 1
+            count_dict[candidate_list[i].get('candidate')] += 1
+            title_dict[candidate_list[i].get('candidate')].append(candidate_list[i].get('title'))
         elif result == -1 or result == '-1':
             Pledge.objects.filter(id=candidate_list[i].get('id')).update(unlike=F('unlike') + 1,
                                                                          updated=datetime.now())
-            candidate_dict[candidate_list[i].get('candidate')] -= 1
+            count_dict[candidate_list[i].get('candidate')] -= 1
 
-    result_list = [{'candidate': '문재인', 'count': candidate_dict['문재인']},
-               {'candidate': '안철수', 'count': candidate_dict['안철수']},
-               {'candidate': '이재명', 'count': candidate_dict['이재명']},
-               {'candidate': '유승민', 'count': candidate_dict['유승민']},
-               {'candidate': '안희정', 'count': candidate_dict['안희정']},
-               {'candidate': '심상정', 'count': candidate_dict['심상정']},
-               {'candidate': '남경필', 'count': candidate_dict['남경필']}, ]
+    result_list = [{'candidate': '문재인', 'count': count_dict['문재인'], 'titles': title_dict['문재인']},
+               {'candidate': '안철수', 'count': count_dict['안철수'], 'titles': title_dict['안철수']},
+               {'candidate': '이재명', 'count': count_dict['이재명'], 'titles': title_dict['이재명']},
+               {'candidate': '유승민', 'count': count_dict['유승민'], 'titles': title_dict['유승민']},
+               {'candidate': '안희정', 'count': count_dict['안희정'], 'titles': title_dict['안희정']},
+               {'candidate': '심상정', 'count': count_dict['심상정'], 'titles': title_dict['심상정']},
+               {'candidate': '남경필', 'count': count_dict['남경필'], 'titles': title_dict['남경필']},
+               {'candidate': '홍준표', 'count': count_dict['홍준표'], 'titles': title_dict['홍준표']},
+                   ]
     result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
 
     return result_list
@@ -225,6 +235,7 @@ def approval_rating_list(cp, is_last):
 
 
 @cache_page(60 * 10)
+@csrf_exempt
 def approval_rating(request):
     return JSONResponse(approval_rating_list(request.GET.get('cp', None), False))
 
@@ -417,7 +428,15 @@ def get_candidate_sns_list():
 
                         if title.find('…') > 0:
                             continue
-                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'),
+
+                        if hour > 23:
+                            hour -= 24
+                            date = datetime(2017, month, day, hour, minute)
+                            date += timedelta(days=1)
+                        else:
+                            date = datetime(2017, month, day, hour, minute)
+
+                        schedules.append({'start': date.strftime('%Y-%m-%d %H:%M'),
                                           'title': status.user.name + ', ' + title, 'color': candidate_dict[status.user.name]})
 
                 if hour_format_2.findall(contents) is not None:
@@ -434,7 +453,15 @@ def get_candidate_sns_list():
                         title = time.group(time.lastindex).replace('에는', '')
                         if title.find('…') > 0:
                             continue
-                        schedules.append({'start': datetime(2017, month, day, hour, minute).strftime('%Y-%m-%d %H:%M'),
+
+                        if hour > 23:
+                            hour -= 24
+                            date = datetime(2017, month, day, hour, minute)
+                            date += timedelta(days=1)
+                        else:
+                            date = datetime(2017, month, day, hour, minute)
+
+                        schedules.append({'start': date.strftime('%Y-%m-%d %H:%M'),
                                           'title': status.user.name + ', ' + title, 'color': candidate_dict[status.user.name]})
 
                 continue

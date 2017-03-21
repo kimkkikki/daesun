@@ -158,3 +158,8 @@ ul.social-buttons li a {
 .light-bg {
     background-color: #f2f5f7;
 }
+
+.blind-test {
+    height: 400px;
+    overflow-y: scroll;
+}

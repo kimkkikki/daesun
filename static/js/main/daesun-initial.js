@@ -1,4 +1,6 @@
-new WOW().init();
+AOS.init();
+
+$('[data-toggle="tooltip"]').tooltip();
 
 function waitMe(element) {
     element.waitMe({

@@ -19,7 +19,7 @@
 
     <!-- Library CSS -->
     <link rel="stylesheet" href="{% static 'css/waitMe.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
     <link rel="stylesheet" href="{% static 'lib/vis/dist/vis.min.css' %}">
     <link rel="stylesheet" href="{% static 'lib/c3/c3.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/fullcalendar.min.css'%}">
@@ -174,7 +174,7 @@
 
     <!-- 공약 이상형 모달 -->
     <div id="pledge-test-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title text-center">공약 이상형</h5>
@@ -183,11 +183,10 @@
                     </button>
                 </div>
                 <div id="pledge-test" class="modal-body">
-                    <div class="jumbotron text-center">
+                    <div class="jumbotron justify-content-center blind-test">
                         <p id="pledge-test-count" class="pull-right"></p>
-                        <p>&nbsp;</p>
-                        <h4 id="pledge-test-title"></h4>
-                        <p id="pledge-test-contents"></p>
+                        <h4 id="pledge-test-title" class="text-center"></h4>
+                        <p id="pledge-test-contents" class="text-center"></p>
                     </div>
                     <div class="row justify-content-center">
                         <div class="mx-auto">
@@ -197,6 +196,26 @@
                                 <button id="pledge-test-button-3" type="button" class="btn btn-secondary" value="0">몰라요</button>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pledge-result-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">공약 이상형 결과</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="pledge-result"></div>
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">다시하기</button>
+                        <button type="button" class="btn btn-danger">공유하기</button>
                     </div>
                 </div>
             </div>
@@ -221,7 +240,7 @@
                 </div>
             </div>
             <div class="row justify-content-center section-contents">
-                <div class="col-4">
+                <div class="col-4" data-aos="fade-right">
                     <div id="slot-machine-1" class="randomizeMachine text-center">
                         <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
                         <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
@@ -234,7 +253,7 @@
                         <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4" data-aos="fade-up" data-aos-delay="250">
                     <div id="slot-machine-2" class="randomizeMachine text-center">
                         <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
                         <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
@@ -247,7 +266,7 @@
                         <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4" data-aos="fade-left" data-aos-delay="500">
                     <div id="slot-machine-3" class="randomizeMachine text-center">
                         <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
                         <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
@@ -261,6 +280,7 @@
                     </div>
                 </div>
             </div>
+            <div id="slot-machine-count" class="row justify-content-center" data-toggle="tooltip" data-placement="bottom" title="아까비.. 다시 돌릴래요?"></div>
         </div>
     </section>
 
@@ -343,6 +363,9 @@
                                 {% endfor %}
                             </div>
                         </div>
+                        <div class="input-group-addon">
+                            &nbsp;
+                        </div>
                         <div class="input-group-btn">
                             <button id="constellation-day" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">몇일</button>
                             <div class="dropdown-menu">
@@ -393,14 +416,45 @@
                 <div class="col-12 col-md-auto text-center">
                     <h2 class="section-heading">언론</h2>
                     <h3 class="section-subheading text-muted">최근 30일간 언론 언급으로 보는 대선후보 이슈정도</h3>
+                    <select id="press-select" class="col-6 form-control mx-auto" title="언론사 선택">
+                        <option value="all">모든언론사</option>
+                        <option value="asiae">아시아경제</option>
+                        <option value="chosun">조선일보</option>
+                        <option value="donga">동아일보</option>
+                        <option value="edaily">이데일리</option>
+                        <option value="hani">한겨레</option>
+                        <option value="heraldcorp">헤럴드경제</option>
+                        <option value="ichannela">채널A</option>
+                        <option value="joins">중앙일보</option>
+                        <option value="jtbc">JTBC</option>
+                        <option value="kbs">KBS</option>
+                        <option value="khan">경향신문</option>
+                        <option value="kmib">국민일보</option>
+                        <option value="mbc">MBC</option>
+                        <option value="mbn">MBN</option>
+                        <option value="mk">매일경제</option>
+                        <option value="mt">머니투데이</option>
+                        <option value="munhwa">문화일보</option>
+                        <option value="news1">뉴스1</option>
+                        <option value="newsis">뉴시스</option>
+                        <option value="ohmynews">오마이뉴스</option>
+                        <option value="sbs">SBS</option>
+                        <option value="sedaily">서울경제</option>
+                        <option value="segye">세계일보</option>
+                        <option value="seoul">서울신문</option>
+                        <option value="sisain">시사인</option>
+                        <option value="tvchosun">TV조선</option>
+                        <option value="yonhap">연합뉴스</option>
+                        <option value="ytn">YTN</option>
+                    </select>
                 </div>
             </div>
             <div class="row section-contents">
-                <div class="col-md-6 col-sm-6 text-center">
+                <div class="col-md-6 text-center">
                     <h4>언론 언급 점유율</h4>
                     <div id="press-chart-pie"></div>
                 </div>
-                <div class="col-md-6 col-sm-6 text-center">
+                <div class="col-md-6 text-center">
                     <h4>언론 언급 횟수</h4>
                     <div id="press-chart-line"></div>
                 </div>
@@ -435,21 +489,23 @@
                     <button class="btn btn-secondary" type="button" id="post-cheering">등록</button>
                 </span>
             </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr class="row m-0">
-                        <th class="col-2">응원후보</th>
-                        <th class="col-6 col-md-8">응원메세지</th>
-                        <th class="col-4 col-md-2">작성자</th>
-                    </tr>
-                </thead>
-                <tbody id="cheering-table">
-                    {% include 'cheering_table.html' %}
-                </tbody>
-                <tfoot>
-                    <tr><td colspan="4"><button id="cheering-more" class="btn btn-secondary btn-block">응원메세지 더보기</button></td></tr>
-                </tfoot>
-            </table>
+            <div class="row section-contents">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="row m-0">
+                            <th class="col-2">응원후보</th>
+                            <th class="col-6 col-md-8">응원메세지</th>
+                            <th class="col-4 col-md-2">작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cheering-table">
+                        {% include 'cheering_table.html' %}
+                    </tbody>
+                    <tfoot>
+                        <tr><td colspan="4"><button id="cheering-more" class="btn btn-secondary btn-block">응원메세지 더보기</button></td></tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </section>
 
@@ -550,7 +606,7 @@
 <script type="text/javascript" src="{% static 'lib/moment/min/moment.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/fullcalendar.min.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.slotmachine.min.js'%}"></script>
-<script type="text/javascript" src="{% static 'js/main/wow.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
@@ -635,7 +691,7 @@
             blindLoopIndex += 1;
             blindResult.push(this.value);
         } else {
-            waitMe($('#pledge'));
+            waitMe($('#pledge-test-modal'));
             blindLoopIndex += 1;
             blindResult.push(this.value);
 
@@ -653,11 +709,14 @@
                         'list': blindResult
                     }),
                     success: function(data) {
-                        $('#pledge').waitMe('hide');
-                        $('#pledge-test').html(data);
+                        var testModal = $('#pledge-test-modal');
+                        testModal.waitMe('hide');
+                        testModal.modal('hide');
+                        $('#pledge-result').html(data);
+                        $('#pledge-result-modal').modal('show');
                     },
                     error: function(data, status, err) {
-                        $('#pledge').waitMe('hide');
+                        $('#pledge-test-modal').waitMe('hide');
                         console.log(err);
                     }
                 });
@@ -699,6 +758,7 @@
                 break;
             case 'slot-machine-3':
                 slot_count++;
+                $('#slot-machine-count').html('#' + slot_count);
                 result_3 = active;
 
                 if (result_1 == result_2 && result_2 == result_3) {
@@ -728,7 +788,7 @@
                             }
                         });
                 } else {
-
+                    $('#slot-machine-count').tooltip('show');
                 }
                 break;
         }
@@ -738,6 +798,7 @@
         machine1.shuffle(5, onComplete);
         machine2.shuffle(10, onComplete);
         machine3.shuffle(15, onComplete);
+        $('#slot-machine-count').tooltip('hide');
 	});
 
     $('#slot-honor-button').click(function () {
