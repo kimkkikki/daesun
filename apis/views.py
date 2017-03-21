@@ -19,7 +19,7 @@ import pytz
 import re
 import base64
 import random
-from django.conf import settings
+from google.cloud import storage
 
 
 candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
@@ -641,15 +641,13 @@ def save_lucky_result_api(request):
 def upload(request):
     if request.method == 'POST':
         body = JSONParser().parse(request)
-        format, imgstr = str(body.get('image')).split(';base64,')
-        ext = format.split('/')[-1]
-        file_name = "image/" + str(random.random()) + "." + ext
-        f = open(settings.MEDIA_ROOT + file_name, "wb")
-        f.write(base64.b64decode(imgstr))
-        f.close()
+        file_format, imgstr = str(body.get('image')).split(';base64,')
+        ext = file_format.split('/')[-1]
 
-    print(settings.MEDIA_URL)
-    print(settings.MEDIA_ROOT)
+        gcs = storage.Client()
+        bucket = gcs.get_bucket('daesun2017.appspot.com')
+        filename = 'share/' + str(random.random()) + "." + ext
+        blob = bucket.blob(filename)
+        blob.upload_from_string(base64.b64decode(imgstr), content_type=file_format)
 
-    return HttpResponse(settings.MEDIA_URL+file_name)
-
+        return HttpResponse(blob.public_url)
