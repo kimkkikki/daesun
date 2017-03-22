@@ -1,9 +1,16 @@
 {% load staticfiles %}
-<div class="row">
+<div class="row align-items-center">
 {% for result in results%}
-    <div class="col-3">{{ result.cp }}</div>
-    <div class="col-9">
-        <a href="{{ result.link }}">{{ result.title }}</a>
+    <div class="col-2 col-md-1 keyword-item">
+        <img class="img-fluid" src="{% static '' %}img/cp/{{ result.cp }}.png">
+    </div>
+    <div class="col-10 col-md-11 keyword-item">
+        <a href="{{ result.link }}" target="_blank">{{ result.title }}</a>
+    </div>
+
+    {% empty %}
+    <div class="col-12">
+        <p>해당 키워드의 기사가 없습니다.<br>여러 뉴스의 제목을 종합하여 뽑아낸 키워드이기 때문에 없을 수 있습니다</p>
     </div>
 {% endfor %}
 </div>

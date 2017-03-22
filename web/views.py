@@ -12,6 +12,10 @@ def labs(request):
     return render(request, 'labs.html', {'book_list': book_list})
 
 
+def terms(request):
+    return render(request, 'terms.html')
+
+
 def main(request):
     ratings = views.approval_rating_list(None, True)
     cheerings = views.get_cheering_message_list(0)

@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.main, name='main'),
+    url(r'^terms$', views.terms, name='terms'),
     url(r'^labs$', views.labs, name='labs'),
     url(r'^.well-known/acme-challenge/([\w-]+)', views.lets_encrypt),
     url(r'^cheering$', views.cheering, name='cheering'),

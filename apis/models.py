@@ -141,7 +141,7 @@ class LuckyRating(models.Model):
 
 class LuckyRatingAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'type', 'input', 'created')
-    list_filter = ['candidate']
+    list_filter = ['candidate', 'type']
 
 
 class Calendar(models.Model):
@@ -156,3 +156,4 @@ class Calendar(models.Model):
 
 class CalendarAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'title', 'start', 'end')
+    list_filter = ['candidate']

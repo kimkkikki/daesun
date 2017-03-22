@@ -228,15 +228,9 @@
     <section id="slot" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-auto text-center">
+                <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">돌려돌려 대선 돌림판</h2>
                     <h3 class="section-subheading text-muted">도저히 모르겠다 돌려보자(1%의 확률)</h3>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="mx-auto">
-                    <button id="slot-start" type="button" class="btn btn-secondary">룰렛 돌리기</button>
-                    <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
                 </div>
             </div>
             <div class="row justify-content-center section-contents">
@@ -281,6 +275,12 @@
                 </div>
             </div>
             <div id="slot-machine-count" class="row justify-content-center" data-toggle="tooltip" data-placement="bottom" title="아까비.. 다시 돌릴래요?"></div>
+            <div class="row justify-content-center">
+                <div class="mx-auto">
+                    <button id="slot-start" type="button" class="btn btn-secondary">룰렛 돌리기</button>
+                    <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -321,7 +321,17 @@
                 </div>
                 <div class="modal-body">
                     <div id="slot-honor-result" class="row text-center">
-                        <div class="col-2">
+                        <div class="col-4 col-md-2">
+                            <h2>문재인</h2>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
+                            <p>#1 asdfasdf 3</p>
+                        </div>
+                        <div class="col-4 col-md-2">
+                            <h2>문재인</h2>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
+                            <p>#1 asdfasdf 3</p>
+                        </div>
+                        <div class="col-4 col-md-2">
                             <h2>문재인</h2>
                             <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
                             <p>#1 asdfasdf 3</p>
@@ -618,7 +628,7 @@
                 </div>
                 <div class="col-12 col-md-4 mx-auto">
                     <ul class="list-inline quicklinks">
-                        <li class="list-inline-item"><a href="#" target="_blank">이용약관</a></li>
+                        <li class="list-inline-item"><a href="{% url 'terms' %}" target="_blank">이용약관</a></li>
                         <li class="list-inline-item"><a href="mailto:kimkkikki1@gmail.com">개발자에게 의견보내기</a></li>
                     </ul>
                 </div>
