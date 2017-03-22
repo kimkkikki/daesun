@@ -73,7 +73,6 @@ function loadKeyword(date) {
 }
 
 function keywordClick(data) {
-    console.log(data);
     waitMe($('#keyword'));
     $.ajax({
             url: '/news',

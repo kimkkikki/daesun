@@ -101,7 +101,7 @@
     <section id="rating" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-auto text-center">
+                <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">누가누가 잘하나</h2>
                     <h3 class="section-subheading text-muted">여론조사결과로 보는 대선 지지율 결과와<br>2017 대선닷컴의 럭키박스 결과를 기반으로 한 운빨 결과를 보여드립니다</h3>
                 </div>
@@ -158,7 +158,7 @@
     <section id="pledge">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-auto text-center">
+                <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">공약 이상형</h2>
                     <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
                 </div>
@@ -230,7 +230,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">돌려돌려 대선 돌림판</h2>
-                    <h3 class="section-subheading text-muted">도저히 모르겠다 돌려보자(1%의 확률)</h3>
+                    <h3 class="section-subheading text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</h3>
                 </div>
             </div>
             <div class="row justify-content-center section-contents">
@@ -277,7 +277,7 @@
             <div id="slot-machine-count" class="row justify-content-center" data-toggle="tooltip" data-placement="bottom" title="아까비.. 다시 돌릴래요?"></div>
             <div class="row justify-content-center">
                 <div class="mx-auto">
-                    <button id="slot-start" type="button" class="btn btn-secondary">룰렛 돌리기</button>
+                    <button id="slot-start" type="button" class="btn btn-secondary">돌려돌려!</button>
                     <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
                 </div>
             </div>
@@ -345,7 +345,7 @@
     <section id="lucky">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-auto text-center">
+                <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">럭키박스</h2>
                     <h3 class="section-subheading text-muted">후보자를 고르는 가장 재밌는 방법</h3>
                 </div>
@@ -418,14 +418,30 @@
         </div>
     </div>
 
-    <!--TODO: 별자리 모달뷰 디자인-->
-    <div id="constellation-result">
+    <!-- 별자리점 모달뷰 -->
+    <div id="constellation-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">별자리 궁합 결과</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="constellation-result"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">공유하기</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <section id="press" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-auto text-center">
+                <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">언론</h2>
                     <h3 class="section-subheading text-muted">최근 30일간 언론 언급으로 보는 대선후보 이슈정도</h3>
                     <select id="press-select" class="col-6 form-control mx-auto" title="언론사 선택">
@@ -477,7 +493,7 @@
     <section id="keyword">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-auto text-center">
+                <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">데일리 뉴스 요약</h2>
                     <h3 class="section-subheading text-muted">매일매일의 뉴스를 요약하여 뽑은 키워드 입니다<br>키워드를 선택하면 관련 뉴스를 바로 볼 수 있어요</h3>
                 </div>
@@ -512,7 +528,7 @@
     <section id="cheering" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-auto text-center">
+                <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">대선주자 응원하기</h2>
                     <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
                 </div>
@@ -559,7 +575,7 @@
     <section id="donate">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-auto text-center">
+                <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">기부하기</h2>
                     <h3 class="section-subheading text-muted">대선후보/대선닷컴에 기부하세요</h3>
                 </div>
@@ -603,7 +619,7 @@
     <section id="labs" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-auto text-center">
+                <div class="col-12 col-auto text-center">
                     <h2 class="section-heading">대선닷컴 연구소</h2>
                     <h3 class="section-subheading text-muted">만들다만 기능들을 보고싶다면 클릭하세요</h3>
                 </div>
@@ -652,6 +668,7 @@
 <script type="text/javascript" src="{% static 'lib/c3/c3.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'lib/moment/min/moment.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/fullcalendar.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/locale-all.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.slotmachine.min.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/main/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
@@ -882,15 +899,15 @@
                     success: function(data) {
                         $('#calendar').fullCalendar({
                             header: {
-                                left: 'prev,next today',
-                                center: 'title',
+                                left: 'prev,next',
                                 right: 'listDay, listWeek, month'
                             },
                             views: {
-                                listDay: { buttonText: '오늘' },
-                                listWeek: { buttonText: '이번주' },
-                                month: { buttonText: '이번달' }
+                                listDay: { buttonText: '일간' },
+                                listWeek: { buttonText: '주간' },
+                                month: { buttonText: '월간' }
                             },
+                            locale : 'ko',
                             defaultView: 'listDay',
                             defaultDate: yyyy + '-' + mm + '-' + dd,
                             navLinks: true, // can click day/week names to navigate views
