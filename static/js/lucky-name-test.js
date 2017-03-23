@@ -39,8 +39,7 @@ $(document).ready(function(){
                     }),
                     type:'POST',
                     success:function(data){
-                        console.log(data);
-                        url = 'http://2017daesun.com/' + data;
+                        url = data;
                         Kakao.Link.sendTalkLink({
                             label: '베스트이름커플',
                             image: {

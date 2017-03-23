@@ -333,24 +333,30 @@ def lucky_name(request):
     i, j, length, to_nodes, from_nodes = 0, 0, len(best_to), [], []
 
     for name_one in best_to_name:
-        to_nodes.append({"id": 99 - j, "label": name_one, "level": length})
+        to_nodes.append({"id": 99 - j, "label": name_one, "level": length, 'color': {'border': "#ffffff"}})
         j += 1
 
     for item in best_to:
         for score in item:
-            to_nodes.append({"id": i, "label": score, "level": length - 1})
+            if length == 1:
+                to_nodes.append({"id": i, "label": score, "level": length-1, 'font': {'color': "#ec2400"}, "color": "#f1e500"})
+            else:
+                to_nodes.append({"id": i, "label": score, "level": length - 1})
             i += 1
         length -= 1
 
-    length = len(best_from)
+    i, j, length = 0, 0, len(best_from)
 
     for name_one in best_from_name:
-        from_nodes.append({"id": 99 - j, "label": name_one, "level": length})
+        from_nodes.append({"id": 99 - j, "label": name_one, "level": length, 'color': {'border': "#ffffff"}})
         j += 1
 
     for item in best_from:
         for score in item:
-            from_nodes.append({"id": i, "label": score, "level": length - 1})
+            if length == 1:
+                from_nodes.append({"id": i, "label": score, "level": length-1, 'font': {'color': "#ec2400"}, "color": "#f1e500"})
+            else:
+                from_nodes.append({"id": i, "label": score, "level": length - 1})
             i += 1
         length -= 1
 
