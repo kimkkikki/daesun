@@ -793,13 +793,11 @@
 <script type="text/javascript">
     $('#slot-share-facebook').click(function () {
         console.log('slot-share candidate : ' + slot_result_candidate + ', count : ' + slot_result_count);
-        var slotModalBody = $("#slot-modal-body");
-        html2canvas(slotModalBody, {
-            onrendered: function (canvas) {
-                slotModalBody.css('background-color', 'white');
-                var image = canvas.toDataURL("image/png");
 
-                waitMe($('#slot-modal'));
+        waitMe($('#slot-modal'));
+        html2canvas($('#slot-modal-body'), {
+            onrendered: function (canvas) {
+                var image = canvas.toDataURL("image/jpeg");
                 $.ajax({
                     url:'/apis/upload',
                     headers: {
@@ -814,16 +812,13 @@
                         $('#slot-modal').waitMe('hide');
                         FB.ui({
                             method: 'share',
-                            display: 'popup',
                             picture : data,
-                            href: 'https://2017daesun.com'
+                            href: 'http://2017daesun.com'
                         }, function(response){
-                            slotModalBody.css('background-color', '');
                             console.log(response);
                         });
                     },
                     error: function(data, status, err) {
-                        slotModalBody.css('background-color', '');
                         $('#slot-modal').waitMe('hide');
                         console.log(err);
                     }
@@ -866,7 +861,7 @@
                 $('#slot-machine-count').html('#' + slot_count);
                 result_3 = active;
 
-//                if (result_1 == result_2 && result_2 == result_3) {
+                if (result_1 == result_2 && result_2 == result_3) {
                     waitMe($('#slot'));
                     slot_result_candidate = slot_candidates[result_1];
                     slot_result_count = slot_count;
@@ -894,9 +889,9 @@
                                 $('#slot').waitMe('hide');
                             }
                         });
-//                } else {
-//                    $('#slot-machine-count').tooltip('show');
-//                }
+                } else {
+                    $('#slot-machine-count').tooltip('show');
+                }
                 break;
         }
     }

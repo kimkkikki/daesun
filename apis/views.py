@@ -21,7 +21,6 @@ import base64
 import random
 from google.cloud import storage
 
-
 candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
                             {'candidate': '안희정', 'constellation': '황소', 'blood': 'A', 'twitter': 'steelroot'},
                             {'candidate': '이재명', 'constellation': '물병', 'blood': 'O', 'twitter': 'Jaemyung_Lee'},
@@ -652,7 +651,8 @@ def upload(request):
 
         gcs = storage.Client()
         bucket = gcs.get_bucket('daesun2017.appspot.com')
-        filename = 'share/' + str(random.random()) + "." + ext
+        today_string = datetime.now().strftime('%Y%m%d_%H%M%S_')
+        filename = 'share/' + today_string + str(random.random()).split('.')[1] + "." + ext
         blob = bucket.blob(filename)
         blob.upload_from_string(base64.b64decode(imgstr), content_type=file_format)
 
