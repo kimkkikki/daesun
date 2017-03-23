@@ -52,3 +52,15 @@ $ daesun/static> npm install
 ```bash
 $ daesun/static> node_modules/.bin/bower install
 ```
+
+
+# 기타 명령어
+CORS 추가
+```bash
+gsutil cors set cors-gs.json gs://daesun2017.appspot.com
+```
+
+static파일 업로드
+```bash
+gsutil rsync -d -R static/ gs://daesun2017.appspot.com/static
+```

@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var ip = '';
     $.ajax({
-        url: 'http://jsonip.com/',
+        url: 'https://jsonip.com/',
         dataType: "jsonp",
         success: function (data) {
             var splits = data.ip.split('.');
