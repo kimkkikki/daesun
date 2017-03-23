@@ -1,9 +1,23 @@
 {% load staticfiles %}
 <div id="lucky-name-result-detail" class="row" style="margin-left:0; margin-right:0">
-
+    <div class="text-center name-result-contents">
+        {% if best_one.score >= 180 %}
+        자음과 모음의 오묘한 조화~ 이 정도면 백년해로 가능!
+        {% elif best_one.score >= 160 %}
+        누가 그랬던가. 우린 인연이라고
+        {% elif best_one.score >= 140 %}
+        맞을듯 안 맞을듯. 싸우면서 사랑하는거지
+        {% elif best_one.score >= 100 %}
+        반이라도 비슷한게 어디야
+        {% elif best_one.score >= 60 %}
+        우리… 계속 만나도 되겠니?
+        {% else %}
+        너.. 나 아는척 하지마.
+        {% endif %}
+    </div>
     <div class="row name-result" id="lucky_name_best">
-        <div class="col-4 text-center" data-aos="fade-in">
-            <span><span id="your_name" style="font-weight: bolder;">{{ name }}</span>님과<br>이름점 궁합이<br>최고입니다</span>
+
+        <div class="col-4 text-center" data-aos="fade-in" style="margin:auto">
             {% if best_one.candidate == '문재인' %}
             <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
             {% elif best_one.candidate == '안철수' %}

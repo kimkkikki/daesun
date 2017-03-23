@@ -162,7 +162,10 @@ ul.social-buttons li a {
     height: 400px;
     overflow-y: scroll;
 }
-
+.name-result-contents{
+    margin:auto;
+    padding:5px;
+}
 .name-result{
     font-size:0.7rem;
     margin-left:0px;
@@ -174,14 +177,19 @@ ul.social-buttons li a {
     margin-right:0px;
 }
 
+
 #kakao-btn{
     width:30px;
 }
 
 @media (min-width: 768px) {
+    .name-result-contents{
+        padding:8px;
+        font-size:1.3em;
+    }
+
     .name-result {
         font-size: 1rem;
-        height:300px;
         width:100%;
         margin-left:0px;
         margin-right:0px;

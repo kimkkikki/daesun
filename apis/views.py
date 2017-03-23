@@ -328,7 +328,7 @@ def lucky_name(request):
 
     if len(result_list) > 0:
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
-        # save_lucky_rating(result_list[0]['candidate'], 'name')
+        save_lucky_rating(result_list[0]['candidate'], 'name','')
 
     i, j, length, to_nodes, from_nodes = 0, 0, len(best_to), [], []
 
