@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<div class="row text-center">
+    {% for result in results %}
+    <div class="col-4 col-md-2">
+        <h2>{{ result.candidate }}</h2>
+        {% if result.candidate == '문재인' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
+        {% elif result.candidate == '안철수' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}">
+        {% elif result.candidate == '이재명' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}">
+        {% elif result.candidate == '안희정' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}">
+        {% elif result.candidate == '심상정' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}">
+        {% elif result.candidate == '유승민' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}">
+        {% elif result.candidate == '남경필' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}">
+        {% elif result.candidate == '홍준표' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}">
+        {% elif result.candidate == '손학규' %}
+        <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
+        {% endif %}
+        {% for item in result.items %}
+        <p>#{{ item }}</p>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>

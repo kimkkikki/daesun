@@ -240,6 +240,31 @@ def lucky_rating_list():
     return list(lucky_ratings)
 
 
+def slot_honor_list():
+    slot_list = LuckyRating.objects.filter(type='slot').order_by('-input')
+    print(slot_list)
+
+    results = []
+    for obj in slot_list:
+        has_value = False
+        for result in results:
+            if obj.candidate in result.values():
+                has_value = True
+                result['items'].append(obj.input)
+                break
+
+        if not has_value:
+            results.append({'candidate': obj.candidate, 'items': [obj.input]})
+
+    print(results)
+
+    return list(results)
+
+
+def slot_honor_api(request):
+    return JSONResponse(slot_honor_list())
+
+
 def approval_rating_list(cp, is_last):
     if is_last:
         last = ApprovalRating.objects.latest('date').date

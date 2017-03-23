@@ -107,3 +107,8 @@ def news(request):
     if request.method == 'POST':
         news_list = views.get_news_list(request)
         return render_to_response('keyword_modal.html', {'results': news_list})
+
+
+def slot_honor(request):
+    results = views.slot_honor_list()
+    return render_to_response('slot_honor_modal.html', {'results': results})

@@ -321,22 +321,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div id="slot-honor-result" class="row text-center">
-                        <div class="col-4 col-md-2">
-                            <h2>문재인</h2>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
-                            <p>#1 asdfasdf 3</p>
-                        </div>
-                        <div class="col-4 col-md-2">
-                            <h2>문재인</h2>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
-                            <p>#1 asdfasdf 3</p>
-                        </div>
-                        <div class="col-4 col-md-2">
-                            <h2>문재인</h2>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
-                            <p>#1 asdfasdf 3</p>
-                        </div>
+                    <div id="slot-honor-result">
                     </div>
                 </div>
             </div>
@@ -904,7 +889,25 @@
 	});
 
     $('#slot-honor-button').click(function () {
-        $('#slot-honor-modal').modal('show');
+        waitMe($('#slot'));
+        $.ajax({
+                url: '/slot/honor',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                async: true,
+                type: 'GET',
+                success: function(data) {
+                    $('#slot-honor-result').html(data);
+                    $('#slot-honor-modal').modal('show');
+                    $('#slot').waitMe('hide');
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    $('#slot').waitMe('hide');
+                }
+            });
+
     });
 </script>
 
