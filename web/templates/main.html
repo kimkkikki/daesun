@@ -37,7 +37,7 @@
         </button>
         <a class="navbar-brand" href="#page-top">2017대선닷컴</a>
 
-        <div class="collapse navbar-collapse justify-content-center" id="navbar-collapse">
+        <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#rating">지지율 </a>
@@ -101,7 +101,7 @@
     <section id="rating" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-auto text-center">
+                <div class="col-12 text-center">
                     <h2 class="section-heading">누가누가 잘하나</h2>
                     <h3 class="section-subheading text-muted">여론조사결과로 보는 대선 지지율 결과와<br>2017 대선닷컴의 럭키박스 결과를 기반으로 한 운빨 결과를 보여드립니다</h3>
                 </div>
@@ -158,7 +158,7 @@
     <section id="pledge">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-auto text-center">
+                <div class="col-12 text-center">
                     <h2 class="section-heading">공약 이상형</h2>
                     <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
                 </div>
@@ -228,7 +228,7 @@
     <section id="slot" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-auto text-center">
+                <div class="col-12 text-center">
                     <h2 class="section-heading">돌려돌려 대선 돌림판</h2>
                     <h3 class="section-subheading text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</h3>
                 </div>
@@ -294,14 +294,15 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div id="slot-modal-body" class="modal-body">
                     <div id="slot-result" class="row justify-content-center text-center">
                         <!--TODO 여기에 슬롯결과 표시됨-->
                     </div>
                     <div class="row justify-content-center text-center">
                         <div class="mx-auto">
                             <button id="slot-share" class="btn btn-primary">공유하고 명예의전당 등록</button>
-                            <button class="btn btn-secondary" data-dismiss="modal">다시하기</button>
+                            <button id="slot-share-facebook" class="btn btn-primary">페이스북</button>
+                            <button class="btn btn-secondary" data-dismiss="modal">다시 도전하기</button>
                         </div>
                     </div>
                 </div>
@@ -345,7 +346,7 @@
     <section id="lucky">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-auto text-center">
+                <div class="col-12 text-center">
                     <h2 class="section-heading">럭키박스</h2>
                     <h3 class="section-subheading text-muted">후보자를 고르는 가장 재밌는 방법</h3>
                 </div>
@@ -441,7 +442,7 @@
     <section id="press" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-auto text-center">
+                <div class="col-12 text-center">
                     <h2 class="section-heading">언론</h2>
                     <h3 class="section-subheading text-muted">최근 30일간 언론 언급으로 보는 대선후보 이슈정도</h3>
                     <select id="press-select" class="col-6 form-control mx-auto" title="언론사 선택">
@@ -493,7 +494,7 @@
     <section id="keyword">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-auto text-center">
+                <div class="col-12 text-center">
                     <h2 class="section-heading">데일리 뉴스 요약</h2>
                     <h3 class="section-subheading text-muted">매일매일의 뉴스를 요약하여 뽑은 키워드 입니다<br>키워드를 선택하면 관련 뉴스를 바로 볼 수 있어요</h3>
                 </div>
@@ -528,7 +529,7 @@
     <section id="cheering" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-auto text-center">
+                <div class="col-12 text-center">
                     <h2 class="section-heading">대선주자 응원하기</h2>
                     <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
                 </div>
@@ -575,7 +576,7 @@
     <section id="donate">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-auto text-center">
+                <div class="col-12 text-center">
                     <h2 class="section-heading">기부하기</h2>
                     <h3 class="section-subheading text-muted">대선후보/대선닷컴에 기부하세요</h3>
                 </div>
@@ -619,7 +620,7 @@
     <section id="labs" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-auto text-center">
+                <div class="col-12 text-center">
                     <h2 class="section-heading">대선닷컴 연구소</h2>
                     <h3 class="section-subheading text-muted">만들다만 기능들을 보고싶다면 클릭하세요</h3>
                 </div>
@@ -790,8 +791,45 @@
 </script>
 
 <script type="text/javascript">
-    $('#slot-share').click(function () {
-        console.log('slot-share click');
+    $('#slot-share-facebook').click(function () {
+        console.log('slot-share candidate : ' + slot_result_candidate + ', count : ' + slot_result_count);
+        var slotModalBody = $("#slot-modal-body");
+        html2canvas(slotModalBody, {
+            onrendered: function (canvas) {
+                slotModalBody.css('background-color', 'white');
+                var image = canvas.toDataURL("image/png");
+
+                waitMe($('#slot-modal'));
+                $.ajax({
+                    url:'/apis/upload',
+                    headers: {
+                        'Content-Type':'application/json'
+                    },
+                    data: JSON.stringify({
+                        'image': image
+                    }),
+                    type:'POST',
+                    success:function(data){
+                        console.log(data);
+                        $('#slot-modal').waitMe('hide');
+                        FB.ui({
+                            method: 'share',
+                            display: 'popup',
+                            picture : data,
+                            href: 'https://2017daesun.com'
+                        }, function(response){
+                            slotModalBody.css('background-color', '');
+                            console.log(response);
+                        });
+                    },
+                    error: function(data, status, err) {
+                        slotModalBody.css('background-color', '');
+                        $('#slot-modal').waitMe('hide');
+                        console.log(err);
+                    }
+                });
+            }
+        });
     });
 </script>
 
@@ -799,6 +837,8 @@
     //TODO: 슬롯머신
     var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '남경필', '심상정', '손학규', '유승민'];
     var slot_count = 0;
+    var slot_result_count;
+    var slot_result_candidate;
     var machine1 = $("#slot-machine-1").slotMachine({
 					active	: Math.floor(Math.random() * 10),
 					delay	: 500
@@ -826,8 +866,10 @@
                 $('#slot-machine-count').html('#' + slot_count);
                 result_3 = active;
 
-                if (result_1 == result_2 && result_2 == result_3) {
+//                if (result_1 == result_2 && result_2 == result_3) {
                     waitMe($('#slot'));
+                    slot_result_candidate = slot_candidates[result_1];
+                    slot_result_count = slot_count;
                     $.ajax({
                             url: '/slot',
                             headers: {
@@ -852,9 +894,9 @@
                                 $('#slot').waitMe('hide');
                             }
                         });
-                } else {
-                    $('#slot-machine-count').tooltip('show');
-                }
+//                } else {
+//                    $('#slot-machine-count').tooltip('show');
+//                }
                 break;
         }
     }

@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response
 from django.views.decorators.csrf import csrf_exempt
-
+from django.views.decorators.cache import cache_page
 from apis import views
 from django.http import HttpResponse
 from datetime import datetime
@@ -16,6 +16,7 @@ def terms(request):
     return render(request, 'terms.html')
 
 
+@cache_page(60 * 1)
 def main(request):
     ratings = views.approval_rating_list(None, True)
     cheerings = views.get_cheering_message_list(0)
@@ -46,6 +47,7 @@ def cheering(request):
     return render_to_response('cheering_table.html', {'cheering_list': lists, 'today': datetime.today()})
 
 
+@cache_page(60 * 10)
 @csrf_exempt
 def rating(request):
     if request.method == 'POST':
@@ -88,6 +90,7 @@ def luckyname(request):
     return render_to_response('lucky_name_modal.html', result)
 
 
+@cache_page(60 * 10)
 @csrf_exempt
 def keyword(request):
     result = views.get_issue_keyword_list(request.GET.get('date', None))
@@ -98,6 +101,7 @@ def keyword(request):
         return render_to_response('keyword.html', {'results': []})
 
 
+@cache_page(60 * 10)
 @csrf_exempt
 def news(request):
     if request.method == 'POST':

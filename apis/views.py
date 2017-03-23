@@ -45,18 +45,23 @@ def save_lucky_rating(candidate, type, input):
 
 def get_news_list(request):
     body = JSONParser().parse(request)
-    keywords = body.get('keywords', None)
-    keywords = keywords.split(' ')
-    q_list = []
-    for keyword in keywords:
-        if keyword != 'ALL':
-            q_list.append(Q(title__contains=keyword))
+    request_keyword = body.get('keywords', None)
 
-    query = q_list.pop()
-    for item in q_list:
-        query &= item
+    cache = caches['default']
+    news_list = cache.get('news_' + request_keyword)
+    if news_list is None:
+        keywords = request_keyword.split(' ')
+        q_list = []
+        for keyword in keywords:
+            if keyword != 'ALL':
+                q_list.append(Q(title__contains=keyword))
 
-    news_list = Scraps.objects.filter(query).order_by('-created_at')[0:10]
+        query = q_list.pop()
+        for item in q_list:
+            query &= item
+
+        news_list = Scraps.objects.filter(query).order_by('-created_at')[0:10]
+        cache.set('news_' + request_keyword, news_list, timeout=600)
 
     return news_list
 
@@ -233,7 +238,6 @@ def lucky_rating_list():
     for lucky in lucky_ratings:
         lucky['rating'] = round((lucky['count'] / total) * 100, 1)
 
-    print(lucky_ratings)
     return list(lucky_ratings)
 
 
@@ -249,6 +253,7 @@ def approval_rating_list(cp, is_last):
         else:
             approval_ratings = ApprovalRating.objects.filter(type=1, date__gte=datetime.now() - timedelta(days=30), cp=cp) \
                 .values('candidate', 'date').annotate(rating=Avg(F('rating'))).order_by('date')
+
     return list(approval_ratings)
 
 
@@ -538,6 +543,7 @@ def get_issue_keyword_list(date):
     return results
 
 
+@cache_page(60 * 10)
 def get_issue_keyword_api(request):
     if request.method == 'GET':
         return JSONResponse(get_issue_keyword_list(request.GET.get('date', None)))
