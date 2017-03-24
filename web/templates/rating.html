@@ -1,5 +1,5 @@
 {% for result in ratings %}
-{% if forloop.counter0 == 0 and rating.date %}
+{% if forloop.counter0 == 0 and result.date %}
 <div class="col col-12">
     <p class="text-center">{{ result.date|date:"Y.m.d" }}에 발표된 여론조사 결과</p>
 </div>
