@@ -414,7 +414,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div id="constellation-result"></div>
+                    <div id="constellation-result" class="row justify-content-center"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary">공유하기</button>
@@ -797,7 +797,7 @@
                         FB.ui({
                             method: 'share',
                             picture : data,
-                            href: 'http://2017daesun.com'
+                            href: 'https://2017daesun.com'
                         }, function(response){
                             console.log(response);
                         });
@@ -842,7 +842,8 @@
                 break;
             case 'slot-machine-3':
                 slot_count++;
-                $('#slot-machine-count').html('#' + slot_count);
+                var slotModalCount = $('#slot-machine-count');
+                slotModalCount.html('#' + slot_count);
                 result_3 = active;
 
                 if (result_1 == result_2 && result_2 == result_3) {
@@ -874,7 +875,7 @@
                             }
                         });
                 } else {
-                    $('#slot-machine-count').tooltip('show');
+                    slotModalCount.tooltip('show');
                 }
                 break;
         }

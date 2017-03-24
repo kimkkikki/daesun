@@ -1,30 +1,11 @@
-{% load staticfiles %}
-{% for rating in ratings %}
+{% for result in ratings %}
 {% if forloop.counter0 == 0 and rating.date %}
 <div class="col col-12">
-    <p class="text-center">{{ rating.date|date:"Y.m.d" }}에 발표된 여론조사 결과</p>
+    <p class="text-center">{{ result.date|date:"Y.m.d" }}에 발표된 여론조사 결과</p>
 </div>
 {% endif %}
 <div class="col-3 col-md-2 text-center" data-aos="fade-up">
-    {% if rating.candidate == '문재인' %}
-    <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
-    {% elif rating.candidate == '안철수' %}
-    <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}">
-    {% elif rating.candidate == '이재명' %}
-    <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}">
-    {% elif rating.candidate == '안희정' %}
-    <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}">
-    {% elif rating.candidate == '심상정' %}
-    <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}">
-    {% elif rating.candidate == '유승민' %}
-    <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}">
-    {% elif rating.candidate == '남경필' %}
-    <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}">
-    {% elif rating.candidate == '홍준표' %}
-    <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}">
-    {% elif rating.candidate == '손학규' %}
-    <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
-    {% endif %}
-    <p>{{ rating.candidate }}<br>{{ rating.rating }}%</p>
+    {% include 'candidate_img_template.html' %}
+    <p>{{ result.candidate }}<br>{{ result.rating }}%</p>
 </div>
 {% endfor %}
