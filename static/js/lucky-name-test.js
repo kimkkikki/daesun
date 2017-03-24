@@ -19,7 +19,9 @@ $(document).ready(function(){
         });
     });
 
-    $('#kakao-link-btn').click(function(){
+    $('.share-facebook').click(function(){
+
+        var id = this.id;
 
         waitMe($('#lucky-name-modal-footer'));
 
@@ -38,7 +40,11 @@ $(document).ready(function(){
                     success:function(data){
                         url = data;
                         console.log(data);
-                        snsShare('kakaotalk', data, '베스트이름커플');
+                        if( id == 'name-share-facebook'){
+                            snsShare('facebook', data, null);
+                        }else if( id =='name-share-kakaotalk') {
+                            snsShare('kakaotalk', data, '베스트이름커플');
+                        }
                         $('#lucky-name-modal-footer').waitMe('hide');
 
                     },

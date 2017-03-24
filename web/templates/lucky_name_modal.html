@@ -16,24 +16,23 @@
         {% endif %}
     </div>
     <div class="row name-result" id="lucky_name_best">
-
-        <div class="col-4 text-center" data-aos="fade-in" style="margin:auto">
+        <div class="text-center name-best" data-aos="fade-in">
             {% include 'candidate_img_template.html' %}
             <br>
             <span id="best_candidate">{{ result.candidate }}</span><br>
             <span id="best_score">{{ result.score }}점</span>
         </div>
-        <div class="col-4 text-center name-result">
-            <div id="lucky_name_result_to" style="height:100%"></div>
+        <div class="text-center name-tree">
+            <div class="name-tree-canvas" id="lucky_name_result_to"></div>
         </div>
-        <div class="col-4 text-center name-result">
-            <div id="lucky_name_result_from" style="height:100%;"></div>
+        <div class="text-center name-tree">
+            <div class="name-tree-canvas" id="lucky_name_result_from"></div>
         </div>
     </div>
     <div class="row name-result-rest">
         {% for result in list %}
-            {% if forloop.counter != 1 %}
-                <div class="col-2 text-center">
+            {% if forloop.counter != 1 and forloop.counter < 8 %}
+                <div class="col-2 text-center name-rest">
                      {{ forloop.counter }} 등
                     {% include 'candidate_img_template.html' %}
                     <span>{{ result.candidate }}</span><br>

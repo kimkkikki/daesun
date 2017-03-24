@@ -178,12 +178,52 @@ ul.social-buttons li a {
     margin-right:0px;
 }
 
+.name-best{
+    width:100%;
+    margin:auto;
+    padding:5px;
+}
+
+.name-best .img-fluid{
+    width:100px;
+}
+
+.name-tree{
+ width:50%;
+}
+
+.name-tree-canvas{
+    height:150px;
+}
+
+.name-rest{
+    padding:3px;
+}
 
 #kakao-btn{
     width:30px;
 }
 
 @media (min-width: 768px) {
+    .name-best{
+        width:33.3%;
+    }
+    .name-tree{
+        width:33.3%;
+    }
+
+    .name-tree-canvas{
+        height:100%;
+    }
+
+    .name-best .img-fluid{
+        width:100%;
+    }
+
+    .name-rest{
+        padding:10px;
+    }
+
     .name-result-contents{
         padding:8px;
         font-size:1.3em;

@@ -343,7 +343,7 @@ def lucky_name(request):
     for item in best_to:
         for score in item:
             if length == 1:
-                to_nodes.append({"id": i, "label": score, "level": length-1, 'font': {'color': "#ec2400"}, "color": "#f1e500"})
+                to_nodes.append({"id": i, "label": score, "level": length-1, 'font': {'color': "#ffffff"}, "color": "#fec503"})
             else:
                 to_nodes.append({"id": i, "label": score, "level": length - 1})
             i += 1
@@ -358,7 +358,7 @@ def lucky_name(request):
     for item in best_from:
         for score in item:
             if length == 1:
-                from_nodes.append({"id": i, "label": score, "level": length-1, 'font': {'color': "#ec2400"}, "color": "#f1e500"})
+                from_nodes.append({"id": i, "label": score, "level": length-1, 'font': {'color': "#ffffff"}, "color": "#fec503"})
             else:
                 from_nodes.append({"id": i, "label": score, "level": length - 1})
             i += 1
