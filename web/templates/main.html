@@ -294,7 +294,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="slot-modal-body" class="modal-body">
+                <div id="slot-modal-body" class="modal-body white-background">
                     <div id="slot-result" class="row justify-content-center text-center">
                         <!--TODO 여기에 슬롯결과 표시됨-->
                     </div>
@@ -413,11 +413,13 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div id="constellation-modal-body" class="modal-body white-background">
                     <div id="constellation-result" class="row"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary">공유하기</button>
+                    <button type="button" class="btn btn-primary constellation-button" value="facebook">페이스북</button>
+                    <button type="button" class="btn btn-info constellation-button" value="twitter">트위터</button>
+                    <button type="button" class="btn btn-warning constellation-button" value="kakaotalk">카카오톡</button>
                 </div>
             </div>
         </div>
@@ -664,308 +666,15 @@
 
 <!-- Custom JS -->
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/sns.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/rating.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/constellation.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/press.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/keyword.js' %}"></script>
-
-<script type="text/javascript">
-    var isLoadPledgeRank = false;
-    $('#pledge-rank-button').click(function () {
-        if (!isLoadPledgeRank) {
-            waitMe($('#pledge'));
-            $.ajax({
-                url: '/pledge?type=rank',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                type: 'GET',
-                success: function(data) {
-                    $('#pledge-rank').html(data);
-                    $('#pledge-rank-modal').modal('show');
-                    $('#pledge').waitMe('hide');
-                    isLoadPledgeRank = true;
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                    $('#pledge').waitMe('hide');
-                }
-            });
-        } else {
-            $('#pledge-rank-modal').modal('show');
-        }
-    });
-
-    var blindResult;
-    var blindToken;
-    var blindList;
-    var blindLoopIndex;
-
-    $('#pledge-test-start-button').click(function () {
-        console.log('pledge start');
-        waitMe($('#pledge'));
-        $.ajax({
-            url: '/apis/pledge',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            dataType: 'json',
-            cache: false,
-            type: 'GET',
-            success: function(data) {
-                blindResult = [];
-                blindToken = data.token;
-                blindList = data.list;
-                blindLoopIndex = 1;
-
-                $('#pledge-test-title').html(blindList[0].title);
-                $('#pledge-test-contents').html(blindList[0].contents);
-                $('#pledge-test-count').html('1/' + blindList.length);
-                $('#pledge').waitMe('hide');
-                $('#pledge-test-modal').modal('show');
-            },
-            error: function(data, status, err) {
-                console.log(err);
-                $('#pledge').waitMe('hide');
-            }
-        });
-    });
-
-    $('#pledge-test-button-1, #pledge-test-button-2, #pledge-test-button-3').click(function () {
-        if (blindLoopIndex < 10) {
-            $('#pledge-test-title').html(blindList[blindLoopIndex].title);
-            $('#pledge-test-contents').html(blindList[blindLoopIndex].contents);
-            $('#pledge-test-count').html((blindLoopIndex + 1) + '/' + blindList.length);
-            blindLoopIndex += 1;
-            blindResult.push(this.value);
-        } else {
-            waitMe($('#pledge-test-modal'));
-            blindLoopIndex += 1;
-            blindResult.push(this.value);
-
-            console.log(blindResult);
-            $.ajax({
-                    url: '/pledge',
-                    cache: false,
-                    headers: {
-                        'Content-Type':'application/json'
-                    },
-                    async: true,
-                    type: 'POST',
-                    data: JSON.stringify({
-                        'token': blindToken,
-                        'list': blindResult
-                    }),
-                    success: function(data) {
-                        var testModal = $('#pledge-test-modal');
-                        testModal.waitMe('hide');
-                        testModal.modal('hide');
-                        $('#pledge-result').html(data);
-                        $('#pledge-result-modal').modal('show');
-                    },
-                    error: function(data, status, err) {
-                        $('#pledge-test-modal').waitMe('hide');
-                        console.log(err);
-                    }
-                });
-        }
-    });
-</script>
-
-<script type="text/javascript">
-    $('#slot-share-facebook').click(function () {
-        console.log('slot-share candidate : ' + slot_result_candidate + ', count : ' + slot_result_count);
-
-        waitMe($('#slot-modal'));
-        html2canvas($('#slot-modal-body'), {
-            onrendered: function (canvas) {
-                var image = canvas.toDataURL("image/jpeg");
-                $.ajax({
-                    url:'/apis/upload',
-                    headers: {
-                        'Content-Type':'application/json'
-                    },
-                    data: JSON.stringify({
-                        'image': image
-                    }),
-                    type:'POST',
-                    success:function(data){
-                        console.log(data);
-                        $('#slot-modal').waitMe('hide');
-                        FB.ui({
-                            method: 'share',
-                            picture : data,
-                            href: 'https://2017daesun.com'
-                        }, function(response){
-                            console.log(response);
-                        });
-                    },
-                    error: function(data, status, err) {
-                        $('#slot-modal').waitMe('hide');
-                        console.log(err);
-                    }
-                });
-            }
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    //TODO: 슬롯머신
-    var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '남경필', '심상정', '손학규', '유승민'];
-    var slot_count = 0;
-    var slot_result_count;
-    var slot_result_candidate;
-    var machine1 = $("#slot-machine-1").slotMachine({
-					active	: Math.floor(Math.random() * 10),
-					delay	: 500
-				});
-    var machine2 = $("#slot-machine-2").slotMachine({
-					active	: Math.floor(Math.random() * 10),
-					delay	: 500
-				});
-    var machine3 = $("#slot-machine-3").slotMachine({
-					active	: Math.floor(Math.random() * 10),
-					delay	: 500
-				});
-
-    var result_1, result_2, result_3;
-    function onComplete(active){
-        switch(this.element[0].id){
-            case 'slot-machine-1':
-                result_1 = active;
-                break;
-            case 'slot-machine-2':
-                result_2 = active;
-                break;
-            case 'slot-machine-3':
-                slot_count++;
-                var slotModalCount = $('#slot-machine-count');
-                slotModalCount.html('#' + slot_count);
-                result_3 = active;
-
-                if (result_1 == result_2 && result_2 == result_3) {
-                    waitMe($('#slot'));
-                    slot_result_candidate = slot_candidates[result_1];
-                    slot_result_count = slot_count;
-                    $.ajax({
-                            url: '/slot',
-                            headers: {
-                                'Content-Type':'application/json'
-                            },
-                            async: true,
-                            type: 'POST',
-                            data: JSON.stringify({
-                                'type': 'slot',
-                                'candidate': slot_candidates[result_1],
-                                'count': slot_count
-                            }),
-                            success: function(data) {
-                                $('#slot-result').html(data);
-                                $('#slot-modal').modal('show');
-                                //TODO 슬롯 카운트 초기화 언제?
-                                slot_count = 0;
-                                $('#slot').waitMe('hide');
-                            },
-                            error: function(data, status, err) {
-                                console.log(err);
-                                $('#slot').waitMe('hide');
-                            }
-                        });
-                } else {
-                    slotModalCount.tooltip('show');
-                }
-                break;
-        }
-    }
-
-	$('#slot-start').click(function(){
-        machine1.shuffle(5, onComplete);
-        machine2.shuffle(10, onComplete);
-        machine3.shuffle(15, onComplete);
-        $('#slot-machine-count').tooltip('hide');
-	});
-
-    $('#slot-honor-button').click(function () {
-        waitMe($('#slot'));
-        $.ajax({
-                url: '/slot/honor',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                async: true,
-                type: 'GET',
-                success: function(data) {
-                    $('#slot-honor-result').html(data);
-                    $('#slot-honor-modal').modal('show');
-                    $('#slot').waitMe('hide');
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                    $('#slot').waitMe('hide');
-                }
-            });
-
-    });
-</script>
-
-<script type="text/javascript">
-    var isCalendarLoad = false;
-    $('#calendar-button-1, #calendar-button-2, #calendar-button-3, #calendar-button-4, #calendar-button-5').click(function () {
-        if (!isCalendarLoad) {
-            waitMe($('#calendar-modal'));
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
-            var yyyy = today.getFullYear();
-
-            if(dd<10) {
-                dd='0'+dd
-            }
-            if(mm<10) {
-                mm='0'+mm
-            }
-
-            $.ajax({
-                    url: "/apis/sns",
-                    headers: {
-                        'Content-Type':'application/json'
-                    },
-                    async: true,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#calendar').fullCalendar({
-                            header: {
-                                left: 'prev,next',
-                                right: 'listDay, listWeek, month'
-                            },
-                            views: {
-                                listDay: { buttonText: '일간' },
-                                listWeek: { buttonText: '주간' },
-                                month: { buttonText: '월간' }
-                            },
-                            locale : 'ko',
-                            defaultView: 'listDay',
-                            defaultDate: yyyy + '-' + mm + '-' + dd,
-                            navLinks: true, // can click day/week names to navigate views
-                            editable: true,
-                            eventLimit: true, // allow "more" link when too many events
-                            events: data,
-                            eventOrder: "start"
-                        });
-                        $('#calendar-modal').waitMe('hide');
-                        isCalendarLoad = true;
-                    },
-                    error: function(data, status, err) {
-                        console.log(err);
-                        $('#calendar-modal').waitMe('hide');
-                    }
-            });
-        }
-    });
-</script>
+<script type="text/javascript" src="{% static 'js/main/slot.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/pledge.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/calendar.js' %}"></script>
 
 </html>

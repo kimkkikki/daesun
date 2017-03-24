@@ -624,15 +624,14 @@ def constellation_post(request):
     request_constellation = constellation.get_constellation((month, day))
     result = constellation.constellation_chemistry(request_constellation, candidate_dict_list)
     result = sorted(result, key=itemgetter('score'), reverse=True)
-    save_lucky_rating(result[0]['candidate'], 'star', str((month, day)))
 
     max_obj = max(result, key=itemgetter('score'))
-
     result_dict = {'constellation': request_constellation, 'bests': [], 'rests': []}
 
     for obj in result:
         if obj['score'] == max_obj['score']:
             result_dict['bests'].append(obj)
+            save_lucky_rating(obj['candidate'], 'star', str((month, day)))
         else:
             result_dict['rests'].append(obj)
 
@@ -706,5 +705,3 @@ def upload(request):
             f.write(base64.b64decode(imgstr))
             f.close()
             return HttpResponse(settings.MEDIA_URL + file_name)
-
-
