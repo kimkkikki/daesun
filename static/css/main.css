@@ -170,6 +170,7 @@ ul.social-buttons li a {
     font-size:0.7rem;
     margin-left:0px;
     margin-right:0px;
+    padding:0px;
 }
 .name-result-rest {
     font-size:0.6rem;
@@ -193,6 +194,7 @@ ul.social-buttons li a {
         width:100%;
         margin-left:0px;
         margin-right:0px;
+        padding:0px;
     }
 
     .name-result-rest {

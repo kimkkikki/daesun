@@ -137,8 +137,7 @@
             nodes: {
                 font: {
                     size: 50, // px
-                    color: '#000000',
-                    strokeWidth: 1
+                    color: '#000000'
                  },
                 color: {
                     background: '#ffffff',
@@ -183,8 +182,13 @@ $(function() {
 $(document).ready(function(){
 
     setInterval(function() {
-        network_from.fit();
-        network_to.fit();
+        if (network_from !== null) {
+           network_from.fit();
+        }
+        if (network_to !== null) {
+            network_to.fit();
+        }
+
         $('.name-result').style = 'padding:0px;margin:auto';
 
     }, 100);
