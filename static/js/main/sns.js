@@ -21,6 +21,23 @@ window.fbAsyncInit = function() {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+
 function snsShare(sns, imageUrl, title) {
     if (sns == 'facebook') {
         console.log(sns);
@@ -36,7 +53,13 @@ function snsShare(sns, imageUrl, title) {
             }
         });
     } else if (sns == 'twitter') {
-        console.log(sns);
+        //TODO: 이미지 공유 방법 모르겠음..
+        var windowOptions = 'scrollbars=yes,resizable=yes,toolbar=no,location=yes',
+            width = 550,
+            height = 420;
+
+        window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(imageUrl), 'intent', windowOptions + ',width=' + width +
+                                           ',height=' + height);
     } else if (sns == 'kakaotalk') {
         console.log(sns);
         Kakao.Link.sendTalkLink({
