@@ -625,7 +625,17 @@ def constellation_post(request):
     result = sorted(result, key=itemgetter('score'), reverse=True)
     save_lucky_rating(result[0]['candidate'], 'star', str((month, day)))
 
-    return result
+    max_obj = max(result, key=itemgetter('score'))
+
+    result_dict = {'constellation': request_constellation, 'bests': [], 'rests': []}
+
+    for obj in result:
+        if obj['score'] == max_obj['score']:
+            result_dict['bests'].append(obj)
+        else:
+            result_dict['rests'].append(obj)
+
+    return result_dict
 
 
 @csrf_exempt

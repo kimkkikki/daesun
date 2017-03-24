@@ -1,6 +1,33 @@
-{% for result in constellation_result %}
-<div>
-<p>{{ result.candidate }} {{ result.constellation }} {{ result.score }}</p>
-
+<div class="col-6 mx-auto">
+    {% if constellation_result.bests|length > 1 %}
+    <div class="row justify-content-center">
+    {% endif %}
+    {% for result in constellation_result.bests %}
+        {% if constellation_result.bests|length == 2 %}
+        <div class="col-6 text-center">
+        {% elif constellation_result.bests|length == 3 %}
+        <div class="col-4 text-center">
+        {% endif %}
+            {% include 'candidate_img_template.html' %}
+            <p>{{ result.candidate }}</p>
+            <p>{{ result.constellation }}</p>
+            <p>{{ result.score }}</p>
+        {% if constellation_result.bests|length == 2 %}
+        </div>
+        {% elif constellation_result.bests|length == 3 %}
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>
+<div class="col-6 text-center">
+    내별자리 {{ constellation_result.constellation }}
+</div>
+{% for result in constellation_result.rests %}
+<div class="col-3 col-md-2 text-center">
+    {% include 'candidate_img_template.html' %}
+    <p>{{ result.candidate }}</p>
+    <p>{{ result.constellation }}</p>
+    <p>{{ result.score }}</p>
 </div>
 {% endfor %}
