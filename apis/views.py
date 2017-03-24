@@ -331,7 +331,7 @@ def lucky_name(request):
 
     if len(result_list) > 0:
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
-        save_lucky_rating(result_list[0]['candidate'], 'name','')
+        save_lucky_rating(result_list[0]['candidate'], 'name', name)
 
     i, j, length, to_nodes, from_nodes = 0, 0, len(best_to), [], []
 
@@ -363,7 +363,7 @@ def lucky_name(request):
             i += 1
         length -= 1
 
-    return {'name_length': len(name)+3, 'name': name, 'best_one': result_list[0], 'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes}
+    return {'name_length': len(name)+3, 'name': name, 'result': result_list[0], 'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes}
 
 
 @api_view(['GET'])
