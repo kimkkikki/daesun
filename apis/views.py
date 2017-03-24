@@ -27,7 +27,8 @@ candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'bl
                             {'candidate': '심상정', 'constellation': '물고기', 'blood': 'B', 'twitter': 'sangjungsim'},
                             {'candidate': '유승민', 'constellation': '염소', 'blood': 'A', 'twitter': ''},
                             {'candidate': '남경필', 'constellation': '물병', 'blood': '', 'twitter': ''},
-                            {'candidate': '안철수', 'constellation': '물고기', 'blood': 'AB', 'twitter': 'cheolsoo0919'}]
+                            {'candidate': '안철수', 'constellation': '물고기', 'blood': 'AB', 'twitter': 'cheolsoo0919'},
+                            {'candidate': '홍준표', 'constellation': '사수', 'blood': 'A', 'twitter': ''}]
 
 
 class JSONResponse(HttpResponse):
