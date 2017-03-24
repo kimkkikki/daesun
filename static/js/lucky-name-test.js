@@ -24,11 +24,11 @@ $(document).ready(function(){
     $('#kakao-link-btn').click(function(){
 
         var url = 'http://imgnews.naver.com/image/082/2017/02/21/20170221000028_0_99_20170222115012.jpg';
+        waitMe($('#lucky-name-modal-footer'));
 
         html2canvas($("#lucky-name-result"), {
             onrendered: function(canvas) {
                 var image = canvas.toDataURL("image/png");
-
                 $.ajax({
                     url:'/apis/upload',
                     headers: {
@@ -50,11 +50,21 @@ $(document).ready(function(){
                             webButton: {
                                 text: '2017daesun.com',
                                 url: 'http://2017daesun.com'
+                            },
+                            // success:function(){
+                            //     console.log('success share kakaotalk')
+                            // },
+                            fail: function(){
+                                alert('카카오톡 앱이 설치되어 있는 모바일 기기에서만 전송 가능합니다.');
+                                console.log('fail share kakaotalk');
                             }
                         });
+                        $('#lucky-name-modal-footer').waitMe('hide');
+
                     },
                     error: function(data, status, err) {
                         console.log(err);
+                        $('#lucky-name-modal-footer').waitMe('hide');
                     }
                 });
             }

@@ -20,6 +20,9 @@ import re
 import base64
 import random
 from google.cloud import storage
+import os
+from django.conf import settings
+
 
 candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
                             {'candidate': '안희정', 'constellation': '황소', 'blood': 'A', 'twitter': 'steelroot'},
@@ -329,7 +332,7 @@ def lucky_name(request):
 
     if len(result_list) > 0:
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
-        save_lucky_rating(result_list[0]['candidate'], 'name','')
+        save_lucky_rating(result_list[0]['candidate'], 'name', name)
 
     i, j, length, to_nodes, from_nodes = 0, 0, len(best_to), [], []
 
@@ -361,7 +364,7 @@ def lucky_name(request):
             i += 1
         length -= 1
 
-    return {'name_length': len(name)+3, 'name': name, 'best_one': result_list[0], 'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes}
+    return {'name_length': len(name)+3, 'name': name, 'result': result_list[0], 'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes}
 
 
 @api_view(['GET'])
@@ -687,12 +690,21 @@ def upload(request):
         body = JSONParser().parse(request)
         file_format, imgstr = str(body.get('image')).split(';base64,')
         ext = file_format.split('/')[-1]
-
-        gcs = storage.Client()
-        bucket = gcs.get_bucket('daesun2017.appspot.com')
         today_string = datetime.now().strftime('%Y%m%d_%H%M%S_')
-        filename = 'share/' + today_string + str(random.random()).split('.')[1] + "." + ext
-        blob = bucket.blob(filename)
-        blob.upload_from_string(base64.b64decode(imgstr), content_type=file_format)
 
-        return HttpResponse(blob.public_url)
+        if os.getenv('GAE_INSTANCE'):
+            gcs = storage.Client()
+            bucket = gcs.get_bucket('daesun2017.appspot.com')
+            filename = 'share/' + today_string + str(random.random()).split('.')[1] + "." + ext
+            blob = bucket.blob(filename)
+            blob.upload_from_string(base64.b64decode(imgstr), content_type=file_format)
+
+            return HttpResponse(blob.public_url)
+        else:
+            file_name = "image/" + today_string + str(random.random()) + "." + ext
+            f = open(settings.MEDIA_ROOT + file_name, "wb")
+            f.write(base64.b64decode(imgstr))
+            f.close()
+            return HttpResponse(settings.MEDIA_URL + file_name)
+
+
