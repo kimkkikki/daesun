@@ -23,7 +23,6 @@ $(document).ready(function(){
 
     $('#kakao-link-btn').click(function(){
 
-        var url = 'http://imgnews.naver.com/image/082/2017/02/21/20170221000028_0_99_20170222115012.jpg';
         waitMe($('#lucky-name-modal-footer'));
 
         html2canvas($("#lucky-name-result"), {
@@ -40,6 +39,7 @@ $(document).ready(function(){
                     type:'POST',
                     success:function(data){
                         url = data;
+                        console.log(data);
                         Kakao.Link.sendTalkLink({
                             label: '베스트이름커플',
                             image: {
@@ -51,9 +51,6 @@ $(document).ready(function(){
                                 text: '2017daesun.com',
                                 url: 'http://2017daesun.com'
                             },
-                            // success:function(){
-                            //     console.log('success share kakaotalk')
-                            // },
                             fail: function(){
                                 alert('카카오톡 앱이 설치되어 있는 모바일 기기에서만 전송 가능합니다.');
                                 console.log('fail share kakaotalk');
