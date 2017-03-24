@@ -24,11 +24,11 @@ $(document).ready(function(){
     $('#kakao-link-btn').click(function(){
 
         var url = 'http://imgnews.naver.com/image/082/2017/02/21/20170221000028_0_99_20170222115012.jpg';
+        waitMe($('#lucky-name-result'));
 
         html2canvas($("#lucky-name-result"), {
             onrendered: function(canvas) {
                 var image = canvas.toDataURL("image/png");
-
                 $.ajax({
                     url:'/apis/upload',
                     headers: {
@@ -50,11 +50,15 @@ $(document).ready(function(){
                             webButton: {
                                 text: '2017daesun.com',
                                 url: 'http://2017daesun.com'
-                            }
+                            },
+                            fail: function(){alert('모바일 기기에서만 가능한 기능입니다.');}
                         });
+                        $('#lucky-name-result').waitMe('hide');
+
                     },
                     error: function(data, status, err) {
                         console.log(err);
+                        $('#lucky-name-result').waitMe('hide');
                     }
                 });
             }
