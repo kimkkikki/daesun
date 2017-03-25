@@ -64,6 +64,7 @@ function onComplete(active){
             slotModalCount.html('#' + slot_count);
             result_3 = active;
 
+            slotStart.prop('disabled', false);
             if (result_1 == result_2 && result_2 == result_3) {
                 waitMe($('#slot'));
                 slot_result_candidate = slot_candidates[result_1];
@@ -99,7 +100,10 @@ function onComplete(active){
     }
 }
 
-$('#slot-start').click(function(){
+var slotStart = $('#slot-start');
+
+slotStart.click(function(){
+    slotStart.prop('disabled', true);
     machine1.shuffle(5, onComplete);
     machine2.shuffle(10, onComplete);
     machine3.shuffle(15, onComplete);

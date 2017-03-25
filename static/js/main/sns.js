@@ -52,14 +52,16 @@ function snsShare(sns, imageUrl, title) {
                 console.log("Facebook Share Failure : " + JSON.stringify(response));
             }
         });
+
     } else if (sns == 'twitter') {
         //TODO: 이미지 공유 방법 모르겠음..
         var windowOptions = 'scrollbars=yes,resizable=yes,toolbar=no,location=yes',
             width = 550,
             height = 420;
 
-        window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(imageUrl), 'intent', windowOptions + ',width=' + width +
-                                           ',height=' + height);
+        window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(imageUrl),
+            'intent', windowOptions + ',width=' + width + ',height=' + height);
+
     } else if (sns == 'kakaotalk') {
         console.log(sns);
         Kakao.Link.sendTalkLink({

@@ -325,7 +325,7 @@ def lucky_name(request):
         score_to, score_to_list, name_to_list = hangle.name_chemistry(name, obj.get('candidate'))
         score_from, score_from_list, name_from_list = hangle.name_chemistry(obj.get('candidate'), name)
         result_list.append({'candidate': obj.get('candidate'), 'score_to': score_to, 'score_from': score_from,
-                            'score': score_to + score_from})
+                            'score': (score_to + score_from) / 2})
         if score < score_to + score_from:
             best_to, best_from, best_to_name, best_from_name = score_to_list, score_from_list, name_to_list, name_from_list
             score = score_to + score_from

@@ -50,7 +50,7 @@ $('#constellation-button').click(function() {
         alert('생일을 입력해야 합니다');
         return;
     }
-    waitMe($('#lucky'));
+    waitMe($('#constellation-lucky'));
     $.ajax({
             url: '/constellation',
             headers: {
@@ -65,11 +65,11 @@ $('#constellation-button').click(function() {
             success: function(data) {
                 $('#constellation-result').html(data);
                 $('#constellation-modal').modal('show');
-                $('#lucky').waitMe('hide');
+                $('#constellation-lucky').waitMe('hide');
             },
             error: function(data, status, err) {
                 console.log(err);
-                $('#lucky').waitMe('hide');
+                $('#constellation-lucky').waitMe('hide');
             }
         });
 });

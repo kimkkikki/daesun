@@ -50,9 +50,11 @@
     <p>나머지 후보들과의 별자리 궁합 점수입니다</p>
 </div>
 {% for result in constellation_result.rests %}
-<div class="col-3 col-md-2 text-center">
+{% if forloop.counter0 < 4 %}
+<div class="col-3 text-center">
     {% include 'candidate_img_template.html' %}
     <h5>{{ result.candidate }}</h5>
     <p>{{ result.constellation }}<br>{{ result.score|floatformat }}점</p>
 </div>
+{% endif %}
 {% endfor %}

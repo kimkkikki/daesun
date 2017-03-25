@@ -1,15 +1,15 @@
 {% load staticfiles %}
 <div id="lucky-name-result-detail" class="row" style="margin-left:0; margin-right:0">
     <div class="text-center name-result-contents">
-        {% if result.score >= 180 %}
+        {% if result.score >= 90 %}
         자음과 모음의 오묘한 조화~ 이 정도면 백년해로 가능!
-        {% elif result.score >= 160 %}
+        {% elif result.score >= 80 %}
         누가 그랬던가. 우린 인연이라고
-        {% elif result.score >= 140 %}
+        {% elif result.score >= 70 %}
         맞을듯 안 맞을듯. 싸우면서 사랑하는거지
-        {% elif result.score >= 100 %}
+        {% elif result.score >= 50 %}
         반이라도 비슷한게 어디야
-        {% elif result.score >= 60 %}
+        {% elif result.score >= 30 %}
         우리… 계속 만나도 되겠니?
         {% else %}
         너.. 나 아는척 하지마.

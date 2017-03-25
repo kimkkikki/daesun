@@ -42,7 +42,7 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#page-top">2017대선닷컴</a>
+        <a class="navbar-brand" href="#page-top">2017대선닷컴 <span id="d-day" class="badge badge-danger"></span></a>
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="navbar-nav ml-auto">
@@ -68,17 +68,17 @@
         </div>
     </nav>
 
-    <header>
-        <div class="container-fluid">
-            <div class="intro-text">
-                <div class="intro-lead-in">대한민국을 책임질 대통령</div>
-                <div class="intro-heading">당신은 누구를 고르시습니까?</div>
-                <div class="intro-guide">2017대선닷컴은 특정 후보를 지지하지 않습니다.<br>본 사이트의 모든 콘텐츠는 오직 <strong>재미</strong>를 위해 만들어 졌습니다.</div>
-            </div>
-        </div>
-    </header>
+    <!--<header>-->
+        <!--<div class="container-fluid">-->
+            <!--<div class="intro-text">-->
+                <!--<div class="intro-lead-in">대한민국을 책임질 대통령</div>-->
+                <!--<div class="intro-heading">당신은 누구를 고르시습니까?</div>-->
+                <!--<div class="intro-guide">2017대선닷컴은 특정 후보를 지지하지 않습니다.<br>본 사이트의 모든 콘텐츠는 오직 <strong>재미</strong>를 위해 만들어 졌습니다.</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</header>-->
 
-    <div role="toolbar">
+    <div class="first-section" role="toolbar">
         <div class="btn-group special" role="group">
             <button id="calendar-button-1" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">3.10<br>예비후보자 등록</button>
             <button id="calendar-button-2" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.15 ~ 16<br>후보자 등록</button>
@@ -100,6 +100,214 @@
                 </div>
                 <div class="modal-body">
                     <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="lucky" class="light-bg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h2 class="section-heading">럭키박스</h2>
+                    <h3 class="section-subheading text-muted">후보자를 고르는 가장 재밌는 방법</h3>
+                </div>
+            </div>
+            <div id="slot">
+                <div class="row justify-content-center section-contents">
+                    <div class="col-12 text-center">
+                        <h5>돌려돌려 대선 돌림판</h5>
+                        <p class="text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</p>
+                    </div>
+                    <div class="col-4" data-aos="fade-right">
+                        <div id="slot-machine-1" class="randomizeMachine text-center">
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
+                        </div>
+                    </div>
+                    <div class="col-4" data-aos="fade-up" data-aos-delay="250">
+                        <div id="slot-machine-2" class="randomizeMachine text-center">
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
+                        </div>
+                    </div>
+                    <div class="col-4" data-aos="fade-left" data-aos-delay="500">
+                        <div id="slot-machine-3" class="randomizeMachine text-center">
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
+                        </div>
+                    </div>
+                </div>
+                <div id="slot-machine-count" class="row justify-content-center" data-toggle="tooltip" data-placement="bottom" title="아까비.. 다시 돌릴래요?"></div>
+                <div class="row justify-content-center">
+                    <div class="mx-auto">
+                        <button id="slot-start" type="button" class="btn btn-secondary">돌려돌려!</button>
+                        <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center section-contents">
+                <div id="name-lucky" class="col-12 col-md-6 text-center lucky-box">
+                    <h3>이름점</h3>
+                    <p>자음모음 획수로 보는 후보자와의 궁합</p>
+                    <div class="input-group">
+                        <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" id='buttonUserName' data-toggle="modal" data-target="#lucky-name-modal">확인</button>
+                        </span>
+                    </div>
+                </div>
+                <div id="constellation-lucky" class="col-12 col-md-6 text-center lucky-box">
+                    <h3>별자리점</h3>
+                    <p>로맨틱한 밤하늘로 알아보는 궁합</p>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-btn">
+                            <button id="constellation-month" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">몇월</button>
+                            <div class="dropdown-menu">
+                                {% for i in "xxxxxxxxxxxx" %}
+                                <button class="dropdown-item constellation-month" value="{{ forloop.counter }}">{{ forloop.counter }}월</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="input-group-addon">
+                            &nbsp;
+                        </div>
+                        <div class="input-group-btn">
+                            <button id="constellation-day" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">몇일</button>
+                            <div class="dropdown-menu">
+                                {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
+                                <button class="dropdown-item constellation-day" value="{{ forloop.counter }}">{{ forloop.counter }}일</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <span class="input-group-btn">
+                            <button id="constellation-button" type="button" class="btn btn-primary">확인</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 슬롯 결과 모달뷰 -->
+    <div id="slot-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">축하합니다</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="slot-modal-body" class="modal-body white-background">
+                    <div id="slot-result" class="row justify-content-center text-center">
+                        <!--TODO 여기에 슬롯결과 표시됨-->
+                    </div>
+                    <div class="row justify-content-center text-center">
+                        <div class="mx-auto">
+                            <button id="slot-share" class="btn btn-primary">공유하고 명예의전당 등록</button>
+                            <button id="slot-share-facebook" class="btn btn-primary">페이스북</button>
+                            <button class="btn btn-secondary" data-dismiss="modal">다시 도전하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 명예의 전당 모달뷰 -->
+    <div id="slot-honor-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">명예의 전당</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="slot-honor-result">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<section id="lucky">-->
+        <!--<div class="container">-->
+            <!--<div class="row justify-content-center">-->
+                <!--<div class="col-12 text-center">-->
+                    <!--<h2 class="section-heading">럭키박스</h2>-->
+                    <!--<h3 class="section-subheading text-muted">후보자를 고르는 가장 재밌는 방법</h3>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</section>-->
+
+    <!-- 이름점 모달뷰 -->
+    <div id="lucky-name-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">이름점 결과</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="lucky-name-result" class="row text-center" style="background-color:#ffffff">
+                        <!--TODO 여기에 이름점 결과 표시됨-->
+                    </div>
+                <div class="modal-footer" id="lucky-name-modal-footer">
+                    <a id="kakao-link-btn">
+                        <button id="name-share-facebook" class="btn btn-primary">페이스북</button>
+                        <button id="name-share-kakaotalk" class="btn btn-primary" style="background-color: #fec503;border-color:#f6bf01;">카카오톡</button>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 별자리점 모달뷰 -->
+    <div id="constellation-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">별자리 궁합 결과</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="constellation-modal-body" class="modal-body white-background">
+                    <div id="constellation-result" class="row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary constellation-button" value="facebook">페이스북</button>
+                    <button type="button" class="btn btn-info constellation-button" value="twitter">트위터</button>
+                    <button type="button" class="btn btn-warning constellation-button" value="kakaotalk">카카오톡</button>
                 </div>
             </div>
         </div>
@@ -231,207 +439,6 @@
 
     <!-- Pledge Rank Modal -->
     {% include 'pledge_rank_modal.html' %}
-
-    <section id="slot" class="light-bg">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h2 class="section-heading">돌려돌려 대선 돌림판</h2>
-                    <h3 class="section-subheading text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</h3>
-                </div>
-            </div>
-            <div class="row justify-content-center section-contents">
-                <div class="col-4" data-aos="fade-right">
-                    <div id="slot-machine-1" class="randomizeMachine text-center">
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
-                    </div>
-                </div>
-                <div class="col-4" data-aos="fade-up" data-aos-delay="250">
-                    <div id="slot-machine-2" class="randomizeMachine text-center">
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
-                    </div>
-                </div>
-                <div class="col-4" data-aos="fade-left" data-aos-delay="500">
-                    <div id="slot-machine-3" class="randomizeMachine text-center">
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
-                        <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
-                    </div>
-                </div>
-            </div>
-            <div id="slot-machine-count" class="row justify-content-center" data-toggle="tooltip" data-placement="bottom" title="아까비.. 다시 돌릴래요?"></div>
-            <div class="row justify-content-center">
-                <div class="mx-auto">
-                    <button id="slot-start" type="button" class="btn btn-secondary">돌려돌려!</button>
-                    <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 슬롯 결과 모달뷰 -->
-    <div id="slot-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">축하합니다</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="slot-modal-body" class="modal-body white-background">
-                    <div id="slot-result" class="row justify-content-center text-center">
-                        <!--TODO 여기에 슬롯결과 표시됨-->
-                    </div>
-                    <div class="row justify-content-center text-center">
-                        <div class="mx-auto">
-                            <button id="slot-share" class="btn btn-primary">공유하고 명예의전당 등록</button>
-                            <button id="slot-share-facebook" class="btn btn-primary">페이스북</button>
-                            <button class="btn btn-secondary" data-dismiss="modal">다시 도전하기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 명예의 전당 모달뷰 -->
-    <div id="slot-honor-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">명예의 전당</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="slot-honor-result">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <section id="lucky">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h2 class="section-heading">럭키박스</h2>
-                    <h3 class="section-subheading text-muted">후보자를 고르는 가장 재밌는 방법</h3>
-                </div>
-            </div>
-            <div class="row justify-content-center section-contents">
-                <div class="col-12 col-md-6 text-center lucky-box">
-                    <h3>이름점</h3>
-                    <p>자음모음 획수로 보는 후보자와의 궁합</p>
-                    <div class="input-group">
-                        <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-primary" id='buttonUserName' data-toggle="modal" data-target="#lucky-name-modal">확인</button>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 text-center lucky-box">
-                    <h3>별자리점</h3>
-                    <p>로맨틱한 밤하늘로 알아보는 궁합</p>
-                    <div class="input-group justify-content-center">
-                        <div class="input-group-btn">
-                            <button id="constellation-month" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">몇월</button>
-                            <div class="dropdown-menu">
-                                {% for i in "xxxxxxxxxxxx" %}
-                                <button class="dropdown-item constellation-month" value="{{ forloop.counter }}">{{ forloop.counter }}월</button>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="input-group-addon">
-                            &nbsp;
-                        </div>
-                        <div class="input-group-btn">
-                            <button id="constellation-day" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">몇일</button>
-                            <div class="dropdown-menu">
-                                {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
-                                <button class="dropdown-item constellation-day" value="{{ forloop.counter }}">{{ forloop.counter }}일</button>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <span class="input-group-btn">
-                            <button id="constellation-button" type="button" class="btn btn-primary">확인</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 이름점 모달뷰 -->
-    <div id="lucky-name-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">이름점 결과</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="lucky-name-result" class="row text-center" style="background-color:#ffffff">
-                        <!--TODO 여기에 이름점 결과 표시됨-->
-                    </div>
-                <div class="modal-footer" id="lucky-name-modal-footer">
-                    <a id="kakao-link-btn">
-                        <button id="name-share-facebook" class="btn btn-primary">페이스북</button>
-                        <button id="name-share-kakaotalk" class="btn btn-primary" style="background-color: #fec503;border-color:#f6bf01;">카카오톡</button>
-                    </a>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 별자리점 모달뷰 -->
-    <div id="constellation-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">별자리 궁합 결과</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="constellation-modal-body" class="modal-body white-background">
-                    <div id="constellation-result" class="row"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary constellation-button" value="facebook">페이스북</button>
-                    <button type="button" class="btn btn-info constellation-button" value="twitter">트위터</button>
-                    <button type="button" class="btn btn-warning constellation-button" value="kakaotalk">카카오톡</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <section id="press" class="light-bg">
         <div class="container">
@@ -684,5 +691,13 @@
 <script type="text/javascript" src="{% static 'js/main/slot.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/pledge.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/calendar.js' %}"></script>
+
+<script type="text/javascript">
+    var now = new Date();
+    var then = new Date("05,09,2017");
+    var gap = then.getTime() - now.getTime();
+    gap = Math.floor(gap / (1000 * 60 * 60 * 24));
+    $('#d-day').html('D-' + gap);
+</script>
 
 </html>
