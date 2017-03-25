@@ -1,4 +1,4 @@
-<div class="col-12 col-md-6 mx-auto">
+<div class="col-12 mx-auto">
     <div class="row justify-content-center text-center">
         <div class="col-12">
             <p>나와 별자리 궁합이 가장 좋은 후보입니다</p>
@@ -24,37 +24,13 @@
     {% endfor %}
     </div>
 </div>
-<div class="col-12 col-md-6">
-    <div class="row justify-content-center align-items-center text-center">
-        <div class="col-3">
-            <h5>내별자리</h5>
-            <p>{{ constellation_result.constellation }}</p>
-        </div>
-        <div class="col-9">
-            <h5>종은 궁합</h5>
-            <div class="row">
-                <div class="col-4">좋은 별자리1</div>
-                <div class="col-4">좋은 별자리2</div>
-                <div class="col-4">좋은 별자리3</div>
-            </div>
-            <h5>나쁜 궁합</h5>
-            <div class="row">
-                <div class="col-4">나쁜 별자리1</div>
-                <div class="col-4">나쁜 별자리2</div>
-                <div class="col-4">나쁜 별자리3</div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="col-12">
     <p>나머지 후보들과의 별자리 궁합 점수입니다</p>
 </div>
 {% for result in constellation_result.rests %}
-{% if forloop.counter0 < 4 %}
-<div class="col-3 text-center">
+<div class="col-3 col-md-2 text-center">
     {% include 'candidate_img_template.html' %}
     <h5>{{ result.candidate }}</h5>
     <p>{{ result.constellation }}<br>{{ result.score|floatformat }}점</p>
 </div>
-{% endif %}
 {% endfor %}

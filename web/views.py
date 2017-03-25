@@ -18,7 +18,8 @@ def terms(request):
 
 @cache_page(60 * 1)
 def main(request):
-    ratings = views.approval_rating_list(None, True)
+    # ratings = views.approval_rating_list(None, True)
+    ratings = views.lucky_rating_list('all')
     cheerings = views.get_cheering_message_list(0)
     return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings, 'today': datetime.today()})
 
@@ -50,9 +51,9 @@ def cheering(request):
 @cache_page(60 * 10)
 @csrf_exempt
 def rating(request):
-    if request.method == 'POST':
-        ratings = views.lucky_rating_list()
-        return render_to_response('rating.html', {'ratings': ratings})
+    if request.method == 'GET':
+        ratings = views.lucky_rating_list(request.GET.get('type', 'all'))
+        return render_to_response('rating_lucky.html', {'results': ratings})
     else:
         return HttpResponse(status=404)
 

@@ -13,8 +13,8 @@ header {
     color: white;
 }
 header .intro-text {
-    padding-top: 130px;
-    padding-bottom: 30px;
+    padding-top: 100px;
+    padding-bottom: 15px;
 }
 header .intro-text .intro-lead-in {
     font-size: 14px;
@@ -28,7 +28,7 @@ header .intro-text .intro-heading {
 }
 header .intro-guide {
     font-family: 'Nanum Barun Gothic UltraLight', sans-serif;
-	font-size: 10px;
+	font-size: 9px;
 	font-weight: 200;
 	font-style: normal;
 	font-stretch: normal;
@@ -37,8 +37,8 @@ header .intro-guide {
 }
 @media (min-width: 768px) {
     header .intro-text {
-        padding-top: 300px;
-        padding-bottom: 25px;
+        padding-top: 150px;
+        padding-bottom: 70px;
     }
     header .intro-text .intro-lead-in {
         font-size: 40px;
@@ -64,7 +64,7 @@ header .intro-guide {
 }
 
 section {
-    padding: 80px 0;
+    padding: 70px 0;
 }
 section h2.section-heading {
     font-size: 30px;
@@ -76,10 +76,11 @@ section h3.section-subheading {
     text-transform: none;
     font-style: italic;
     font-weight: 400;
+    margin-bottom: 20px;
 }
 @media (min-width: 768px) {
     section {
-        padding: 50px 0;
+        padding: 100px 0;
     }
 }
 
@@ -276,6 +277,14 @@ ul.social-buttons li a {
     margin-bottom: 30px;
 }
 
-.first-section {
-    padding-top: 56px;
+@media (max-width: 768px) {
+    p {
+        font-size: 13px;
+    }
+    td {
+        font-size: 13px;
+    }
+    tr {
+        font-size: 13px;
+    }
 }

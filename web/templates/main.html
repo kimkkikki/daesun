@@ -68,25 +68,25 @@
         </div>
     </nav>
 
-    <!--<header>-->
-        <!--<div class="container-fluid">-->
-            <!--<div class="intro-text">-->
-                <!--<div class="intro-lead-in">대한민국을 책임질 대통령</div>-->
-                <!--<div class="intro-heading">당신은 누구를 고르시습니까?</div>-->
-                <!--<div class="intro-guide">2017대선닷컴은 특정 후보를 지지하지 않습니다.<br>본 사이트의 모든 콘텐츠는 오직 <strong>재미</strong>를 위해 만들어 졌습니다.</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</header>-->
-
-    <div class="first-section" role="toolbar">
-        <div class="btn-group special" role="group">
-            <button id="calendar-button-1" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">3.10<br>예비후보자 등록</button>
-            <button id="calendar-button-2" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.15 ~ 16<br>후보자 등록</button>
-            <button id="calendar-button-3" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.25 ~ 30<br>재외투표소 투표</button>
-            <button id="calendar-button-4" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.4 ~ 5<br>사전투표소 투표</button>
-            <button id="calendar-button-5" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.9<br>대통령선거</button>
+    <header>
+        <div class="container-fluid">
+            <div class="intro-text">
+                <div class="intro-lead-in">재미로 보는 대선</div>
+                <div class="intro-heading">2017대선닷컴</div>
+                <div class="intro-guide">2017대선닷컴은 특정 후보를 지지하지 않습니다.<br>본 사이트의 모든 콘텐츠는 오직 <strong>재미</strong>를 위해 만들어 졌습니다.</div>
+            </div>
         </div>
-    </div>
+    </header>
+
+    <!--<div role="toolbar">-->
+        <!--<div class="btn-group special" role="group">-->
+            <!--<button id="calendar-button-1" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">3.10<br>예비후보자 등록</button>-->
+            <!--<button id="calendar-button-2" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.15 ~ 16<br>후보자 등록</button>-->
+            <!--<button id="calendar-button-3" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.25 ~ 30<br>재외투표소 투표</button>-->
+            <!--<button id="calendar-button-4" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.4 ~ 5<br>사전투표소 투표</button>-->
+            <!--<button id="calendar-button-5" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.9<br>대통령선거</button>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <!-- Calendar Modal -->
     <div id="calendar-modal" class="modal fade" role="dialog">
@@ -105,20 +105,16 @@
         </div>
     </div>
 
-    <section id="lucky" class="light-bg">
+    <section id="lucky">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h2 class="section-heading">럭키박스</h2>
-                    <h3 class="section-subheading text-muted">후보자를 고르는 가장 재밌는 방법</h3>
-                </div>
-            </div>
             <div id="slot">
-                <div class="row justify-content-center section-contents">
+                <div class="row justify-content-center">
                     <div class="col-12 text-center">
-                        <h5>돌려돌려 대선 돌림판</h5>
-                        <p class="text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</p>
+                        <h2 class="section-heading">돌려돌려 대선 돌림판</h2>
+                        <h3 class="section-subheading text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</h3>
                     </div>
+                </div>
+                <div class="row justify-content-center">
                     <div class="col-4" data-aos="fade-right">
                         <div id="slot-machine-1" class="randomizeMachine text-center">
                             <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
@@ -317,31 +313,39 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
-                    <h2 class="section-heading">누가누가 잘하나</h2>
-                    <h3 class="section-subheading text-muted">여론조사결과로 보는 대선 지지율 결과와<br>2017 대선닷컴의 럭키박스 결과를 기반으로 한 운빨 결과를 보여드립니다</h3>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="btn-group mx-auto" data-toggle="buttons">
-                    <label class="btn btn-outline-success active">
-                        <input type="radio" name="rating-radio" autocomplete="off" value="real" checked>여론조사
-                    </label>
-                    <label class="btn btn-outline-danger">
-                        <input type="radio" name="rating-radio" autocomplete="off" value="lucky">우주의기운
-                    </label>
+                    <p class="text-muted">2017대선닷컴 이용자가 뽑은</p>
+                    <h2 class="section-heading">우주의 기운이 돕는 후보</h2>
                 </div>
             </div>
             <div id="rating-template" class="row section-contents">
                 {% include 'rating.html' %}
             </div>
             <div class="col col-12">
-                <p class="text-center" id="rating-description">리얼미터가 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터 홈페이지를 참고하세요</p>
-                <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">그래프 보기</button>
+                <p class="text-center" id="rating-description">2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.</p>
+                <button id="rating-lucky-button" class="btn btn-info btn-block">우주가 어떻게 후보를 돕는지 보러가기</button>
+                <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">+더보기(여론조사 지지율 그래프 보기)</button>
             </div>
         </div>
     </section>
 
-    <!-- Rating Modal -->
+    <!-- 우주의기운 선정근거 모달 -->
+    <div id="lucky-rating-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">우주가 어떻게 후보를 돕는지 보러가기</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="lucky-rating-modal-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating graph Modal -->
     <div id="rating-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -370,77 +374,7 @@
         </div>
     </div>
 
-    <section id="pledge">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h2 class="section-heading">공약 이상형</h2>
-                    <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
-                </div>
-            </div>
-            <div class="row justify-content-center section-contents">
-                <div class="mx-auto">
-                    <button id="pledge-test-start-button" class="btn btn-primary">시작하기</button>
-                    <button id="pledge-rank-button" class="btn btn-secondary">랭킹보기</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 공약 이상형 모달 -->
-    <div id="pledge-test-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">공약 이상형</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="pledge-test" class="modal-body">
-                    <div class="jumbotron justify-content-center blind-test">
-                        <p id="pledge-test-count" class="pull-right"></p>
-                        <h4 id="pledge-test-title" class="text-center"></h4>
-                        <p id="pledge-test-contents" class="text-center"></p>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="mx-auto">
-                            <div class="btn-group" role="group" aria-label="공약 이상형 버튼">
-                                <button id="pledge-test-button-1" type="button" class="btn btn-success" value="1">좋아요</button>
-                                <button id="pledge-test-button-2" type="button" class="btn btn-danger" value="-1">싫어요</button>
-                                <button id="pledge-test-button-3" type="button" class="btn btn-secondary" value="0">몰라요</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="pledge-result-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">공약 이상형 결과</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="pledge-result"></div>
-                    <div class="row justify-content-center">
-                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">다시하기</button>
-                        <button type="button" class="btn btn-danger">공유하기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pledge Rank Modal -->
-    {% include 'pledge_rank_modal.html' %}
-
-    <section id="press" class="light-bg">
+    <section id="press">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -492,7 +426,7 @@
         </div>
     </section>
 
-    <section id="keyword">
+    <section id="keyword" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -527,7 +461,7 @@
         </div>
     </div>
 
-    <section id="cheering" class="light-bg">
+    <section id="cheering">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -574,12 +508,12 @@
         </div>
     </section>
 
-    <section id="donate">
+    <section id="donate" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
-                    <h2 class="section-heading">기부하기</h2>
-                    <h3 class="section-subheading text-muted">대선후보/대선닷컴에 기부하세요</h3>
+                    <h2 class="section-heading">후원하기</h2>
+                    <h3 class="section-subheading text-muted">대선후보/대선닷컴에 후원해 주세요</h3>
                 </div>
             </div>
             <div class="row section-contents">
@@ -594,7 +528,7 @@
                     <tbody>
                         <tr>
                             <td>문재인</td>
-                            <td>우리은행 1006-901-451607</td>
+                            <td>우리 1006-901-451607</td>
                             <td>문재인후원회</td>
                         </tr>
                         <tr>
@@ -609,7 +543,7 @@
                         </tr>
                         <tr>
                             <td>대선닷컴</td>
-                            <td>우리은행 계좌개설해야지</td>
+                            <td>우리 계좌개설해야지</td>
                             <td>대선닷컴</td>
                         </tr>
                     </tbody>
@@ -618,7 +552,7 @@
         </div>
     </section>
 
-    <section id="labs" class="light-bg">
+    <section id="labs">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -632,7 +566,7 @@
         </div>
     </section>
 
-    <footer>
+    <footer class="light-bg">
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-4 mx-auto">
@@ -689,7 +623,6 @@
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/keyword.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/slot.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main/pledge.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/calendar.js' %}"></script>
 
 <script type="text/javascript">

@@ -231,17 +231,49 @@ def pledge(request):
         return JSONResponse(pledge_post(request))
 
 
-def lucky_rating_list():
-    lucky_ratings = LuckyRating.objects.all().values('candidate').annotate(count=Count('candidate')).order_by('-count')
+def lucky_rating_list(result_type):
+    if result_type == 'all':
+        lucky_ratings = LuckyRating.objects.all().values('candidate', 'type').annotate(count=Count('candidate')).order_by('-count')
 
-    total = 0
-    for lucky in lucky_ratings:
-        total += lucky['count']
+        result_list = []
+        for lucky in lucky_ratings:
+            has_candidate = False
+            for result in result_list:
+                if lucky['candidate'] == result['candidate']:
+                    has_candidate = True
+                    if lucky['type'] == 'star':
+                        result['count'] += lucky['count'] * 1
+                    elif lucky['type'] == 'name':
+                        result['count'] += lucky['count'] * 5
+                    elif lucky['type'] == 'slot':
+                        result['count'] += lucky['count'] * 100
+                    break
 
-    for lucky in lucky_ratings:
-        lucky['rating'] = round((lucky['count'] / total) * 100, 1)
+            if not has_candidate:
+                if lucky['type'] == 'star':
+                    lucky['count'] *= 1
+                elif lucky['type'] == 'name':
+                    lucky['count'] *= 5
+                elif lucky['type'] == 'slot':
+                    lucky['count'] *= 100
+                result_list.append(lucky)
 
-    return list(lucky_ratings)
+        result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
+        return result_list
+    else:
+        lucky_ratings = LuckyRating.objects.all().values('candidate', 'type').annotate(count=Count('candidate')).order_by('-count')
+        result_list = list(lucky_ratings)
+
+        for result in result_list:
+            if result['type'] == 'star':
+                result['score'] = result['count'] * 1
+            elif result['type'] == 'name':
+                result['score'] = result['count'] * 5
+            elif result['type'] == 'slot':
+                result['score'] = result['count'] * 100
+
+        result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
+        return result_list
 
 
 def slot_honor_list():

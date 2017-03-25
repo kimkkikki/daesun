@@ -31,6 +31,7 @@ def constellation_chemistry(cons, candidate_dict):
                 constellation_chemistry_man_to_woman(candidate.get('constellation'), cons) + \
                 constellation_chemistry_woman_to_man(cons, candidate.get('constellation')) + \
                 constellation_chemistry_woman_to_man(candidate.get('constellation'), cons)
+        score /= 4
         candidate['score'] = score
 
     return candidate_dict
