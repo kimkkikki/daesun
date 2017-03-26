@@ -42,8 +42,9 @@ class JSONResponse(HttpResponse):
 
 
 def save_lucky_rating(candidate, type, input):
-    lucky_rating = LuckyRating(candidate=candidate, type=type, input=input)
-    lucky_rating.save()
+    if os.getenv('GAE_INSTANCE'):
+        lucky_rating = LuckyRating(candidate=candidate, type=type, input=input)
+        lucky_rating.save()
 
 
 def get_news_list(request):
