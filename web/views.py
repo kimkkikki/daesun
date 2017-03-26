@@ -3,12 +3,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_page
 from apis import views
 from django.http import HttpResponse
-from datetime import datetime
+from datetime import datetime, date
 
 
 def labs(request):
     book_list = views.get_shop()
-    # book_list = []
     return render(request, 'labs.html', {'book_list': book_list})
 
 
@@ -18,10 +17,10 @@ def terms(request):
 
 @cache_page(60 * 1)
 def main(request):
-    # ratings = views.approval_rating_list(None, True)
     ratings = views.lucky_rating_list('all')
     cheerings = views.get_cheering_message_list(0)
-    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings, 'today': datetime.today()})
+    d_day = (date(2017, 5, 9) - date.today()).days
+    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings, 'today': datetime.today(), 'd_day': d_day})
 
 
 def lets_encrypt(request, authorization_code):

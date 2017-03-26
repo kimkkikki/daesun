@@ -42,15 +42,12 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#page-top">2017대선닷컴 <span id="d-day" class="badge badge-danger"></span></a>
+        <a class="navbar-brand" href="#page-top">2017대선닷컴 <span class="badge badge-danger">D-{{ d_day }}</span></a>
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#rating">지지율 </a>
-                </li>
-                 <li class="nav-item">
-                    <a class="nav-link" href="#pledge">공약</a>
+                    <a class="nav-link" href="#rating">우주의기운</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#lucky">럭키박스</a>
@@ -78,15 +75,15 @@
         </div>
     </header>
 
-    <!--<div role="toolbar">-->
-        <!--<div class="btn-group special" role="group">-->
-            <!--<button id="calendar-button-1" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">3.10<br>예비후보자 등록</button>-->
-            <!--<button id="calendar-button-2" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.15 ~ 16<br>후보자 등록</button>-->
-            <!--<button id="calendar-button-3" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.25 ~ 30<br>재외투표소 투표</button>-->
-            <!--<button id="calendar-button-4" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.4 ~ 5<br>사전투표소 투표</button>-->
-            <!--<button id="calendar-button-5" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.9<br>대통령선거</button>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div role="toolbar">
+        <div class="btn-group special" role="group">
+            <button id="calendar-button-1" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">3.10<br>예비후보자 등록</button>
+            <button id="calendar-button-2" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.15 ~ 16<br>후보자 등록</button>
+            <button id="calendar-button-3" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">4.25 ~ 30<br>재외투표소 투표</button>
+            <button id="calendar-button-4" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.4 ~ 5<br>사전투표소 투표</button>
+            <button id="calendar-button-5" type="button" class="btn btn-secondary btn-schedule" data-toggle="modal" data-target="#calendar-modal">5.9<br>대통령선거</button>
+        </div>
+    </div>
 
     <!-- Calendar Modal -->
     <div id="calendar-modal" class="modal fade" role="dialog">
@@ -100,6 +97,70 @@
                 </div>
                 <div class="modal-body">
                     <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="rating" class="light-bg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <p class="text-muted">2017대선닷컴 이용자가 뽑은</p>
+                    <h2 class="section-heading">우주의 기운이 돕는 후보</h2>
+                </div>
+            </div>
+            <div id="rating-template" class="row section-contents">
+                {% include 'rating.html' %}
+            </div>
+            <div class="col col-12">
+                <p class="text-center" id="rating-description">2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.</p>
+                <button id="rating-lucky-button" class="btn btn-info btn-block">우주가 어떻게 후보를 돕는지 보러가기</button>
+                <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">+더보기(여론조사 지지율 그래프 보기)</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 우주의기운 선정근거 모달 -->
+    <div id="lucky-rating-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">우주가 어떻게 후보를 돕는지 보러가기</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="lucky-rating-modal-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating graph Modal -->
+    <div id="rating-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="btn-group mx-auto" data-toggle="buttons">
+                        <label class="btn btn-outline-info active">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="all" checked>전체
+                        </label>
+                        <label class="btn btn-outline-success">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="realmeter">리얼미터
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="gallup">한국갤럽
+                        </label>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="ratingChart"></div>
+                    <p class="text-center">리얼미터와 한국갤럽의 여론조사 결과를 재구성한 것입니다.<br>출처: 리얼미터, 한국갤럽</p>
                 </div>
             </div>
         </div>
@@ -251,17 +312,6 @@
         </div>
     </div>
 
-    <!--<section id="lucky">-->
-        <!--<div class="container">-->
-            <!--<div class="row justify-content-center">-->
-                <!--<div class="col-12 text-center">-->
-                    <!--<h2 class="section-heading">럭키박스</h2>-->
-                    <!--<h3 class="section-subheading text-muted">후보자를 고르는 가장 재밌는 방법</h3>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</section>-->
-
     <!-- 이름점 모달뷰 -->
     <div id="lucky-name-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -309,72 +359,7 @@
         </div>
     </div>
 
-    <section id="rating" class="light-bg">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <p class="text-muted">2017대선닷컴 이용자가 뽑은</p>
-                    <h2 class="section-heading">우주의 기운이 돕는 후보</h2>
-                </div>
-            </div>
-            <div id="rating-template" class="row section-contents">
-                {% include 'rating.html' %}
-            </div>
-            <div class="col col-12">
-                <p class="text-center" id="rating-description">2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.</p>
-                <button id="rating-lucky-button" class="btn btn-info btn-block">우주가 어떻게 후보를 돕는지 보러가기</button>
-                <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">+더보기(여론조사 지지율 그래프 보기)</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- 우주의기운 선정근거 모달 -->
-    <div id="lucky-rating-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">우주가 어떻게 후보를 돕는지 보러가기</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="lucky-rating-modal-body"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Rating graph Modal -->
-    <div id="rating-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <!--<h5 class="modal-title text-center">여론조사 지지율 차트</h5>-->
-                    <div class="btn-group mx-auto" data-toggle="buttons">
-                        <label class="btn btn-outline-info active">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="all" checked>전체
-                        </label>
-                        <label class="btn btn-outline-success">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="realmeter">리얼미터
-                        </label>
-                        <label class="btn btn-outline-primary">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="gallup">한국갤럽
-                        </label>
-                    </div>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="ratingChart"></div>
-                    <p class="text-center">리얼미터와 한국갤럽의 여론조사 결과를 재구성한 것입니다.<br>출처: 리얼미터, 한국갤럽</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <section id="press">
+    <section id="press" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -426,7 +411,7 @@
         </div>
     </section>
 
-    <section id="keyword" class="light-bg">
+    <section id="keyword">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -461,7 +446,7 @@
         </div>
     </div>
 
-    <section id="cheering">
+    <section id="cheering" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -508,7 +493,7 @@
         </div>
     </section>
 
-    <section id="donate" class="light-bg">
+    <section id="donate">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -552,7 +537,7 @@
         </div>
     </section>
 
-    <section id="labs">
+    <section id="labs" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -566,7 +551,7 @@
         </div>
     </section>
 
-    <footer class="light-bg">
+    <footer>
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-4 mx-auto">
@@ -624,13 +609,5 @@
 <script type="text/javascript" src="{% static 'js/main/keyword.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/slot.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/calendar.js' %}"></script>
-
-<script type="text/javascript">
-    var now = new Date();
-    var then = new Date("05,09,2017");
-    var gap = then.getTime() - now.getTime();
-    gap = Math.floor(gap / (1000 * 60 * 60 * 24));
-    $('#d-day').html('D-' + gap);
-</script>
 
 </html>
