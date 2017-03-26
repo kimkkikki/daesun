@@ -2,31 +2,25 @@
     {
       "origin": ["http://daesun2017.appspot.com"],
       "responseHeader": ["Content-Type"],
-      "method": ["GET", "HEAD"],
+      "method": ["GET", "HEAD", "POST", "DELETE", "OPTIONS"],
       "maxAgeSeconds": 3600
     },
     {
       "origin": ["http://2017daesun.com", "http://www.2017daesun.com"],
       "responseHeader": ["Content-Type"],
-      "method": ["GET", "HEAD"],
-      "maxAgeSeconds": 3600
-    },
-    {
-      "origin": ["http://www.2017daesun.com"],
-      "responseHeader": ["Content-Type"],
-      "method": ["GET", "HEAD"],
+      "method": ["GET", "HEAD", "POST", "DELETE", "OPTIONS"],
       "maxAgeSeconds": 3600
     },
     {
       "origin": ["https://2017daesun.com", "https://www.2017daesun.com"],
       "responseHeader": ["Content-Type"],
-      "method": ["GET", "HEAD"],
+      "method": ["GET", "HEAD", "POST", "DELETE", "OPTIONS"],
       "maxAgeSeconds": 3600
     },
     {
       "origin": ["http://daesun2017.appspot-preview.com"],
       "responseHeader": ["Content-Type"],
-      "method": ["GET", "HEAD"],
+      "method": ["GET", "HEAD", "POST", "DELETE", "OPTIONS"],
       "maxAgeSeconds": 3600
     }
 ]

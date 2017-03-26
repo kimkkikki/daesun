@@ -24,7 +24,16 @@ $(document).ready(function(){
         }
 
         var message = $("#cheering-message").val();
-        console.log(message);
+        if (message == null || message == '') {
+            alert('메세지를 입력하세요');
+            return;
+        }
+
+        var writer = $("#cheering-writer").val();
+        if (writer == '') {
+            writer = ip;
+        }
+
         waitMe($('#cheering'));
         $.ajax({
 			url: '/cheering',
@@ -36,7 +45,7 @@ $(document).ready(function(){
 			data: JSON.stringify({
                     'candidate': cheering_candidate_select,
                     'message': message,
-                    'ip': ip
+                    'ip': writer
                 }),
 			success: function(data) {
                 $('#cheering-table').html(data);

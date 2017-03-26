@@ -8,47 +8,48 @@ $('#slot-guide-button').click(function () {
 
 function share_facebook(){
     waitMe($('#slot-modal'));
-    domtoimage.toJpeg(document.getElementById('slot-result-detail'), { quality: 0.95 })
-        .then(function (dataUrl) {
-        $.ajax({
-            url:'/apis/upload',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            data: JSON.stringify({
-                'image': dataUrl
-            }),
-            type:'POST',
-            success:function(data){
-                console.log(data);
-                $('#slot-modal').waitMe('hide');
-                //snsShare('facebook', data, null);
-                $('#your_name').removeAttr('disabled');
-                $('#add_honor').removeAttr('disabled');
-            },
-            error: function(data, status, err) {
-                $('#slot-modal').waitMe('hide');
-                console.log(err);
-            }
-        });
-    })
-    .catch(function (error) {
-        console.error('oops, something went wrong!', error);
-        $('#slot-modal').waitMe('hide');
-    });
-}
-
-function share_kakaotalk(){
-    waitMe($('#slot-modal'));
-    domtoimage.toJpeg(document.getElementById('slot-result-detail'), { quality: 0.95 })
-        .then(function (dataUrl) {
+    html2canvas(document.getElementById('slot-result-detail'), {
+        useCORS: true,
+        onrendered: function(canvas) {
+            var image = canvas.toDataURL('image/jpeg', 0.9);
             $.ajax({
                 url:'/apis/upload',
                 headers: {
                     'Content-Type':'application/json'
                 },
                 data: JSON.stringify({
-                    'image': dataUrl
+                    'image': image
+                }),
+                type:'POST',
+                success:function(data){
+                    console.log(data);
+                    $('#slot-modal').waitMe('hide');
+                    snsShare('facebook', data, null);
+                    $('#your_name').removeAttr('disabled');
+                    $('#add_honor').removeAttr('disabled');
+                },
+                error: function(data, status, err) {
+                    $('#slot-modal').waitMe('hide');
+                    console.log(err);
+                }
+            });
+        }
+    });
+}
+
+function share_kakaotalk(){
+    waitMe($('#slot-modal'));
+    html2canvas(document.getElementById('slot-result-detail'), {
+        useCORS: true,
+        onrendered: function(canvas) {
+            var image = canvas.toDataURL('image/jpeg', 0.9);
+            $.ajax({
+                url:'/apis/upload',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                data: JSON.stringify({
+                    'image': image
                 }),
                 type:'POST',
                 success:function(data){
@@ -63,11 +64,8 @@ function share_kakaotalk(){
                     console.log(err);
                 }
             });
-        })
-    .catch(function (error) {
-        console.error('oops, something went wrong!', error);
-        $('#slot-modal').waitMe('hide');
-    });
+        }
+   });
 }
 
 var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '남경필', '심상정', '손학규', '유승민'];

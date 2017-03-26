@@ -171,7 +171,7 @@
             <div id="slot">
                 <div class="row justify-content-center">
                     <div class="col-12 text-center">
-                        <h2 class="section-heading">돌려돌려 대선 돌림판 <i id="slot-guide-button" class="fa fa-question-circle" aria-hidden="true"></i></h2>
+                        <h2 class="section-heading">돌려돌려 대선 돌림판 <i id="slot-guide-button" class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="클릭하면 가이드가 나와요"></i></h2>
                         <h3 class="section-subheading text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</h3>
                     </div>
                 </div>
@@ -485,27 +485,16 @@
                         <button class="dropdown-item cheering-candidate-select" value="홍준표">홍준표</button>
                     </div>
                 </div>
-                <input class="form-control" type="text" id="cheering-message" title="메세지">
+                <input class="form-control" type="text" id="cheering-message" placeholder="메세지를 입력해 주세요" title="메세지">
                 <span class="input-group-btn">
                     <button class="btn btn-secondary" type="button" id="post-cheering">등록</button>
                 </span>
             </div>
-            <div class="row section-contents">
-                <table class="table table-hover">
-                    <thead>
-                        <tr class="row m-0">
-                            <th class="col-2">응원후보</th>
-                            <th class="col-10 col-md-8">응원메세지</th>
-                            <th class="col-md-2 hidden-sm-down">작성자</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cheering-table">
-                        {% include 'cheering_table.html' %}
-                    </tbody>
-                    <tfoot>
-                        <tr><td colspan="4"><button id="cheering-more" class="btn btn-secondary btn-block">응원메세지 더보기</button></td></tr>
-                    </tfoot>
-                </table>
+            <div class="container section-contents">
+                <div id="cheering-table" class="row align-items-center">
+                    {% include 'cheering_table.html' %}
+                </div>
+                <button id="cheering-more" class="btn btn-secondary btn-block">응원메세지 더보기</button>
             </div>
         </div>
     </section>
@@ -636,9 +625,8 @@
 <script type="text/javascript" src="{% static 'js/main/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main/dom-to-image.min.js' %}"></script>
-<!--<script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>-->
-<!--<script type="text/javascript" src="{% static 'js/Canvas2Image.js' %}"></script>-->
+<script type="text/javascript" src="{% static 'js/main/dom-to-image.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/kakao.min.js' %}"></script>
 
 <!-- Custom JS -->

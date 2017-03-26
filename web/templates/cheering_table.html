@@ -1,11 +1,18 @@
-{% for obj in cheering_list %}
-<tr class="row m-0">
-    <td class="col-2">{{ obj.candidate }}</td>
-    <td class="col-10 col-md-8">{{ obj.message }}</td>
-    {% if obj.created.date < today.date %}
-    <td class="col-md-2 hidden-sm-down">{{ obj.created|date:"m.d" }}<br>{{ obj.ip }}</td>
-    {% else %}
-    <td class="col-md-2 hidden-sm-down">오늘 {{ obj.created|date:"G:i" }}<br>{{ obj.ip }}</td>
-    {% endif %}
-</tr>
+{% for result in cheering_list %}
+<div class="col-12 col-md-6 keyword-item">
+    <div class="row align-items-center">
+        <div class="col-2">
+            {% include 'candidate_img_template.html' %}
+        </div>
+        <div class="col-10">
+            {% if result.created.date < today.date %}
+                {{ result.ip }} | {{ result.created|date:"m.d" }}
+            {% else %}
+                {{ result.ip }} | 오늘 {{ result.created|date:"G:i" }}
+            {% endif %}
+            <br>
+            {{ result.message }}
+        </div>
+    </div>
+</div>
 {% endfor %}
