@@ -3,19 +3,16 @@
  */
 
 $('#slot-share-facebook').click(function () {
-    console.log('slot-share candidate : ' + slot_result_candidate + ', count : ' + slot_result_count);
-
     waitMe($('#slot-modal'));
-    html2canvas($('#slot-modal-body'), {
-        onrendered: function (canvas) {
-            var image = canvas.toDataURL("image/jpeg");
+    domtoimage.toJpeg(document.getElementById('slot-modal-content'), { quality: 0.95 })
+        .then(function (dataUrl) {
             $.ajax({
                 url:'/apis/upload',
                 headers: {
                     'Content-Type':'application/json'
                 },
                 data: JSON.stringify({
-                    'image': image
+                    'image': dataUrl
                 }),
                 type:'POST',
                 success:function(data){
@@ -28,8 +25,11 @@ $('#slot-share-facebook').click(function () {
                     console.log(err);
                 }
             });
-        }
-    });
+        })
+        .catch(function (error) {
+            console.error('oops, something went wrong!', error);
+            $('#slot-modal').waitMe('hide');
+        });
 });
 
 var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '남경필', '심상정', '손학규', '유승민'];

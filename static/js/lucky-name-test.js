@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
     $('#buttonUserName').click(function(){
-
         waitMe($('#lucky-name-modal'));
 
         $.ajax({
@@ -19,22 +18,18 @@ $(document).ready(function(){
         });
     });
 
-    $('.share-facebook').click(function(){
-
+    $('.share-name-lucky').click(function(){
         var id = this.id;
-
-        waitMe($('#lucky-name-modal-footer'));
-
-        html2canvas($("#lucky-name-result"), {
-            onrendered: function(canvas) {
-                var image = canvas.toDataURL("image/png");
+        waitMe($('#lucky-name-modal'));
+        domtoimage.toJpeg(document.getElementById('lucky-name-content'), { quality: 0.95 })
+            .then(function (dataUrl) {
                 $.ajax({
                     url:'/apis/upload',
                     headers: {
                         'Content-Type':'application/json'
                     },
                     data: JSON.stringify({
-                        'image': image
+                        'image': dataUrl
                     }),
                     type:'POST',
                     success:function(data){
@@ -45,16 +40,18 @@ $(document).ready(function(){
                         }else if( id =='name-share-kakaotalk') {
                             snsShare('kakaotalk', data, '베스트이름커플');
                         }
-                        $('#lucky-name-modal-footer').waitMe('hide');
+                        $('#lucky-name-modal').waitMe('hide');
 
                     },
                     error: function(data, status, err) {
                         console.log(err);
-                        $('#lucky-name-modal-footer').waitMe('hide');
+                        $('#lucky-name-modal').waitMe('hide');
                     }
                 });
-            }
-        });
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
+                $('#lucky-name-modal').waitMe('hide');
+            });
     });
-
 });

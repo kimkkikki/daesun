@@ -15,6 +15,10 @@ body {
     font-family: 'Nanum Barun Gothic UltraLight', sans-serif;
 }
 
+h1, h2, h3, h4, h5 {
+    font-family: "BM JUA", '배달의민족 주아', sans-serif;
+}
+
 header {
     font-family: "BM JUA", '배달의민족 주아', sans-serif;
     background: url('../img/header.png') no-repeat scroll center center;
@@ -286,7 +290,7 @@ ul.social-buttons li a {
     margin-bottom: 45px;
 }
 .white-background {
-    background-color: #FFFFFF;
+    background: #FFFFFF;
 }
 
 .top-bottom-margin {

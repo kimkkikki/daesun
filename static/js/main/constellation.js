@@ -19,16 +19,16 @@ $('.constellation-day').click(function () {
 $('.constellation-button').click(function () {
     var sns = this.value;
     waitMe($('#constellation-modal'));
-    html2canvas($('#constellation-modal-body'), {
-        onrendered: function (canvas) {
-            var image = canvas.toDataURL("image/jpeg");
+
+    domtoimage.toJpeg(document.getElementById('constellation-modal-contents'), { quality: 0.95 })
+        .then(function (dataUrl) {
             $.ajax({
                 url:'/apis/upload',
                 headers: {
                     'Content-Type':'application/json'
                 },
                 data: JSON.stringify({
-                    'image': image
+                    'image': dataUrl
                 }),
                 type:'POST',
                 success:function(data){
@@ -41,8 +41,11 @@ $('.constellation-button').click(function () {
                     console.log(err);
                 }
             });
-        }
-    });
+        })
+        .catch(function (error) {
+            console.error('oops, something went wrong!', error);
+            $('#constellation-modal').waitMe('hide');
+        });
 });
 
 $('#constellation-button').click(function() {

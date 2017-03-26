@@ -271,7 +271,7 @@
     <!-- 슬롯 결과 모달뷰 -->
     <div id="slot-modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div id="slot-modal-content" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title text-center">축하합니다</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -315,7 +315,7 @@
     <!-- 이름점 모달뷰 -->
     <div id="lucky-name-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div id="lucky-name-content" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">이름점 결과</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -328,8 +328,8 @@
                     </div>
                 <div class="modal-footer" id="lucky-name-modal-footer">
                     <a id="kakao-link-btn">
-                        <button id="name-share-facebook" class="btn btn-primary">페이스북</button>
-                        <button id="name-share-kakaotalk" class="btn btn-primary" style="background-color: #fec503;border-color:#f6bf01;">카카오톡</button>
+                        <button id="name-share-facebook" class="btn btn-primary share-name-lucky">페이스북</button>
+                        <button id="name-share-kakaotalk" class="btn btn-primary share-name-lucky" style="background-color: #fec503;border-color:#f6bf01;">카카오톡</button>
                     </a>
                 </div>
                 </div>
@@ -340,15 +340,15 @@
     <!-- 별자리점 모달뷰 -->
     <div id="constellation-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div id="constellation-modal-contents" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">별자리 궁합 결과</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="constellation-modal-body" class="modal-body white-background">
-                    <div id="constellation-result" class="row"></div>
+                <div class="modal-body">
+                    <div id="constellation-result" class="row white-background"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary constellation-button" value="facebook">페이스북</button>
@@ -594,8 +594,9 @@
 <script type="text/javascript" src="{% static 'js/main/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/Canvas2Image.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/dom-to-image.min.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>-->
+<!--<script type="text/javascript" src="{% static 'js/Canvas2Image.js' %}"></script>-->
 <script type="text/javascript" src="{% static 'js/kakao.min.js' %}"></script>
 
 <!-- Custom JS -->
