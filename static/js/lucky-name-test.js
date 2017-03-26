@@ -21,16 +21,18 @@ $(document).ready(function(){
     $('.share-name-lucky').click(function(){
         var id = this.id;
         waitMe($('#lucky-name-modal'));
-        domtoimage.toJpeg(document.getElementById('lucky-name-content'), { quality: 0.95 })
-            .then(function (dataUrl) {
+        html2canvas(document.getElementById('lucky-name-content'), {
+            onrendered: function(canvas) {
+                var image = canvas.toDataURL('image/jpeg', 0.9);
                 $.ajax({
                     url:'/apis/upload',
                     headers: {
                         'Content-Type':'application/json'
                     },
                     data: JSON.stringify({
-                        'image': dataUrl
+                        'image': image
                     }),
+                    cache: false,
                     type:'POST',
                     success:function(data){
                         url = data;
@@ -48,10 +50,7 @@ $(document).ready(function(){
                         $('#lucky-name-modal').waitMe('hide');
                     }
                 });
-            })
-            .catch(function (error) {
-                console.error('oops, something went wrong!', error);
-                $('#lucky-name-modal').waitMe('hide');
-            });
+            }
+        });
     });
 });
