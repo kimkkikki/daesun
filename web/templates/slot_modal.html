@@ -27,3 +27,28 @@
     </div>
     <h1 class="text-center top-bottom-margin">{{ lucky.candidate }}</h1>
 </div>
+
+<div id="slot-add-honor" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">공유 및 명예의 전당 등록</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button id="slot-share-facebook" class="btn btn-primary" onclick="share_facebook()">페이스북</button>
+                <button id="slot-share-kakaotalk" class="btn btn-primary share-name-lucky" style="background-color: #fec503;border-color:#f6bf01;" onclick="share_kakaotalk()">카카오톡</button>
+
+                <form method="post" id="form">
+                    {% csrf_token %}
+                    <input name="candidate" value = "{{lucky.candidate}}">
+                    <input name="count" value = "{{ lucky.count }}">
+                    <input type="text" name="your_name" placeholder="닉네임을 입력하세요">
+                    <input type="submit" id = "add_honor" value="등록하기">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

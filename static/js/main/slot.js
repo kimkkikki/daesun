@@ -6,9 +6,39 @@ $('#slot-guide-button').click(function () {
     $('#slot-guide-modal').modal('show');
 });
 
-$('#slot-share-facebook').click(function () {
+function share_facebook(){
     waitMe($('#slot-modal'));
-    domtoimage.toJpeg(document.getElementById('slot-modal-content'), { quality: 0.95 })
+    domtoimage.toJpeg(document.getElementById('slot-result'), { quality: 0.95 })
+        .then(function (dataUrl) {
+        $.ajax({
+            url:'/apis/upload',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            data: JSON.stringify({
+                'image': dataUrl
+            }),
+            type:'POST',
+            success:function(data){
+                console.log(data);
+                $('#slot-modal').waitMe('hide');
+                snsShare('facebook', data, null);
+            },
+            error: function(data, status, err) {
+                $('#slot-modal').waitMe('hide');
+                console.log(err);
+            }
+        });
+    })
+    .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+        $('#slot-modal').waitMe('hide');
+    });
+}
+
+function share_kakaotalk(){
+    waitMe($('#slot-modal'));
+    domtoimage.toJpeg(document.getElementById('slot-result'), { quality: 0.95 })
         .then(function (dataUrl) {
             $.ajax({
                 url:'/apis/upload',
@@ -22,7 +52,7 @@ $('#slot-share-facebook').click(function () {
                 success:function(data){
                     console.log(data);
                     $('#slot-modal').waitMe('hide');
-                    snsShare('facebook', data, null);
+                    snsShare('kakaotalk', data, null);
                 },
                 error: function(data, status, err) {
                     $('#slot-modal').waitMe('hide');
@@ -30,11 +60,11 @@ $('#slot-share-facebook').click(function () {
                 }
             });
         })
-        .catch(function (error) {
-            console.error('oops, something went wrong!', error);
-            $('#slot-modal').waitMe('hide');
-        });
-});
+    .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+        $('#slot-modal').waitMe('hide');
+    });
+}
 
 var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '남경필', '심상정', '손학규', '유승민'];
 var slot_count = 0;
@@ -69,7 +99,7 @@ function onComplete(active){
             result_3 = active;
 
             slotStart.prop('disabled', false);
-            if (result_1 == result_2 && result_2 == result_3) {
+            //if (result_1 == result_2 && result_2 == result_3) {
                 waitMe($('#slot'));
                 slot_result_candidate = slot_candidates[result_1];
                 slot_result_count = slot_count;
@@ -97,11 +127,11 @@ function onComplete(active){
                             $('#slot').waitMe('hide');
                         }
                     });
-            } else {
-                var messages = ['까비 다시 도전해보세요', '후보 고르기 슆지 않죠. 다시고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
-                slotModalCount.attr('data-original-title', messages[Math.floor((Math.random() * 8))])
-                  .tooltip('show');
-            }
+//            } else {
+//                var messages = ['까비 다시 도전해보세요', '후보 고르기 슆지 않죠. 다시고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
+//                slotModalCount.attr('data-original-title', messages[Math.floor((Math.random() * 8))])
+//                  .tooltip('show');
+//            }
             break;
     }
 }
@@ -137,4 +167,24 @@ $('#slot-honor-button').click(function () {
             }
         });
 
+});
+
+$('#add_honor').click(function(){
+    alert('add');
+    //action="/apis/slot/add" method="post"
+    $.ajax({
+        url: '/apis/slot/add',
+        async: true,
+        type: 'POST',
+        data: $('#form').serialize(),
+        success: function(data) {
+            $('#slot-honor-result').html(data);
+            $('#slot-honor-modal').modal('show');
+            $('#slot').waitMe('hide');
+        },
+        error: function(data, status, err) {
+            console.log(err);
+            $('#slot').waitMe('hide');
+        }
+    });
 });
