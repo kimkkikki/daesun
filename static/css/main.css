@@ -154,7 +154,12 @@ ul.social-buttons li a {
 }
 
 .section-contents {
-    margin-top: 75px;
+    margin-top: 25px;
+}
+@media (min-width: 768px) {
+    .section-contents {
+        margin-top: 50px;
+    }
 }
 
 .lucky-box {
