@@ -9,6 +9,7 @@ $('#slot-guide-button').click(function () {
 $('#slot-share-facebook').click(function () {
     waitMe($('#slot-modal'));
     html2canvas(document.getElementById('slot-modal-content'), {
+        useCORS: true,
         onrendered: function(canvas) {
             var image = canvas.toDataURL('image/jpeg', 0.9);
             $.ajax({

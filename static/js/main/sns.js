@@ -6,9 +6,11 @@ Kakao.init('17c8317e213251d5ed0578e27ad3b8e9');
 
 window.fbAsyncInit = function() {
     FB.init({
-      appId      : '149936898862655',
-      xfbml      : true,
-      version    : 'v2.8'
+        appId      : '149936898862655',
+        xfbml      : true,
+        status : true,
+        cookie : true,
+        version    : 'v2.8'
     });
     FB.AppEvents.logPageView();
 };

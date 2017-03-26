@@ -22,6 +22,7 @@ $(document).ready(function(){
         var id = this.id;
         waitMe($('#lucky-name-modal'));
         html2canvas(document.getElementById('lucky-name-content'), {
+            useCORS: true,
             onrendered: function(canvas) {
                 var image = canvas.toDataURL('image/jpeg', 0.9);
                 $.ajax({

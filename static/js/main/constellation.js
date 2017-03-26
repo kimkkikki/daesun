@@ -20,6 +20,7 @@ $('.constellation-button').click(function () {
     var sns = this.value;
     waitMe($('#constellation-modal'));
     html2canvas(document.getElementById('constellation-modal-contents'), {
+        useCORS: true,
         onrendered: function(canvas) {
             var image = canvas.toDataURL('image/jpeg', 0.9);
             $.ajax({
