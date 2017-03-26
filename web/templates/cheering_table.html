@@ -1,11 +1,11 @@
 {% for obj in cheering_list %}
 <tr class="row m-0">
     <td class="col-2">{{ obj.candidate }}</td>
-    <td class="col-6 col-md-8">{{ obj.message }}</td>
+    <td class="col-10 col-md-8">{{ obj.message }}</td>
     {% if obj.created.date < today.date %}
-    <td class="col-4 col-md-2">{{ obj.created|date:"Y.m.d" }}<br>{{ obj.ip }}</td>
+    <td class="col-md-2 hidden-sm-down">{{ obj.created|date:"m.d" }}<br>{{ obj.ip }}</td>
     {% else %}
-    <td class="col-4 col-md-2">오늘 {{ obj.created|date:"G:i" }}<br>{{ obj.ip }}</td>
+    <td class="col-md-2 hidden-sm-down">오늘 {{ obj.created|date:"G:i" }}<br>{{ obj.ip }}</td>
     {% endif %}
 </tr>
 {% endfor %}

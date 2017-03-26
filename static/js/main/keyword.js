@@ -27,7 +27,7 @@ $('.keyword-date-button').click(function () {
     loadKeyword(currentDate);
 });
 
-$('#press').waypoint(function() {
+$('#lucky').waypoint(function() {
     if (!isLoadTodayKeyword) {
         loadKeyword(currentDate);
     }
@@ -37,7 +37,7 @@ $('#keyword').waypoint(function () {
         loadKeyword(currentDate);
     }
 });
-$('#donate').waypoint(function() {
+$('#press').waypoint(function() {
     if (!isLoadTodayKeyword) {
         loadKeyword(currentDate);
     }

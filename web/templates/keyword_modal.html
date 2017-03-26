@@ -5,7 +5,7 @@
         <img class="img-fluid" src="{% static '' %}img/cp/{{ result.cp }}.png">
     </div>
     <div class="col-10 col-md-11 keyword-item">
-        <a href="{{ result.link }}" target="_blank">{{ result.title }}</a>
+        <a href="{{ result.link }}" target="_blank">{{ result.title }}</a> <span class="text-muted">{{ result.created_at|date:"Y.m.d" }}</span>
     </div>
 
     {% empty %}

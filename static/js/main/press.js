@@ -3,7 +3,7 @@
  */
 
 var isLoadChart = false;
-$('#lucky').waypoint(function () {
+$('#keyword').waypoint(function () {
     if (!isLoadChart) {
         createPressChart();
     }
@@ -13,7 +13,7 @@ $('#press').waypoint(function() {
         createPressChart();
     }
 });
-$('#keyword').waypoint(function() {
+$('#donate').waypoint(function() {
     if (!isLoadChart) {
         createPressChart();
     }

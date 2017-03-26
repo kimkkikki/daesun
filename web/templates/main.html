@@ -53,10 +53,10 @@
                     <a class="nav-link" href="#lucky">럭키박스</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#press">언론</a>
+                    <a class="nav-link" href="#keyword">오늘은 무슨일이</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#cheering">응원메세지</a>
+                    <a class="nav-link" href="#cheering">기운팍팍</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#donate">후원하기</a>
@@ -171,7 +171,7 @@
             <div id="slot">
                 <div class="row justify-content-center">
                     <div class="col-12 text-center">
-                        <h2 class="section-heading">돌려돌려 대선 돌림판</h2>
+                        <h2 class="section-heading">돌려돌려 대선 돌림판 <i id="slot-guide-button" class="fa fa-question-circle" aria-hidden="true"></i></h2>
                         <h3 class="section-subheading text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</h3>
                     </div>
                 </div>
@@ -220,7 +220,7 @@
                 <div class="row justify-content-center">
                     <div class="mx-auto">
                         <button id="slot-start" type="button" class="btn btn-secondary">돌려돌려!</button>
-                        <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
+                        <!--<button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>-->
                     </div>
                 </div>
             </div>
@@ -294,6 +294,24 @@
         </div>
     </div>
 
+    <div id="slot-guide-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">돌려돌려 대선 돌림판이란?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>내가 원하는 후보가 골라질 때까지 돌려보는 대선 슬롯머신!<br>슬롯머신 3칸 모두에 내가 원하는 후보 얼굴이 나올 때까지 돌려보세요.</p>
+                    <!-- 가이드 이미지 -->
+                    <p>한 번에 못 뽑았다고 실망하지 마세요. 나올때까지 돌릴 수 있어요 ㅎㅎ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 명예의 전당 모달뷰 -->
     <div id="slot-honor-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -359,7 +377,42 @@
         </div>
     </div>
 
-    <section id="press" class="light-bg">
+    <section id="keyword" class="light-bg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h2 class="section-heading">오늘은 무슨일이</h2>
+                    <h3 class="section-subheading text-muted">매일매일의 뉴스를 요약하여 뽑은 키워드 입니다<br>키워드를 선택하면 관련 뉴스를 바로 볼 수 있어요</h3>
+                </div>
+            </div>
+            <div class="row justify-content-around align-items-center section-contents keyword-date">
+                <button type="button" class="btn btn-secondary keyword-date-button" value="yesterday">어제</button>
+                <h5 id="keyword-date"></h5>
+                <button type="button" class="btn btn-secondary keyword-date-button" value="tomorrow" id="keyword-tomorrow-button" disabled>내일</button>
+            </div>
+            <div id="keyword-body">
+            </div>
+        </div>
+    </section>
+
+    <!-- 키워드 모달뷰 -->
+    <div id="keyword-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">키워드 뉴스 리스트</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="keyword-modal-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="press">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -411,46 +464,11 @@
         </div>
     </section>
 
-    <section id="keyword">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h2 class="section-heading">데일리 뉴스 요약</h2>
-                    <h3 class="section-subheading text-muted">매일매일의 뉴스를 요약하여 뽑은 키워드 입니다<br>키워드를 선택하면 관련 뉴스를 바로 볼 수 있어요</h3>
-                </div>
-            </div>
-            <div class="row justify-content-around align-items-center section-contents keyword-date">
-                <button type="button" class="btn btn-secondary keyword-date-button" value="yesterday">어제</button>
-                <h5 id="keyword-date"></h5>
-                <button type="button" class="btn btn-secondary keyword-date-button" value="tomorrow" id="keyword-tomorrow-button" disabled>내일</button>
-            </div>
-            <div id="keyword-body">
-            </div>
-        </div>
-    </section>
-
-    <!-- 키워드 모달뷰 -->
-    <div id="keyword-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">키워드 뉴스 리스트</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="keyword-modal-body"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <section id="cheering" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
-                    <h2 class="section-heading">대선주자 응원하기</h2>
+                    <h2 class="section-heading">대선주자 기운팍팍</h2>
                     <h3 class="section-subheading text-muted">대선 주자들에게 응원메시지를 남기는 공간입니다</h3>
                 </div>
             </div>
@@ -478,8 +496,8 @@
                     <thead>
                         <tr class="row m-0">
                             <th class="col-2">응원후보</th>
-                            <th class="col-6 col-md-8">응원메세지</th>
-                            <th class="col-4 col-md-2">작성자</th>
+                            <th class="col-10 col-md-8">응원메세지</th>
+                            <th class="col-md-2 hidden-sm-down">작성자</th>
                         </tr>
                     </thead>
                     <tbody id="cheering-table">
@@ -501,38 +519,52 @@
                     <h3 class="section-subheading text-muted">대선후보/대선닷컴에 후원해 주세요</h3>
                 </div>
             </div>
-            <div class="row section-contents">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>후원 대상</th>
-                            <th>후원 계좌</th>
-                            <th>예금주</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>문재인</td>
-                            <td>우리 1006-901-451607</td>
-                            <td>문재인후원회</td>
-                        </tr>
-                        <tr>
-                            <td>안희정</td>
-                            <td>농협 301-0206-6146-11</td>
-                            <td>김태영</td>
-                        </tr>
-                        <tr>
-                            <td>이재명</td>
-                            <td>농협 302-0207-1611-11</td>
-                            <td>이재명후원회</td>
-                        </tr>
-                        <tr>
-                            <td>대선닷컴</td>
-                            <td>우리 계좌개설해야지</td>
-                            <td>대선닷컴</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row align-items-center section-contents">
+                <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
+                    <p>우리 1006-901-451607<br>(예금주 : 문재인후원회)<br>
+                    <a href="http://moonjaein.com">moonjaein.com</a></p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}">
+                    <p>농협 301-0206-6146-11<br>(예금주 : 김태영)<br>
+                    <a href="http://www.ahnhj.com">www.ahnhj.com</a></p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}">
+                    <p>농협 302-0207-1611-11<br>(예금주 : 이재명후원회)<br>
+                    <a href="http://gongjeong.net">gongjeong.net</a></p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}">
+                    <p>국민 598001-01-250148<br>(예금주 : 심상정후원회)<br>
+                    <a href="http://www.minsim.or.kr">www.minsim.or.kr</a></p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}">
+                    <p>국민 ‎536201-01-363703<br>(예금주 : 국회의원 안철수후원회)<br>
+                    <a href="http://ahncs.kr">ahncs.kr</a></p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}">
+                    <p>농협 712-12-173114<br>(예금주 : 이영미)<br>
+                    <a href="http://www.ysm21.com">www.ysm21.com</a></p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
+                    <p>농협 301-0208-6758-01<br>(예금주 : 송태호 손학규후원회)<br>
+                    <a href="http://www.hq.or.kr">www.hq.or.kr</a></p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}">
+                    <p>농협 036-01-109253<br>(예금주 : 국회의원 남경필후원회)<br>
+                    <a href="http://namkyungpil.gg.go.kr">namkyungpil.gg.go.kr</a></p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 alert alert-info text-center" role="alert">
+                    <strong>대선닷컴도 도와주세요</strong> 서버비가 필요합니다ㅜㅜ<br>국민 612501-01-247419 (예금주 : 김동근)
+                </div>
             </div>
         </div>
     </section>

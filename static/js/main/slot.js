@@ -2,6 +2,10 @@
  * Created by kimkkikki on 2017. 3. 24..
  */
 
+$('#slot-guide-button').click(function () {
+    $('#slot-guide-modal').modal('show');
+});
+
 $('#slot-share-facebook').click(function () {
     waitMe($('#slot-modal'));
     domtoimage.toJpeg(document.getElementById('slot-modal-content'), { quality: 0.95 })
@@ -50,6 +54,7 @@ var machine3 = $("#slot-machine-3").slotMachine({
             });
 
 var result_1, result_2, result_3;
+var slotModalCount = $('#slot-machine-count');
 function onComplete(active){
     switch(this.element[0].id){
         case 'slot-machine-1':
@@ -60,7 +65,6 @@ function onComplete(active){
             break;
         case 'slot-machine-3':
             slot_count++;
-            var slotModalCount = $('#slot-machine-count');
             slotModalCount.html('총 ' + slot_count + '번 돌리셨습니다');
             result_3 = active;
 
@@ -94,7 +98,7 @@ function onComplete(active){
                         }
                     });
             } else {
-                var messages = ['까비 다시 도전해보세요', '후보 고르기 슆지 않죠. 다시 고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
+                var messages = ['까비 다시 도전해보세요', '후보 고르기 슆지 않죠. 다시고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
                 slotModalCount.attr('data-original-title', messages[Math.floor((Math.random() * 8))])
                   .tooltip('show');
             }
@@ -114,6 +118,7 @@ slotStart.click(function(){
 
 $('#slot-honor-button').click(function () {
     waitMe($('#slot'));
+    slotModalCount.tooltip('hide');
     $.ajax({
             url: '/slot/honor',
             headers: {

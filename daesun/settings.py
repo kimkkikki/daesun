@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'x-g(o_(ep7rhy+h7w5*zpjey4cb818z5&@+8y+yf*jc)#5j)+0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -101,8 +101,8 @@ DATABASE_OPTIONS = {'charset': 'utf8'}
 
 CACHES = {
     'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        # 'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        # 'BACKEND': 'redis_cache.RedisCache',
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'LOCATION': [
             '104.199.215.251:6379',
         ],
