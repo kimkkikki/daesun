@@ -3,7 +3,7 @@
  */
 
 var isLoadChart = false;
-$('#pledge').waypoint(function () {
+$('#lucky').waypoint(function () {
     if (!isLoadChart) {
         createPressChart();
     }
