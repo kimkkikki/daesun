@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^blood$', views.blood_type_chemistry_api, name='blood_type_chemistry_api'),
     url(r'^lucky$', views.save_lucky_result_api, name='save_lucky_result'),
     url(r'^slot$', views.slot_honor_api, name='slot_honor_api'),
+    url(r'^slot/add$', views.slot_honor_add, name='slot_honor_add'),
     url(r'^upload$', views.upload, name='upload'),
 
 ]

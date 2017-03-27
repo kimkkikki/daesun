@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib import admin
 from rest_framework import serializers
 from datetime import datetime
+from django import forms
 
 
 class Scraps(models.Model):
@@ -157,3 +158,15 @@ class Calendar(models.Model):
 class CalendarAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'title', 'start', 'end')
     list_filter = ['candidate']
+
+
+class Honor(models.Model):
+    class Meta:
+        db_table = 'honor'
+    id = models.AutoField(primary_key=True)
+    candidate = models.CharField(max_length=10)
+    count = models.CharField(max_length=10)
+    name = models.CharField(max_length=10)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+

@@ -1,4 +1,4 @@
-from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage, LuckyRating, Calendar
+from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage, LuckyRating, Calendar, Honor
 from django.http import HttpResponse, Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -297,6 +297,14 @@ def slot_honor_list():
 
 def slot_honor_api(request):
     return JSONResponse(slot_honor_list())
+
+@csrf_exempt
+def slot_honor_add(request):
+    if request.method == 'POST':
+        body = request.POST
+        honor = Honor(candidate=body.get('candidate'), count=body.get('count'), name=body.get('your_name'))
+        honor.save()
+    return HttpResponse(status=200)
 
 
 def approval_rating_list(cp, is_last):

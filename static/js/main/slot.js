@@ -6,9 +6,9 @@ $('#slot-guide-button').click(function () {
     $('#slot-guide-modal').modal('show');
 });
 
-$('#slot-share-facebook').click(function () {
+function share_facebook(){
     waitMe($('#slot-modal'));
-    html2canvas(document.getElementById('slot-modal-content'), {
+    html2canvas(document.getElementById('slot-result-detail'), {
         useCORS: true,
         onrendered: function(canvas) {
             var image = canvas.toDataURL('image/jpeg', 0.9);
@@ -25,6 +25,8 @@ $('#slot-share-facebook').click(function () {
                     console.log(data);
                     $('#slot-modal').waitMe('hide');
                     snsShare('facebook', data, null);
+                    $('#your_name').removeAttr('disabled');
+                    $('#add_honor').removeAttr('disabled');
                 },
                 error: function(data, status, err) {
                     $('#slot-modal').waitMe('hide');
@@ -33,7 +35,38 @@ $('#slot-share-facebook').click(function () {
             });
         }
     });
-});
+}
+
+function share_kakaotalk(){
+    waitMe($('#slot-modal'));
+    html2canvas(document.getElementById('slot-result-detail'), {
+        useCORS: true,
+        onrendered: function(canvas) {
+            var image = canvas.toDataURL('image/jpeg', 0.9);
+            $.ajax({
+                url:'/apis/upload',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                data: JSON.stringify({
+                    'image': image
+                }),
+                type:'POST',
+                success:function(data){
+                    console.log(data);
+                    $('#slot-modal').waitMe('hide');
+                    snsShare('kakaotalk', data, null);
+                    $('#your_name').removeAttr('disabled');
+                    $('#add_honor').removeAttr('disabled');
+                },
+                error: function(data, status, err) {
+                    $('#slot-modal').waitMe('hide');
+                    console.log(err);
+                }
+            });
+        }
+   });
+}
 
 var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '남경필', '심상정', '손학규', '유승민'];
 var slot_count = 0;
@@ -115,19 +148,29 @@ slotStart.click(function(){
     $('#slot-machine-count').tooltip('hide');
 });
 
-$('#slot-honor-button').click(function () {
-    waitMe($('#slot'));
-    slotModalCount.tooltip('hide');
-    $.ajax({
-            url: '/slot/honor',
+function check(){
+    if( $('#your_name')[0].disabled == true){
+        $('#add-honor-form').attr('data-original-title', '소셜 공유 후에 명예의 전당에 등록하실 수 있습니다').tooltip('show');
+    }else{
+        $('#add-honor-form').removeAttr('data-original-title');
+    }
+}
+
+
+$(document).ready(function(){
+
+    $('#add_honor').click(function () {
+    alert('click');
+        $.ajax({
+            url: '/apis/slot/add',
             headers: {
                 'Content-Type':'application/json'
             },
             async: true,
-            type: 'GET',
+            type: 'POST',
+            data: $('#form').serialize(),
             success: function(data) {
-                $('#slot-honor-result').html(data);
-                $('#slot-honor-modal').modal('show');
+                console.log('done');
                 $('#slot').waitMe('hide');
             },
             error: function(data, status, err) {
@@ -135,5 +178,6 @@ $('#slot-honor-button').click(function () {
                 $('#slot').waitMe('hide');
             }
         });
+    });
 
 });

@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^keyword$', views.keyword, name='keyword'),
     url(r'^news$', views.news, name='news'),
     url(r'^slot/honor$', views.slot_honor, name='slot_honor'),
+
 ]
