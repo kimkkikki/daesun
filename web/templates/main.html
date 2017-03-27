@@ -38,6 +38,28 @@
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar">
+    <script type="text/javascript">
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '149936898862655',
+                xfbml      : true,
+                status : true,
+                cookie : true,
+                display : 'popup',
+                version    : 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/ko_KR/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -626,7 +648,7 @@
 <script type="text/javascript" src="{% static 'js/main/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main/dom-to-image.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/main/dom-to-image.js' %}"></script>-->
 <script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/kakao.min.js' %}"></script>
 

@@ -4,25 +4,6 @@
 
 Kakao.init('17c8317e213251d5ed0578e27ad3b8e9');
 
-window.fbAsyncInit = function() {
-    FB.init({
-        appId      : '149936898862655',
-        xfbml      : true,
-        status : true,
-        cookie : true,
-        version    : 'v2.8'
-    });
-    FB.AppEvents.logPageView();
-};
-
-(function(d, s, id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/ko_KR/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-
 window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
@@ -44,9 +25,11 @@ function snsShare(sns, imageUrl, title) {
     if (sns == 'facebook') {
         console.log(sns);
         FB.ui({
-            method: 'share',
+            method: 'feed',
             picture : imageUrl,
-            href: 'https://2017daesun.com'
+            name: title,
+            caption: '2017대선닷컴에서 대선을 즐겨보아요',
+            href: '2017daesun.com'
         }, function(response){
             if (response && !response.error_code) {
                 console.log("Facebook Share Success : " + JSON.stringify(response));
