@@ -43,9 +43,6 @@
             FB.init({
                 appId      : '149936898862655',
                 xfbml      : true,
-                status : true,
-                cookie : true,
-                display : 'popup',
                 version    : 'v2.8'
             });
             FB.AppEvents.logPageView();
@@ -379,7 +376,7 @@
     <!-- 별자리점 모달뷰 -->
     <div id="constellation-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
-            <div id="constellation-modal-contents" class="modal-content">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">별자리 궁합 결과</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -387,11 +384,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div id="constellation-result" class="row white-background"></div>
+                    <div id="constellation-result" class="row"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary constellation-button" value="facebook">페이스북</button>
-                    <button type="button" class="btn btn-info constellation-button" value="twitter">트위터</button>
+                    <!--<button type="button" class="btn btn-info constellation-button" value="twitter">트위터</button>-->
                     <button type="button" class="btn btn-warning constellation-button" value="kakaotalk">카카오톡</button>
                 </div>
             </div>

@@ -24,12 +24,14 @@ window.twttr = (function(d, s, id) {
 function snsShare(sns, imageUrl, title) {
     if (sns == 'facebook') {
         console.log(sns);
+        FB._https = (window.location.protocol == "https:");
         FB.ui({
             method: 'feed',
             picture : imageUrl,
             name: title,
             caption: '2017대선닷컴에서 대선을 즐겨보아요',
-            href: '2017daesun.com'
+            href: 'https://2017daesun.com',
+            redirect_uri: 'https://2017daesun.com'
         }, function(response){
             if (response && !response.error_code) {
                 console.log("Facebook Share Success : " + JSON.stringify(response));
