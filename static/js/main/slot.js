@@ -184,8 +184,6 @@ function check() {
 $(document).ready(function(){
     $('#add_honor').click(function () {
         var nickname = $('#honor_nickname').val();
-        console.log(slot_result_candidate, slot_result_count, nickname);
-
         if (nickname === '') {
             alert('닉네임을 입력해야 합니다.')
         } else{

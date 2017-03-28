@@ -172,3 +172,18 @@ class Honor(models.Model):
 class HonorAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'count', 'name', 'created')
     list_filter = ['candidate']
+
+
+class Donate(models.Model):
+    class Meta:
+        db_table = 'donate'
+    id = models.AutoField(primary_key=True)
+    candidate = models.CharField(max_length=10)
+    account = models.CharField(max_length=20)
+    account_name = models.CharField(max_length=20)
+    homepage = models.CharField(max_length=30)
+
+
+class DonateAdmin(admin.ModelAdmin):
+    list_display = ('id', 'candidate', 'account', 'account_name', 'homepage')
+    list_filter = ['candidate']
