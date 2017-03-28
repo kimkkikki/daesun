@@ -101,7 +101,7 @@ function onComplete(active){
             result_3 = active;
 
             slotStart.prop('disabled', false);
-            // if (result_1 === result_2 && result_2 === result_3) {
+            if (result_1 === result_2 && result_2 === result_3) {
                 waitMe($('#slot'));
                 slot_result_candidate = slot_candidates[result_1];
                 slot_result_count = slot_count;
@@ -128,11 +128,11 @@ function onComplete(active){
                             $('#slot').waitMe('hide');
                         }
                     });
-            // } else {
-            //     var messages = ['까비 다시 도전해보세요', '후보 고르기 슆지 않죠. 다시고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
-            //     slotModalCount.attr('data-original-title', messages[Math.floor((Math.random() * 8))])
-            //       .tooltip('show');
-            // }
+            } else {
+                var messages = ['까비 다시 도전해보세요', '후보 고르기 슆지 않죠. 다시고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
+                slotModalCount.attr('data-original-title', messages[Math.floor((Math.random() * 8))])
+                  .tooltip('show');
+            }
             break;
     }
 }
