@@ -293,8 +293,8 @@ def slot_honor_api(request):
     if request.method == 'GET':
         return JSONResponse(slot_honor_list())
     else:
-        body = request.POST
-        honor = Honor(candidate=body.get('candidate'), count=body.get('count'), name=body.get('your_name'))
+        body = JSONParser().parse(request)
+        honor = Honor(candidate=body.get('candidate'), count=body.get('count'), name=body.get('nickname'))
         honor.save()
         return HttpResponse(status=200)
 

@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib import admin
 from rest_framework import serializers
 from datetime import datetime
-from django import forms
 
 
 class Scraps(models.Model):
@@ -173,5 +172,3 @@ class Honor(models.Model):
 class HonorAdmin(admin.ModelAdmin):
     list_display = ('id', 'candidate', 'count', 'name', 'created')
     list_filter = ['candidate']
-
-

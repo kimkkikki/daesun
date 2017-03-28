@@ -25,7 +25,7 @@ function share_facebook(){
                     console.log(data);
                     $('#slot-modal').waitMe('hide');
                     snsShare('facebook', data, null);
-                    $('#your_name').removeAttr('disabled');
+                    $('#honor_nickname').removeAttr('disabled');
                     $('#add_honor').removeAttr('disabled');
                 },
                 error: function(data, status, err) {
@@ -56,7 +56,7 @@ function share_kakaotalk(){
                     console.log(data);
                     $('#slot-modal').waitMe('hide');
                     snsShare('kakaotalk', data, null);
-                    $('#your_name').removeAttr('disabled');
+                    $('#honor_nickname').removeAttr('disabled');
                     $('#add_honor').removeAttr('disabled');
                 },
                 error: function(data, status, err) {
@@ -101,7 +101,7 @@ function onComplete(active){
             result_3 = active;
 
             slotStart.prop('disabled', false);
-            if (result_1 == result_2 && result_2 == result_3) {
+            // if (result_1 === result_2 && result_2 === result_3) {
                 waitMe($('#slot'));
                 slot_result_candidate = slot_candidates[result_1];
                 slot_result_count = slot_count;
@@ -114,13 +114,12 @@ function onComplete(active){
                         type: 'POST',
                         data: JSON.stringify({
                             'type': 'slot',
-                            'candidate': slot_candidates[result_1],
-                            'count': slot_count
+                            'candidate': slot_result_candidate,
+                            'count': slot_result_count
                         }),
                         success: function(data) {
                             $('#slot-result').html(data);
                             $('#slot-modal').modal('show');
-                            //TODO 슬롯 카운트 초기화 언제?
                             slot_count = 0;
                             $('#slot').waitMe('hide');
                         },
@@ -129,11 +128,11 @@ function onComplete(active){
                             $('#slot').waitMe('hide');
                         }
                     });
-            } else {
-                var messages = ['까비 다시 도전해보세요', '후보 고르기 슆지 않죠. 다시고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
-                slotModalCount.attr('data-original-title', messages[Math.floor((Math.random() * 8))])
-                  .tooltip('show');
-            }
+            // } else {
+            //     var messages = ['까비 다시 도전해보세요', '후보 고르기 슆지 않죠. 다시고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
+            //     slotModalCount.attr('data-original-title', messages[Math.floor((Math.random() * 8))])
+            //       .tooltip('show');
+            // }
             break;
     }
 }
@@ -166,7 +165,7 @@ $('#slot-honor-button').click(function () {
 
 var slotStart = $('#slot-start');
 
-slotStart.click(function(){
+slotStart.click(function() {
     slotStart.prop('disabled', true);
     machine1.shuffle(5, onComplete);
     machine2.shuffle(10, onComplete);
@@ -174,34 +173,47 @@ slotStart.click(function(){
     $('#slot-machine-count').tooltip('hide');
 });
 
-function check(){
-    if( $('#your_name')[0].disabled == true){
+function check() {
+    if ($('#honor_nickname')[0].disabled === true) {
         $('#add-honor-form').attr('data-original-title', '소셜 공유 후에 명예의 전당에 등록하실 수 있습니다').tooltip('show');
-    }else{
+    } else {
         $('#add-honor-form').removeAttr('data-original-title');
     }
 }
 
 $(document).ready(function(){
     $('#add_honor').click(function () {
-    alert('click');
-        $.ajax({
-            url: '/apis/slot',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            async: true,
-            type: 'POST',
-            data: $('#form').serialize(),
-            success: function(data) {
-                console.log('done');
-                $('#slot').waitMe('hide');
-            },
-            error: function(data, status, err) {
-                console.log(err);
-                $('#slot').waitMe('hide');
-            }
-        });
-    });
+        var nickname = $('#honor_nickname').val();
+        console.log(slot_result_candidate, slot_result_count, nickname);
 
+        if (nickname === '') {
+            alert('닉네임을 입력해야 합니다.')
+        } else{
+            var addHonorModal = $('#slot-add-honor-modal');
+            waitMe(addHonorModal);
+            $.ajax({
+                url: '/apis/slot',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                async: true,
+                type: 'POST',
+                data: JSON.stringify({
+                    'candidate': slot_result_candidate,
+                    'count': slot_result_count,
+                    'nickname': nickname
+                }),
+                success: function() {
+                    alert('등록되었습니다');
+                    addHonorModal.waitMe('hide');
+                    addHonorModal.modal('toggle');
+                    $('#slot-modal').modal('toggle');
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    addHonorModal.waitMe('hide');
+                }
+            });
+        }
+    });
 });
