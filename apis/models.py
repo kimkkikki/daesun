@@ -170,3 +170,8 @@ class Honor(models.Model):
     created = models.DateTimeField(auto_now_add=True, db_index=True)
 
 
+class HonorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'candidate', 'count', 'name', 'created')
+    list_filter = ['candidate']
+
+

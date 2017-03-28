@@ -153,6 +153,9 @@
                 <div class="modal-body">
                     <div id="lucky-rating-modal-body"></div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">닫기</button>
+                </div>
             </div>
         </div>
     </div>
@@ -312,6 +315,7 @@
         </div>
     </div>
 
+    <!-- 슬롯 가이드 모달뷰 -->
     <div id="slot-guide-modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -341,6 +345,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <p class="text-center">후보를 뽑기까지 가장 많이 돌리신 운 없는 분들을 위해 마련했습니다.</p>
                     <div id="slot-honor-result">
                     </div>
                 </div>
@@ -528,19 +533,19 @@
             </div>
             <div class="row align-items-center section-contents">
                 <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}">
+                    <p>농협 036-01-109253<br>(예금주 : 국회의원 남경필후원회)<br>
+                    <a href="http://namkyungpil.gg.go.kr">namkyungpil.gg.go.kr</a></p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
                     <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}">
                     <p>우리 1006-901-451607<br>(예금주 : 문재인후원회)<br>
                     <a href="http://moonjaein.com">moonjaein.com</a></p>
                 </div>
                 <div class="col-6 col-md-3 text-center">
-                    <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}">
-                    <p>농협 301-0206-6146-11<br>(예금주 : 김태영)<br>
-                    <a href="http://www.ahnhj.com">www.ahnhj.com</a></p>
-                </div>
-                <div class="col-6 col-md-3 text-center">
-                    <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}">
-                    <p>농협 302-0207-1611-11<br>(예금주 : 이재명후원회)<br>
-                    <a href="http://gongjeong.net">gongjeong.net</a></p>
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
+                    <p>농협 301-0208-6758-01<br>(예금주 : 송태호 손학규후원회)<br>
+                    <a href="http://www.hq.or.kr">www.hq.or.kr</a></p>
                 </div>
                 <div class="col-6 col-md-3 text-center">
                     <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}">
@@ -553,19 +558,19 @@
                     <a href="http://ahncs.kr">ahncs.kr</a></p>
                 </div>
                 <div class="col-6 col-md-3 text-center">
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}">
+                    <p>농협 301-0206-6146-11<br>(예금주 : 김태영)<br>
+                    <a href="http://www.ahnhj.com">www.ahnhj.com</a></p>
+                </div>
+                <div class="col-6 col-md-3 text-center">
                     <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}">
                     <p>농협 712-12-173114<br>(예금주 : 이영미)<br>
                     <a href="http://www.ysm21.com">www.ysm21.com</a></p>
                 </div>
                 <div class="col-6 col-md-3 text-center">
-                    <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}">
-                    <p>농협 301-0208-6758-01<br>(예금주 : 송태호 손학규후원회)<br>
-                    <a href="http://www.hq.or.kr">www.hq.or.kr</a></p>
-                </div>
-                <div class="col-6 col-md-3 text-center">
-                    <img class="img-fluid rounded" src="{% static 'img/candidate/nam.jpg' %}">
-                    <p>농협 036-01-109253<br>(예금주 : 국회의원 남경필후원회)<br>
-                    <a href="http://namkyungpil.gg.go.kr">namkyungpil.gg.go.kr</a></p>
+                    <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}">
+                    <p>농협 302-0207-1611-11<br>(예금주 : 이재명후원회)<br>
+                    <a href="http://gongjeong.net">gongjeong.net</a></p>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -590,16 +595,18 @@
         </div>
     </section>
 
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- 2017daesun_lucky_result -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8539175752861876"
-         data-ad-slot="2185162141"
-         data-ad-format="auto"></ins>
-    <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+    <div id="ads">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- 2017daesun_lucky_result -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8539175752861876"
+             data-ad-slot="2185162141"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 
     <footer>
         <div class="container-fluid">

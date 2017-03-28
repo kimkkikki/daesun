@@ -41,9 +41,9 @@
                 <button id="slot-share-facebook" class="btn btn-primary" onclick="share_facebook()">페이스북</button>
                 <button id="slot-share-kakaotalk" class="btn btn-primary share-name-lucky" style="background-color: #fec503;border-color:#f6bf01;" onclick="share_kakaotalk()">카카오톡</button>
                 <div id="add-honor-form" style="margin:30px" onclick="check()">
-                    <form id="form" method="post" action="/apis/slot/add">
+                    <form id="form" method="post" action="/apis/slot">
                         {% csrf_token %}
-                        <input type="hidden" name="candidate" value = "{{lucky.candidate}}">
+                        <input type="hidden" name="candidate" value = "{{ lucky.candidate }}">
                         <input type="hidden" name="count" value = "{{ lucky.count }}">
                         <input type="text" id="your_name" name="your_name" placeholder="닉네임을 입력하세요" disabled>
                         <button id ="add_honor" class="btn" disabled>등록하기</button>

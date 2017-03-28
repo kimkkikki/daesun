@@ -1,12 +1,23 @@
 {% load staticfiles %}
-<div class="row text-center">
-    {% for result in results %}
-    <div class="col-4 col-md-2">
-        <h2>{{ result.candidate }}</h2>
-        {% include 'candidate_img_template.html' %}
-        {% for item in result.items %}
-        <p>#{{ item }}</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>등수</th>
+            <th>횟수</th>
+            <th>닉네임</th>
+            <th>결과</th>
+            <th>날짜</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ result.count }}</td>
+            <td>{{ result.name }}</td>
+            <td>{{ result.candidate }}</td>
+            <td>{{ result.created|date:"Y.m.d G:i" }}</td>
+        </tr>
         {% endfor %}
-    </div>
-    {% endfor %}
-</div>
+    </tbody>
+</table>

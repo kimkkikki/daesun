@@ -278,33 +278,19 @@ def lucky_rating_list(result_type):
 
 
 def slot_honor_list():
-    slot_list = LuckyRating.objects.filter(type='slot').order_by('-input')
+    honor_list = Honor.objects.all().order_by('-count').values('candidate', 'count', 'name', 'created')[0:30]
+    return list(honor_list)
 
-    results = []
-    for obj in slot_list:
-        has_value = False
-        for result in results:
-            if obj.candidate in result.values():
-                has_value = True
-                result['items'].append(obj.input)
-                break
-
-        if not has_value:
-            results.append({'candidate': obj.candidate, 'items': [obj.input]})
-
-    return list(results)
-
-
-def slot_honor_api(request):
-    return JSONResponse(slot_honor_list())
 
 @csrf_exempt
-def slot_honor_add(request):
-    if request.method == 'POST':
+def slot_honor_api(request):
+    if request.method == 'GET':
+        return JSONResponse(slot_honor_list())
+    else:
         body = request.POST
         honor = Honor(candidate=body.get('candidate'), count=body.get('count'), name=body.get('your_name'))
         honor.save()
-    return HttpResponse(status=200)
+        return HttpResponse(status=200)
 
 
 def approval_rating_list(cp, is_last):

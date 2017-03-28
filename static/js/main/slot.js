@@ -138,6 +138,32 @@ function onComplete(active){
     }
 }
 
+var isLoadHonor = false;
+$('#slot-honor-button').click(function () {
+    if (!isLoadHonor) {
+        waitMe($('#slot'));
+        $.ajax({
+                url: '/slot/honor',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                type: 'GET',
+                success: function(data) {
+                    $('#slot-honor-result').html(data);
+                    $('#slot-honor-modal').modal('show');
+                    isLoadHonor = true;
+                    $('#slot').waitMe('hide');
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    $('#slot').waitMe('hide');
+                }
+            });
+    } else {
+        $('#slot-honor-modal').modal('show');
+    }
+});
+
 var slotStart = $('#slot-start');
 
 slotStart.click(function(){
@@ -156,13 +182,11 @@ function check(){
     }
 }
 
-
 $(document).ready(function(){
-
     $('#add_honor').click(function () {
     alert('click');
         $.ajax({
-            url: '/apis/slot/add',
+            url: '/apis/slot',
             headers: {
                 'Content-Type':'application/json'
             },
