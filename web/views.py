@@ -20,7 +20,8 @@ def main(request):
     ratings = views.lucky_rating_list('all')
     cheerings = views.get_cheering_message_list(0)
     d_day = (date(2017, 5, 9) - date.today()).days
-    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings, 'today': datetime.today(), 'd_day': d_day})
+    donates = views.donate_list()
+    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings, 'today': datetime.today(), 'd_day': d_day, 'donates': donates})
 
 
 def lets_encrypt(request, authorization_code):

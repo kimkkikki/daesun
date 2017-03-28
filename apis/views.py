@@ -1,4 +1,4 @@
-from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage, LuckyRating, Calendar, Honor
+from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage, LuckyRating, Calendar, Honor, Donate
 from django.http import HttpResponse, Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -487,6 +487,7 @@ def get_candidate_sns_list():
 
             if '일정' in contents:
                 contents += '\n'
+                # print(contents)
 
                 date_format_1 = re.compile('\d+[.]\d+')  # 00.00
                 date_format_2 = re.compile('\d+월\s*\d+일')  # 00월 00일
@@ -738,3 +739,8 @@ def upload(request):
             f.write(base64.b64decode(imgstr))
             f.close()
             return HttpResponse(settings.MEDIA_URL + file_name)
+
+
+def donate_list():
+    donates = Donate.objects.all().values('candidate', 'account', 'account_name', 'homepage').order_by('candidate')
+    return list(donates)
