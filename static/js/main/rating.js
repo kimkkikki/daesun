@@ -1,6 +1,6 @@
 
 function ratingDataParsing(data) {
-    var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['남경필'], ['안희정'], ['이재명'], ['유승민'], ['홍준표'], ['손학규']];
+    var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['남경필'], ['안희정'], ['이재명'], ['유승민'], ['홍준표'], ['손학규'], ['김진태']];
     for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         if (!result_list[0].includes(obj.date)) {
@@ -39,6 +39,9 @@ function ratingDataParsing(data) {
                 break;
             case '손학규':
                 result_list[9].push(obj.rating);
+                break;
+            case '김진태':
+                result_list[10].push(obj.rating);
                 break;
         }
     }

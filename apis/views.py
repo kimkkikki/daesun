@@ -28,10 +28,12 @@ candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'bl
                             {'candidate': '안희정', 'constellation': '황소', 'blood': 'A', 'twitter': 'steelroot'},
                             {'candidate': '이재명', 'constellation': '물병', 'blood': 'O', 'twitter': 'Jaemyung_Lee'},
                             {'candidate': '심상정', 'constellation': '물고기', 'blood': 'B', 'twitter': 'sangjungsim'},
-                            {'candidate': '유승민', 'constellation': '염소', 'blood': 'A', 'twitter': ''},
+                            {'candidate': '유승민', 'constellation': '염소', 'blood': 'A', 'twitter': 'yooseongmin2017'},
                             {'candidate': '남경필', 'constellation': '물병', 'blood': '', 'twitter': ''},
                             {'candidate': '안철수', 'constellation': '물고기', 'blood': 'AB', 'twitter': 'cheolsoo0919'},
-                            {'candidate': '홍준표', 'constellation': '사수', 'blood': 'A', 'twitter': ''}]
+                            {'candidate': '홍준표', 'constellation': '사수', 'blood': 'A', 'twitter': ''},
+                            {'candidate': '손학규', 'constellation': '전갈', 'blood': '', 'twitter': 'HQ_Sohn'},
+                            {'candidate': '김진태', 'constellation': '천칭', 'blood': '', 'twitter': 'jtkim1013'}]
 
 
 class JSONResponse(HttpResponse):
@@ -81,11 +83,11 @@ def cp_group(request):
         candidate_q_list = Q(created_at__range=[start, end]) & \
                             (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                              Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
-                             Q(title__contains='남경필') | Q(title__contains='홍준표'))
+                             Q(title__contains='남경필') | Q(title__contains='홍준표') | Q(title__contains='손학규') | Q(title__contains='김진태'))
     else:
         candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                             Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
-                            Q(title__contains='남경필') | Q(title__contains='홍준표'))
+                            Q(title__contains='남경필') | Q(title__contains='홍준표') | Q(title__contains='손학규') | Q(title__contains='김진태'))
 
     group_list = Scraps.objects.filter(Q(created_at__gte=datetime.now() - timedelta(days=30)) & candidate_q_list).values('cp').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
@@ -95,7 +97,9 @@ def cp_group(request):
         hee=Count(Case(When(title__contains='안희정', then=1))),
         sim=Count(Case(When(title__contains='심상정', then=1))),
         nam=Count(Case(When(title__contains='남경필', then=1))),
-        hong=Count(Case(When(title__contains='홍준표', then=1)))
+        hong=Count(Case(When(title__contains='홍준표', then=1))),
+        son=Count(Case(When(title__contains='손학규', then=1))),
+        kim=Count(Case(When(title__contains='김진태', then=1)))
     )
 
     return JSONResponse(list(group_list))
@@ -106,7 +110,7 @@ def cp_daily(request):
     cp = request.GET.get('cp', None)
     candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
                         Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
-                        Q(title__contains='남경필') | Q(title__contains='홍준표'))
+                        Q(title__contains='남경필') | Q(title__contains='홍준표') | Q(title__contains='손학규') | Q(title__contains='김진태'))
 
     if cp is not None:
         candidate_q_list = (candidate_q_list & Q(cp=cp))
@@ -120,7 +124,9 @@ def cp_daily(request):
         hee=Count(Case(When(title__contains='안희정', then=1))),
         sim=Count(Case(When(title__contains='심상정', then=1))),
         nam=Count(Case(When(title__contains='남경필', then=1))),
-        hong=Count(Case(When(title__contains='홍준표', then=1)))
+        hong=Count(Case(When(title__contains='홍준표', then=1))),
+        son=Count(Case(When(title__contains='손학규', then=1))),
+        kim=Count(Case(When(title__contains='김진태', then=1)))
     )
 
     return JSONResponse(list(daily_list))

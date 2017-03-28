@@ -6,8 +6,10 @@
     {% for result in constellation_result.bests %}
         {% if constellation_result.bests|length == 2 %}
         <div class="col-6 text-center">
-        {% elif constellation_result.bests|length > 2 %}
+        {% elif constellation_result.bests|length == 3 %}
         <div class="col-4 text-center">
+        {% elif constellation_result.bests|length > 3 %}
+        <div class="col-3 text-center">
         {% else %}
         <div class="col-12 text-center">
         {% endif %}
@@ -16,7 +18,9 @@
             <p>{{ result.constellation }}<br>{{ result.score|floatformat }}점</p>
         {% if constellation_result.bests|length == 2 %}
         </div>
-        {% elif constellation_result.bests|length > 2 %}
+        {% elif constellation_result.bests|length == 3 %}
+        </div>
+        {% elif constellation_result.bests|length > 3 %}
         </div>
         {% else %}
         </div>
