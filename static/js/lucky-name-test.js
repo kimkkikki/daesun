@@ -21,7 +21,7 @@ $(document).ready(function(){
     $('.share-name-lucky').click(function(){
         var id = this.id;
         waitMe($('#lucky-name-modal'));
-        html2canvas(document.getElementById('lucky-name-content'), {
+        html2canvas(document.getElementById('lucky-name-image'), {
             useCORS: true,
             onrendered: function(canvas) {
                 var image = canvas.toDataURL('image/jpeg', 0.9);

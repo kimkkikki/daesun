@@ -1,32 +1,34 @@
 {% load staticfiles %}
 <div id="lucky-name-result-detail" class="row" style="margin-left:0; margin-right:0">
-    <div class="text-center name-result-contents">
-        {% if result.score >= 90 %}
-        자음과 모음의 오묘한 조화~ 이 정도면 백년해로 가능!
-        {% elif result.score >= 80 %}
-        누가 그랬던가. 우린 인연이라고
-        {% elif result.score >= 70 %}
-        맞을듯 안 맞을듯. 싸우면서 사랑하는거지
-        {% elif result.score >= 50 %}
-        반이라도 비슷한게 어디야
-        {% elif result.score >= 30 %}
-        우리… 계속 만나도 되겠니?
-        {% else %}
-        너.. 나 아는척 하지마.
-        {% endif %}
-    </div>
-    <div class="row name-result" id="lucky_name_best">
-        <div class="text-center name-best" data-aos="fade-in">
-            {% include 'candidate_img_template.html' %}
-            <br>
-            <span id="best_candidate">{{ result.candidate }}</span><br>
-            <span id="best_score">{{ result.score }}점</span>
+    <div id="lucky-name-image" style="width:100%;background:#ffffff">
+        <div class="text-center name-result-contents">
+            {% if result.score >= 90 %}
+            자음과 모음의 오묘한 조화~ 이 정도면 백년해로 가능!
+            {% elif result.score >= 80 %}
+            누가 그랬던가. 우린 인연이라고
+            {% elif result.score >= 70 %}
+            맞을듯 안 맞을듯. 싸우면서 사랑하는거지
+            {% elif result.score >= 50 %}
+            반이라도 비슷한게 어디야
+            {% elif result.score >= 30 %}
+            우리… 계속 만나도 되겠니?
+            {% else %}
+            너.. 나 아는척 하지마.
+            {% endif %}
         </div>
-        <div class="text-center name-tree">
-            <div class="name-tree-canvas" id="lucky_name_result_to"></div>
-        </div>
-        <div class="text-center name-tree">
-            <div class="name-tree-canvas" id="lucky_name_result_from"></div>
+        <div class="row name-result" id="lucky_name_best">
+            <div class="text-center name-best" data-aos="fade-in">
+                {% include 'candidate_img_template.html' %}
+                <br>
+                <span id="best_candidate">{{ result.candidate }}</span><br>
+                <span id="best_score">{{ result.score }}점</span>
+            </div>
+            <div class="text-center name-tree">
+                <div class="name-tree-canvas" id="lucky_name_result_to"></div>
+            </div>
+            <div class="text-center name-tree">
+                <div class="name-tree-canvas" id="lucky_name_result_from"></div>
+            </div>
         </div>
     </div>
     <div class="row name-result-rest">
