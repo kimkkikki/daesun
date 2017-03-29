@@ -15,6 +15,10 @@ def terms(request):
     return render(request, 'terms.html')
 
 
+def policy(request):
+    return render(request, 'policy.html')
+
+
 @cache_page(60 * 1)
 def main(request):
     ratings = views.lucky_rating_list('all')

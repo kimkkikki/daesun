@@ -209,6 +209,7 @@
                             <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
                             <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
                             <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/kim.jpg' %}"/>
                         </div>
                     </div>
                     <div class="col-4" data-aos="fade-up" data-aos-delay="250">
@@ -222,6 +223,7 @@
                             <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
                             <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
                             <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/kim.jpg' %}"/>
                         </div>
                     </div>
                     <div class="col-4" data-aos="fade-left" data-aos-delay="500">
@@ -235,6 +237,7 @@
                             <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
                             <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
                             <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
+                            <img class="img-fluid rounded" src="{% static 'img/candidate/kim.jpg' %}"/>
                         </div>
                     </div>
                 </div>
@@ -333,7 +336,7 @@
                         <button id ="add_honor" class="btn btn-secondary" disabled>등록하기</button>
                     </div>
                     <div class="text-center" style="font-size:0.4em">
-                        등록하기를 누르시면 이용약관과 개인정보수집이용에 동의하신 것으로 간주됩니다 .<br>
+                        등록하기를 누르시면 <a href="{% url  'terms' %}" target="_blank">이용약관</a>과 <a href="{% url 'policy' %}" target="_blank">개인정보처리방침</a>에 동의하신 것으로 간주됩니다 .<br>
                         수집된 정보는 명예의 전당 등록 이외에 어떠한 용도로도 활용되지 않습니다<br>
                     </div>
                 </div>
