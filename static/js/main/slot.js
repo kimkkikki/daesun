@@ -55,7 +55,7 @@ function share_kakaotalk(){
                 success:function(data){
                     console.log(data);
                     $('#slot-modal').waitMe('hide');
-                    snsShare('kakaotalk', data, null);
+                    snsShare('kakaotalk', data, '대선잿팟');
                     $('#honor_nickname').removeAttr('disabled');
                     $('#add_honor').removeAttr('disabled');
                 },
