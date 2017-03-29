@@ -318,4 +318,7 @@ ul.social-buttons li a {
     tr {
         font-size: 13px;
     }
+    .alert {
+        font-size: 13px;
+    }
 }

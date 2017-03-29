@@ -92,7 +92,6 @@ def slot(request):
 @csrf_exempt
 def luckyname(request):
     result = views.lucky_name(request)
-    print(result)
     return render_to_response('lucky_name_modal.html', result)
 
 
@@ -100,7 +99,6 @@ def luckyname(request):
 @csrf_exempt
 def keyword(request):
     result = views.get_issue_keyword_list(request.GET.get('date', None))
-    print(result)
     if len(result) > 0:
         return render_to_response('keyword.html', {'results': result[0]['items']})
     else:
