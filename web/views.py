@@ -25,11 +25,12 @@ def main(request):
 
 
 def lets_encrypt(request, authorization_code):
+    print(authorization_code)
     return render(request, 'lets_encrypt.html',
                   {'lets_encrypt_authorization_code': 'RFUcoJwfCni-GMuQEDFpKaXIrd3gwS9ZJ45FcF8dGvQ._wy1NPw2PM2-Tj2pxrj4JuyU2iCElWaebHkUZVAerkY'})
 
 
-def google_app_engine_health_check(req):
+def google_app_engine_health_check(request):
     return HttpResponse(status=200)
 
 
@@ -61,8 +62,8 @@ def rating(request):
 @csrf_exempt
 def pledge(request):
     if request.method == 'GET':
-        type = request.GET.get('type', None)
-        if type == 'rank':
+        pledge_type = request.GET.get('type', None)
+        if pledge_type == 'rank':
             results = views.pledge_rank_list()
             return render_to_response('pledge_rank_modal.html', {'pledge_rank_list': results})
     else:
@@ -111,5 +112,6 @@ def news(request):
 
 
 def slot_honor(request):
-    results = views.slot_honor_list()
-    return render_to_response('slot_honor_modal.html', {'results': results})
+    if request.method == 'GET':
+        results = views.slot_honor_list()
+        return render_to_response('slot_honor_modal.html', {'results': results})

@@ -19,7 +19,7 @@
     <!-- Font CSS -->
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
     <link rel='stylesheet' href="{% static 'css/nanumbarungothic.css' %}" type='text/css'>
-    <link rel='stylesheet' href='https://fonts.googleapis.com/earlyaccess/nanumpenscript.css' type='text/css'>
+    <!--<link rel='stylesheet' href='https://fonts.googleapis.com/earlyaccess/nanumpenscript.css' type='text/css'>-->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -460,6 +460,9 @@
                 <div class="modal-body">
                     <div id="keyword-modal-body"></div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">닫기</button>
+                </div>
             </div>
         </div>
     </div>
@@ -650,7 +653,6 @@
 <script type="text/javascript" src="{% static 'js/main/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
-<!--<script type="text/javascript" src="{% static 'js/main/dom-to-image.js' %}"></script>-->
 <script type="text/javascript" src="{% static 'js/html2canvas.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/kakao.min.js' %}"></script>
 
