@@ -23,15 +23,13 @@ window.twttr = (function(d, s, id) {
 
 function snsShare(sns, imageUrl, title) {
     if (sns == 'facebook') {
-        console.log(sns);
-        FB._https = (window.location.protocol == "https:");
         FB.ui({
             method: 'feed',
             picture : imageUrl,
             name: title,
-            caption: '2017대선닷컴에서 대선을 즐겨보아요',
-            href: 'https://2017daesun.com',
-            redirect_uri: 'https://2017daesun.com'
+            caption: '2017대선닷컴',
+            description: '대선후보 돌려돌려 돌림판에서 잭팟이 터졌습니다! 이 후보랑 잘 맞으시네요 ㅎㅎ',
+            link: 'https://2017daesun.com'
         }, function(response){
             if (response && !response.error_code) {
                 console.log("Facebook Share Success : " + JSON.stringify(response));

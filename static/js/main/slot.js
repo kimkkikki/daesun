@@ -24,7 +24,7 @@ function share_facebook(){
                 success:function(data){
                     console.log(data);
                     $('#slot-modal').waitMe('hide');
-                    snsShare('facebook', data, null);
+                    snsShare('facebook', data, '2017대선닷컴 후보 돌림판 당첨!');
                     $('#honor_nickname').removeAttr('disabled');
                     $('#add_honor').removeAttr('disabled');
                 },
