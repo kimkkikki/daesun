@@ -29,11 +29,6 @@ $(document).ready(function(){
             return;
         }
 
-        var writer = $("#cheering-writer").val();
-        if (writer == '') {
-            writer = ip;
-        }
-
         waitMe($('#cheering'));
         $.ajax({
 			url: '/cheering',
@@ -45,7 +40,7 @@ $(document).ready(function(){
 			data: JSON.stringify({
                     'candidate': cheering_candidate_select,
                     'message': message,
-                    'ip': writer
+                    'ip': ip
                 }),
 			success: function(data) {
                 $('#cheering-table').html(data);
