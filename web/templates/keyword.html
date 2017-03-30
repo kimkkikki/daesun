@@ -1,9 +1,9 @@
 {% for result in results %}
 <div class="row align-items-center">
-    <div class="col-2 col-md-1 keyword-item">
+    <div class="col-3 col-md-1 keyword-item">
         {% include 'candidate_img_template.html' %}
     </div>
-    <div class="col-10 col-md-11 keyword-item">
+    <div class="col-9 col-md-11 keyword-item">
         {% for keyword in result.keywords %}
             <a href="javascript:void(0)" class="keyword" title="{{ result.candidate }} {{ keyword }}"><kbd>{{ keyword }}</kbd></a>
         {% endfor %}
