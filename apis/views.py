@@ -25,14 +25,15 @@ from django.conf import settings
 
 
 candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
-                            {'candidate': '안희정', 'constellation': '황소', 'blood': 'A', 'twitter': 'steelroot'},
-                            {'candidate': '이재명', 'constellation': '물병', 'blood': 'O', 'twitter': 'Jaemyung_Lee'},
-                            {'candidate': '심상정', 'constellation': '물고기', 'blood': 'B', 'twitter': 'sangjungsim'},
-                            {'candidate': '유승민', 'constellation': '염소', 'blood': 'A', 'twitter': 'yooseongmin2017'},
-                            {'candidate': '안철수', 'constellation': '물고기', 'blood': 'AB', 'twitter': 'cheolsoo0919'},
-                            {'candidate': '홍준표', 'constellation': '사수', 'blood': 'A', 'twitter': ''},
-                            {'candidate': '손학규', 'constellation': '전갈', 'blood': '', 'twitter': 'HQ_Sohn'},
-                            {'candidate': '김진태', 'constellation': '천칭', 'blood': '', 'twitter': 'jtkim1013'}]
+                       {'candidate': '안희정', 'constellation': '황소', 'blood': 'A', 'twitter': 'steelroot'},
+                       {'candidate': '이재명', 'constellation': '물병', 'blood': 'O', 'twitter': 'Jaemyung_Lee'},
+                       {'candidate': '심상정', 'constellation': '물고기', 'blood': 'B', 'twitter': 'sangjungsim'},
+                       {'candidate': '유승민', 'constellation': '염소', 'blood': 'A', 'twitter': 'yooseongmin2017'},
+                       {'candidate': '안철수', 'constellation': '물고기', 'blood': 'AB', 'twitter': 'cheolsoo0919'},
+                       {'candidate': '홍준표', 'constellation': '사수', 'blood': 'A', 'twitter': ''},
+                       {'candidate': '손학규', 'constellation': '전갈', 'blood': '', 'twitter': 'HQ_Sohn'},
+                       {'candidate': '김진태', 'constellation': '천칭', 'blood': '', 'twitter': 'jtkim1013'}
+                       ]
 
 
 class JSONResponse(HttpResponse):
@@ -42,31 +43,26 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-def save_lucky_rating(candidate, type, input):
+def save_lucky_rating(candidate, lucky_type, lucky_input):
     if os.getenv('GAE_INSTANCE'):
-        lucky_rating = LuckyRating(candidate=candidate, type=type, input=input)
+        lucky_rating = LuckyRating(candidate=candidate, type=lucky_type, input=lucky_input)
         lucky_rating.save()
 
 
 def get_news_list(request):
     body = JSONParser().parse(request)
     request_keyword = body.get('keywords', None)
+    keywords = request_keyword.split(' ')
+    q_list = []
+    for keyword in keywords:
+        if keyword != 'ALL':
+            q_list.append(Q(title__contains=keyword))
 
-    cache = caches['default']
-    news_list = cache.get('news_' + request_keyword)
-    if news_list is None:
-        keywords = request_keyword.split(' ')
-        q_list = []
-        for keyword in keywords:
-            if keyword != 'ALL':
-                q_list.append(Q(title__contains=keyword))
+    query = q_list.pop()
+    for item in q_list:
+        query &= item
 
-        query = q_list.pop()
-        for item in q_list:
-            query &= item
-
-        news_list = Scraps.objects.filter(query).order_by('-created_at')[0:10]
-        cache.set('news_' + request_keyword, news_list, timeout=600)
+    news_list = Scraps.objects.filter(query).order_by('-created_at')[0:10]
 
     return news_list
 
@@ -132,9 +128,9 @@ def cp_daily(request):
 def get_shop():
     results = []
 
-    for obj in candidate_dict_list:
-        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + obj.get('candidate') +\
-              "&d_auth=" + obj.get('candidate') + "&sort=date&d_dafr=20150101&d_dato=20171231"
+    for candidate_dict in candidate_dict_list:
+        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + candidate_dict.get('candidate') +\
+              "&d_auth=" + candidate_dict.get('candidate') + "&sort=date&d_dafr=20150101&d_dato=20171231"
 
         response = requests.get(url, headers={'X-Naver-Client-Id': 'cC0cf4zyUuLFmj_kKUum',
                                               'X-Naver-Client-Secret': 'EYop6SBs44'})
@@ -151,8 +147,9 @@ def get_shop():
 
 
 @cache_page(60 * 10)
-def shop(req):
-    return JSONResponse(get_shop())
+def shop(request):
+    if request.method == 'GET':
+        return JSONResponse(get_shop())
 
 
 def pledge_rank_list():
@@ -161,8 +158,9 @@ def pledge_rank_list():
 
 
 @cache_page(60 * 10)
-def pledge_rank_api(req):
-    return JSONResponse(pledge_rank_list())
+def pledge_rank_api(request):
+    if request.method == 'GET':
+        return JSONResponse(pledge_rank_list())
 
 
 def pledge_get():
@@ -213,13 +211,13 @@ def pledge_post(request):
             count_dict[candidate_list[i].get('candidate')] -= 1
 
     result_list = [{'candidate': '문재인', 'count': count_dict['문재인'], 'titles': title_dict['문재인']},
-               {'candidate': '안철수', 'count': count_dict['안철수'], 'titles': title_dict['안철수']},
-               {'candidate': '이재명', 'count': count_dict['이재명'], 'titles': title_dict['이재명']},
-               {'candidate': '유승민', 'count': count_dict['유승민'], 'titles': title_dict['유승민']},
-               {'candidate': '안희정', 'count': count_dict['안희정'], 'titles': title_dict['안희정']},
-               {'candidate': '심상정', 'count': count_dict['심상정'], 'titles': title_dict['심상정']},
-               {'candidate': '남경필', 'count': count_dict['남경필'], 'titles': title_dict['남경필']},
-               {'candidate': '홍준표', 'count': count_dict['홍준표'], 'titles': title_dict['홍준표']},
+                   {'candidate': '안철수', 'count': count_dict['안철수'], 'titles': title_dict['안철수']},
+                   {'candidate': '이재명', 'count': count_dict['이재명'], 'titles': title_dict['이재명']},
+                   {'candidate': '유승민', 'count': count_dict['유승민'], 'titles': title_dict['유승민']},
+                   {'candidate': '안희정', 'count': count_dict['안희정'], 'titles': title_dict['안희정']},
+                   {'candidate': '심상정', 'count': count_dict['심상정'], 'titles': title_dict['심상정']},
+                   {'candidate': '남경필', 'count': count_dict['남경필'], 'titles': title_dict['남경필']},
+                   {'candidate': '홍준표', 'count': count_dict['홍준표'], 'titles': title_dict['홍준표']},
                    ]
     result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
 
@@ -439,25 +437,26 @@ def timeline(req):
 
 
 @api_view(['GET'])
-def love_test(req):
-    candidate_dict = {'문재인': 1, '안희정': 2, '이재명': 3, '안철수': 4, '유승민': 5, '황교안': 6, '남경필': 7}
-    result_list = []
-    result_db_list = LoveOrHate.objects.values('speaker', 'target').annotate(s_cnt=Count('speaker'),
-                                                                             t_cnt=Count('target'))
-    speaker, target, count, arrows = result_db_list[0]['speaker'], result_db_list[0]['target'], result_db_list[0][
-        't_cnt'], 'to'
-    for result in result_db_list:
-        if speaker != result['speaker']:
-            result_list.append({'from': candidate_dict[speaker], 'to': candidate_dict[target],
-                                'arrows': arrows})
-            speaker, target, count = result['speaker'], result['target'], result['t_cnt']
+def love_test(request):
+    if request.method == 'GET':
+        candidate_dict = {'문재인': 1, '안희정': 2, '이재명': 3, '안철수': 4, '유승민': 5, '황교안': 6, '남경필': 7}
+        result_list = []
+        result_db_list = LoveOrHate.objects.values('speaker', 'target').annotate(s_cnt=Count('speaker'),
+                                                                                 t_cnt=Count('target'))
+        speaker, target, count, arrows = result_db_list[0]['speaker'], result_db_list[0]['target'], result_db_list[0][
+            't_cnt'], 'to'
+        for result in result_db_list:
+            if speaker != result['speaker']:
+                result_list.append({'from': candidate_dict[speaker], 'to': candidate_dict[target],
+                                    'arrows': arrows})
+                speaker, target, count = result['speaker'], result['target'], result['t_cnt']
 
-        if count < result['t_cnt']:
-            count, target = result['t_cnt'], result['target']
-            if count > 20:
-                arrows = {'to': {'scaleFactor': '2'}}
-    print(list(result_list))
-    return JSONResponse(list(result_list))
+            if count < result['t_cnt']:
+                count, target = result['t_cnt'], result['target']
+                if count > 20:
+                    arrows = {'to': {'scaleFactor': '2'}}
+
+        return JSONResponse(list(result_list))
 
 
 def get_candidate_sns_list():
@@ -467,8 +466,8 @@ def get_candidate_sns_list():
                       consumer_secret='lxpIYyImUVVyIQfDyrEPi5HIh71CZLrnNBF2uRPfuNrmVUqICM')
 
     schedules = []
-    candidate_dict = {'문재인': '#337ab7', '안희정': '#337ab7', '이재명': '#337ab7',
-                      '안철수': '#669966', '유승민': '#4ca0e6', '심상정': '#c9151e'}
+    candidate_dict = {'문재인': '#1870B9', '안희정': '#1870B9', '이재명': '#1870B9', '홍준표': '#c9151e', '김진태': '#c9151e',
+                      '안철수': '#036241', '손학규': '#036241', '유승민': '#01B1EC', '심상정': '#FFCA08'}
 
     for candidate in candidate_dict_list:
         if candidate.get('twitter') == '':
