@@ -40,6 +40,16 @@ def constellation_chemistry(cons, candidates):
     return results
 
 
+def constellation_chemistry_one(cons1, cons2):
+    score = constellation_chemistry_man_to_woman(cons1, cons2) + \
+            constellation_chemistry_man_to_woman(cons2, cons1) + \
+            constellation_chemistry_woman_to_man(cons1, cons2) + \
+            constellation_chemistry_woman_to_man(cons2, cons1)
+    score /= 4
+
+    return score
+
+
 def constellation_chemistry_man_to_woman(cons1, cons2):
     if cons1 == '양':
         if cons2 == '양':

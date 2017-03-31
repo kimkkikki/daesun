@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^constellation$', views.constellation_chemistry, name='constellation'),
     url(r'^blood$', views.blood_chemistry, name='blood'),
     url(r'^zodiac$', views.zodiac_chemistry, name='zodiac'),
+    url(r'^total$', views.total_chemistry, name='total'),
     url(r'^slot$', views.slot, name='slot'),
     url(r'^luckyname$', views.luckyname, name='luckyname'),
     url(r'^keyword$', views.keyword, name='keyword'),

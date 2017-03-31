@@ -308,7 +308,7 @@
                     <h2 class="section-heading">비과학의 끝! 총평 궁합</h2>
                     <h3 class="section-subheading text-muted">당신이 타고난 운명적으로 알수 없는 끌림이 있어야 하는 추천 후보</h3>
                     <form class="form-inline justify-content-center row">
-                        <select title="별자리" class="form-control col-5 col-md-2">
+                        <select id="total-constellation" title="별자리" class="form-control col-5 col-md-2">
                             <option value="None">별자리 선택</option>
                             <option value="물병">물병자리</option>
                             <option value="물고기">물고기자리</option>
@@ -323,14 +323,14 @@
                             <option value="사수">사수자리</option>
                             <option value="염소">염소자리</option>
                         </select>
-                        <select title="혈액형" class="form-control col-5 col-md-2">
+                        <select id="total-blood" title="혈액형" class="form-control col-5 col-md-2">
                             <option value="None">혈액형 선택</option>
                             <option value="A">A형</option>
                             <option value="B">B형</option>
                             <option value="O">O형</option>
                             <option value="AB">AB형</option>
                         </select>
-                        <select title="띠" class="form-control col-4 col-md-2">
+                        <select id="total-zodiac" title="띠" class="form-control col-4 col-md-2">
                             <option value="None">띠 선택</option>
                             <option value="쥐">쥐띠</option>
                             <option value="소">소띠</option>
@@ -344,8 +344,8 @@
                             <option value="개">개띠</option>
                             <option value="돼지">돼지띠</option>
                         </select>
-                        <input type="text" class="form-control col-4 col-md-2" placeholder="내 이름 입력" maxlength="4">
-                        <button type="button" class="btn btn-primary col-2 col-md-1">확인</button>
+                        <input id="total-name" type="text" class="form-control col-4 col-md-2" placeholder="내 이름 입력" maxlength="4">
+                        <button id="total-button" type="button" class="btn btn-primary col-2 col-md-1">확인</button>
                     </form>
                 </div>
             </div>
@@ -523,6 +523,27 @@
                 </div>
                 <div class="modal-body">
                     <div id="zodiac-result" class="row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" value="facebook">페이스북</button>
+                    <button type="button" class="btn btn-warning" value="kakaotalk">카카오톡</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 토탈 모달뷰 -->
+    <div id="total-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">당신은 이후보와 운명이다</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="total-result" class="row"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" value="facebook">페이스북</button>

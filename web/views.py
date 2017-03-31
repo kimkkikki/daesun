@@ -76,6 +76,13 @@ def pledge(request):
 
 
 @csrf_exempt
+def total_chemistry(request):
+    if request.method == 'POST':
+        results = views.total_chemistry(request)
+        return render_to_response('total_modal.html', {'results': results})
+
+
+@csrf_exempt
 def constellation_chemistry(request):
     if request.method == 'POST':
         results = views.constellation_post(request)

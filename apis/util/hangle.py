@@ -85,7 +85,6 @@ def name_chemistry(name1, name2):
         sum_list = result_list
         score_list.append(sum_list)
 
-    print(score_list)
     score = sum_list[0] * 10 + sum_list[1]
 
     if score == 0:

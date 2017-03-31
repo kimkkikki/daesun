@@ -118,3 +118,44 @@ $('#zodiac-type-button').click(function() {
             });
     }
 });
+
+$('#total-button').click(function() {
+    var totalZodiac = $('#total-zodiac').val();
+    var totalConstellation = $('#total-constellation').val();
+    var totalName = $('#total-name').val();
+    var totalBlood = $('#total-blood').val();
+    if (totalZodiac === 'None') {
+        alert('띠를 선택해주세요')
+    } else if (totalConstellation === 'None') {
+        alert('별자리를 선택해주세요')
+    } else if (totalBlood === 'None') {
+        alert('혈액형을 선택해주세요')
+    } else if (totalName === '') {
+        alert('이름을 입력해주세요')
+    } else {
+        waitMe($('#lucky'));
+        $.ajax({
+                url: '/total',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                cache: false,
+                type: 'POST',
+                data: JSON.stringify({
+                    'zodiac': totalZodiac,
+                    'blood': totalBlood,
+                    'constellation': totalConstellation,
+                    'name': totalName
+                }),
+                success: function(data) {
+                    $('#total-result').html(data);
+                    $('#total-modal').modal('show');
+                    $('#lucky').waitMe('hide');
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    $('#lucky').waitMe('hide');
+                }
+            });
+    }
+});

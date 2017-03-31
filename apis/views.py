@@ -741,6 +741,44 @@ def zodiac_chemistry(request):
     return result_dict
 
 
+def total_chemistry(request):
+    body = JSONParser().parse(request)
+    request_zodiac = body.get('zodiac', None)
+    request_blood = body.get('blood', None)
+    request_constellation = body.get('constellation', None)
+    request_name = body.get('name', None)
+
+    if request_zodiac is None or request_blood is None or request_constellation is None or request_name is None:
+        return
+
+    result_list = []
+    for candidate in get_candidates():
+        score_to, score_to_list, name_to_list = hangle.name_chemistry(request_name, candidate.candidate)
+        score_from, score_from_list, name_from_list = hangle.name_chemistry(candidate.candidate, request_name)
+        name_score = (score_from + score_to) / 2
+
+        if candidate.blood_type != '':
+            blood_score = blood_type.blood_chemistry(request_blood, candidate.blood_type)
+        else:
+            blood_score = 0
+
+        constellation_score = constellation.constellation_chemistry_one(request_constellation, candidate.constellation)
+        zodiac_score = zodiac.chemistry(request_zodiac, candidate.zodiac)
+
+        total_score = name_score + blood_score + constellation_score + zodiac_score
+        total_score = total_score / 4
+
+        result_list.append({'candidate': candidate.candidate, 'name': name_score, 'blood': blood_score, 'constellation': constellation_score, 'zodiac': zodiac_score, 'score': total_score})
+
+    result = sorted(result_list, key=itemgetter('score'), reverse=True)
+
+    save_string = request_zodiac + '_' + request_blood + '_' + request_constellation + '_' + request_name
+    save_lucky_rating(result[0], 'total', save_string)
+
+    return result
+
+
+
 @csrf_exempt
 def blood_type_chemistry_api(request):
     if request.method == 'POST':
