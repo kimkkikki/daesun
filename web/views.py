@@ -83,6 +83,20 @@ def constellation_chemistry(request):
 
 
 @csrf_exempt
+def blood_chemistry(request):
+    if request.method == 'POST':
+        results = views.blood_type_chemistry(request)
+        return render_to_response('blood_modal.html', {'results': results})
+
+
+@csrf_exempt
+def zodiac_chemistry(request):
+    if request.method == 'POST':
+        results = views.zodiac_chemistry(request)
+        return render_to_response('zodiac_modal.html', {'results': results})
+
+
+@csrf_exempt
 def slot(request):
     if request.method == 'POST':
         result = views.save_lucky_result(request)

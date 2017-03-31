@@ -1,5 +1,5 @@
 <div class="col-12 mx-auto">
-    <div id="constellation-modal-contents" class="row justify-content-center text-center white-background">
+    <div id="constellation-modal-contents" class="row justify-content-center text-center white-background lucky-best animated zoomIn">
         <div class="col-12">
             <p>나와 별자리 궁합이 가장 좋은 후보입니다</p>
         </div>
@@ -32,7 +32,7 @@
     <p>나머지 후보들과의 별자리 궁합 점수입니다</p>
     <div class="row">
         {% for result in constellation_result.rests %}
-        <div class="col-3 col-md-2 text-center">
+        <div class="col-3 col-md-2 text-center lucky-rests animated zoomIn">
             {% include 'candidate_img_template.html' %}
             <h5>{{ result.candidate }}</h5>
             <p>{{ result.constellation }}<br>{{ result.score|floatformat }}점</p>

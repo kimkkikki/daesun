@@ -9,7 +9,7 @@ from django.core.cache import caches
 from django.views.decorators.cache import cache_page
 import json
 import uuid
-from .util import hangle, constellation, blood_type
+from .util import hangle, constellation, blood_type, zodiac
 from datetime import datetime, timedelta
 from rest_framework.decorators import api_view
 from operator import itemgetter
@@ -661,24 +661,25 @@ def cheering_message_api(request):
 
 def constellation_post(request):
     body = JSONParser().parse(request)
-    month = body.get('month', None)
-    day = body.get('day', None)
+    request_constellation = body.get('constellation', None)
 
-    request_constellation = constellation.get_constellation((month, day))
-    result = constellation.constellation_chemistry(request_constellation, get_candidates())
-    result = sorted(result, key=itemgetter('score'), reverse=True)
+    if constellation is not None:
+        result = constellation.constellation_chemistry(request_constellation, get_candidates())
+        result = sorted(result, key=itemgetter('score'), reverse=True)
 
-    max_obj = max(result, key=itemgetter('score'))
-    result_dict = {'constellation': request_constellation, 'bests': [], 'rests': []}
+        max_obj = max(result, key=itemgetter('score'))
+        result_dict = {'constellation': request_constellation, 'bests': [], 'rests': []}
 
-    for obj in result:
-        if obj['score'] == max_obj['score']:
-            result_dict['bests'].append(obj)
-            save_lucky_rating(obj['candidate'], 'star', str((month, day)))
-        else:
-            result_dict['rests'].append(obj)
+        for obj in result:
+            if obj['score'] == max_obj['score']:
+                result_dict['bests'].append(obj)
+                save_lucky_rating(obj['candidate'], 'star', constellation)
+            else:
+                result_dict['rests'].append(obj)
 
-    return result_dict
+        return result_dict
+    else:
+        return None
 
 
 @csrf_exempt
@@ -690,19 +691,61 @@ def constellation_api(request):
         return Http404
 
 
-# 안씀
+def blood_type_chemistry(request):
+    body = JSONParser().parse(request)
+    blood = body.get('blood', None)
+    result_list = []
+    for candidate in get_candidates():
+        if candidate.blood_type is None or candidate.blood_type == '':
+            continue
+        score = blood_type.blood_chemistry(blood, candidate.blood_type)
+        result_list.append({'candidate': candidate.candidate, 'blood': candidate.blood_type, 'score': score})
+
+    result = sorted(result_list, key=itemgetter('score'), reverse=True)
+
+    max_obj = max(result, key=itemgetter('score'))
+    result_dict = {'bests': [], 'rests': []}
+
+    for obj in result:
+        if obj['score'] == max_obj['score']:
+            result_dict['bests'].append(obj)
+            save_lucky_rating(obj['candidate'], 'blood', constellation)
+        else:
+            result_dict['rests'].append(obj)
+
+    return result_dict
+
+
+def zodiac_chemistry(request):
+    body = JSONParser().parse(request)
+    request_zodiac = body.get('zodiac', None)
+    result_list = []
+    for candidate in get_candidates():
+        if candidate.zodiac is None or candidate.zodiac == '':
+            continue
+        score = zodiac.chemistry(request_zodiac, candidate.zodiac)
+        result_list.append({'candidate': candidate.candidate, 'zodiac': candidate.zodiac, 'score': score})
+
+    result = sorted(result_list, key=itemgetter('score'), reverse=True)
+
+    max_obj = max(result, key=itemgetter('score'))
+    result_dict = {'bests': [], 'rests': []}
+
+    for obj in result:
+        if obj['score'] == max_obj['score']:
+            result_dict['bests'].append(obj)
+            save_lucky_rating(obj['candidate'], 'zodiac', constellation)
+        else:
+            result_dict['rests'].append(obj)
+
+    return result_dict
+
+
 @csrf_exempt
 def blood_type_chemistry_api(request):
     if request.method == 'POST':
-        body = JSONParser().parse(request)
-        blood = body.get('blood', None)
-
-        result_list = []
-        for candidate in get_candidates():
-            score = blood_type.blood_chemistry(blood, candidate.blood_type)
-            result_list.append({'candidate': candidate.candidate, 'score': score})
-
-        return JSONResponse(result_list)
+        result = blood_type_chemistry(request)
+        return JSONResponse(result)
     else:
         return Http404
 

@@ -235,42 +235,118 @@
 
             <div class="row justify-content-center section-contents">
                 <div id="name-lucky" class="col-12 col-md-6 text-center lucky-box">
-                    <h3>이름점</h3>
-                    <p>자음모음 획수로 보는 후보자와의 궁합</p>
-                    <div class="input-group">
-                        <input type="text" id="inputUserName" class="form-control" placeholder="내 이름 입력" maxlength="4">
+                    <h2 class="section-heading">이름점</h2>
+                    <h3 class="section-subheading text-muted">자음모음 획수로 보는 후보자와의 궁합</h3>
+                    <div class="input-group justify-content-center">
+                        <input type="text" id="inputUserName" class="form-control col-4" placeholder="내 이름 입력" maxlength="4">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-primary" id='buttonUserName' data-toggle="modal" data-target="#lucky-name-modal">확인</button>
                         </span>
                     </div>
                 </div>
                 <div id="constellation-lucky" class="col-12 col-md-6 text-center lucky-box">
-                    <h3>별자리점</h3>
-                    <p>로맨틱한 밤하늘로 알아보는 궁합</p>
-                    <div class="input-group justify-content-center">
-                        <div class="input-group-btn">
-                            <button id="constellation-month" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">몇월</button>
-                            <div class="dropdown-menu">
-                                {% for i in "xxxxxxxxxxxx" %}
-                                <button class="dropdown-item constellation-month" value="{{ forloop.counter }}">{{ forloop.counter }}월</button>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="input-group-addon">
-                            &nbsp;
-                        </div>
-                        <div class="input-group-btn">
-                            <button id="constellation-day" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">몇일</button>
-                            <div class="dropdown-menu">
-                                {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
-                                <button class="dropdown-item constellation-day" value="{{ forloop.counter }}">{{ forloop.counter }}일</button>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <span class="input-group-btn">
-                            <button id="constellation-button" type="button" class="btn btn-primary">확인</button>
-                        </span>
-                    </div>
+                    <h2 class="section-heading">별자리점</h2>
+                    <h3 class="section-subheading text-muted">로맨틱한 밤하늘로 알아보는 후보자와 궁합</h3>
+                    <form class="form-inline justify-content-center row">
+                        <select id="constellation-select" title="별자리" class="form-control col-4">
+                            <option value="None">별자리 선택</option>
+                            <option value="물병">물병자리</option>
+                            <option value="물고기">물고기자리</option>
+                            <option value="양">양자리</option>
+                            <option value="황소">황소자리</option>
+                            <option value="쌍둥이">쌍둥이자리</option>
+                            <option value="게">게자리</option>
+                            <option value="사자">사자자리</option>
+                            <option value="처녀">처녀자리</option>
+                            <option value="천칭">천칭자리</option>
+                            <option value="전갈">전갈자리</option>
+                            <option value="사수">사수자리</option>
+                            <option value="염소">염소자리</option>
+                        </select>
+                        <button id="constellation-button" type="button" class="btn btn-primary col-2">확인</button>
+                    </form>
+                </div>
+
+                <div class="col-12 col-md-6 text-center lucky-box">
+                    <h2 class="section-heading">혈액형 궁합</h2>
+                    <h3 class="section-subheading text-muted">혈액형으로 보는 추천 후보</h3>
+                    <form class="form-inline justify-content-center row">
+                        <select id="blood-type" title="혈액형" class="form-control col-4">
+                            <option value="None">혈액형 선택</option>
+                            <option value="A">A형</option>
+                            <option value="B">B형</option>
+                            <option value="O">O형</option>
+                            <option value="AB">AB형</option>
+                        </select>
+                        <button id="blood-type-button" type="button" class="btn btn-primary col-2">확인</button>
+                    </form>
+                </div>
+
+                <div class="col-12 col-md-6 text-center lucky-box">
+                    <h2 class="section-heading">띠별 궁합</h2>
+                    <h3 class="section-subheading text-muted">12지신으로 보는 추천 후보</h3>
+                    <form class="form-inline justify-content-center row">
+                        <select id="zodiac-type" title="혈액형" class="form-control col-4">
+                            <option value="None">띠 선택</option>
+                            <option value="쥐">쥐띠</option>
+                            <option value="소">소띠</option>
+                            <option value="호랑이">호랑이띠</option>
+                            <option value="용">용띠</option>
+                            <option value="뱀">뱀띠</option>
+                            <option value="말">말띠</option>
+                            <option value="양">양띠</option>
+                            <option value="원숭이">원숭이띠</option>
+                            <option value="닭">닭띠</option>
+                            <option value="개">개띠</option>
+                            <option value="돼지">돼지띠</option>
+                        </select>
+                        <button id="zodiac-type-button" type="button" class="btn btn-primary col-2">확인</button>
+                    </form>
+                </div>
+
+                <div class="col-12 text-center lucky-box">
+                    <h2 class="section-heading">비과학의 끝! 총평 궁합</h2>
+                    <h3 class="section-subheading text-muted">당신이 타고난 운명적으로 알수 없는 끌림이 있어야 하는 추천 후보</h3>
+                    <form class="form-inline justify-content-center row">
+                        <select title="별자리" class="form-control col-5 col-md-2">
+                            <option value="None">별자리 선택</option>
+                            <option value="물병">물병자리</option>
+                            <option value="물고기">물고기자리</option>
+                            <option value="양">양자리</option>
+                            <option value="황소">황소자리</option>
+                            <option value="쌍둥이">쌍둥이자리</option>
+                            <option value="게">게자리</option>
+                            <option value="사자">사자자리</option>
+                            <option value="처녀">처녀자리</option>
+                            <option value="천칭">천칭자리</option>
+                            <option value="전갈">전갈자리</option>
+                            <option value="사수">사수자리</option>
+                            <option value="염소">염소자리</option>
+                        </select>
+                        <select title="혈액형" class="form-control col-5 col-md-2">
+                            <option value="None">혈액형 선택</option>
+                            <option value="A">A형</option>
+                            <option value="B">B형</option>
+                            <option value="O">O형</option>
+                            <option value="AB">AB형</option>
+                        </select>
+                        <select title="띠" class="form-control col-4 col-md-2">
+                            <option value="None">띠 선택</option>
+                            <option value="쥐">쥐띠</option>
+                            <option value="소">소띠</option>
+                            <option value="호랑이">호랑이띠</option>
+                            <option value="용">용띠</option>
+                            <option value="뱀">뱀띠</option>
+                            <option value="말">말띠</option>
+                            <option value="양">양띠</option>
+                            <option value="원숭이">원숭이띠</option>
+                            <option value="닭">닭띠</option>
+                            <option value="개">개띠</option>
+                            <option value="돼지">돼지띠</option>
+                        </select>
+                        <input type="text" class="form-control col-4 col-md-2" placeholder="내 이름 입력" maxlength="4">
+                        <button type="button" class="btn btn-primary col-2 col-md-1">확인</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -408,8 +484,49 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary constellation-button" value="facebook">페이스북</button>
-                    <!--<button type="button" class="btn btn-info constellation-button" value="twitter">트위터</button>-->
                     <button type="button" class="btn btn-warning constellation-button" value="kakaotalk">카카오톡</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 혈액형 모달뷰 -->
+    <div id="blood-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">혈액형 궁합 결과</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="blood-result" class="row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" value="facebook">페이스북</button>
+                    <button type="button" class="btn btn-warning" value="kakaotalk">카카오톡</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 띠 모달뷰 -->
+    <div id="zodiac-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">띠별 궁합 결과</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="zodiac-result" class="row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" value="facebook">페이스북</button>
+                    <button type="button" class="btn btn-warning" value="kakaotalk">카카오톡</button>
                 </div>
             </div>
         </div>
@@ -645,7 +762,7 @@
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/sns.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/rating.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main/constellation.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/daesun-lucky.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/press.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>

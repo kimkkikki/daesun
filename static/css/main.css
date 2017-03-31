@@ -338,3 +338,17 @@ ul.social-buttons li a {
     -webkit-animation-delay: 1s;
     -moz-animation-delay: 1s;
 }
+
+.lucky-best {
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    -webkit-animation-delay: 2.5s;
+    -moz-animation-delay: 2.5s;
+}
+
+.lucky-rests {
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    -webkit-animation-delay: 0.5s;
+    -moz-animation-delay: 0.5s;
+}
