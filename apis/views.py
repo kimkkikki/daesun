@@ -1,4 +1,4 @@
-from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage, LuckyRating, Calendar, Honor, Donate
+from apis.models import Scraps, Keywords, Pledge, ApprovalRating, LoveOrHate, IssueKeyword, CheeringMessage, LuckyRating, Calendar, Honor, Candidate
 from django.http import HttpResponse, Http404
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
@@ -24,16 +24,9 @@ import os
 from django.conf import settings
 
 
-candidate_dict_list = [{'candidate': '문재인', 'constellation': '물병', 'blood': 'B', 'twitter': 'moonriver365'},
-                       {'candidate': '안희정', 'constellation': '황소', 'blood': 'A', 'twitter': 'steelroot'},
-                       {'candidate': '이재명', 'constellation': '물병', 'blood': 'O', 'twitter': 'Jaemyung_Lee'},
-                       {'candidate': '심상정', 'constellation': '물고기', 'blood': 'B', 'twitter': 'sangjungsim'},
-                       {'candidate': '유승민', 'constellation': '염소', 'blood': 'A', 'twitter': 'yooseongmin2017'},
-                       {'candidate': '안철수', 'constellation': '물고기', 'blood': 'AB', 'twitter': 'cheolsoo0919'},
-                       {'candidate': '홍준표', 'constellation': '사수', 'blood': 'A', 'twitter': ''},
-                       {'candidate': '손학규', 'constellation': '전갈', 'blood': '', 'twitter': 'HQ_Sohn'},
-                       {'candidate': '김진태', 'constellation': '천칭', 'blood': '', 'twitter': 'jtkim1013'}
-                       ]
+def get_candidates():
+    candidates = Candidate.objects.filter(running=True)
+    return candidates
 
 
 class JSONResponse(HttpResponse):
@@ -128,9 +121,9 @@ def cp_daily(request):
 def get_shop():
     results = []
 
-    for candidate_dict in candidate_dict_list:
-        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + candidate_dict.get('candidate') +\
-              "&d_auth=" + candidate_dict.get('candidate') + "&sort=date&d_dafr=20150101&d_dato=20171231"
+    for candidate in get_candidates():
+        url = "https://openapi.naver.com/v1/search/book_adv.json?d_titl=" + candidate.candidate +\
+              "&d_auth=" + candidate.candidate + "&sort=date&d_dafr=20150101&d_dato=20171231"
 
         response = requests.get(url, headers={'X-Naver-Client-Id': 'cC0cf4zyUuLFmj_kKUum',
                                               'X-Naver-Client-Secret': 'EYop6SBs44'})
@@ -328,10 +321,10 @@ def name_chemistry(request):
         return JSONResponse({'message': 'param is missing'}, status=400)
 
     result_list = []
-    for obj in candidate_dict_list:
-        score_to = hangle.name_chemistry(name, obj.get('candidate'))
-        score_from = hangle.name_chemistry(obj.get('candidate'), name)
-        result_list.append({'candidate': obj.get('candidate'), 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
+    for candidate in get_candidates():
+        score_to = hangle.name_chemistry(name, candidate.candidate)
+        score_from = hangle.name_chemistry(candidate.candidate, name)
+        result_list.append({'candidate': candidate.candidate, 'score_to': score_to, 'score_from': score_from, 'score': score_to + score_from})
 
     if len(result_list) > 0:
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
@@ -349,10 +342,10 @@ def lucky_name(request):
     print(name)
     result_list = []
     score, best_to, best_from, best_to_name, best_from_name = 0, [], [], [], []
-    for obj in candidate_dict_list:
-        score_to, score_to_list, name_to_list = hangle.name_chemistry(name, obj.get('candidate'))
-        score_from, score_from_list, name_from_list = hangle.name_chemistry(obj.get('candidate'), name)
-        result_list.append({'candidate': obj.get('candidate'), 'score_to': score_to, 'score_from': score_from,
+    for candidate in get_candidates():
+        score_to, score_to_list, name_to_list = hangle.name_chemistry(name, candidate.candidate)
+        score_from, score_from_list, name_from_list = hangle.name_chemistry(candidate.candidate, name)
+        result_list.append({'candidate': candidate.candidate, 'score_to': score_to, 'score_from': score_from,
                             'score': (score_to + score_from) / 2})
         if score < score_to + score_from:
             best_to, best_from, best_to_name, best_from_name = score_to_list, score_from_list, name_to_list, name_from_list
@@ -469,10 +462,10 @@ def get_candidate_sns_list():
     candidate_dict = {'문재인': '#1870B9', '안희정': '#1870B9', '이재명': '#1870B9', '홍준표': '#c9151e', '김진태': '#c9151e',
                       '안철수': '#036241', '손학규': '#036241', '유승민': '#01B1EC', '심상정': '#FFCA08'}
 
-    for candidate in candidate_dict_list:
-        if candidate.get('twitter') == '':
+    for candidate in get_candidates():
+        if candidate.twitter is None:
             continue
-        statuses = api.GetUserTimeline(screen_name=candidate.get('twitter'))
+        statuses = api.GetUserTimeline(screen_name=candidate.twitter)
 
         for status in statuses:
             created = datetime.strptime(status.created_at, '%a %b %d %H:%M:%S %z %Y').astimezone(pytz.timezone('Asia/Seoul'))
@@ -652,7 +645,7 @@ def constellation_post(request):
     day = body.get('day', None)
 
     request_constellation = constellation.get_constellation((month, day))
-    result = constellation.constellation_chemistry(request_constellation, candidate_dict_list)
+    result = constellation.constellation_chemistry(request_constellation, get_candidates())
     result = sorted(result, key=itemgetter('score'), reverse=True)
 
     max_obj = max(result, key=itemgetter('score'))
@@ -685,9 +678,9 @@ def blood_type_chemistry_api(request):
         blood = body.get('blood', None)
 
         result_list = []
-        for obj in candidate_dict_list:
-            score = blood_type.blood_chemistry(blood, obj.get('blood'))
-            result_list.append({'candidate': obj.get('candidate'), 'score': score})
+        for candidate in get_candidates():
+            score = blood_type.blood_chemistry(blood, candidate.blood_type)
+            result_list.append({'candidate': candidate.candidate, 'score': score})
 
         return JSONResponse(result_list)
     else:
@@ -738,5 +731,5 @@ def upload(request):
 
 
 def donate_list():
-    donates = Donate.objects.all().values('candidate', 'account', 'account_name', 'homepage').order_by('candidate')
-    return list(donates)
+    candidates = Candidate.objects.filter(running=True, account__isnull=False).exclude(account__exact='').values('candidate', 'account', 'account_name', 'homepage').order_by('candidate')
+    return list(candidates)

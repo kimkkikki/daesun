@@ -200,14 +200,14 @@ ul.social-buttons li a {
 }
 .name-result{
     font-size:0.7rem;
-    margin-left:0px;
-    margin-right:0px;
-    padding:0px;
+    margin-left:0;
+    margin-right:0;
+    padding:0;
 }
 .name-result-rest {
     font-size:0.6rem;
-    margin-left:0px;
-    margin-right:0px;
+    margin-left:0;
+    margin-right:0;
 }
 
 .name-best{
@@ -264,9 +264,9 @@ ul.social-buttons li a {
     .name-result {
         font-size: 1rem;
         width:100%;
-        margin-left:0px;
-        margin-right:0px;
-        padding:0px;
+        margin-left:0;
+        margin-right:0;
+        padding:0;
     }
 
     .name-result-rest {
@@ -321,4 +321,20 @@ ul.social-buttons li a {
     .alert {
         font-size: 13px;
     }
+}
+
+.name-result {
+    padding: 0;
+    margin: auto;
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    -webkit-animation-delay: 3s;
+    -moz-animation-delay: 3s;
+}
+
+.name-rest {
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
 }

@@ -7,7 +7,6 @@ $(document).ready(function(){
             url:'/luckyname?name='+$('#inputUserName')[0].value,
             type:'GET',
             success:function(data){
-
                 $('#lucky-name-result').html(data);
                 $('#lucky-name-modal').waitMe('hide');
             },
@@ -36,7 +35,6 @@ $(document).ready(function(){
                     cache: false,
                     type:'POST',
                     success:function(data){
-                        url = data;
                         console.log(data);
                         if( id == 'name-share-facebook'){
                             snsShare('facebook', data, null);

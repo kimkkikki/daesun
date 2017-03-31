@@ -25,16 +25,19 @@ def get_constellation(birthday):
         return '염소'
 
 
-def constellation_chemistry(cons, candidate_dict):
-    for candidate in candidate_dict:
-        score = constellation_chemistry_man_to_woman(cons, candidate.get('constellation')) + \
-                constellation_chemistry_man_to_woman(candidate.get('constellation'), cons) + \
-                constellation_chemistry_woman_to_man(cons, candidate.get('constellation')) + \
-                constellation_chemistry_woman_to_man(candidate.get('constellation'), cons)
+def constellation_chemistry(cons, candidates):
+    results = []
+    for candidate in candidates:
+        score = constellation_chemistry_man_to_woman(cons, candidate.constellation) + \
+                constellation_chemistry_man_to_woman(candidate.constellation, cons) + \
+                constellation_chemistry_woman_to_man(cons, candidate.constellation) + \
+                constellation_chemistry_woman_to_man(candidate.constellation, cons)
         score /= 4
-        candidate['score'] = score
 
-    return candidate_dict
+        result_dict = {'candidate': candidate.candidate, 'constellation': candidate.constellation, 'score': score}
+        results.append(result_dict)
+
+    return results
 
 
 def constellation_chemistry_man_to_woman(cons1, cons2):

@@ -174,16 +174,21 @@ class HonorAdmin(admin.ModelAdmin):
     list_filter = ['candidate']
 
 
-class Donate(models.Model):
+class Candidate(models.Model):
     class Meta:
-        db_table = 'donate'
+        db_table = 'candidate'
     id = models.AutoField(primary_key=True)
     candidate = models.CharField(max_length=10)
-    account = models.CharField(max_length=20)
-    account_name = models.CharField(max_length=20)
-    homepage = models.CharField(max_length=30)
+    account = models.CharField(max_length=20, blank=True)
+    account_name = models.CharField(max_length=20, blank=True)
+    homepage = models.CharField(max_length=30, blank=True)
+    running = models.BooleanField(default=True)
+    constellation = models.CharField(max_length=3, blank=True)
+    blood_type = models.CharField(max_length=2, blank=True)
+    zodiac = models.CharField(max_length=3, blank=True)
+    twitter = models.CharField(max_length=20, blank=True)
 
 
-class DonateAdmin(admin.ModelAdmin):
-    list_display = ('id', 'candidate', 'account', 'account_name', 'homepage')
+class CandidateAdmin(admin.ModelAdmin):
+    list_display = ('id', 'candidate', 'account', 'account_name', 'homepage', 'running', 'constellation', 'blood_type', 'zodiac', 'twitter')
     list_filter = ['candidate']

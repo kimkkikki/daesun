@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <div id="lucky-name-result-detail" class="row" style="margin-left:0; margin-right:0">
-    <div id="lucky-name-image" style="width:100%;background:#ffffff">
+    <div id="lucky-name-image" class="white-background" style="width:100%;">
         <div class="text-center name-result-contents">
             {% if result.score >= 90 %}
             자음과 모음의 오묘한 조화~ 이 정도면 백년해로 가능!
@@ -16,8 +16,8 @@
             너.. 나 아는척 하지마.
             {% endif %}
         </div>
-        <div class="row name-result" id="lucky_name_best">
-            <div class="text-center name-best" data-aos="fade-in">
+        <div class="row name-result animated zoomIn" id="lucky_name_best">
+            <div class="text-center name-best">
                 {% include 'candidate_img_template.html' %}
                 <br>
                 <span id="best_candidate">{{ result.candidate }}</span><br>
@@ -34,7 +34,7 @@
     <div class="row name-result-rest">
         {% for result in list %}
             {% if forloop.counter != 1 and forloop.counter < 8 %}
-                <div class="col-2 text-center name-rest">
+                <div class="col-2 text-center name-rest animated zoomIn">
                      {{ forloop.counter }} 등
                     {% include 'candidate_img_template.html' %}
                     <span>{{ result.candidate }}</span><br>
@@ -79,8 +79,8 @@
 
         for(var i= name_length - 1; i*2 >= 4; i--){
             for(var j = 0; j <i; j++) {
-                edges.push({from: left, to: right})
-                edges.push({from: left + 1, to: right})
+                edges.push({from: left, to: right});
+                edges.push({from: left + 1, to: right});
                 left++;
                 right++;
             }
@@ -106,7 +106,7 @@
                 color: {
                     background: '#ffffff',
                     border: '#000000'
-                },
+                }
             },
             layout: {
                 hierarchical: {
@@ -118,7 +118,7 @@
                   springLength: 100
                 },
                 stabilization: {
-                    enabled: true,
+                    enabled: true
                 },
                 maxVelocity: 11,
                 minVelocity: 0.37,
@@ -129,10 +129,11 @@
                 dragView:false
             }
         };
+
         if(to_from == 'to') {
             network_to = new vis.Network(container, data, options);
 
-        }else{
+        } else {
             network_from = new vis.Network(container, data, options);
         }
     }
@@ -144,7 +145,6 @@ $(function() {
 });
 
 $(document).ready(function(){
-
     setInterval(function() {
         if (network_from !== null) {
            network_from.fit();
@@ -152,9 +152,6 @@ $(document).ready(function(){
         if (network_to !== null) {
             network_to.fit();
         }
-
-        $('.name-result').style = 'padding:0px;margin:auto';
-
     }, 100);
 
 });
