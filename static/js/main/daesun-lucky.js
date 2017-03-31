@@ -19,12 +19,98 @@ $('.constellation-button').click(function () {
                 }),
                 type:'POST',
                 success:function(data){
-                    console.log(data);
                     snsShare(sns, data, '대선후보 별자리 궁합 결과');
                     $('#constellation-modal').waitMe('hide');
                 },
                 error: function(data, status, err) {
                     $('#constellation-modal').waitMe('hide');
+                    console.log(err);
+                }
+            });
+        }
+    });
+});
+
+$('.blood-share-button').click(function () {
+    var sns = this.value;
+    waitMe($('#blood-modal'));
+    html2canvas(document.getElementById('blood-modal-contents'), {
+        useCORS: true,
+        onrendered: function(canvas) {
+            var image = canvas.toDataURL('image/jpeg', 0.9);
+            $.ajax({
+                url:'/apis/upload',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                data: JSON.stringify({
+                    'image': image
+                }),
+                type:'POST',
+                success:function(data){
+                    snsShare(sns, data, '대선후보 혈액형 궁합 결과');
+                    $('#blood-modal').waitMe('hide');
+                },
+                error: function(data, status, err) {
+                    $('#blood-modal').waitMe('hide');
+                    console.log(err);
+                }
+            });
+        }
+    });
+});
+
+$('.zodiac-share-button').click(function () {
+    var sns = this.value;
+    waitMe($('#zodiac-modal'));
+    html2canvas(document.getElementById('zodiac-modal-contents'), {
+        useCORS: true,
+        onrendered: function(canvas) {
+            var image = canvas.toDataURL('image/jpeg', 0.9);
+            $.ajax({
+                url:'/apis/upload',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                data: JSON.stringify({
+                    'image': image
+                }),
+                type:'POST',
+                success:function(data){
+                    snsShare(sns, data, '대선후보 띠별궁합 결과');
+                    $('#zodiac-modal').waitMe('hide');
+                },
+                error: function(data, status, err) {
+                    $('#zodiac-modal').waitMe('hide');
+                    console.log(err);
+                }
+            });
+        }
+    });
+});
+
+$('.total-share-button').click(function () {
+    var sns = this.value;
+    waitMe($('#total-modal'));
+    html2canvas(document.getElementById('total-modal-contents'), {
+        useCORS: true,
+        onrendered: function(canvas) {
+            var image = canvas.toDataURL('image/jpeg', 0.9);
+            $.ajax({
+                url:'/apis/upload',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                data: JSON.stringify({
+                    'image': image
+                }),
+                type:'POST',
+                success:function(data){
+                    snsShare(sns, data, '운명이 점지해준 후보');
+                    $('#total-modal').waitMe('hide');
+                },
+                error: function(data, status, err) {
+                    $('#total-modal').waitMe('hide');
                     console.log(err);
                 }
             });
