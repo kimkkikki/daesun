@@ -23,7 +23,6 @@
     <!-- Font CSS -->
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
     <link rel='stylesheet' href="{% static 'css/nanumbarungothic.css' %}" type='text/css'>
-    <!--<link rel='stylesheet' href='https://fonts.googleapis.com/earlyaccess/nanumpenscript.css' type='text/css'>-->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -205,41 +204,23 @@
                 <div class="row justify-content-center">
                     <div class="col-4" data-aos="fade-right">
                         <div id="slot-machine-1" class="randomizeMachine text-center">
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/kim.jpg' %}"/>
+                            {% for result in candidates %}
+                            {% include 'candidate_img_template.html' %}
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-4" data-aos="fade-up" data-aos-delay="250">
                         <div id="slot-machine-2" class="randomizeMachine text-center">
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/kim.jpg' %}"/>
+                            {% for result in candidates %}
+                            {% include 'candidate_img_template.html' %}
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-4" data-aos="fade-left" data-aos-delay="500">
                         <div id="slot-machine-3" class="randomizeMachine text-center">
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/moon.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn1.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/ahn2.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/hong.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/lee.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/sim.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/son.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/you.jpg' %}"/>
-                            <img class="img-fluid rounded" src="{% static 'img/candidate/kim.jpg' %}"/>
+                            {% for result in candidates %}
+                            {% include 'candidate_img_template.html' %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -536,15 +517,9 @@
                 <div class="input-group-btn">
                     <button id="cheering-candidate-button" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">대선후보</button>
                     <div class="dropdown-menu">
-                        <button class="dropdown-item cheering-candidate-select" value="김진태">김진태</button>
-                        <button class="dropdown-item cheering-candidate-select" value="문재인">문재인</button>
-                        <button class="dropdown-item cheering-candidate-select" value="손학규">손학규</button>
-                        <button class="dropdown-item cheering-candidate-select" value="심상정">심상정</button>
-                        <button class="dropdown-item cheering-candidate-select" value="안철수">안철수</button>
-                        <button class="dropdown-item cheering-candidate-select" value="안희정">안희정</button>
-                        <button class="dropdown-item cheering-candidate-select" value="유승민">유승민</button>
-                        <button class="dropdown-item cheering-candidate-select" value="이재명">이재명</button>
-                        <button class="dropdown-item cheering-candidate-select" value="홍준표">홍준표</button>
+                        {% for candidate in candidates %}
+                        <button class="dropdown-item cheering-candidate-select" value="{{ candidate.candidate }}">{{ candidate.candidate }}</button>
+                        {% endfor %}
                     </div>
                 </div>
                 <input class="form-control" type="text" id="cheering-message" placeholder="메세지를 입력해 주세요" title="메세지">
@@ -661,6 +636,12 @@
 <script type="text/javascript" src="{% static 'js/kakao.min.js' %}"></script>
 
 <!-- Custom JS -->
+<script type="text/javascript">
+    var slot_candidates = [];
+    {% for candidate in candidates %}
+    slot_candidates.push('{{ candidate.candidate }}');
+    {% endfor %}
+</script>
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/sns.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/rating.js' %}"></script>

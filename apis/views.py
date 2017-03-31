@@ -25,8 +25,25 @@ from django.conf import settings
 
 
 def get_candidates():
-    candidates = Candidate.objects.filter(running=True)
+    cache = caches['default']
+    candidates = cache.get('candidates', None)
+    if candidates is None:
+        candidates = Candidate.objects.filter(running=True).order_by('candidate')
+        cache.set('candidates', candidates)
     return candidates
+
+
+def get_candidates_query_list():
+    candidates = get_candidates()
+    q_list = []
+    for candidate in candidates:
+        q_list.append(Q(title__contains=candidate.candidate))
+
+    query = q_list.pop()
+    for item in q_list:
+        query |= item
+
+    return query
 
 
 class JSONResponse(HttpResponse):
@@ -68,14 +85,9 @@ def cp_group(request):
     if start_date is not None and end_date is not None:
         start = datetime.strptime(start_date, '%Y%m%d')
         end = datetime.strptime(end_date, '%Y%m%d') + timedelta(days=1)
-        candidate_q_list = Q(created_at__range=[start, end]) & \
-                            (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-                             Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
-                             Q(title__contains='홍준표') | Q(title__contains='손학규') | Q(title__contains='김진태'))
+        candidate_q_list = Q(created_at__range=[start, end]) & get_candidates_query_list()
     else:
-        candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-                            Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
-                            Q(title__contains='홍준표') | Q(title__contains='손학규') | Q(title__contains='김진태'))
+        candidate_q_list = get_candidates_query_list()
 
     group_list = Scraps.objects.filter(Q(created_at__gte=datetime.now() - timedelta(days=30)) & candidate_q_list).values('cp').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
@@ -95,14 +107,13 @@ def cp_group(request):
 @cache_page(60 * 10)
 def cp_daily(request):
     cp = request.GET.get('cp', None)
-    candidate_q_list = (Q(title__contains='문재인') | Q(title__contains='안철수') | Q(title__contains='이재명') |
-                        Q(title__contains='유승민') | Q(title__contains='안희정') | Q(title__contains='심상정') |
-                        Q(title__contains='홍준표') | Q(title__contains='손학규') | Q(title__contains='김진태'))
 
     if cp is not None:
-        candidate_q_list = (candidate_q_list & Q(cp=cp))
+        candidate_q_list = Q(created_at__gte=datetime.now() - timedelta(days=30)) & Q(cp=cp) & get_candidates_query_list()
+    else:
+        candidate_q_list = Q(created_at__gte=datetime.now() - timedelta(days=30)) & get_candidates_query_list()
 
-    daily_list = Scraps.objects.filter(Q(created_at__gte=datetime.now() - timedelta(days=30)) & candidate_q_list).extra({'date': 'date(created_at)'}).values(
+    daily_list = Scraps.objects.filter(candidate_q_list).extra({'date': 'date(created_at)'}).values(
         'date').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
         ahn=Count(Case(When(title__contains='안철수', then=1))),
@@ -227,8 +238,17 @@ def pledge(request):
 
 
 def lucky_rating_list(result_type):
+    candidates = get_candidates()
+    q_list = []
+    for candidate in candidates:
+        q_list.append(Q(candidate=candidate.candidate))
+
+    query = q_list.pop()
+    for item in q_list:
+        query |= item
+
     if result_type == 'all':
-        lucky_ratings = LuckyRating.objects.all().values('candidate', 'type').annotate(count=Count('candidate')).order_by('-count')
+        lucky_ratings = LuckyRating.objects.filter(query).values('candidate', 'type').annotate(count=Count('candidate')).order_by('-count')
 
         result_list = []
         for lucky in lucky_ratings:
@@ -256,7 +276,7 @@ def lucky_rating_list(result_type):
         result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
         return result_list
     else:
-        lucky_ratings = LuckyRating.objects.all().values('candidate', 'type').annotate(count=Count('candidate')).order_by('-count')
+        lucky_ratings = LuckyRating.objects.filter(query).values('candidate', 'type').annotate(count=Count('candidate')).order_by('-count')
         result_list = list(lucky_ratings)
 
         for result in result_list:
@@ -459,7 +479,7 @@ def get_candidate_sns_list():
                       consumer_secret='lxpIYyImUVVyIQfDyrEPi5HIh71CZLrnNBF2uRPfuNrmVUqICM')
 
     schedules = []
-    candidate_dict = {'문재인': '#1870B9', '안희정': '#1870B9', '이재명': '#1870B9', '홍준표': '#c9151e', '김진태': '#c9151e',
+    candidate_color_dict = {'문재인': '#1870B9', '안희정': '#1870B9', '이재명': '#1870B9', '홍준표': '#c9151e', '김진태': '#c9151e',
                       '안철수': '#036241', '손학규': '#036241', '유승민': '#01B1EC', '심상정': '#FFCA08'}
 
     for candidate in get_candidates():
@@ -514,7 +534,7 @@ def get_candidate_sns_list():
                             date = datetime(2017, month, day, hour, minute)
 
                         schedules.append({'start': date.strftime('%Y-%m-%d %H:%M'),
-                                          'title': status.user.name + ', ' + title, 'color': candidate_dict[status.user.name]})
+                                          'title': status.user.name + ', ' + title, 'color': candidate_color_dict[status.user.name]})
 
                 if hour_format_2.findall(contents) is not None:
                     for time in hour_format_2.finditer(contents):
@@ -539,7 +559,7 @@ def get_candidate_sns_list():
                             date = datetime(2017, month, day, hour, minute)
 
                         schedules.append({'start': date.strftime('%Y-%m-%d %H:%M'),
-                                          'title': status.user.name + ', ' + title, 'color': candidate_dict[status.user.name]})
+                                          'title': status.user.name + ', ' + title, 'color': candidate_color_dict[status.user.name]})
 
                 continue
 
@@ -728,8 +748,3 @@ def upload(request):
             f.write(base64.b64decode(imgstr))
             f.close()
             return HttpResponse(settings.MEDIA_URL + file_name)
-
-
-def donate_list():
-    candidates = Candidate.objects.filter(running=True, account__isnull=False).exclude(account__exact='').values('candidate', 'account', 'account_name', 'homepage').order_by('candidate')
-    return list(candidates)

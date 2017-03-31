@@ -68,7 +68,6 @@ function share_kakaotalk(){
    });
 }
 
-var slot_candidates = ['문재인', '안철수', '안희정', '홍준표', '이재명', '심상정', '손학규', '유승민', '김진태'];
 var slot_count = 0;
 var slot_result_count;
 var slot_result_candidate;

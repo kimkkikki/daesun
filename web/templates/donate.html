@@ -1,7 +1,9 @@
-{% for result in donates %}
+{% for result in candidates %}
+{% if result.account %}
 <div class="col-6 col-md-3 text-center">
     {% include 'candidate_img_template.html' %}
     <p>{{ result.account }}<br>(예금주 : {{ result.account_name }})<br>
     <a href="http://{{ result.homepage }}" target="_blank">{{ result.homepage }}</a></p>
 </div>
+{% endif %}
 {% endfor %}

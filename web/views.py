@@ -24,8 +24,8 @@ def main(request):
     ratings = views.lucky_rating_list('all')
     cheerings = views.get_cheering_message_list(0)
     d_day = (date(2017, 5, 9) - date.today()).days
-    donates = views.donate_list()
-    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings, 'today': datetime.today(), 'd_day': d_day, 'donates': donates})
+    candidates = views.get_candidates()
+    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings, 'today': datetime.today(), 'd_day': d_day, 'candidates': candidates})
 
 
 def lets_encrypt(request, authorization_code):
@@ -86,7 +86,7 @@ def constellation_chemistry(request):
 def slot(request):
     if request.method == 'POST':
         result = views.save_lucky_result(request)
-        return render_to_response('slot_modal.html', {'lucky': result})
+        return render_to_response('slot_modal.html', {'result': result})
 
 
 @csrf_exempt
