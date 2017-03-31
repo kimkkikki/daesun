@@ -773,7 +773,7 @@ def total_chemistry(request):
     result = sorted(result_list, key=itemgetter('score'), reverse=True)
 
     save_string = request_zodiac + '_' + request_blood + '_' + request_constellation + '_' + request_name
-    save_lucky_rating(result[0], 'total', save_string)
+    save_lucky_rating(result[0]['candidate'], 'total', save_string)
 
     return result
 
