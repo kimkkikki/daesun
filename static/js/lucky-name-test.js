@@ -1,10 +1,52 @@
 $(document).ready(function(){
 
     $('#buttonUserName').click(function(){
+
+        inputName = $('#inputUserName')[0];
+
+        strarr = new Array(inputName.value.length);
+        schar = new Array('/','.','>','<',',','?','}','{',' ','\\','|','(',')','+','=');
+        for (i=0; i<inputName.value.length; i++)    {
+            for (j=0; j<schar.length; j++)        {
+                if (schar[j] ==inputName.value.charAt(i))
+                {
+                    alert("이름은 한글입력만 가능합니다.");
+                    return false;
+                }
+                else
+                    continue;
+            }
+            strarr[i] = inputName.value.charAt(i)
+            if ((strarr[i] >=0) && (strarr[i] <=9))
+            {
+                alert("이름에 숫자가 있습니다. 이름은 한글입력만 가능합니다.");
+                return false;
+            }
+            else if ((strarr[i] >='a') && (strarr[i] <='z'))
+            {
+                alert("이름에 알파벳이 있습니다. 이름은 한글입력만 가능합니다.");
+                return false;
+            }
+            else if ((strarr[i] >='A') && (strarr[i] <='Z'))
+            {
+                alert("이름에 알파벳이 있습니다. 이름은 한글입력만 가능합니다.");
+                return false;
+            }
+            else if ((escape(strarr[i]) > '%60') && (escape(strarr[i]) <'%80') )
+            {
+                alert("이름에 특수문자가 있습니다. 이름은 한글입력만 가능합니다.");
+                return false;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
         waitMe($('#lucky-name-modal'));
 
         $.ajax({
-            url:'/luckyname?name='+$('#inputUserName')[0].value,
+            url:'/luckyname?name='+inputName,
             type:'GET',
             success:function(data){
                 $('#lucky-name-result').html(data);
@@ -52,4 +94,5 @@ $(document).ready(function(){
             }
         });
     });
+
 });
