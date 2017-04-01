@@ -709,7 +709,7 @@ def blood_type_chemistry(request):
     for obj in result:
         if obj['score'] == max_obj['score']:
             result_dict['bests'].append(obj)
-            save_lucky_rating(obj['candidate'], 'blood', constellation)
+            save_lucky_rating(obj['candidate'], 'blood', blood)
         else:
             result_dict['rests'].append(obj)
 
@@ -734,7 +734,7 @@ def zodiac_chemistry(request):
     for obj in result:
         if obj['score'] == max_obj['score']:
             result_dict['bests'].append(obj)
-            save_lucky_rating(obj['candidate'], 'zodiac', constellation)
+            save_lucky_rating(obj['candidate'], 'zodiac', request_zodiac)
         else:
             result_dict['rests'].append(obj)
 
