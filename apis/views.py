@@ -257,20 +257,32 @@ def lucky_rating_list(result_type):
                 if lucky['candidate'] == result['candidate']:
                     has_candidate = True
                     if lucky['type'] == 'star':
-                        result['count'] += lucky['count'] * 1
+                        result['count'] += lucky['count'] * 3
                     elif lucky['type'] == 'name':
-                        result['count'] += lucky['count'] * 5
+                        result['count'] += lucky['count'] * 10
+                    elif lucky['type'] == 'zodiac':
+                        result['count'] += lucky['count'] * 3
+                    elif lucky['type'] == 'blood':
+                        result['count'] += lucky['count'] * 1
                     elif lucky['type'] == 'slot':
                         result['count'] += lucky['count'] * 100
+                    elif lucky['type'] == 'total':
+                        result['count'] += lucky['count'] * 50
                     break
 
             if not has_candidate:
                 if lucky['type'] == 'star':
-                    lucky['count'] *= 1
+                    lucky['count'] *= 3
                 elif lucky['type'] == 'name':
-                    lucky['count'] *= 5
+                    lucky['count'] *= 10
+                elif lucky['type'] == 'zodiac':
+                    lucky['count'] *= 3
+                elif lucky['type'] == 'blood':
+                    lucky['count'] *= 1
                 elif lucky['type'] == 'slot':
                     lucky['count'] *= 100
+                elif lucky['type'] == 'total':
+                    lucky['count'] *= 50
                 result_list.append(lucky)
 
         result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
@@ -281,11 +293,17 @@ def lucky_rating_list(result_type):
 
         for result in result_list:
             if result['type'] == 'star':
-                result['score'] = result['count'] * 1
+                result['score'] = result['count'] * 3
             elif result['type'] == 'name':
-                result['score'] = result['count'] * 5
+                result['score'] = result['count'] * 10
+            elif result['type'] == 'zodiac':
+                result['score'] = result['count'] * 3
+            elif result['type'] == 'blood':
+                result['score'] = result['count'] * 1
             elif result['type'] == 'slot':
                 result['score'] = result['count'] * 100
+            elif result['type'] == 'total':
+                result['score'] = result['count'] * 50
 
         result_list = sorted(result_list, key=itemgetter('count'), reverse=True)
         return result_list
@@ -673,7 +691,7 @@ def constellation_post(request):
         for obj in result:
             if obj['score'] == max_obj['score']:
                 result_dict['bests'].append(obj)
-                save_lucky_rating(obj['candidate'], 'star', constellation)
+                save_lucky_rating(obj['candidate'], 'star', request_constellation)
             else:
                 result_dict['rests'].append(obj)
 
