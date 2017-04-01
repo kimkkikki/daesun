@@ -3,43 +3,43 @@ def blood_chemistry(type1, type2):
         if type2 == 'A':
             return 82
         elif type2 == 'B':
-            return 52
+            return 64
         elif type2 == 'O':
-            return 80
+            return 95
         elif type2 == 'AB':
-            return 65
+            return 47
         else:
             return 0
     if type1 == 'B':
         if type2 == 'A':
-            return 64
+            return 52
         elif type2 == 'B':
-            return 77
+            return 87
         elif type2 == 'O':
-            return 75
+            return 67
         elif type2 == 'AB':
-            return 90
+            return 63
         else:
             return 0
     if type1 == 'O':
         if type2 == 'A':
-            return 95
+            return 80
         elif type2 == 'B':
-            return 67
+            return 75
         elif type2 == 'O':
             return 68
         elif type2 == 'AB':
-            return 60
+            return 50
         else:
             return 0
     if type1 == 'AB':
         if type2 == 'A':
-            return 47
+            return 65
         elif type2 == 'B':
-            return 63
-        elif type2 == 'O':
-            return 50
-        elif type2 == 'AB':
             return 70
+        elif type2 == 'O':
+            return 60
+        elif type2 == 'AB':
+            return 75
         else:
             return 0

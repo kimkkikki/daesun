@@ -94,7 +94,7 @@ DATABASES['default']['HOST'] = '/cloudsql/daesun2017:asia-east1:mysql'
 if os.getenv('GAE_INSTANCE'):
     pass
 else:
-    DATABASES['default']['HOST'] = '104.199.133.72'
+    DATABASES['default']['HOST'] = '127.0.0.1'
 # [END dbconfig]
 
 DATABASE_OPTIONS = {'charset': 'utf8'}
