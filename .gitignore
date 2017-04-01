@@ -5,3 +5,4 @@ apis/migrations/00*
 static/node_modules
 static/lib
 static/npm-debug.log
+cloud_sql_proxy
