@@ -30,8 +30,8 @@ header {
     color: white;
 }
 header .intro-text {
-    padding-top: 100px;
-    padding-bottom: 15px;
+    padding-top: 80px;
+    padding-bottom: 25px;
 }
 header .intro-text .intro-lead-in {
     font-size: 14px;
@@ -346,7 +346,7 @@ ul.social-buttons li a {
 #slot-machine-div {
     padding-top: 50px;
     padding-bottom: 30px;
-    background: url('../img/slotmachine4.png') no-repeat;
+    background: url('../img/slotmachine4.png') no-repeat center center;
     background-size: contain;
 }
 @media (min-width: 768px) {
