@@ -128,7 +128,7 @@ function onComplete(active){
                         }
                     });
             } else {
-                var messages = ['까비 다시 도전해보세요', '후보 고르기 슆지 않죠. 다시고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
+                var messages = ['까비 다시 도전해보세요', '후보 고르기 쉽지 않죠. 다시고고!', '힘내세요. 다시 도전!', '슬슬 포기단계? 힘내서 고고!', '확률은 확률일 뿐. 다시 도전!', 'ㅠㅠ', '까비요.'];
                 slotModalCount.attr('data-original-title', messages[Math.floor((Math.random() * 8))])
                   .tooltip('show');
             }
@@ -200,8 +200,8 @@ $(document).ready(function(){
                     'count': slot_result_count,
                     'nickname': nickname
                 }),
-                success: function() {
-                    alert('등록되었습니다');
+                success: function(data) {
+                    alert(data.message);
                     addHonorModal.waitMe('hide');
                     addHonorModal.modal('toggle');
                     $('#slot-modal').modal('toggle');

@@ -302,9 +302,14 @@ def slot_honor_api(request):
         return JSONResponse(slot_honor_list())
     else:
         body = JSONParser().parse(request)
+        isExist = Honor.objects.filter(candidate=body.get('candidate'), count=body.get('count'), name=body.get('nickname'))
+
+        if len(isExist) != 0:
+            return JSONResponse({'message': '이미 등록되었습니다.'}, status=200)
+
         honor = Honor(candidate=body.get('candidate'), count=body.get('count'), name=body.get('nickname'))
         honor.save()
-        return HttpResponse(status=200)
+        return JSONResponse({'message': '등록되었습니다.'}, status=200)
 
 
 def approval_rating_list(cp, is_last):
