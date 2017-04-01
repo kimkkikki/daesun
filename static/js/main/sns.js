@@ -28,7 +28,7 @@ function snsShare(sns, imageUrl, title) {
             picture : imageUrl,
             name: title,
             caption: '2017대선닷컴',
-            description: '대선후보 돌려돌려 돌림판에서 잭팟이 터졌습니다! 이 후보랑 잘 맞으시네요 ㅎㅎ',
+            description: '대선후보에서 잘맞는 후보를 찾았습니다! 이 후보랑 잘 맞으시네요 ㅎㅎ',
             link: 'https://2017daesun.com'
         }, function(response){
             if (response && !response.error_code) {
