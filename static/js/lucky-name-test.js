@@ -46,7 +46,7 @@ $(document).ready(function(){
         waitMe($('#lucky-name-modal'));
 
         $.ajax({
-            url:'/luckyname?name='+inputName,
+            url:'/luckyname?name='+inputName.value,
             type:'GET',
             success:function(data){
                 $('#lucky-name-result').html(data);
