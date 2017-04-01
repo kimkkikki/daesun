@@ -143,7 +143,7 @@
                     <div class="input-group justify-content-center">
                         <input type="text" id="inputUserName" class="form-control col-4" placeholder="내 이름 입력" maxlength="4">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-primary" id='buttonUserName' data-toggle="modal" data-target="#lucky-name-modal">확인</button>
+                            <button type="button" class="btn btn-info" id='buttonUserName' data-toggle="modal" data-target="#lucky-name-modal">확인</button>
                         </span>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
                             <option value="사수">사수자리</option>
                             <option value="염소">염소자리</option>
                         </select>
-                        <button id="constellation-button" type="button" class="btn btn-primary col-2">확인</button>
+                        <button id="constellation-button" type="button" class="btn btn-info col-2">확인</button>
                     </form>
                 </div>
 
@@ -181,7 +181,7 @@
                             <option value="O">O형</option>
                             <option value="AB">AB형</option>
                         </select>
-                        <button id="blood-type-button" type="button" class="btn btn-primary col-2">확인</button>
+                        <button id="blood-type-button" type="button" class="btn btn-info col-2">확인</button>
                     </form>
                 </div>
 
@@ -204,7 +204,7 @@
                             <option value="개">개띠</option>
                             <option value="돼지">돼지띠</option>
                         </select>
-                        <button id="zodiac-type-button" type="button" class="btn btn-primary col-2">확인</button>
+                        <button id="zodiac-type-button" type="button" class="btn btn-info col-2">확인</button>
                     </form>
                 </div>
 
@@ -250,7 +250,7 @@
                             <option value="돼지">돼지띠</option>
                         </select>
                         <input id="total-name" type="text" class="form-control col-4 col-md-2" placeholder="내 이름 입력" maxlength="4">
-                        <button id="total-button" type="button" class="btn btn-primary col-2 col-md-1">확인</button>
+                        <button id="total-button" type="button" class="btn btn-info col-2 col-md-1">확인</button>
                     </form>
                 </div>
 
@@ -284,7 +284,7 @@
                     <div class="row justify-content-center">
                         <div class="mx-auto">
                             <button id="slot-start" type="button" class="btn btn-secondary">돌려돌려!</button>
-                            <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
+                            <button id="slot-honor-button" class="btn btn-info">명예의 전당</button>
                         </div>
                     </div>
                 </div>
@@ -308,7 +308,7 @@
                     </div>
                     <div class="row justify-content-center text-center">
                         <div class="mx-auto">
-                            <button id="add-honor-list" class="btn btn-primary" data-toggle="modal" data-target="#slot-add-honor-modal">공유하고 명예의전당 등록</button>
+                            <button id="add-honor-list" class="btn btn-info" data-toggle="modal" data-target="#slot-add-honor-modal">공유하고 명예의전당 등록</button>
                             <button class="btn btn-secondary" data-dismiss="modal">다시 도전하기</button>
                         </div>
                     </div>
@@ -328,8 +328,8 @@
                     </button>
                 </div>
                 <div class="modal-body row justify-content-center">
-                    <button id="slot-share-facebook" class="btn btn-primary" onclick="share_facebook()">페이스북</button>
-                    <button id="slot-share-kakaotalk" class="btn btn-primary" style="background-color: #fec503;border-color:#f6bf01;" onclick="share_kakaotalk()">카카오톡</button>
+                    <button id="slot-share-facebook" class="btn btn-info" onclick="share_facebook()">페이스북</button>
+                    <button id="slot-share-kakaotalk" class="btn btn-info" style="background-color: #fec503;border-color:#f6bf01;" onclick="share_kakaotalk()">카카오톡</button>
                     <div id="add-honor-form" class="input-group" style="margin:30px" onclick="check()">
                         <input id="honor_nickname" type="text" name="your_name" placeholder="닉네임을 입력하세요" class="form-control" disabled>
                         <button id ="add_honor" class="btn btn-secondary" disabled>등록하기</button>
@@ -400,8 +400,8 @@
                     </div>
                 <div class="modal-footer" id="lucky-name-modal-footer">
                     <a id="kakao-link-btn">
-                        <button id="name-share-facebook" class="btn btn-primary share-name-lucky">페이스북</button>
-                        <button id="name-share-kakaotalk" class="btn btn-primary share-name-lucky" style="background-color: #fec503;border-color:#f6bf01;">카카오톡</button>
+                        <button id="name-share-facebook" class="btn btn-info share-name-lucky">페이스북</button>
+                        <button id="name-share-kakaotalk" class="btn btn-info share-name-lucky" style="background-color: #fec503;border-color:#f6bf01;">카카오톡</button>
                     </a>
                 </div>
                 </div>
@@ -423,7 +423,7 @@
                     <div id="constellation-result" class="row"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary constellation-button" value="facebook">페이스북</button>
+                    <button type="button" class="btn btn-info constellation-button" value="facebook">페이스북</button>
                     <button type="button" class="btn btn-warning constellation-button" value="kakaotalk">카카오톡</button>
                 </div>
             </div>
@@ -476,7 +476,7 @@
                     <div id="blood-result" class="row"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary blood-share-button" value="facebook">페이스북</button>
+                    <button type="button" class="btn btn-info blood-share-button" value="facebook">페이스북</button>
                     <button type="button" class="btn btn-warning blood-share-button" value="kakaotalk">카카오톡</button>
                 </div>
             </div>
@@ -497,7 +497,7 @@
                     <div id="zodiac-result" class="row"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary zodiac-share-button" value="facebook">페이스북</button>
+                    <button type="button" class="btn btn-info zodiac-share-button" value="facebook">페이스북</button>
                     <button type="button" class="btn btn-warning zodiac-share-button" value="kakaotalk">카카오톡</button>
                 </div>
             </div>
@@ -518,7 +518,7 @@
                     <div id="total-result" class="row"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary total-share-button" value="facebook">페이스북</button>
+                    <button type="button" class="btn btn-info total-share-button" value="facebook">페이스북</button>
                     <button type="button" class="btn btn-warning total-share-button" value="kakaotalk">카카오톡</button>
                 </div>
             </div>
