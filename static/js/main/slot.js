@@ -166,6 +166,7 @@ var slotStart = $('#slot-start');
 
 slotStart.click(function() {
     slotStart.prop('disabled', true);
+    slotStart.text('다시돌려!');
     machine1.shuffle(5, onComplete);
     machine2.shuffle(10, onComplete);
     machine3.shuffle(15, onComplete);
