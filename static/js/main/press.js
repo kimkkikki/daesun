@@ -68,7 +68,7 @@ $('#press-select').change(function () {
 });
 
 function dailyDataParsing(data) {
-    var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['안희정'], ['이재명'], ['유승민'], ['홍준표'], ['손학규'], ['김진태']];
+    var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['안희정'], ['이재명'], ['유승민'], ['홍준표'], ['손학규']];
     for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         result_list[0].push(obj.date);
@@ -80,7 +80,6 @@ function dailyDataParsing(data) {
         result_list[6].push(obj.you);
         result_list[7].push(obj.hong);
         result_list[8].push(obj.son);
-        result_list[9].push(obj.kim);
     }
 
     return result_list
@@ -134,7 +133,7 @@ function createPressChart() {
             },
             type: 'GET',
             success: function(data) {
-                var result = [['문재인', 0], ['이재명', 0], ['안희정', 0], ['유승민', 0], ['심상정', 0], ['안철수', 0], ['홍준표', 0], ['손학규', 0], ['김진태', 0]];
+                var result = [['문재인', 0], ['이재명', 0], ['안희정', 0], ['유승민', 0], ['심상정', 0], ['안철수', 0], ['홍준표', 0], ['손학규', 0]];
 
                 for (var i = 0; i < data.length; i++) {
                     result[0][1] += data[i].moon;
@@ -145,10 +144,9 @@ function createPressChart() {
                     result[5][1] += data[i].ahn;
                     result[6][1] += data[i].hong;
                     result[7][1] += data[i].son;
-                    result[8][1] += data[i].kim;
                     pressGroupDict[data[i]['cp']] = [['문재인', data[i].moon], ['이재명', data[i].lee], ['안희정', data[i].hee],
                         ['유승민', data[i].you], ['심상정', data[i].sim], ['안철수', data[i].ahn],
-                        ['홍준표', data[i].hong], ['손학규', data[i].son], ['김진태', data[i].kim]];
+                        ['홍준표', data[i].hong], ['손학규', data[i].son]];
                 }
                 pressGroupDict['all'] = result;
 

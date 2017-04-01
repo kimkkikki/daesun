@@ -70,10 +70,10 @@
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#rating">우주의기운</a>
+                    <a class="nav-link" href="#lucky">후보 고르기</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#lucky">럭키박스</a>
+                    <a class="nav-link" href="#rating">우주의기운</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#keyword">오늘은 무슨일이</a>
@@ -125,114 +125,10 @@
         </div>
     </div>
 
-    <section id="rating" class="light-bg">
+    <section id="lucky" class="light-bg">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h3 class="section-subheading text-muted">2017대선닷컴 이용자가 뽑은</h3>
-                    <h2 class="section-heading">우주의 기운이 돕는 후보</h2>
-                </div>
-            </div>
-            <div id="rating-template" class="row section-contents">
-                {% include 'rating.html' %}
-            </div>
-            <div class="col col-12">
-                <p class="text-center" id="rating-description">2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.</p>
-                <button id="rating-lucky-button" class="btn btn-info btn-block">우주가 어떻게 후보를 돕는지 보러가기</button>
-                <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">+더보기(여론조사 지지율 그래프 보기)</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- 우주의기운 선정근거 모달 -->
-    <div id="lucky-rating-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">우주가 어떻게 후보를 돕는지 보러가기</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="lucky-rating-modal-body"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Rating graph Modal -->
-    <div id="rating-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="btn-group mx-auto" data-toggle="buttons">
-                        <label class="btn btn-outline-info active">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="all" checked>전체
-                        </label>
-                        <label class="btn btn-outline-success">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="realmeter">리얼미터
-                        </label>
-                        <label class="btn btn-outline-primary">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="gallup">한국갤럽
-                        </label>
-                    </div>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="ratingChart"></div>
-                    <p class="text-center">리얼미터와 한국갤럽의 여론조사 결과를 재구성한 것입니다.<br>출처: <a href="http://www.realmeter.net" target="_blank">리얼미터</a>, <a href="http://www.gallup.co.kr" target="_blank">한국갤럽</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <section id="lucky">
-        <div class="container">
-            <div id="slot">
-                <div class="row justify-content-center">
-                    <div class="col-12 text-center">
-                        <h2 class="section-heading">돌려돌려 대선 돌림판 <i id="slot-guide-button" class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="클릭하면 가이드가 나와요"></i></h2>
-                        <h3 class="section-subheading text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</h3>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-4" data-aos="fade-right">
-                        <div id="slot-machine-1" class="randomizeMachine text-center">
-                            {% for result in candidates %}
-                            {% include 'candidate_img_template.html' %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="col-4" data-aos="fade-up" data-aos-delay="250">
-                        <div id="slot-machine-2" class="randomizeMachine text-center">
-                            {% for result in candidates %}
-                            {% include 'candidate_img_template.html' %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="col-4" data-aos="fade-left" data-aos-delay="500">
-                        <div id="slot-machine-3" class="randomizeMachine text-center">
-                            {% for result in candidates %}
-                            {% include 'candidate_img_template.html' %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <div id="slot-machine-count" class="row justify-content-center" data-toggle="tooltip" data-placement="bottom" title="아까비.. 다시 돌릴래요?"></div>
-                <div class="row justify-content-center">
-                    <div class="mx-auto">
-                        <button id="slot-start" type="button" class="btn btn-secondary">돌려돌려!</button>
-                        <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
-                    </div>
-                </div>
-            </div>
-
+            <h2 class="section-heading text-center">후보 큐레이션</h2>
+            <h3 class="section-subheading text-muted text-center">당신과 꼭맞는 후보를 찾아드립니다</h3>
             <div class="row justify-content-center section-contents">
                 <div id="name-lucky" class="col-12 col-md-6 text-center lucky-box">
                     <h2 class="section-heading">이름점</h2>
@@ -349,6 +245,41 @@
                         <input id="total-name" type="text" class="form-control col-4 col-md-2" placeholder="내 이름 입력" maxlength="4">
                         <button id="total-button" type="button" class="btn btn-primary col-2 col-md-1">확인</button>
                     </form>
+                </div>
+
+                <div id="slot" class="col-12 text-center lucky-box">
+                    <h2 class="section-heading">돌려돌려 대선 돌림판 <i id="slot-guide-button" class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="클릭하면 가이드가 나와요"></i></h2>
+                    <h3 class="section-subheading text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</h3>
+                    <div class="row justify-content-center">
+                        <div class="col-4" data-aos="fade-right">
+                            <div id="slot-machine-1" class="randomizeMachine text-center">
+                                {% for result in candidates %}
+                                {% include 'candidate_img_template.html' %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-4" data-aos="fade-up" data-aos-delay="250">
+                            <div id="slot-machine-2" class="randomizeMachine text-center">
+                                {% for result in candidates %}
+                                {% include 'candidate_img_template.html' %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-4" data-aos="fade-left" data-aos-delay="500">
+                            <div id="slot-machine-3" class="randomizeMachine text-center">
+                                {% for result in candidates %}
+                                {% include 'candidate_img_template.html' %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="slot-machine-count" class="row justify-content-center" data-toggle="tooltip" data-placement="bottom" title="아까비.. 다시 돌릴래요?"></div>
+                    <div class="row justify-content-center">
+                        <div class="mx-auto">
+                            <button id="slot-start" type="button" class="btn btn-secondary">돌려돌려!</button>
+                            <button id="slot-honor-button" class="btn btn-secondary">명예의 전당</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -582,6 +513,73 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary total-share-button" value="facebook">페이스북</button>
                     <button type="button" class="btn btn-warning total-share-button" value="kakaotalk">카카오톡</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="rating">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h3 class="section-subheading text-muted">2017대선닷컴 이용자가 뽑은</h3>
+                    <h2 class="section-heading">우주의 기운이 돕는 후보</h2>
+                </div>
+            </div>
+            <div id="rating-template" class="row section-contents">
+                {% include 'rating.html' %}
+            </div>
+            <div class="col col-12">
+                <p class="text-center" id="rating-description">2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.</p>
+                <button id="rating-lucky-button" class="btn btn-info btn-block">우주가 어떻게 후보를 돕는지 보러가기</button>
+                <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">+더보기(여론조사 지지율 그래프 보기)</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 우주의기운 선정근거 모달 -->
+    <div id="lucky-rating-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">우주가 어떻게 후보를 돕는지 보러가기</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="lucky-rating-modal-body"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating graph Modal -->
+    <div id="rating-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="btn-group mx-auto" data-toggle="buttons">
+                        <label class="btn btn-outline-info active">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="all" checked>전체
+                        </label>
+                        <label class="btn btn-outline-success">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="realmeter">리얼미터
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="gallup">한국갤럽
+                        </label>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="ratingChart"></div>
+                    <p class="text-center">리얼미터와 한국갤럽의 여론조사 결과를 재구성한 것입니다.<br>출처: <a href="http://www.realmeter.net" target="_blank">리얼미터</a>, <a href="http://www.gallup.co.kr" target="_blank">한국갤럽</a></p>
                 </div>
             </div>
         </div>
