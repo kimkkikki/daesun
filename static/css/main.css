@@ -365,3 +365,7 @@ ul.social-buttons li a {
         height: 200px;
     }
 }
+
+kbd{
+    background-color: #606060;
+}
