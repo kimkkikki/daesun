@@ -250,22 +250,22 @@
                 <div id="slot" class="col-12 text-center lucky-box">
                     <h2 class="section-heading">돌려돌려 대선 돌림판 <i id="slot-guide-button" class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="클릭하면 가이드가 나와요"></i></h2>
                     <h3 class="section-subheading text-muted">누구 뽑을지 도저히 모르겠다 돌려보자(1%의 확률)</h3>
-                    <div class="row justify-content-center">
-                        <div class="col-4" data-aos="fade-right">
+                    <div id="slot-machine-div" class="row justify-content-center">
+                        <div class="col-3" data-aos="fade-right">
                             <div id="slot-machine-1" class="randomizeMachine text-center">
                                 {% for result in candidates %}
                                 {% include 'candidate_img_template.html' %}
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="col-4" data-aos="fade-up" data-aos-delay="250">
+                        <div class="col-3" data-aos="fade-up" data-aos-delay="250">
                             <div id="slot-machine-2" class="randomizeMachine text-center">
                                 {% for result in candidates %}
                                 {% include 'candidate_img_template.html' %}
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="col-4" data-aos="fade-left" data-aos-delay="500">
+                        <div class="col-3" data-aos="fade-left" data-aos-delay="500">
                             <div id="slot-machine-3" class="randomizeMachine text-center">
                                 {% for result in candidates %}
                                 {% include 'candidate_img_template.html' %}
@@ -745,19 +745,6 @@
             </div>
         </div>
     </section>
-
-    <div id="ads">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- 2017daesun_lucky_result -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8539175752861876"
-             data-ad-slot="2185162141"
-             data-ad-format="auto"></ins>
-        <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
 
     <footer>
         <div class="container-fluid">
