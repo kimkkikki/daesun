@@ -210,6 +210,45 @@ $('#total-button').click(function() {
     var totalConstellation = $('#total-constellation').val();
     var totalName = $('#total-name').val();
     var totalBlood = $('#total-blood').val();
+
+    strarr = new Array(totalName.length);
+    schar = new Array('/','.','>','<',',','?','}','{',' ','\\','|','(',')','+','=');
+    for (i=0; i<totalName.length; i++)    {
+        for (j=0; j<schar.length; j++)        {
+            if (schar[j] ==totalName.charAt(i))
+            {
+                alert("이름은 한글입력만 가능합니다.");
+                return false;
+            }
+            else
+                continue;
+        }
+        strarr[i] = totalName.charAt(i)
+        if ((strarr[i] >=0) && (strarr[i] <=9))
+        {
+            alert("이름에 숫자가 있습니다. 이름은 한글입력만 가능합니다.");
+            return false;
+        }
+        else if ((strarr[i] >='a') && (strarr[i] <='z'))
+        {
+            alert("이름에 알파벳이 있습니다. 이름은 한글입력만 가능합니다.");
+            return false;
+        }
+        else if ((strarr[i] >='A') && (strarr[i] <='Z'))
+        {
+            alert("이름에 알파벳이 있습니다. 이름은 한글입력만 가능합니다.");
+            return false;
+        }
+        else if ((escape(strarr[i]) > '%60') && (escape(strarr[i]) <'%80') )
+        {
+            alert("이름에 특수문자가 있습니다. 이름은 한글입력만 가능합니다.");
+            return false;
+        }
+        else
+        {
+            continue;
+        }
+    }
     if (totalZodiac === 'None') {
         alert('띠를 선택해주세요')
     } else if (totalConstellation === 'None') {
