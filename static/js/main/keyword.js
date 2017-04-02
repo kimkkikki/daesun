@@ -46,6 +46,10 @@ $('#press').waypoint(function() {
 function loadKeyword(date) {
     if (date in issueKeywords) {
         $('#keyword-body').html(issueKeywords[date]);
+
+        $('.keyword').on('click', function () {
+            keywordClick(this.title);
+        });
     } else {
         waitMe($('#keyword'));
         isLoadTodayKeyword = true;
@@ -60,7 +64,7 @@ function loadKeyword(date) {
                     $('#keyword-body').html(data);
                     $('#keyword').waitMe('hide');
 
-                    $('.keyword').click(function () {
+                    $('.keyword').on('click', function () {
                         keywordClick(this.title);
                     });
                 },
