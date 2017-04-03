@@ -21,11 +21,12 @@ def policy(request):
 
 @cache_page(60 * 1)
 def main(request):
-    ratings = views.lucky_rating_list('all')
+    # ratings = views.lucky_rating_list('all')
+    ratings = views.approval_rating_list(None, True)
     cheerings = views.get_cheering_message_list(0)
     d_day = (date(2017, 5, 9) - date.today()).days
     candidates = views.get_candidates()
-    return render(request, 'main.html', {'ratings': ratings, 'cheering_list': cheerings, 'today': datetime.today(), 'd_day': d_day, 'candidates': candidates})
+    return render(request, 'main.html', {'real_ratings': ratings, 'count_string': '%', 'cheering_list': cheerings, 'today': datetime.today(), 'd_day': d_day, 'candidates': candidates})
 
 
 def lets_encrypt(request, authorization_code):
@@ -57,10 +58,15 @@ def cheering(request):
 @csrf_exempt
 def rating(request):
     if request.method == 'GET':
-        ratings = views.lucky_rating_list(request.GET.get('type', 'all'))
-        return render_to_response('rating_lucky.html', {'results': ratings})
+        request_type = request.GET.get('type', 'all')
+        ratings = views.lucky_rating_list(request_type)
+        if request_type == 'detail':
+            return render_to_response('rating_lucky.html', {'results': ratings})
+        else:
+            return render_to_response('rating.html', {'ratings': ratings, 'count_string': '점'})
     else:
-        return HttpResponse(status=404)
+        ratings = views.approval_rating_list(None, True)
+        return render_to_response('rating.html', {'real_ratings': ratings, 'count_string': '%'})
 
 
 @csrf_exempt

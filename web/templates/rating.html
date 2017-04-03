@@ -1,6 +1,21 @@
+{% if ratings %}
 {% for result in ratings %}
 <div class="col-3 col-md-2 text-center">
     {% include 'candidate_img_template.html' %}
-    <p>{{ result.candidate }}<br>{{ result.count }}점</p>
+    <p>{{ result.candidate }}<br>{{ result.count }}{{ count_string }}</p>
 </div>
 {% endfor %}
+{% endif %}
+{% if real_ratings %}
+{% for result in real_ratings %}
+{% if forloop.counter == 1 %}
+<div class="col-12 text-center">
+    {{ result.date|date:"Y.m.d" }}에 조사한 여론조사 결과입니다
+</div>
+{% endif %}
+<div class="col-3 col-md-2 text-center">
+    {% include 'candidate_img_template.html' %}
+    <p>{{ result.candidate }}<br>{{ result.rating }}{{ count_string }}</p>
+</div>
+{% endfor %}
+{% endif %}

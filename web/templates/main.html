@@ -529,17 +529,25 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
-                    <h3 class="section-subheading text-muted">2017대선닷컴 이용자가 뽑은</h3>
-                    <h2 class="section-heading">우주의 기운이 돕는 후보</h2>
+                    <h3 id="rating-subtitle" class="section-subheading text-muted">국민들의 지지율</h3>
+                    <h2 id="rating-title" class="section-heading">여론조사 모아보기</h2>
+                    <div class="btn-group mx-auto" data-toggle="buttons">
+                        <label class="btn btn-outline-danger">
+                            <input type="radio" name="rating-type-radio" autocomplete="off" value="lucky">우주의기운
+                        </label>
+                        <label class="btn btn-outline-success active">
+                            <input type="radio" name="rating-type-radio" autocomplete="off" value="real" checked>여론조사
+                        </label>
+                    </div>
                 </div>
             </div>
             <div id="rating-template" class="row section-contents">
                 {% include 'rating.html' %}
             </div>
             <div class="col col-12">
-                <p class="text-center" id="rating-description">2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.</p>
+                <p class="text-center" id="rating-description">리얼미터, 한국갤럽이 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터, 한국갤럽 홈페이지를 참고하세요</p>
                 <button id="rating-lucky-button" class="btn btn-info btn-block">우주가 어떻게 후보를 돕는지 보러가기</button>
-                <button id="rating-graph-button" class="btn btn-info btn-block" data-toggle="modal" data-target="#rating-modal">+더보기(여론조사 지지율 그래프 보기)</button>
+                <button id="rating-graph-button" class="btn btn-info btn-block hidden-xs-up" data-toggle="modal" data-target="#rating-modal">여론조사 지지율 그래프 보기</button>
             </div>
         </div>
     </section>
