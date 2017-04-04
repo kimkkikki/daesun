@@ -24,12 +24,12 @@ $(document).ready(function(){
     function draw(data_set){
         // create an array with nodes
         var nodes = new vis.DataSet([
-            {id: 1, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/moon.jpeg', label:"문재인", x:300 , y:100},
-            {id: 2, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/hee.jpg', label:"안희정", x:300 , y:400},
-            {id: 3, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/lee.png', label:"이재명", x:500 , y:400},
-            {id: 4, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/ahn.jpeg', label:"안철수", x:500 , y:100},
-            {id: 5, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/you.jpg', label:"유승민", x:100 , y:100},
-            {id: 6, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/hwang.jpg', label:"황교안", x:100 , y:400}
+            {id: 1, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/candidate/moon.jpg', label:"문재인", x:300 , y:100},
+            {id: 2, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/candidate/ahn2.jpg', label:"안희정", x:300 , y:400},
+            {id: 3, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/candidate/lee.jpg', label:"이재명", x:500 , y:400},
+            {id: 4, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/candidate/ahn1.jpg', label:"안철수", x:500 , y:100},
+            {id: 5, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/candidate/you.jpg', label:"유승민", x:100 , y:100},
+            {id: 6, shape: 'circularImage', image: 'https://storage.googleapis.com/daesun2017.appspot.com/static/img/candidate/hwang.jpg', label:"황교안", x:100 , y:400}
         ]);
 
         // create an array with edges
