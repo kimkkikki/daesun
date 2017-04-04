@@ -68,18 +68,16 @@ $('#press-select').change(function () {
 });
 
 function dailyDataParsing(data) {
-    var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['안희정'], ['이재명'], ['유승민'], ['홍준표'], ['손학규']];
+    var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['유승민'], ['홍준표'], ['손학규']];
     for (var i = 0; i < data.length; i++) {
         var obj = data[i];
         result_list[0].push(obj.date);
         result_list[1].push(obj.moon);
         result_list[2].push(obj.ahn);
         result_list[3].push(obj.sim);
-        result_list[4].push(obj.hee);
-        result_list[5].push(obj.lee);
-        result_list[6].push(obj.you);
-        result_list[7].push(obj.hong);
-        result_list[8].push(obj.son);
+        result_list[4].push(obj.you);
+        result_list[5].push(obj.hong);
+        result_list[6].push(obj.son);
     }
 
     return result_list
@@ -133,18 +131,16 @@ function createPressChart() {
             },
             type: 'GET',
             success: function(data) {
-                var result = [['문재인', 0], ['이재명', 0], ['안희정', 0], ['유승민', 0], ['심상정', 0], ['안철수', 0], ['홍준표', 0], ['손학규', 0]];
+                var result = [['문재인', 0], ['유승민', 0], ['심상정', 0], ['안철수', 0], ['홍준표', 0], ['손학규', 0]];
 
                 for (var i = 0; i < data.length; i++) {
                     result[0][1] += data[i].moon;
-                    result[1][1] += data[i].lee;
-                    result[2][1] += data[i].hee;
-                    result[3][1] += data[i].you;
-                    result[4][1] += data[i].sim;
-                    result[5][1] += data[i].ahn;
-                    result[6][1] += data[i].hong;
-                    result[7][1] += data[i].son;
-                    pressGroupDict[data[i]['cp']] = [['문재인', data[i].moon], ['이재명', data[i].lee], ['안희정', data[i].hee],
+                    result[1][1] += data[i].you;
+                    result[2][1] += data[i].sim;
+                    result[3][1] += data[i].ahn;
+                    result[4][1] += data[i].hong;
+                    result[5][1] += data[i].son;
+                    pressGroupDict[data[i]['cp']] = [['문재인', data[i].moon],
                         ['유승민', data[i].you], ['심상정', data[i].sim], ['안철수', data[i].ahn],
                         ['홍준표', data[i].hong], ['손학규', data[i].son]];
                 }
