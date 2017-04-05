@@ -102,7 +102,7 @@ $('input[type=radio][name=rating-type-radio]').change(function () {
         }
 
     } else {
-        description.html("리얼미터, 한국갤럽이 조사한 여론조사 결과입니다. 자세한 내용은 리얼미터, 한국갤럽 홈페이지를 참고하세요");
+        description.html('여러 기관의 여론조사 결과를 평균값으로 재구성한 것입니다.<br>출처: <a href="http://www.realmeter.net" target="_blank">리얼미터</a>, <a href="http://www.gallup.co.kr" target="_blank">한국갤럽</a>, <a href="http://www.rnch.co.kr" target="_blank">알앤써치</a>');
         realMoreButton.removeClass('hidden-xs-up');
         luckyMoreButton.addClass('hidden-xs-up');
         ratingSubTitle.text('국민들의 지지율');
@@ -140,6 +140,7 @@ $('input[type=radio][name=rating-type-radio]').change(function () {
 var all_data = null;
 var realmeter_data = null;
 var gallup_data = null;
+var rnserach_data = null;
 var rating_chart = null;
 $('input[type=radio][name=rating-graph-radio]').change(function () {
     if (this.value === 'all') {
@@ -168,7 +169,7 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
         } else {
             ratingChartReload(realmeter_data);
         }
-    } else {
+    } else if (this.value === 'gallup') {
         if (gallup_data === null) {
             waitMe($('#rating-modal'));
             $.ajax({
@@ -191,6 +192,30 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
             });
         } else {
             ratingChartReload(gallup_data);
+        }
+    } else if (this.value === 'rnsearch') {
+        if (rnserach_data === null) {
+            waitMe($('#rating-modal'));
+            $.ajax({
+                url: '/apis/rating?cp=rnsearch',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                async: true,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    rnserach_data = ratingDataParsing(data);
+                    ratingChartReload(rnserach_data);
+                    $('#rating-modal').waitMe('hide');
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    $('#rating-modal').waitMe('hide');
+                }
+            });
+        } else {
+            ratingChartReload(rnserach_data);
         }
     }
 });
