@@ -142,10 +142,10 @@ var realmeter_data = null;
 var gallup_data = null;
 var rating_chart = null;
 $('input[type=radio][name=rating-graph-radio]').change(function () {
-    if (this.value == 'all') {
+    if (this.value === 'all') {
         ratingChartReload(all_data);
-    } else if (this.value == 'realmeter') {
-        if (realmeter_data == null) {
+    } else if (this.value === 'realmeter') {
+        if (realmeter_data === null) {
             waitMe($('#rating-modal'));
             $.ajax({
                 url: '/apis/rating?cp=realmeter',
@@ -169,7 +169,7 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
             ratingChartReload(realmeter_data);
         }
     } else {
-        if (gallup_data == null) {
+        if (gallup_data === null) {
             waitMe($('#rating-modal'));
             $.ajax({
                 url: '/apis/rating?cp=gallup',
@@ -196,7 +196,7 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
 });
 
 realMoreButton.click(function() {
-    if (all_data == null) {
+    if (all_data === null) {
         waitMe($('#rating-modal'));
         $.ajax({
             url: '/apis/rating',
@@ -212,6 +212,7 @@ realMoreButton.click(function() {
                     bindto: '#ratingChart',
                     data: {
                         x: 'x',
+                        colors: candidateColors,
                         columns: all_data
                     },
                     axis: {
@@ -233,8 +234,8 @@ realMoreButton.click(function() {
     }
 });
 
+var isLoadLuckyDetail = false;
 luckyMoreButton.click(function () {
-    var isLoadLuckyDetail = false;
     if (!isLoadLuckyDetail) {
         waitMe($('#rating'));
         $.ajax({
@@ -246,7 +247,7 @@ luckyMoreButton.click(function () {
             success: function(data) {
                 $('#lucky-rating-modal-body').html(data);
                 $('#rating').waitMe('hide');
-                sLoadLuckyDetail = true;
+                isLoadLuckyDetail = true;
                 $('#lucky-rating-modal').modal('show');
             },
             error: function() {

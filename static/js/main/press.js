@@ -38,7 +38,7 @@ $('#press-select').change(function () {
     groupChart.load({
         columns: group
     });
-    if (daily == null) {
+    if (daily === null) {
         var value = this.value;
         waitMe($('#press'));
         $.ajax({
@@ -101,6 +101,7 @@ function createPressChart() {
                     bindto: '#press-chart-line',
                     data: {
                         x: 'x',
+                        colors: candidateColors,
                         columns: result_list
                     },
                     axis: {
@@ -113,7 +114,7 @@ function createPressChart() {
                     }
                 });
 
-                if (count == 0) {
+                if (count === 0) {
                     count++;
                 } else {
                     $('#press').waitMe('hide');
@@ -130,17 +131,15 @@ function createPressChart() {
             },
             type: 'GET',
             success: function(data) {
-                var result = [['문재인', 0], ['유승민', 0], ['심상정', 0], ['안철수', 0], ['홍준표', 0]];
+                var result = [['문재인', 0], ['안철수', 0], ['심상정', 0], ['유승민', 0], ['홍준표', 0]];
 
                 for (var i = 0; i < data.length; i++) {
                     result[0][1] += data[i].moon;
-                    result[1][1] += data[i].you;
+                    result[1][1] += data[i].ahn;
                     result[2][1] += data[i].sim;
-                    result[3][1] += data[i].ahn;
+                    result[3][1] += data[i].you;
                     result[4][1] += data[i].hong;
-                    pressGroupDict[data[i]['cp']] = [['문재인', data[i].moon],
-                        ['유승민', data[i].you], ['심상정', data[i].sim], ['안철수', data[i].ahn],
-                        ['홍준표', data[i].hong]];
+                    pressGroupDict[data[i]['cp']] = [['문재인', data[i].moon], ['안철수', data[i].ahn], ['심상정', data[i].sim], ['유승민', data[i].you], ['홍준표', data[i].hong]];
                 }
                 pressGroupDict['all'] = result;
 
@@ -148,11 +147,12 @@ function createPressChart() {
                     bindto: '#press-chart-pie',
                     data: {
                         columns: result,
+                        colors: candidateColors,
                         type : 'pie'
                     }
                 });
 
-                if (count == 0) {
+                if (count === 0) {
                     count++;
                 } else {
                     $('#press').waitMe('hide');
