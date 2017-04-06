@@ -1,4 +1,25 @@
 
+
+var isLoadRatingChart = false;
+$('#lucky').waypoint(function () {
+    if (!isLoadRatingChart) {
+        isLoadRatingChart = true;
+        createRatingChart();
+    }
+});
+$('#rating').waypoint(function() {
+    if (!isLoadRatingChart) {
+        isLoadRatingChart = true;
+        createRatingChart();
+    }
+});
+$('#keyword').waypoint(function() {
+    if (!isLoadRatingChart) {
+        isLoadRatingChart = true;
+        createRatingChart();
+    }
+});
+
 function ratingDataParsing(data) {
     var result_list = [['x'], ['문재인'], ['안철수'], ['심상정'], ['남경필'], ['안희정'], ['이재명'], ['유승민'], ['홍준표'], ['손학규'], ['김진태']];
     for (var i = 0; i < data.length; i++) {
@@ -61,23 +82,21 @@ function ratingChartReload(data) {
     });
 }
 
-var luckyMoreButton = $('#rating-lucky-button');
-var realMoreButton = $('#rating-graph-button');
+var luckyRating = $('#lucky-rating');
+var realRating = $('#real-rating');
 var ratingSubTitle = $('#rating-subtitle');
 var ratingTitle = $('#rating-title');
 
-var before = null;
+var isLoadLuckyRating = false;
 $('input[type=radio][name=rating-type-radio]').change(function () {
     var description = $('#rating-description');
-    var template = $('#rating-template');
     var temp;
     if (this.value === 'lucky') {
-        description.html("2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.");
-        luckyMoreButton.removeClass('hidden-xs-up');
-        realMoreButton.addClass('hidden-xs-up');
+        luckyRating.removeClass('hidden-xs-up');
+        realRating.addClass('hidden-xs-up');
         ratingSubTitle.text('2017대선닷컴 이용자가 뽑은');
         ratingTitle.text('우주의 기운이 돕는 후보');
-        if (before === null) {
+        if (!isLoadLuckyRating) {
             waitMe($('#rating'));
             $.ajax({
                 url: '/rating?type=all',
@@ -86,8 +105,8 @@ $('input[type=radio][name=rating-type-radio]').change(function () {
                 },
                 type: 'GET',
                 success: function(data) {
-                    before = template.html();
-                    template.html(data);
+                    isLoadLuckyRating = true;
+                    $('#rating-lucky-body').html(data);
                     $('#rating').waitMe('hide');
                 },
                 error: function() {
@@ -95,43 +114,15 @@ $('input[type=radio][name=rating-type-radio]').change(function () {
                     $('#rating').waitMe('hide');
                 }
             });
-        } else {
-            temp = template.html();
-            template.html(before);
-            before = temp;
         }
 
     } else {
-        description.html('여러 기관의 여론조사 결과를 평균값으로 재구성한 것입니다.<br>출처: <a href="http://www.realmeter.net" target="_blank">리얼미터</a>, <a href="http://www.gallup.co.kr" target="_blank">한국갤럽</a>, <a href="http://www.rnch.co.kr" target="_blank">알앤써치</a>');
-        realMoreButton.removeClass('hidden-xs-up');
-        luckyMoreButton.addClass('hidden-xs-up');
+        realRating.removeClass('hidden-xs-up');
+        luckyRating.addClass('hidden-xs-up');
         ratingSubTitle.text('국민들의 지지율');
         ratingTitle.text('여론조사 모아보기');
-        if (before === null) {
-            waitMe($('#rating'));
-            $.ajax({
-                url: '/rating',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                type: 'POST',
-                data: JSON.stringify({
-                        'type': 'real'
-                    }),
-                success: function(data) {
-                    before = template.html();
-                    template.html(data);
-                    $('#rating').waitMe('hide');
-                },
-                error: function() {
-                    alert('지지율 데이터를 가져오는데 실패하였습니다');
-                    $('#rating').waitMe('hide');
-                }
-            });
-        } else {
-            temp = template.html();
-            template.html(before);
-            before = temp;
+        if (!isLoadRatingChart) {
+            createRatingChart();
         }
     }
 });
@@ -147,7 +138,7 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
         ratingChartReload(all_data);
     } else if (this.value === 'realmeter') {
         if (realmeter_data === null) {
-            waitMe($('#rating-modal'));
+            waitMe($('#rating'));
             $.ajax({
                 url: '/apis/rating?cp=realmeter',
                 headers: {
@@ -159,11 +150,11 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
                 success: function(data) {
                     realmeter_data = ratingDataParsing(data);
                     ratingChartReload(realmeter_data);
-                    $('#rating-modal').waitMe('hide');
+                    $('#rating').waitMe('hide');
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    $('#rating-modal').waitMe('hide');
+                    $('#rating').waitMe('hide');
                 }
             });
         } else {
@@ -171,7 +162,7 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
         }
     } else if (this.value === 'gallup') {
         if (gallup_data === null) {
-            waitMe($('#rating-modal'));
+            waitMe($('#rating'));
             $.ajax({
                 url: '/apis/rating?cp=gallup',
                 headers: {
@@ -183,11 +174,11 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
                 success: function(data) {
                     gallup_data = ratingDataParsing(data);
                     ratingChartReload(gallup_data);
-                    $('#rating-modal').waitMe('hide');
+                    $('#rating').waitMe('hide');
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    $('#rating-modal').waitMe('hide');
+                    $('#rating').waitMe('hide');
                 }
             });
         } else {
@@ -195,7 +186,7 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
         }
     } else if (this.value === 'rnsearch') {
         if (rnserach_data === null) {
-            waitMe($('#rating-modal'));
+            waitMe($('#rating'));
             $.ajax({
                 url: '/apis/rating?cp=rnsearch',
                 headers: {
@@ -207,11 +198,11 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
                 success: function(data) {
                     rnserach_data = ratingDataParsing(data);
                     ratingChartReload(rnserach_data);
-                    $('#rating-modal').waitMe('hide');
+                    $('#rating').waitMe('hide');
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    $('#rating-modal').waitMe('hide');
+                    $('#rating').waitMe('hide');
                 }
             });
         } else {
@@ -220,47 +211,45 @@ $('input[type=radio][name=rating-graph-radio]').change(function () {
     }
 });
 
-realMoreButton.click(function() {
-    if (all_data === null) {
-        waitMe($('#rating-modal'));
-        $.ajax({
-            url: '/apis/rating',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            async: true,
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                all_data = ratingDataParsing(data);
-                rating_chart = c3.generate({
-                    bindto: '#ratingChart',
-                    data: {
-                        x: 'x',
-                        colors: candidateColors,
-                        columns: all_data
-                    },
-                    axis: {
-                        x: {
-                            type: 'timeseries',
-                            tick: {
-                                format: '%Y-%m-%d'
-                            }
+function createRatingChart() {
+    waitMe($('#rating'));
+    $.ajax({
+        url: '/apis/rating',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        async: true,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            all_data = ratingDataParsing(data);
+            rating_chart = c3.generate({
+                bindto: '#ratingChart',
+                data: {
+                    x: 'x',
+                    colors: candidateColors,
+                    columns: all_data
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%Y-%m-%d'
                         }
                     }
-                });
-                $('#rating-modal').waitMe('hide');
-            },
-            error: function(data, status, err) {
-                console.log(err);
-                $('#rating-modal').waitMe('hide');
-            }
-        });
-    }
-});
+                }
+            });
+            $('#rating').waitMe('hide');
+        },
+        error: function(data, status, err) {
+            console.log(err);
+            $('#rating').waitMe('hide');
+        }
+    });
+}
 
 var isLoadLuckyDetail = false;
-luckyMoreButton.click(function () {
+$('#rating-lucky-button').click(function () {
     if (!isLoadLuckyDetail) {
         waitMe($('#rating'));
         $.ajax({

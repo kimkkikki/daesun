@@ -22,11 +22,13 @@ def policy(request):
 @cache_page(60 * 1)
 def main(request):
     # ratings = views.lucky_rating_list('all')
-    ratings = views.approval_rating_list(None, True)
+    # ratings = views.approval_rating_list(None, True)
+
+    lucky_count = views.lucky_rating_count()
     cheerings = views.get_cheering_message_list(0)
     d_day = (date(2017, 5, 9) - date.today()).days
     candidates = views.get_candidates()
-    return render(request, 'main.html', {'real_ratings': ratings, 'count_string': '%', 'cheering_list': cheerings, 'today': datetime.today(), 'd_day': d_day, 'candidates': candidates})
+    return render(request, 'main.html', {'lucky_count': lucky_count, 'count_string': '%', 'cheering_list': cheerings, 'today': datetime.today(), 'd_day': d_day, 'candidates': candidates})
 
 
 def lets_encrypt(request, authorization_code):
