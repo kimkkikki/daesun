@@ -237,6 +237,11 @@ def pledge(request):
         return JSONResponse(pledge_post(request))
 
 
+def lucky_rating_count():
+    lucky_count = len(LuckyRating.objects.all().annotate(count=Count('input', distinct=True)))
+    return lucky_count
+
+
 def lucky_rating_list(result_type):
     candidates = get_candidates()
     q_list = []
