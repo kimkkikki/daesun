@@ -4,6 +4,7 @@ from django.views.decorators.cache import cache_page
 from apis import views
 from django.http import HttpResponse
 from datetime import datetime, date
+from django.conf import settings
 
 
 def labs(request):
@@ -144,3 +145,29 @@ def slot_honor(request):
     if request.method == 'GET':
         results = views.slot_honor_list()
         return render_to_response('slot_honor_modal.html', {'results': results})
+
+
+def solor(request):
+    ratings = views.lucky_rating_list('all')
+    solor = ['mercury', 'venus', 'earth', 'mars', 'jupiter']
+    result = []
+
+    count = 0
+
+    for item in ratings:
+        if item['candidate'] == '문재인':
+            image = "content:url('"+settings.STATIC_URL+"img/candidate/moon.jpg');"
+        elif item['candidate'] == '안철수':
+            image = "content:url('"+settings.STATIC_URL+"img/candidate/ahn1.jpg');"
+        elif item['candidate'] == '홍준표':
+            image = "content:url('"+settings.STATIC_URL+"img/candidate/hong.jpg');"
+        elif item['candidate'] == '유승민':
+            image = "content:url('"+settings.STATIC_URL+"img/candidate/you.jpg');"
+        elif item['candidate'] == '심상정':
+            image = "content:url('"+settings.STATIC_URL+"img/candidate/sim.jpg');"
+
+        result.append({'id': solor[count], 'image': image, 'name': item['candidate']})
+        count += 1
+
+    print(result)
+    return render_to_response('solor.html', {'ratings': result})
