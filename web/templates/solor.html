@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+ <link rel="stylesheet" href="{% static 'css/solor.css' %}" type="text/css">
+ <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+</head>
+  <body class="opening hide-UI view-2D zoom-large data-close controls-close">
+    <div id="navbar">
+      <a id="toggle-data" href="#data"><i class="icon-data"></i>Data</a>
+      <h1>우주의 기운<br><span>by <a href="https://twitter.com/JulianGarnier" target="_blank">@2017대선닷컴</a></span></h1>
+      <a id="toggle-controls" href="#controls"><i class="icon-controls"></i>Controls</a>
+    </div>
+    <div id="data">
+      {% for result in ratings %}
+      <a class="{{result.id}} activate" title="{{result.name}}">{{result.name}}</a>
+      {% endfor%}
+    </div>
+    <div id="controls">
+      <label class="set-view">
+        <input type="checkbox">
+      </label>
+      <label class="set-zoom">
+        <input type="checkbox">
+      </label>
+    </div>
+    <div id="universe" class="scale-stretched">
+      <div id="galaxy">
+        <div id="solar-system" class="earth">
+          {% for result in ratings %}
+            <div id="{{result.id}}" class="orbit">
+              <div class="pos">
+                <div class="planet" style="{{result.image}}">
+                  <dl class="infos">
+                    <dt>{{ result.name }}</dt>
+                    <dd><span></span></dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          {% endfor%}
+          <div id="sun" style="content:url({% static 'img/president.png' %})">
+            <dl class="infos">
+              <dt>Sun</dt>
+              <dd><span></span></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    if (typeof jQuery == 'undefined') {
+      document.write(unescape("%3Cscript src='js/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    <script src="{% static 'js/main/solor.js' %}"></script>
+  </body>
+
+</html>
