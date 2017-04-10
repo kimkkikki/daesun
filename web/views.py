@@ -149,10 +149,11 @@ def slot_honor(request):
         return render_to_response('slot_honor_modal.html', {'results': results})
 
 
-def solor(request):
+def solar(request):
     ratings = views.lucky_rating_list('all')
-    solor = ['mercury', 'venus', 'earth', 'mars', 'jupiter']
+    solar = ['mercury', 'venus', 'earth', 'mars', 'jupiter']
     result = []
+    image = None
 
     count = 0
 
@@ -168,8 +169,8 @@ def solor(request):
         elif item['candidate'] == '심상정':
             image = "content:url('"+settings.STATIC_URL+"img/candidate/sim.jpg');"
 
-        result.append({'id': solor[count], 'image': image, 'name': item['candidate']})
+        result.append({'id': solar[count], 'image': image, 'name': item['candidate']})
         count += 1
 
     print(result)
-    return render_to_response('solor.html', {'ratings': result})
+    return render_to_response('solar.html', {'ratings': result})
