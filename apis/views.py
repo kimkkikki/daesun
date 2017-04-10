@@ -319,7 +319,6 @@ def slot_honor_list():
     return list(honor_list)
 
 
-@csrf_exempt
 def slot_honor_api(request):
     if request.method == 'GET':
         return JSONResponse(slot_honor_list())
@@ -508,7 +507,7 @@ def get_candidate_sns_list():
 
     schedules = []
     candidate_color_dict = {'문재인': '#1870B9', '안희정': '#1870B9', '이재명': '#1870B9', '홍준표': '#c9151e', '김진태': '#c9151e',
-                      '안철수': '#036241', '손학규': '#036241', '유승민': '#01B1EC', '심상정': '#FFCA08'}
+                            '안철수': '#036241', '손학규': '#036241', '유승민': '#01B1EC', '심상정': '#FFCA08'}
 
     for candidate in get_candidates():
         if candidate.twitter is None:
@@ -672,7 +671,6 @@ def create_cheering_message(request):
     return False
 
 
-@csrf_exempt
 def cheering_message_api(request):
     if request.method == 'GET':
         page = request.GET.get('page', None)

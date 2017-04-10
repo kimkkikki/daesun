@@ -2,6 +2,10 @@ AOS.init();
 
 $('[data-toggle="tooltip"]').tooltip();
 
+$('.nav-link').on('click', function(){
+    $('#navbar-collapse').collapse('hide')
+});
+
 $(".navbar ul li a[href^='#']").on('click', function(e) {
    e.preventDefault();
 
