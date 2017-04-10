@@ -27,7 +27,7 @@ $('.keyword-date-button').click(function () {
     loadKeyword(currentDate);
 });
 
-$('#lucky').waypoint(function() {
+$('#space').waypoint(function() {
     if (!isLoadTodayKeyword) {
         loadKeyword(currentDate);
     }

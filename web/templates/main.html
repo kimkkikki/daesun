@@ -132,6 +132,55 @@
         </div>
     </div>
 
+    <section id="rating">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h3 id="rating-subtitle" class="section-subheading text-muted">국민들의 지지율</h3>
+                    <h2 id="rating-title" class="section-heading">여론조사 모아보기</h2>
+                    <!--<div class="btn-group mx-auto" data-toggle="buttons">-->
+                        <!--<label class="btn btn-outline-danger">-->
+                            <!--<input type="radio" name="rating-type-radio" autocomplete="off" value="lucky">우주의기운-->
+                        <!--</label>-->
+                        <!--<label class="btn btn-outline-info active">-->
+                            <!--<input type="radio" name="rating-type-radio" autocomplete="off" value="real" checked>여론조사-->
+                        <!--</label>-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div id="real-rating">
+                <div class="row justify-content-center section-contents">
+                    <div id="ratingChart"></div>
+                </div>
+                <div class="col col-12 text-center">
+                    <p id="rating-description">여러 기관의 여론조사 결과를 평균값으로 재구성한 것입니다.<br>출처: <a href="http://www.realmeter.net" target="_blank">리얼미터</a>, <a href="http://www.gallup.co.kr" target="_blank">한국갤럽</a>, <a href="http://www.rnch.co.kr" target="_blank">알앤써치</a></p>
+                    <div id="rating-graph-button" class="btn-group mx-auto" data-toggle="buttons">
+                        <label class="btn btn-outline-info active">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="all" checked>전체
+                        </label>
+                        <label class="btn btn-outline-success">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="realmeter">리얼미터
+                        </label>
+                        <label class="btn btn-outline-primary">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="gallup">한국갤럽
+                        </label>
+                        <label class="btn btn-outline-warning">
+                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="rnsearch">알앤써치
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <!--<div id="lucky-rating" class="hidden-xs-up">-->
+                <!--<div id="rating-lucky-body" class="row justify-content-center section-contents">-->
+                <!--</div>-->
+                <!--<div class="col col-12 text-center">-->
+                    <!--<p>2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.</p>-->
+                    <!--<button id="rating-lucky-button" class="btn btn-danger">우주가 어떻게 후보를 돕는지 보러가기</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </section>
+
     <section id="lucky" class="light-bg">
         <div class="container">
             <h2 class="section-heading text-center">후보 큐레이션</h2>
@@ -492,55 +541,6 @@
         </div>
     </div>
 
-    <section id="rating">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h3 id="rating-subtitle" class="section-subheading text-muted">국민들의 지지율</h3>
-                    <h2 id="rating-title" class="section-heading">여론조사 모아보기</h2>
-                    <div class="btn-group mx-auto" data-toggle="buttons">
-                        <label class="btn btn-outline-danger">
-                            <input type="radio" name="rating-type-radio" autocomplete="off" value="lucky">우주의기운
-                        </label>
-                        <label class="btn btn-outline-info active">
-                            <input type="radio" name="rating-type-radio" autocomplete="off" value="real" checked>여론조사
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div id="real-rating">
-                <div class="row justify-content-center section-contents">
-                    <div id="ratingChart"></div>
-                </div>
-                <div class="col col-12 text-center">
-                    <p id="rating-description">여러 기관의 여론조사 결과를 평균값으로 재구성한 것입니다.<br>출처: <a href="http://www.realmeter.net" target="_blank">리얼미터</a>, <a href="http://www.gallup.co.kr" target="_blank">한국갤럽</a>, <a href="http://www.rnch.co.kr" target="_blank">알앤써치</a></p>
-                    <div id="rating-graph-button" class="btn-group mx-auto" data-toggle="buttons">
-                        <label class="btn btn-outline-info active">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="all" checked>전체
-                        </label>
-                        <label class="btn btn-outline-success">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="realmeter">리얼미터
-                        </label>
-                        <label class="btn btn-outline-primary">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="gallup">한국갤럽
-                        </label>
-                        <label class="btn btn-outline-warning">
-                            <input type="radio" name="rating-graph-radio" autocomplete="off" value="rnsearch">알앤써치
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div id="lucky-rating" class="hidden-xs-up">
-                <div id="rating-lucky-body" class="row justify-content-center section-contents">
-                </div>
-                <div class="col col-12 text-center">
-                    <p>2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.</p>
-                    <button id="rating-lucky-button" class="btn btn-danger">우주가 어떻게 후보를 돕는지 보러가기</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- 우주의기운 선정근거 모달 -->
     <div id="lucky-rating-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -560,6 +560,22 @@
             </div>
         </div>
     </div>
+
+    <section id="space">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h2 class="section-heading">우주의기운</h2>
+                    <h3 class="section-subheading text-muted">2017대선닷컴 이용자가 뽑은 우주의 기운이 돕는 후보</h3>
+                </div>
+                <div class="col col-12 text-center">
+                    <!-- TODO: Solar System is here -->
+                    <p>2017대선닷컴의 돌려돌려돌림판, 이름점, 별자리점을 이용한 방문자 결과의 합계로 계산되었습니다.<br>실제 지지율과는 전혀 상관이 없습니다.</p>
+                    <button id="rating-lucky-button" class="btn btn-danger">우주가 어떻게 후보를 돕는지 보러가기</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section id="keyword" class="light-bg">
         <div class="container">

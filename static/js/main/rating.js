@@ -1,19 +1,19 @@
 
 
 var isLoadRatingChart = false;
-$('#lucky').waypoint(function () {
+$('#rating').waypoint(function () {
     if (!isLoadRatingChart) {
         isLoadRatingChart = true;
         createRatingChart();
     }
 });
-$('#rating').waypoint(function() {
+$('#lucky').waypoint(function() {
     if (!isLoadRatingChart) {
         isLoadRatingChart = true;
         createRatingChart();
     }
 });
-$('#keyword').waypoint(function() {
+$('header').waypoint(function() {
     if (!isLoadRatingChart) {
         isLoadRatingChart = true;
         createRatingChart();
