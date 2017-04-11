@@ -1,23 +1,5 @@
 {% load staticfiles %}
 <div id="solar" class="opening hide-UI view-2D zoom-large data-close controls-close">
-  <div id="navbar">
-    <a id="toggle-data" href="#data"><i class="icon-data"></i>Data</a>
-    <h1>우주의 기운<br><span>by <a href="https://twitter.com/JulianGarnier" target="_blank">@2017대선닷컴</a></span></h1>
-    <a id="toggle-controls" href="#controls"><i class="icon-controls"></i>Controls</a>
-  </div>
-  <div id="data">
-    {% for result in ratings %}
-    <a class="{{result.id}} activate" title="{{result.name}}">{{result.name}}</a>
-    {% endfor%}
-  </div>
-  <div id="controls">
-    <label class="set-view">
-      <input type="checkbox">
-    </label>
-    <label class="set-zoom">
-      <input type="checkbox">
-    </label>
-  </div>
   <div id="universe" class="scale-stretched">
     <div id="galaxy">
       <div id="solar-system" class="earth">
