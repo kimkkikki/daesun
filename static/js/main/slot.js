@@ -206,8 +206,8 @@ $(document).ready(function(){
                     addHonorModal.waitMe('hide');
                     addHonorModal.modal('toggle');
                     $('#slot-modal').modal('toggle');
-                    addHonorModal.modal('hide');
-                    $('#slot-modal').modal('hide');
+                    // addHonorModal.modal('hide');
+                    // $('#slot-modal').modal('hide');
                 },
                 error: function(data, status, err) {
                     console.log(err);
