@@ -53,9 +53,12 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-def save_lucky_rating(candidate, lucky_type, lucky_input):
-    if os.getenv('GAE_INSTANCE'):
-        lucky_rating = LuckyRating(candidate=candidate, type=lucky_type, input=lucky_input)
+def save_lucky_rating(candidate, lucky_type, lucky_input, score):
+    # if os.getenv('GAE_INSTANCE'):
+        if score is not None:
+            lucky_rating = LuckyRating(candidate=candidate, type=lucky_type, input=lucky_input, score=score)
+        else:
+            lucky_rating = LuckyRating(candidate=candidate, type=lucky_type, input=lucky_input)
         lucky_rating.save()
 
 
@@ -375,7 +378,7 @@ def name_chemistry(request):
 
     if len(result_list) > 0:
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
-        save_lucky_rating(result_list[0]['candidate'], 'name', name)
+        save_lucky_rating(result_list[0]['candidate'], 'name', name, None)
 
     return JSONResponse({'list': result_list})
 
@@ -400,7 +403,7 @@ def lucky_name(request):
 
     if len(result_list) > 0:
         result_list = sorted(result_list, key=itemgetter('score'), reverse=True)
-        save_lucky_rating(result_list[0]['candidate'], 'name', name)
+        save_lucky_rating(result_list[0]['candidate'], 'name', name, result_list[0]['score'])
 
     i, j, length, to_nodes, from_nodes = 0, 0, len(best_to), [], []
 
@@ -699,7 +702,7 @@ def constellation_post(request):
         for obj in result:
             if obj['score'] == max_obj['score']:
                 result_dict['bests'].append(obj)
-                save_lucky_rating(obj['candidate'], 'star', request_constellation)
+                save_lucky_rating(obj['candidate'], 'star', request_constellation, None)
             else:
                 result_dict['rests'].append(obj)
 
@@ -735,7 +738,7 @@ def blood_type_chemistry(request):
     for obj in result:
         if obj['score'] == max_obj['score']:
             result_dict['bests'].append(obj)
-            save_lucky_rating(obj['candidate'], 'blood', blood)
+            save_lucky_rating(obj['candidate'], 'blood', blood, None)
         else:
             result_dict['rests'].append(obj)
 
@@ -760,7 +763,7 @@ def zodiac_chemistry(request):
     for obj in result:
         if obj['score'] == max_obj['score']:
             result_dict['bests'].append(obj)
-            save_lucky_rating(obj['candidate'], 'zodiac', request_zodiac)
+            save_lucky_rating(obj['candidate'], 'zodiac', request_zodiac, None)
         else:
             result_dict['rests'].append(obj)
 
@@ -799,7 +802,7 @@ def total_chemistry(request):
     result = sorted(result_list, key=itemgetter('score'), reverse=True)
 
     save_string = request_zodiac + '_' + request_blood + '_' + request_constellation + '_' + request_name
-    save_lucky_rating(result[0]['candidate'], 'total', save_string)
+    save_lucky_rating(result[0]['candidate'], 'total', save_string, result[0]['score'])
 
     return result
 
@@ -819,7 +822,7 @@ def save_lucky_result(request):
     lucky_type = body.get('type', None)
     candidate = body.get('candidate', None)
     count = body.get('count', None)
-    save_lucky_rating(candidate, lucky_type, count)
+    save_lucky_rating(candidate, lucky_type, count, None)
 
     return {'type': lucky_type, 'candidate': candidate, 'count': count}
 

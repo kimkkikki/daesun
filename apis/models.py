@@ -136,11 +136,12 @@ class LuckyRating(models.Model):
     candidate = models.CharField(max_length=10, db_index=True)
     type = models.CharField(max_length=10, db_index=True)
     input = models.CharField(max_length=50, null=True)
+    score = models.FloatField(null=True, blank=True, db_index=True)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
 
 
 class LuckyRatingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'candidate', 'type', 'input', 'created')
+    list_display = ('id', 'candidate', 'type', 'input', 'score', 'created')
     list_filter = ['candidate', 'type']
 
 

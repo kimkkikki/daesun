@@ -4,23 +4,28 @@
     <div class="row justify-content-center text-center white-background lucky-best animated zoomIn">
         <div class="col-12">
             {% include 'candidate_img_template.html' %}
+            {% if result.score > 90 %}
             <h5>{{ result.score|floatformat }}점으로 {{ result.candidate }} 후보와 천생연분입니다</h5>
+            {% elif result.score > 80 %}
+            <h5>{{ result.score|floatformat }}점으로 {{ result.candidate }} 후보와 운명입니다</h5>
+            {% elif result.score > 70 %}
+            <h5>{{ result.score|floatformat }}점으로 {{ result.candidate }} 후보와 잘맞습니다</h5>
+            {% else %}
+            <h5>{{ result.score|floatformat }}점으로 {{ result.candidate }} 후보와 그나마 잘맞습니다</h5>
+            {% endif %}
         </div>
     </div>
 </div>
-{% endif %}
-{% endfor %}
-
-<!--<div class="col-12">-->
-    <!--<div class="row">-->
-        <!--{% for result in results %}-->
-        <!--{% if forloop.counter != 1 %}-->
-        <!--<div class="col-3 col-md-2 text-center lucky-rests animated zoomIn">-->
-            <!--{% include 'candidate_img_template.html' %}-->
-            <!--<h5>{{ result.candidate }}</h5>-->
-            <!--<p>{{ result.score|floatformat }}점</p>-->
-        <!--</div>-->
-        <!--{% endif %}-->
-        <!--{% endfor %}-->
-    <!--</div>-->
-<!--</div>-->
+<div class="col-12">
+    <p>나머지 후보들과의 점수입니다</p>
+    <div class="row">
+    {% else %}
+        <div class="col-3 col-md-2 text-center lucky-rests animated zoomIn">
+            {% include 'candidate_img_template.html' %}
+            <h5>{{ result.candidate }}</h5>
+            <p>{{ result.score|floatformat }}점</p>
+        </div>
+    {% endif %}
+    {% endfor %}
+    </div>
+</div>
