@@ -435,7 +435,9 @@ def lucky_name(request):
             i += 1
         length -= 1
 
-    return {'name_length': len(name)+3, 'name': name, 'result': result_list[0], 'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes}
+    rank = LuckyRating.objects.filter(type='total', score__gt=result_list[0]['score']).count() + 1
+
+    return {'name_length': len(name)+3, 'name': name, 'result': result_list[0], 'list': result_list, 'to_nodes': to_nodes, 'from_nodes': from_nodes, 'rank': rank}
 
 
 @api_view(['GET'])
@@ -803,6 +805,9 @@ def total_chemistry(request):
 
     save_string = request_zodiac + '_' + request_blood + '_' + request_constellation + '_' + request_name
     save_lucky_rating(result[0]['candidate'], 'total', save_string, result[0]['score'])
+
+    rank = LuckyRating.objects.filter(type='total', score__gt=result[0]['score']).count() + 1
+    result[0]['rank'] = rank
 
     return result
 

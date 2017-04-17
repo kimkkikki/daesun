@@ -1,3 +1,4 @@
+{% load humanize %}
 {% load staticfiles %}
 <div id="lucky-name-result-detail" class="row" style="margin-left:0; margin-right:0">
     <div id="lucky-name-image" class="white-background" style="width:100%;">
@@ -21,7 +22,7 @@
                 {% include 'candidate_img_template.html' %}
                 <br>
                 <span id="best_candidate">{{ result.candidate }}</span><br>
-                <span id="best_score">{{ result.score }}점</span>
+                <span id="best_score">{{ result.score }}점<br>{{ result.candidate }} 후보와 궁합인 유권자 중 {{ rank|intcomma }}등으로 잘 맞습니다</span>
             </div>
             <div class="text-center name-tree">
                 <div class="name-tree-canvas" id="lucky_name_result_to"></div>
