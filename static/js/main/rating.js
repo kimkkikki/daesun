@@ -251,7 +251,7 @@ function createRatingChart() {
 var isLoadLuckyDetail = false;
 $('#rating-lucky-button').click(function () {
     if (!isLoadLuckyDetail) {
-        waitMe($('#rating'));
+        waitMe($('#space'));
         $.ajax({
             url: '/rating?type=detail',
             headers: {
@@ -260,13 +260,13 @@ $('#rating-lucky-button').click(function () {
             type: 'GET',
             success: function(data) {
                 $('#lucky-rating-modal-body').html(data);
-                $('#rating').waitMe('hide');
+                $('#space').waitMe('hide');
                 isLoadLuckyDetail = true;
                 $('#lucky-rating-modal').modal('show');
             },
             error: function() {
-                alert('우주의기운 지지율을 가져오는데 실패하였습니다');
-                $('#rating').waitMe('hide');
+                alert('우주의기운 데이터를 가져오는데 실패하였습니다');
+                $('#space').waitMe('hide');
             }
         });
     } else {
