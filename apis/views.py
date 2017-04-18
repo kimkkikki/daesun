@@ -54,7 +54,7 @@ class JSONResponse(HttpResponse):
 
 
 def save_lucky_rating(candidate, lucky_type, lucky_input, score):
-    # if os.getenv('GAE_INSTANCE'):
+    if os.getenv('GAE_INSTANCE'):
         if score is not None:
             lucky_rating = LuckyRating(candidate=candidate, type=lucky_type, input=lucky_input, score=score)
         else:
