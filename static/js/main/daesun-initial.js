@@ -58,3 +58,13 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 ga('create', 'UA-96916102-1', 'auto');
 ga('send', 'pageview');
+
+var config = {
+apiKey: "AIzaSyDGwgCakCmplpZmlFaR9QePGwEHagS56fI",
+authDomain: "daesun2017.firebaseapp.com",
+databaseURL: "https://daesun2017.firebaseio.com",
+projectId: "daesun2017",
+storageBucket: "daesun2017.appspot.com",
+messagingSenderId: "948214494481"
+};
+firebase.initializeApp(config);

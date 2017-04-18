@@ -233,6 +233,8 @@
             </div>
         </div>
     </section>
+
+    <button id="test" class="btn btn-info">테스트</button>
 </body>
 
 <footer class="light-bg">
@@ -288,10 +290,26 @@
 <script type="text/javascript" src="{% static 'js/main/jquery.waypoints.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/js.cookie.js' %}"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.8/firebase.js"></script>
 
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/love-test.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/pledge.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/rating.js' %}"></script>
+
+<script type="text/javascript">
+    var countRef = firebase.database().ref('count/moon');
+    var count = null;
+    countRef.on('value', function(snapshot) {
+        console.log(snapshot.val());
+        count = snapshot.val();
+    });
+    $('#test').click(function () {
+        if (count !== null) {
+            count++;
+            countRef.set(count);
+        }
+    });
+</script>
 
 </html>
