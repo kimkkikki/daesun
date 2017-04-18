@@ -7,7 +7,7 @@ $('#rating').waypoint(function () {
         createRatingChart();
     }
 });
-$('#lucky').waypoint(function() {
+$('#pledge').waypoint(function() {
     if (!isLoadRatingChart) {
         isLoadRatingChart = true;
         createRatingChart();

@@ -11,14 +11,14 @@ var isLoadTodayKeyword = false;
 $('#keyword-date').html(' ' + currentDate + ' ');
 
 $('.keyword-date-button').click(function () {
-    if (this.value == 'yesterday') {
+    if (this.value === 'yesterday') {
         fullDate.setDate(fullDate.getDate() - 1);
     } else {
         fullDate.setDate(fullDate.getDate() + 1);
     }
     twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) :(fullDate.getMonth()+1);
     currentDate = fullDate.getFullYear() + "-" + twoDigitMonth + "-" + fullDate.getDate();
-    if (currentDate == today) {
+    if (currentDate === today) {
         $('#keyword-tomorrow-button').prop('disabled', true);
     } else {
         $('#keyword-tomorrow-button').prop('disabled', false);
@@ -27,7 +27,7 @@ $('.keyword-date-button').click(function () {
     loadKeyword(currentDate);
 });
 
-$('#space').waypoint(function() {
+$('#lucky').waypoint(function() {
     if (!isLoadTodayKeyword) {
         loadKeyword(currentDate);
     }
