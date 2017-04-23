@@ -85,9 +85,6 @@
                     <a class="nav-link" href="#lucky">후보 고르기</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#keyword">오늘은 무슨일이</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#cheering">기운팍팍</a>
                 </li>
                 <li class="nav-item">
@@ -532,96 +529,6 @@
         </div>
     </div>
 
-    <section id="keyword" class="light-bg">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h2 class="section-heading">오늘은 무슨일이</h2>
-                    <h3 class="section-subheading text-muted">매일매일의 뉴스를 요약하여 뽑은 키워드 입니다<br>키워드를 선택하면 관련 뉴스를 바로 볼 수 있어요</h3>
-                </div>
-            </div>
-            <div class="row justify-content-around align-items-center section-contents keyword-date">
-                <button type="button" class="btn btn-secondary keyword-date-button" value="yesterday">어제</button>
-                <h5 id="keyword-date"></h5>
-                <button type="button" class="btn btn-secondary keyword-date-button" value="tomorrow" id="keyword-tomorrow-button" disabled>내일</button>
-            </div>
-            <div id="keyword-body">
-            </div>
-        </div>
-    </section>
-
-    <!-- 키워드 모달뷰 -->
-    <div id="keyword-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">키워드 뉴스 리스트</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="keyword-modal-body"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <section id="press">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h2 class="section-heading">언론</h2>
-                    <h3 class="section-subheading text-muted">최근 30일간 언론 언급으로 보는 대선후보 이슈정도</h3>
-                    <select id="press-select" class="col-6 form-control mx-auto" title="언론사 선택">
-                        <option value="all">모든언론사</option>
-                        <option value="asiae">아시아경제</option>
-                        <option value="chosun">조선일보</option>
-                        <option value="donga">동아일보</option>
-                        <option value="edaily">이데일리</option>
-                        <option value="hani">한겨레</option>
-                        <option value="heraldcorp">헤럴드경제</option>
-                        <option value="ichannela">채널A</option>
-                        <option value="joins">중앙일보</option>
-                        <option value="jtbc">JTBC</option>
-                        <option value="kbs">KBS</option>
-                        <option value="khan">경향신문</option>
-                        <option value="kmib">국민일보</option>
-                        <option value="mbc">MBC</option>
-                        <option value="mbn">MBN</option>
-                        <option value="mk">매일경제</option>
-                        <option value="mt">머니투데이</option>
-                        <option value="munhwa">문화일보</option>
-                        <option value="news1">뉴스1</option>
-                        <option value="newsis">뉴시스</option>
-                        <option value="ohmynews">오마이뉴스</option>
-                        <option value="sbs">SBS</option>
-                        <option value="sedaily">서울경제</option>
-                        <option value="segye">세계일보</option>
-                        <option value="seoul">서울신문</option>
-                        <option value="sisain">시사인</option>
-                        <option value="tvchosun">TV조선</option>
-                        <option value="yonhap">연합뉴스</option>
-                        <option value="ytn">YTN</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row section-contents">
-                <div class="col-md-6 text-center">
-                    <h4>언론 언급 점유율</h4>
-                    <div id="press-chart-pie"></div>
-                </div>
-                <div class="col-md-6 text-center">
-                    <h4>언론 언급 횟수</h4>
-                    <div id="press-chart-line"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section id="cheering" class="light-bg">
         <div class="container">
             <div class="row justify-content-center">
@@ -752,11 +659,10 @@
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/sns.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/daesun-lucky.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main/press.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/cheering.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lucky-name-test.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main/keyword.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/slot.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main/rating.js' %}"></script>
 
 </html>
