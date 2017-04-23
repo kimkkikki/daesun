@@ -41,6 +41,11 @@ $('#press-select').change(function () {
     if (daily === null) {
         var value = this.value;
         waitMe($('#press'));
+        ga('send', 'event', {
+            eventCategory: 'ajax',
+            eventAction: '/apis/cp/daily?cp=' + value
+        });
+
         $.ajax({
             url: '/apis/cp/daily?cp=' + value,
             headers: {

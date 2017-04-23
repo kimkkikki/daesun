@@ -17,6 +17,10 @@ $('#calendar-button-1, #calendar-button-2, #calendar-button-3, #calendar-button-
         if(mm<10) {
             mm='0'+mm
         }
+        ga('send', 'event', {
+            eventCategory: 'ajax',
+            eventAction: '/apis/sns'
+        });
 
         $.ajax({
                 url: "/apis/sns",

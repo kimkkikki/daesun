@@ -53,6 +53,11 @@ function loadKeyword(date) {
     } else {
         waitMe($('#keyword'));
         isLoadTodayKeyword = true;
+        ga('send', 'event', {
+            eventCategory: 'ajax',
+            eventAction: '/keyword?date=' + currentDate
+        });
+
         $.ajax({
                 url: '/keyword?date=' + currentDate,
                 headers: {
@@ -78,6 +83,11 @@ function loadKeyword(date) {
 
 function keywordClick(data) {
     waitMe($('#keyword'));
+    ga('send', 'event', {
+        eventCategory: 'ajax',
+        eventAction: '/news'
+    });
+
     $.ajax({
             url: '/news',
             headers: {

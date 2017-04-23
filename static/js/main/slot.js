@@ -12,6 +12,11 @@ function share_facebook(){
         useCORS: true,
         onrendered: function(canvas) {
             var image = canvas.toDataURL('image/jpeg', 0.9);
+            ga('send', 'event', {
+                eventCategory: 'ajax',
+                eventAction: '/apis/upload/facebook'
+            });
+
             $.ajax({
                 url:'/apis/upload',
                 headers: {
@@ -43,6 +48,11 @@ function share_kakaotalk(){
         useCORS: true,
         onrendered: function(canvas) {
             var image = canvas.toDataURL('image/jpeg', 0.9);
+            ga('send', 'event', {
+                eventCategory: 'ajax',
+                eventAction: '/apis/upload/kakao'
+            });
+
             $.ajax({
                 url:'/apis/upload',
                 headers: {
@@ -104,6 +114,11 @@ function onComplete(active){
                 waitMe($('#slot'));
                 slot_result_candidate = slot_candidates[result_1];
                 slot_result_count = slot_count;
+                ga('send', 'event', {
+                    eventCategory: 'ajax',
+                    eventAction: '/slot'
+                });
+
                 $.ajax({
                         url: '/slot',
                         headers: {
@@ -140,6 +155,11 @@ var isLoadHonor = false;
 $('#slot-honor-button').click(function () {
     if (!isLoadHonor) {
         waitMe($('#slot'));
+        ga('send', 'event', {
+            eventCategory: 'ajax',
+            eventAction: '/slot/honor'
+        });
+
         $.ajax({
                 url: '/slot/honor',
                 headers: {
@@ -189,6 +209,12 @@ $(document).ready(function(){
         } else{
             var addHonorModal = $('#slot-add-honor-modal');
             waitMe(addHonorModal);
+            ga('send', 'event', {
+                eventCategory: 'ajax',
+                eventAction: '/apis/slot',
+                eventLabel: 'POST'
+            });
+
             $.ajax({
                 url: '/apis/slot',
                 headers: {

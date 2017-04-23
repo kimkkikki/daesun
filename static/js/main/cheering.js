@@ -30,6 +30,11 @@ $(document).ready(function(){
         }
 
         waitMe($('#cheering'));
+        ga('send', 'event', {
+            eventCategory: 'ajax',
+            eventAction: '/cheering'
+        });
+
         $.ajax({
 			url: '/cheering',
 			headers: {
@@ -56,6 +61,11 @@ $(document).ready(function(){
 
     $('#cheering-more').click(function() {
         waitMe($('#cheering'));
+        ga('send', 'event', {
+            eventCategory: 'ajax',
+            eventAction: '/cheering?page=' + page
+        });
+
         $.ajax({
 			url: '/cheering?page=' + page,
 			headers: {
