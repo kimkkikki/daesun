@@ -95,13 +95,9 @@ def cp_group(request):
     group_list = Scraps.objects.filter(Q(created_at__gte=datetime.now() - timedelta(days=30)) & candidate_q_list).values('cp').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
         ahn=Count(Case(When(title__contains='안철수', then=1))),
-        lee=Count(Case(When(title__contains='이재명', then=1))),
         you=Count(Case(When(title__contains='유승민', then=1))),
-        hee=Count(Case(When(title__contains='안희정', then=1))),
         sim=Count(Case(When(title__contains='심상정', then=1))),
         hong=Count(Case(When(title__contains='홍준표', then=1))),
-        son=Count(Case(When(title__contains='손학규', then=1))),
-        kim=Count(Case(When(title__contains='김진태', then=1)))
     )
 
     return JSONResponse(list(group_list))
@@ -120,13 +116,9 @@ def cp_daily(request):
         'date').annotate(
         moon=Count(Case(When(title__contains='문재인', then=1))),
         ahn=Count(Case(When(title__contains='안철수', then=1))),
-        lee=Count(Case(When(title__contains='이재명', then=1))),
         you=Count(Case(When(title__contains='유승민', then=1))),
-        hee=Count(Case(When(title__contains='안희정', then=1))),
         sim=Count(Case(When(title__contains='심상정', then=1))),
         hong=Count(Case(When(title__contains='홍준표', then=1))),
-        son=Count(Case(When(title__contains='손학규', then=1))),
-        kim=Count(Case(When(title__contains='김진태', then=1)))
     )
 
     return JSONResponse(list(daily_list))

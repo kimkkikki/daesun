@@ -79,7 +79,7 @@
             <div class="intro-text">
                 <div class="intro-lead-in">재미로 보는 대선</div>
                 <div class="intro-heading">2017대선닷컴 연구소</div>
-                <div class="intro-guide">2017대선닷컴을 만들다가 아니다 싶었던 기능들입니다</div>
+                <div class="intro-guide">2017대선닷컴의 정보성 기능들입니다</div>
             </div>
         </div>
     </header>
@@ -133,89 +133,89 @@
         </div>
     </section>
 
-    <section id="pledge">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <h2 class="section-heading">공약 이상형</h2>
-                    <h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>
-                </div>
-            </div>
-            <div class="row justify-content-center section-contents">
-                <div class="mx-auto">
-                    <button id="pledge-test-start-button" class="btn btn-primary">시작하기</button>
-                    <button id="pledge-rank-button" class="btn btn-secondary">랭킹보기</button>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!--<section id="pledge">-->
+        <!--<div class="container">-->
+            <!--<div class="row justify-content-center">-->
+                <!--<div class="col-12 text-center">-->
+                    <!--<h2 class="section-heading">공약 이상형</h2>-->
+                    <!--<h3 class="section-subheading text-muted">대선공약을 평가하고 자신에게 맞는 후보를 찾으세요</h3>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row justify-content-center section-contents">-->
+                <!--<div class="mx-auto">-->
+                    <!--<button id="pledge-test-start-button" class="btn btn-primary">시작하기</button>-->
+                    <!--<button id="pledge-rank-button" class="btn btn-secondary">랭킹보기</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</section>-->
 
     <!-- 공약 이상형 모달 -->
-    <div id="pledge-test-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">공약 이상형</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="pledge-test" class="modal-body">
-                    <div class="jumbotron justify-content-center blind-test">
-                        <p id="pledge-test-count" class="pull-right"></p>
-                        <h4 id="pledge-test-title" class="text-center"></h4>
-                        <p id="pledge-test-contents" class="text-center"></p>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="mx-auto">
-                            <div class="btn-group" role="group" aria-label="공약 이상형 버튼">
-                                <button id="pledge-test-button-1" type="button" class="btn btn-success" value="1">좋아요</button>
-                                <button id="pledge-test-button-2" type="button" class="btn btn-danger" value="-1">싫어요</button>
-                                <button id="pledge-test-button-3" type="button" class="btn btn-secondary" value="0">몰라요</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--<div id="pledge-test-modal" class="modal fade" role="dialog">-->
+        <!--<div class="modal-dialog modal-lg">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<h5 class="modal-title text-center">공약 이상형</h5>-->
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                        <!--<span aria-hidden="true">&times;</span>-->
+                    <!--</button>-->
+                <!--</div>-->
+                <!--<div id="pledge-test" class="modal-body">-->
+                    <!--<div class="jumbotron justify-content-center blind-test">-->
+                        <!--<p id="pledge-test-count" class="pull-right"></p>-->
+                        <!--<h4 id="pledge-test-title" class="text-center"></h4>-->
+                        <!--<p id="pledge-test-contents" class="text-center"></p>-->
+                    <!--</div>-->
+                    <!--<div class="row justify-content-center">-->
+                        <!--<div class="mx-auto">-->
+                            <!--<div class="btn-group" role="group" aria-label="공약 이상형 버튼">-->
+                                <!--<button id="pledge-test-button-1" type="button" class="btn btn-success" value="1">좋아요</button>-->
+                                <!--<button id="pledge-test-button-2" type="button" class="btn btn-danger" value="-1">싫어요</button>-->
+                                <!--<button id="pledge-test-button-3" type="button" class="btn btn-secondary" value="0">몰라요</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 
-    <div id="pledge-result-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">공약 이상형 결과</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="pledge-result"></div>
-                    <div class="row justify-content-center">
-                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">다시하기</button>
-                        <button type="button" class="btn btn-danger">공유하기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--<div id="pledge-result-modal" class="modal fade" role="dialog">-->
+        <!--<div class="modal-dialog modal-lg">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<h5 class="modal-title text-center">공약 이상형 결과</h5>-->
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                        <!--<span aria-hidden="true">&times;</span>-->
+                    <!--</button>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<div id="pledge-result"></div>-->
+                    <!--<div class="row justify-content-center">-->
+                        <!--<button type="button" class="btn btn-success" data-dismiss="modal" aria-label="Close">다시하기</button>-->
+                        <!--<button type="button" class="btn btn-danger">공유하기</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 
-    <!-- Pledge Rank Modal -->
-    {% include 'pledge_rank_modal.html' %}
+    <!--&lt;!&ndash; Pledge Rank Modal &ndash;&gt;-->
+    <!--{% include 'pledge_rank_modal.html' %}-->
 
-    <section id="charts" class="light-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h2 class="section-heading">사랑과 전쟁</h2>
-                    <h3 class="section-subheading text-muted">사랑과 전쟁</h3>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div id="mynetwork"></div>
-            </div>
-        </div>
-    </section>
+    <!--<section id="charts" class="light-bg">-->
+        <!--<div class="container">-->
+            <!--<div class="row">-->
+                <!--<div class="col-12 text-center">-->
+                    <!--<h2 class="section-heading">사랑과 전쟁</h2>-->
+                    <!--<h3 class="section-subheading text-muted">사랑과 전쟁</h3>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row text-center">-->
+                <!--<div id="mynetwork"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</section>-->
 
     <section id="books">
         <div class="container">
@@ -386,8 +386,8 @@
 <script src="https://www.gstatic.com/firebasejs/3.7.8/firebase.js"></script>
 
 <script type="text/javascript" src="{% static 'js/main/daesun-initial.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/love-test.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/main/pledge.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/love-test.js' %}"></script>-->
+<!--<script type="text/javascript" src="{% static 'js/main/pledge.js' %}"></script>-->
 <script type="text/javascript" src="{% static 'js/main/rating.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/press.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main/keyword.js' %}"></script>
